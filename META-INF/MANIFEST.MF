@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclipse Themes
+Bundle-SymbolicName: com.github.eclipsethemes
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.github.eclipsethemes.EclipseThemes
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Automatic-Module-Name: com.github.eclipsethemes
+Bundle-ActivationPolicy: lazy

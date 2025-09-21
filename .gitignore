@@ -1,0 +1,14 @@
+# Eclipse project files
+.classpath
+.project
+.settings/
+
+# Build output
+bin/
+
+# Ignore temporary or backup files
+*.log
+*.tmp
+*.bak
+*~
+
