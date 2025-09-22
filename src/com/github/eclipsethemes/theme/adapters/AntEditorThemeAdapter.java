@@ -6,7 +6,7 @@ import org.osgi.service.prefs.BackingStoreException;
 import com.github.eclipsethemes.theme.models.Theme;
 import com.github.eclipsethemes.theme.models.TokenKey;
 
-public final class AntAdapter extends ThemeAdapter {
+public final class AntEditorThemeAdapter extends EclipseThemeAdapter {
 
     @Override
     public String getPreferencesId() {

@@ -7,7 +7,7 @@ import org.osgi.service.prefs.BackingStoreException;
 import com.github.eclipsethemes.theme.models.Theme;
 import com.github.eclipsethemes.theme.models.TokenKey;
 
-public final class CdtAdapter extends ThemeAdapter {
+public final class CppEditorThemeAdapter extends EclipseThemeAdapter {
 
     @Override
     public String getPreferencesId() {

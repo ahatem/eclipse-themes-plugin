@@ -6,7 +6,7 @@ import org.osgi.service.prefs.BackingStoreException;
 import com.github.eclipsethemes.theme.models.Theme;
 import com.github.eclipsethemes.theme.models.TokenKey;
 
-public final class GenericTextEditorAdapter extends ThemeAdapter {
+public final class GenericEditorThemeAdapter extends EclipseThemeAdapter {
 
     @Override
     public String getPreferencesId() {

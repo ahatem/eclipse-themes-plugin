@@ -10,7 +10,7 @@ import com.github.eclipsethemes.theme.models.Token;
 import com.github.eclipsethemes.theme.models.TokenKey;
 
 
-public class TextEditorAdapter extends ThemeAdapter {
+public class TextEditorThemeAdapter extends EclipseThemeAdapter {
 
 	@Override
 	public String getPreferencesId() {

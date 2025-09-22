@@ -10,7 +10,7 @@ import com.github.eclipsethemes.theme.models.TokenOptions;
 
 import java.util.Optional;
 
-public abstract class ThemeAdapter {
+public abstract class EclipseThemeAdapter {
 
 	/**
 	 * Returns the Eclipse preferences node ID for this adapter

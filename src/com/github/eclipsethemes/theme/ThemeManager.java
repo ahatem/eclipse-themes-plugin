@@ -22,7 +22,7 @@ import org.eclipse.ui.IWorkbench;
 import org.osgi.service.prefs.BackingStoreException;
 
 import com.github.eclipsethemes.EclipseThemes;
-import com.github.eclipsethemes.theme.adapters.ThemeAdapter;
+import com.github.eclipsethemes.theme.adapters.EclipseThemeAdapter;
 import com.github.eclipsethemes.theme.models.Theme;
 import com.github.eclipsethemes.theme.parser.ParserFactory;
 import com.github.eclipsethemes.theme.parser.ThemeParseException;
@@ -32,7 +32,7 @@ public final class ThemeManager {
 
 	private final File installedThemesDir;
 	private final TreeMap<String, Theme> themes = new TreeMap<>();
-	private final Map<ThemeAdapter, String> adapters = new HashMap<>();
+	private final Map<EclipseThemeAdapter, String> adapters = new HashMap<>();
 
 	public ThemeManager() {
 		this.installedThemesDir = new File(EclipseThemes.getPluginDataDirectory(), "installed_themes");
@@ -121,11 +121,11 @@ public final class ThemeManager {
 
 			try {
 				Object adapter = element.createExecutableExtension("class");
-				if (!(adapter instanceof ThemeAdapter)) {
+				if (!(adapter instanceof EclipseThemeAdapter)) {
 					continue;
 				}
 
-				adapters.put((ThemeAdapter) adapter, element.getAttribute("plugin"));
+				adapters.put((EclipseThemeAdapter) adapter, element.getAttribute("plugin"));
 			} catch (CoreException error) {
 				EclipseThemes.instance().getLogger()
 						.error("Could not register adapter " + element.getAttribute("class"), error);

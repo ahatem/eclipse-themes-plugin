@@ -18,22 +18,22 @@
 	<extension
          point="com.github.eclipsethemes.theme.adapters">
 		<adapter
-            class="com.github.eclipsethemes.theme.adapters.TextEditorAdapter" plugin="org.eclipse.ui.editors"></adapter>
+            class="com.github.eclipsethemes.theme.adapters.TextEditorThemeAdapter" plugin="org.eclipse.ui.editors"></adapter>
 		<adapter
-            class="com.github.eclipsethemes.theme.adapters.GenericTextEditorAdapter"
+            class="com.github.eclipsethemes.theme.adapters.GenericEditorThemeAdapter"
             plugin="org.eclipse.ui.genericeditor"></adapter>
 		<adapter
-            class="com.github.eclipsethemes.theme.adapters.DebugUiAdapter"
+            class="com.github.eclipsethemes.theme.adapters.DebugConsoleThemeAdapter"
             plugin="org.eclipse.debug.ui"></adapter>
 		<adapter
-            class="com.github.eclipsethemes.theme.adapters.CdtAdapter"
+            class="com.github.eclipsethemes.theme.adapters.CppEditorThemeAdapter"
             plugin="org.eclipse.cdt.ui"></adapter>
 		<adapter
-            class="com.github.eclipsethemes.theme.adapters.JdtAdapter" plugin="org.eclipse.jdt.ui"></adapter>
+            class="com.github.eclipsethemes.theme.adapters.JavaEditorThemeAdapter" plugin="org.eclipse.jdt.ui"></adapter>
 		<adapter
-            class="com.github.eclipsethemes.theme.adapters.PdeAdapter" plugin="org.eclipse.pde.ui"></adapter>
+            class="com.github.eclipsethemes.theme.adapters.PluginEditorThemeAdapter" plugin="org.eclipse.pde.ui"></adapter>
 		<adapter
-            class="com.github.eclipsethemes.theme.adapters.AntAdapter"
+            class="com.github.eclipsethemes.theme.adapters.AntEditorThemeAdapter"
             plugin="org.eclipse.ant.ui"></adapter>
 		
 	</extension>

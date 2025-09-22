@@ -55,7 +55,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="com.github.eclipsethemes.theme.adapters.ThemeAdapter:"/>
+                  <meta.attribute kind="java" basedOn="com.github.eclipsethemes.theme.adapters.EclipseThemeAdapter:"/>
                </appinfo>
             </annotation>
          </attribute>

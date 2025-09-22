@@ -6,7 +6,7 @@ import org.osgi.service.prefs.BackingStoreException;
 import com.github.eclipsethemes.theme.models.Theme;
 import com.github.eclipsethemes.theme.models.TokenKey;
 
-public final class DebugUiAdapter extends ThemeAdapter {
+public final class DebugConsoleThemeAdapter extends EclipseThemeAdapter {
 
     @Override
     public String getPreferencesId() {
