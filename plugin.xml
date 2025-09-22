@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension-point id="com.github.eclipsethemes.theme.adapters" name="Theme Adapter" schema="schema/com.github.eclipsethemes.theme.adapters.exsd"/>
+	<extension
+         point="org.eclipse.ui.preferencePages">
+		<page
+			category="org.eclipse.ui.preferencePages.Views"
+            class="com.github.eclipsethemes.preferences.EclipseThemesPreferencePage"
+            id="com.github.eclipsethemes.preferences.EclipseThemesPreferencePage"
+            name="Eclipse Color Themes"></page>
+	</extension>
+	<extension
+         point="org.eclipse.core.runtime.preferences">
+		<initializer
+            class="com.github.eclipsethemes.preferences.PreferenceInitializer"></initializer>
+	</extension>
+	<extension
+         point="com.github.eclipsethemes.theme.adapters">
+		<adapter
+            class="com.github.eclipsethemes.theme.adapters.TextEditorAdapter" plugin="org.eclipse.ui.editors"></adapter>
+		<adapter
+            class="com.github.eclipsethemes.theme.adapters.GenericTextEditorAdapter"
+            plugin="org.eclipse.ui.genericeditor"></adapter>
+		<adapter
+            class="com.github.eclipsethemes.theme.adapters.DebugUiAdapter"
+            plugin="org.eclipse.debug.ui"></adapter>
+		<adapter
+            class="com.github.eclipsethemes.theme.adapters.CdtAdapter"
+            plugin="org.eclipse.cdt.ui"></adapter>
+		<adapter
+            class="com.github.eclipsethemes.theme.adapters.JdtAdapter" plugin="org.eclipse.jdt.ui"></adapter>
+		<adapter
+            class="com.github.eclipsethemes.theme.adapters.PdeAdapter" plugin="org.eclipse.pde.ui"></adapter>
+		<adapter
+            class="com.github.eclipsethemes.theme.adapters.AntAdapter"
+            plugin="org.eclipse.ant.ui"></adapter>
+		
+	</extension>
+</plugin>
