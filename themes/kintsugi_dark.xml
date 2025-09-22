@@ -6,14 +6,14 @@
     <foreground color="#dddddd" />
     <currentLine color="#1d1d1c" />
     <lineNumber color="#444444" />
-    <selectionBackground color="#6c7a8a30" />
+    <selectionBackground color="#26292d" />
     <selectionForeground color="#dddddd" />
     
     <!-- Occurrences and Search -->
-    <searchResultIndication color="#6c7a8a40" />
-    <filteredSearchResultIndication color="#6c7a8a20" />
-    <occurrenceIndication color="#6c7a8a30" />
-    <writeOccurrenceIndication color="#6c7a8a50" />
+    <searchResultIndication color="#2c2f35" />
+    <filteredSearchResultIndication color="#212226" />
+    <occurrenceIndication color="#26292d" />
+    <writeOccurrenceIndication color="#31353c" />
     
     <!-- Comments and Documentation -->
     <singleLineComment color="#af9661" />
@@ -67,6 +67,6 @@
     <!-- Additional Editor Support -->
     <sourceHoverBackground color="#1c1c1c" />
     <deletionIndication color="#b38f8f" />
-    <findScope color="#6c7a8a10" />
+    <findScope color="#1b1c1f" />
     
 </colorTheme>
