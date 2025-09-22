@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Vitesse Light Soft Theme for Eclipse
+    Converted from Vitesse Light Soft VS Code Theme
+    Copyright (c) 2024 Eclipse Themes
+    License: Eclipse Public License v1.0
+-->
+<colorTheme id="8002" name="Vitesse Light Soft" modified="2025-09-22" author="Eclipse Themes" type="light">
+    
+    <!-- Background and Basic Colors -->
+    <background color="#F1F0E9" />
+    <foreground color="#393a34" />
+    <currentLine color="#E7E5DB" />
+    <lineNumber color="#B7B7B0" />
+    <selectionBackground color="#DEDDD6" />
+    <selectionForeground color="#393a34" />
+    
+    <!-- Occurrences and Search -->
+    <searchResultIndication color="#EEE6CA" />
+    <filteredSearchResultIndication color="#EEE6CA" />
+    <occurrenceIndication color="#E7E5DB" />
+    <writeOccurrenceIndication color="#E3E7DE" />
+    
+    <!-- Comments and Documentation -->
+    <singleLineComment color="#a0ada0" italic="true" />
+    <multiLineComment color="#a0ada0" italic="true" />
+    <commentTaskTag color="#1c6b48" bold="true" />
+    <javadoc color="#a0ada0" />
+    <javadocTag color="#999999" bold="true" />
+    <javadocKeyword color="#1e754f" />
+    <javadocLink color="#1c6b48" />
+    
+    <!-- Java Language Elements -->
+    <class color="#5a6aa6" />
+    <interface color="#2e808f" />
+    <abstractClass color="#5a6aa6" />
+    <enum color="#2e808f" />
+    <method color="#59873a" />
+    <methodDeclaration color="#59873a" />
+    <inheritedMethod color="#59873a" />
+    <staticMethod color="#59873a" italic="true" />
+    <abstractMethod color="#59873a" />
+    
+    <!-- Variables and Fields -->
+    <localVariable color="#b07d48" />
+    <localVariableDeclaration color="#b07d48" />
+    <field color="#998418" />
+    <staticField color="#998418" italic="true" />
+    <staticFinalField color="#a65e2b" bold="true" italic="true" />
+    <parameterVariable color="#393a34" />
+    <constant color="#a65e2b" />
+    
+    <!-- Language Constructs -->
+    <keyword color="#1e754f" />
+    <operator color="#ab5959" />
+    <bracket color="#999999" />
+    <number color="#2f798a" />
+    <string color="#b56959" />
+    <annotation color="#998418" />
+    
+    <!-- Generic/Template Types -->
+    <typeArgument color="#2e808f" />
+    <typeParameter color="#2e808f" />
+    
+    <!-- Special Cases -->
+    <deprecatedMember color="#b31d28" strikethrough="true" />
+    
+    <!-- XML Support -->
+    <xmlTag color="#1e754f" />
+    <xmlAttribute color="#998418" />
+    <xmlComment color="#a0ada0" italic="true" />
+    
+    <!-- Additional Editor Support -->
+    <sourceHoverBackground color="#F1F0E9" />
+    <deletionIndication color="#ab5959" />
+    <findScope color="#E7E5DB" />
+    
+</colorTheme>

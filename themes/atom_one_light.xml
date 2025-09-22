@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<colorTheme id="4002" name="Atom One Light" modified="2024-09-21" author="Eclipse Themes" type="light">
+    
+    <!-- Background and Basic Colors -->
+    <background color="#FAFAFA" />
+    <foreground color="#383A42" />
+    <currentLine color="#F0F0F0" />
+    <lineNumber color="#C2C2C3" />
+    <selectionBackground color="#E5E5E6" />
+    
+    <!-- Occurrences and Search -->
+    <searchResultIndication color="#E6E6E6" />
+    <filteredSearchResultIndication color="#E6E6E6" />
+    <occurrenceIndication color="#E6E6E6" />
+    <writeOccurrenceIndication color="#E6E6E6" />
+    
+    <!-- Comments and Documentation -->
+    <singleLineComment color="#A0A1A7" italic="true" />
+    <multiLineComment color="#A0A1A7" italic="true" />
+    <commentTaskTag color="#E45649" />
+    <javadoc color="#A0A1A7" italic="true" />
+    <javadocTag color="#A626A4" italic="true" />
+    <javadocKeyword color="#A626A4" italic="true" />
+    
+    <!-- Java Language Elements -->
+    <class color="#C18401" />
+    <interface color="#C18401" />
+    <enum color="#50A14F" />
+    <method color="#4078F2" />
+    <methodDeclaration color="#4078F2" />
+    <inheritedMethod color="#4078F2" />
+    <staticMethod color="#4078F2" />
+    
+    <!-- Variables and Fields -->
+    <localVariable color="#E45649" />
+    <localVariableDeclaration color="#E45649" />
+    <field color="#E45649" />
+    <staticField color="#986801" />
+    <staticFinalField color="#986801" />
+    <parameterVariable color="#0184BC" />
+    <constant color="#986801" />
+    
+    <!-- Language Constructs -->
+    <keyword color="#A626A4" />
+    <operator color="#383A42" />
+    <bracket color="#383A42" />
+    <number color="#986801" />
+    <string color="#50A14F" />
+    <annotation color="#E45649" />
+    
+    <!-- Generic/Template Types -->
+    <typeArgument color="#0184BC" />
+    <typeParameter color="#0184BC" />
+    
+    <!-- Special Cases -->
+    <deprecatedMember color="#696C77" strikethrough="true" />
+    
+    <!-- XML Support -->
+    <xmlTag color="#E45649" />
+    <xmlAttribute color="#986801" />
+    <xmlComment color="#A0A1A7" italic="true" />
+    
+    <!-- Additional Editor Support -->
+    <sourceHoverBackground color="#F0F0F0" />
+    <deletionIndication color="#E45649" />
+    
+</colorTheme>

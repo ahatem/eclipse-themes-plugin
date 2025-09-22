@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<colorTheme id="4009" name="Starry Code" modified="2024-09-21" author="Ahmed Hatem" type="dark" website="https://github.com/ahatem">
+    
+    <!-- Background and Basic Colors -->
+    <background color="#1a1a1a" />
+    <foreground color="#e6e6e6" />
+    <currentLine color="#2d2d2d" />
+    <lineNumber color="#6b6b6b" />
+    <selectionBackground color="#3d4c5f" />
+    <selectionForeground color="#e6e6e6" />
+    
+    <!-- Occurrences and Search -->
+    <searchResultIndication color="#4a4a4a" />
+    <filteredSearchResultIndication color="#4a4a4a" />
+    <occurrenceIndication color="#4a4a4a" />
+    <writeOccurrenceIndication color="#5a5a5a" />
+    
+    <!-- Comments and Documentation -->
+    <singleLineComment color="#7c7c7c" italic="true" />
+    <multiLineComment color="#7c7c7c" italic="true" />
+    <commentTaskTag color="#ffa500" bold="true" />
+    <javadoc color="#7c7c7c" italic="true" />
+    <javadocTag color="#d4af37" />
+    <javadocKeyword color="#d4af37" />
+    <javadocLink color="#87ceeb" />
+    
+    <!-- Java Language Elements -->
+    <class color="#f0e68c" />
+    <interface color="#daa520" />
+    <abstractClass color="#ffd700" />
+    <enum color="#9acd32" />
+    <method color="#87ceeb" />
+    <methodDeclaration color="#87ceeb" />
+    <inheritedMethod color="#b0c4de" />
+    <staticMethod color="#6495ed" />
+    <abstractMethod color="#87ceeb" />
+    
+    <!-- Variables and Fields -->
+    <localVariable color="#e6e6e6" />
+    <localVariableDeclaration color="#e6e6e6" />
+    <field color="#dda0dd" />
+    <staticField color="#d4af37" />
+    <staticFinalField color="#ffd700" />
+    <parameterVariable color="#f5deb3" />
+    <constant color="#ffa500" />
+    
+    <!-- Language Constructs -->
+    <keyword color="#da70d6" bold="true" />
+    <operator color="#e6e6e6" />
+    <bracket color="#d4af37" />
+    <number color="#ff6347" />
+    <string color="#98fb98" />
+    <annotation color="#ffa500" />
+    
+    <!-- Generic/Template Types -->
+    <typeArgument color="#20b2aa" />
+    <typeParameter color="#20b2aa" />
+    
+    <!-- Special Cases -->
+    <deprecatedMember color="#696969" strikethrough="true" />
+    
+    <!-- XML Support -->
+    <xmlTag color="#da70d6" />
+    <xmlAttribute color="#d4af37" />
+    <xmlComment color="#7c7c7c" italic="true" />
+    
+    <!-- Additional Editor Support -->
+    <sourceHoverBackground color="#2d2d2d" />
+    <deletionIndication color="#dc143c" />
+    <findScope color="#4a4a4a" />
+    
+</colorTheme>

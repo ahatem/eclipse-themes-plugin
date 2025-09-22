@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<colorTheme id="9007" name="Catppuccin Mocha" modified="2025-09-22" author="Eclipse Themes" type="dark" >
+    
+    <!-- Background and Basic Colors -->
+    <background color="#1e1e2e" />
+    <foreground color="#cdd6f4" />
+    <currentLine color="#28283d" />
+    <lineNumber color="#7f849c" />
+    <selectionBackground color="#3e4056" />
+    <selectionForeground color="#cdd6f4" />
+    
+    <!-- Occurrences and Search -->
+    <searchResultIndication color="#5e3f53" />
+    <filteredSearchResultIndication color="#3e5767" />
+    <occurrenceIndication color="#37394c" />
+    <writeOccurrenceIndication color="#36415a" />
+    
+    <!-- Comments and Documentation -->
+    <singleLineComment color="#9399b2" italic="true" />
+    <multiLineComment color="#9399b2" italic="true" />
+    <commentTaskTag color="#cba6f7" bold="true" />
+    <javadoc color="#9399b2" italic="true" />
+    <javadocTag color="#cba6f7" bold="true" />
+    <javadocKeyword color="#cba6f7" />
+    <javadocLink color="#89b4fa" />
+    
+    <!-- Java Language Elements -->
+    <class color="#f9e2af" italic="true" />
+    <interface color="#f9e2af" italic="true" />
+    <abstractClass color="#f9e2af" italic="true" />
+    <enum color="#f9e2af" italic="true" />
+    <method color="#89b4fa" italic="true" />
+    <methodDeclaration color="#89b4fa" italic="true" />
+    <inheritedMethod color="#89b4fa" italic="true" />
+    <staticMethod color="#89b4fa" italic="true" />
+    <abstractMethod color="#89b4fa" italic="true" />
+    
+    <!-- Variables and Fields -->
+    <localVariable color="#cdd6f4" />
+    <localVariableDeclaration color="#cdd6f4" />
+    <field color="#94e2d5" />
+    <staticField color="#94e2d5" italic="true" />
+    <staticFinalField color="#fab387" bold="true" italic="true" />
+    <parameterVariable color="#eba0ac" italic="true" />
+    <constant color="#fab387" />
+    
+    <!-- Language Constructs -->
+    <keyword color="#cba6f7" />
+    <operator color="#94e2d5" />
+    <bracket color="#9399b2" />
+    <number color="#fab387" />
+    <string color="#a6e3a1" />
+    <annotation color="#fab387" />
+    
+    <!-- Generic/Template Types -->
+    <typeArgument color="#89dceb" />
+    <typeParameter color="#89dceb" />
+    
+    <!-- Special Cases -->
+    <deprecatedMember color="#cdd6f4" strikethrough="true" />
+    
+    <!-- XML Support -->
+    <xmlTag color="#89b4fa" />
+    <xmlAttribute color="#f9e2af" />
+    <xmlComment color="#9399b2" />
+    
+    <!-- Additional Editor Support -->
+    <sourceHoverBackground color="#181825" />
+    <deletionIndication color="#f38ba8" />
+    <findScope color="#181825" />
+    
+</colorTheme>

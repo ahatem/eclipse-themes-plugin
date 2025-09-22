@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<colorTheme id="4009" name="Kintsugi Dark" modified="2024-09-21" author="Ahmed Hatem" type="dark" website="https://github.com/ahatem">
+    
+    <!-- Background and Basic Colors -->
+    <background color="#161618" />
+    <foreground color="#dddddd" />
+    <currentLine color="#1d1d1c" />
+    <lineNumber color="#444444" />
+    <selectionBackground color="#6c7a8a30" />
+    <selectionForeground color="#dddddd" />
+    
+    <!-- Occurrences and Search -->
+    <searchResultIndication color="#6c7a8a40" />
+    <filteredSearchResultIndication color="#6c7a8a20" />
+    <occurrenceIndication color="#6c7a8a30" />
+    <writeOccurrenceIndication color="#6c7a8a50" />
+    
+    <!-- Comments and Documentation -->
+    <singleLineComment color="#af9661" />
+    <multiLineComment color="#af9661" />
+    <commentTaskTag color="#af9661" />
+    <javadoc color="#af9661" />
+    <javadocTag color="#8A8970" />
+    <javadocKeyword color="#8A8970" />
+    <javadocLink color="#8A8970" />
+    
+    <!-- Java Language Elements -->
+    <class color="#939799" />
+    <interface color="#939799" />
+    <abstractClass color="#939799" />
+    <enum color="#939799" />
+    <method color="#dddddd" />
+    <methodDeclaration color="#dddddd" />
+    <inheritedMethod color="#dddddd" />
+    <staticMethod color="#dddddd" />
+    <abstractMethod color="#dddddd" />
+    
+    <!-- Variables and Fields -->
+    <localVariable color="#dddddd" />
+    <localVariableDeclaration color="#dddddd" />
+    <field color="#dddddd" />
+    <staticField color="#939799" />
+    <staticFinalField color="#939799" />
+    <parameterVariable color="#dddddd" />
+    <constant color="#939799" />
+    
+    <!-- Language Constructs -->
+    <keyword color="#DBAD49" bold="true" />
+    <operator color="#dddddd" />
+    <bracket color="#868165" />
+    <number color="#819aff" />
+    <string color="#98c379" />
+    <annotation color="#678E87" />
+    
+    <!-- Generic/Template Types -->
+    <typeArgument color="#939799" />
+    <typeParameter color="#939799" />
+    
+    <!-- Special Cases -->
+    <deprecatedMember color="#b38f8f" bold="true" />
+    
+    <!-- XML Support -->
+    <xmlTag color="#939799" />
+    <xmlAttribute color="#939799" />
+    <xmlComment color="#af9661" />
+    
+    <!-- Additional Editor Support -->
+    <sourceHoverBackground color="#1c1c1c" />
+    <deletionIndication color="#b38f8f" />
+    <findScope color="#6c7a8a10" />
+    
+</colorTheme>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<colorTheme id="9010" name="Dark Pro VSC" modified="2025-09-22" author="Eclipse Themes" type="dark">
+    
+    <!-- Background and Basic Colors -->
+    <background color="#111111" />
+    <foreground color="#e6edf3" />
+    <currentLine color="#1B1B1B" />
+    <lineNumber color="#454545" />
+    <selectionBackground color="#244B6D" />
+    <selectionForeground color="#e6edf3" />
+    
+    <!-- Occurrences and Search -->
+    <searchResultIndication color="#515c6a" />
+    <filteredSearchResultIndication color="#59380B" />
+    <occurrenceIndication color="#424242" />
+    <writeOccurrenceIndication color="#053954" />
+    
+    <!-- Comments and Documentation -->
+    <singleLineComment color="#6A9955" italic="true" />
+    <multiLineComment color="#6A9955" italic="true" />
+    <commentTaskTag color="#569cd6" bold="true" />
+    <javadoc color="#6A9955" />
+    <javadocTag color="#569cd6" bold="true" />
+    <javadocKeyword color="#569cd6" />
+    <javadocLink color="#4e94ce" />
+    
+    <!-- Java Language Elements -->
+    <class color="#4EC9B0" />
+    <interface color="#4EC9B0" />
+    <abstractClass color="#4EC9B0" />
+    <enum color="#4EC9B0" />
+    <method color="#DCDCAA" />
+    <methodDeclaration color="#DCDCAA" />
+    <inheritedMethod color="#DCDCAA" />
+    <staticMethod color="#DCDCAA" italic="true" />
+    <abstractMethod color="#DCDCAA" />
+    
+    <!-- Variables and Fields -->
+    <localVariable color="#9CDCFE" />
+    <localVariableDeclaration color="#9CDCFE" />
+    <field color="#9CDCFE" />
+    <staticField color="#9CDCFE" italic="true" />
+    <staticFinalField color="#4FC1FF" bold="true" italic="true" />
+    <parameterVariable color="#9CDCFE" />
+    <constant color="#569cd6" />
+    
+    <!-- Language Constructs -->
+    <keyword color="#569cd6" />
+    <operator color="#d4d4d4" />
+    <bracket color="#d4d4d4" />
+    <number color="#b5cea8" />
+    <string color="#ce9178" />
+    <annotation color="#DCDCAA" />
+    
+    <!-- Generic/Template Types -->
+    <typeArgument color="#4EC9B0" />
+    <typeParameter color="#4EC9B0" />
+    
+    <!-- Special Cases -->
+    <deprecatedMember color="#D4D4D4" strikethrough="true" />
+    
+    <!-- XML Support -->
+    <xmlTag color="#569cd6" />
+    <xmlAttribute color="#9cdcfe" />
+    <xmlComment color="#6A9955" />
+    
+    <!-- Additional Editor Support -->
+    <sourceHoverBackground color="#252526" />
+    <deletionIndication color="#c74e39" />
+    <findScope color="#234365" />
+    
+</colorTheme>
