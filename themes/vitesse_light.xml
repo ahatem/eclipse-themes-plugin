@@ -5,7 +5,7 @@
     Copyright (c) 2024 Eclipse Themes
     License: Eclipse Public License v1.0
 -->
-<colorTheme id="8001" name="Vitesse Light" modified="2025-09-22" author="Eclipse Themes" type="light">
+<colorTheme ect-id="1f298e30-0ccd-436f-b7ff-a8bd97d0d6a7" id="8001" name="Vitesse Light" modified="2025-09-22" author="Eclipse Themes" type="light">
     
     <!-- Background and Basic Colors -->
     <background color="#ffffff" />

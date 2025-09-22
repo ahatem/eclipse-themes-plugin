@@ -5,7 +5,7 @@
     Copyright (c) 2024 Eclipse Themes
     License: Eclipse Public License v1.0
 -->
-<colorTheme id="9008" name="Jupyter" modified="2025-09-22" author="Eclipse Themes" type="light">
+<colorTheme ect-id="31e54fc6-1028-40c6-85ee-a7a51fb52846" id="9008" name="Jupyter" modified="2025-09-22" author="Eclipse Themes" type="light">
     
     <!-- Background and Basic Colors -->
     <background color="#ffffff" />
