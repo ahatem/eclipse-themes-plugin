@@ -2,6 +2,8 @@ package com.github.eclipsethemes.theme.models;
 
 public final class TokenOptions {
 
+	private static final TokenOptions DEFAULT = new TokenOptions(false, false, false, false);
+
 	private final boolean isBold;
 	private final boolean isItalic;
 	private final boolean isUnderline;
@@ -28,6 +30,10 @@ public final class TokenOptions {
 
 	public boolean isStrikethrough() {
 		return this.isStrikethrough;
+	}
+
+	public static TokenOptions empty() {
+		return DEFAULT;
 	}
 
 }

@@ -23,7 +23,7 @@ public final class TokenKey {
 	public static TokenKey byId(String id) {
 		return TOKENS.get(id);
 	}
-
+	
 	// @formatter:off
 	public static final TokenKey 
 	    FOREGROUND                  = register("foreground", null),
@@ -46,7 +46,7 @@ public final class TokenKey {
 	    DEBUG_CALL_STACK            = register("debugCallStack", CURRENT_INSTRUCTION_POINTER),
 	    LINE_NUMBER                 = register("lineNumber", FOREGROUND),
 	    COMMENT                     = register("comment", FOREGROUND),
-	    MULTILINE_COMMENT           = register("multilineComment", COMMENT),
+	    MULTILINE_COMMENT           = register("multiLineComment", COMMENT),
 	    TASK_TAG                    = register("taskTag", COMMENT),
 	    KEYWORD                     = register("keyword", FOREGROUND),
 	    NUMBER                      = register("number", FOREGROUND),

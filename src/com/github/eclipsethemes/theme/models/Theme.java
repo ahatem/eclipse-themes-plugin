@@ -16,7 +16,7 @@ public class Theme {
 	private final Optional<File> file;
 	private final ThemeType type;
 
-	private final Map<String, Token> tokens;
+	private final Map<TokenKey, Token> tokens;
 
 	public Theme(String id, String name, String author, String website, String description, File file, ThemeType type) {
 		this.id = id;
@@ -25,7 +25,7 @@ public class Theme {
 		this.website = website;
 		this.description = description;
 
-		this.file = Optional.of(file);
+		this.file = Optional.ofNullable(file);
 		this.type = type;
 
 		this.tokens = new HashMap<>();
@@ -59,11 +59,34 @@ public class Theme {
 		return this.type;
 	}
 
-	public Map<String, Token> getTokens() {
+	public Map<TokenKey, Token> getTokens() {
 		return tokens;
 	}
 
 	public void addToken(Token token) {
-		tokens.put(token.getTokenName(), token);
+		tokens.put(token.getKey(), token);
 	}
+
+	public boolean has(TokenKey key) {
+		return tokens.containsKey(key);
+	}
+
+	public Token get(TokenKey key) {
+		if (key == null) {
+			throw new NullPointerException();
+		}
+
+		Token result = null;
+		while (result == null) {
+			if (key == null) {
+				return Token.BLACK;
+			}
+
+			result = tokens.get(key);
+			key = key.getInheritsFrom();
+		}
+
+		return result;
+	}
+
 }

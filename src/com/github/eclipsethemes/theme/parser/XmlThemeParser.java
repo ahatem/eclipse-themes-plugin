@@ -1,5 +1,7 @@
 package com.github.eclipsethemes.theme.parser;
 
+import com.github.eclipsethemes.EclipseThemes;
+import com.github.eclipsethemes.theme.mapper.LegacyEclipsePropertyMapper;
 import com.github.eclipsethemes.theme.models.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -24,22 +26,28 @@ public class XmlThemeParser implements ThemeParser {
 			Document document = builder.parse(inputStream);
 
 			Element root = document.getDocumentElement();
+			String id = root.getAttribute("ect-id");
 			String name = root.getAttribute("name");
 			String author = root.getAttribute("author");
 			String website = root.getAttribute("website");
 			String description = root.getAttribute("description");
-			
-			Theme theme = new Theme(name, name, author, website, description, sourceFile, ThemeType.DARK);
+
+			Theme theme = new Theme(id, name, author, website, description, sourceFile, ThemeType.DARK);
 
 			NodeList colorNodes = root.getChildNodes();
 			for (int i = 0; i < colorNodes.getLength(); i++) {
 				Node node = colorNodes.item(i);
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					Element element = (Element) node;
-					TokenKey key = TokenKey.byId(element.getTagName());
 
-					if (key == null)
+					String newTagName = LegacyEclipsePropertyMapper.mapProperty(element.getTagName());
+					TokenKey key = TokenKey.byId(newTagName);
+
+					if (key == null) {
+						EclipseThemes.instance().getLogger()
+								.info("Could match any key with tag = " + element.getTagName());
 						continue;
+					}
 
 					TokenBuilder tokenBuilder = new TokenBuilder().setKey(key)
 							.setHexColor(element.getAttribute("color"));
@@ -59,4 +67,5 @@ public class XmlThemeParser implements ThemeParser {
 			throw new ThemeParseException("Failed to parse theme from stream", e);
 		}
 	}
+
 }
