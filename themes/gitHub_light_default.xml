@@ -7,7 +7,7 @@
     <currentLine color="#f6f8fa" />
     <lineNumber color="#656d76" />
     <selectionBackground color="#D6D6D6" />
-    <selectionForeground color="#ffffff" />
+    <selectionForeground color="#1f2328" />
     
     <!-- Occurrences and Search -->
     <searchResultIndication color="#fff8c5" />
