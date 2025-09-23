@@ -43,7 +43,11 @@
                 <version>${tycho.version}</version>
                 <configuration>
                     <target>
-                        <file>../releng/com.github.eclipsethemes.target/eclipse-2024-09.target</file>
+                        <artifact>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>com.github.eclipsethemes.target</artifactId>
+                            <version>${project.version}</version>
+                        </artifact>
                     </target>
                     <environments>
                         <environment>
