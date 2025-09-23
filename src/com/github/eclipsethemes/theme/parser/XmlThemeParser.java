@@ -50,14 +50,34 @@ public class XmlThemeParser implements ThemeParser {
 						continue;
 					}
 
-					TokenBuilder tokenBuilder = new TokenBuilder().setKey(key)
-							.setHexColor(element.getAttribute("color"));
+					TokenBuilder tokenBuilder = new TokenBuilder().setKey(key);
+					String colorAttr = element.getAttribute("color");
+					if (colorAttr == null || colorAttr.isBlank()) {
+					    continue;
+					}
+
+					try {
+					    tokenBuilder.setColor(Color.ofHex(colorAttr));
+					} catch (IllegalArgumentException e) {
+					    EclipseThemes.instance().getLogger()
+					        .warn("Invalid color '" + colorAttr + "' for tag " + element.getTagName());
+					    continue;
+					}
 
 					if (element.hasAttribute("bold")) {
 						tokenBuilder.setBold(Boolean.parseBoolean(element.getAttribute("bold")));
 					}
+
 					if (element.hasAttribute("italic")) {
 						tokenBuilder.setItalic(Boolean.parseBoolean(element.getAttribute("italic")));
+					}
+
+					if (element.hasAttribute("underline")) {
+						tokenBuilder.setUnderline(Boolean.parseBoolean(element.getAttribute("underline")));
+					}
+
+					if (element.hasAttribute("strikethrough")) {
+						tokenBuilder.setStrikethrough(Boolean.parseBoolean(element.getAttribute("strikethrough")));
 					}
 
 					theme.addToken(tokenBuilder.build());

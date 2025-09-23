@@ -20,8 +20,8 @@ public final class TokenBuilder {
 		return this;
 	}
 
-	public TokenBuilder setHexColor(String hexColor) {
-		this.color = Color.ofHex(hexColor);
+	public TokenBuilder setColor(Color color) {
+		this.color = color;
 		return this;
 	}
 
