@@ -9,8 +9,8 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Eclipse Themes Plugin</name>
-    <description>Modern color themes for Eclipse IDE</description>
+    <name>Eclipse Themes</name>
+    <description>A modern plugin that brings popular editor color themes to the Eclipse IDE, providing beautiful and consistent syntax highlighting.</description>
     <url>https://github.com/ahatem/eclipse-themes-plugin</url>
 
     <properties>

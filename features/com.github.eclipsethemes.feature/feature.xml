@@ -5,9 +5,14 @@
     version="1.0.0.qualifier"
     provider-name="Ahmed Hatem">
 
-    <description url="https://github.com/ahatem/eclipse-themes-plugin">
-        Modern color themes for Eclipse IDE with support for multiple editors and syntax
-        highlighting.
+    <description>
+        Transform your coding experience with a fresh look for your editor.
+        This feature provides a curated collection of popular color themes that beautify your syntax
+        highlighting, including favorites like Solarized, Catppuccin, and GitHub Dark.
+
+        Enjoy a more comfortable and visually appealing workspace within the Eclipse editor area,
+        with support for multiple languages like Java, C++, and XML.
+        (Note: This plugin styles the code editor, not the entire Eclipse IDE user interface.)
     </description>
 
     <copyright>
