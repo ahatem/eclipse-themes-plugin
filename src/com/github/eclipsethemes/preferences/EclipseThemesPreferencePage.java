@@ -56,8 +56,6 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private Link downloadMoreLink;
 	private Button importButton;
 	private Button removeButton;
-	private Button applyButton;
-	private Button resetButton;
 	private Button previewToggleButton;
 
 	// Data
@@ -247,22 +245,6 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		removeButton.setToolTipText("Remove the selected custom theme");
 		removeButton.setEnabled(false);
 		setButtonWidth(removeButton, 120);
-
-		// Spacer
-		new Label(buttonArea, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-		// Reset button
-		resetButton = new Button(buttonArea, SWT.PUSH);
-		resetButton.setText("Reset to Default");
-		resetButton.setToolTipText("Reset to Eclipse default theme");
-		setButtonWidth(resetButton, 120);
-
-		// Apply button
-		applyButton = new Button(buttonArea, SWT.PUSH);
-		applyButton.setText("Apply Theme");
-		applyButton.setToolTipText("Apply the selected theme immediately");
-		applyButton.setEnabled(false);
-		setButtonWidth(applyButton, 120);
 	}
 
 	private void setButtonWidth(Button button, int width) {
@@ -430,20 +412,6 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 				removeSelectedTheme();
 			}
 		});
-
-		applyButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				applySelectedTheme();
-			}
-		});
-
-		resetButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				resetToDefault();
-			}
-		});
 	}
 
 	private void handleThemeSelectionChanged(Theme newTheme) {
@@ -510,10 +478,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private void updateButtonStates() {
 		boolean hasSelection = selectedTheme != null;
 		boolean isImportedTheme = hasSelection && selectedTheme.getFile().isPresent();
-		boolean isDifferentFromCurrent = hasSelection && !selectedTheme.equals(currentTheme);
 
 		removeButton.setEnabled(isImportedTheme);
-		applyButton.setEnabled(hasSelection && isDifferentFromCurrent);
 	}
 
 	private void togglePreviewVisibility() {
