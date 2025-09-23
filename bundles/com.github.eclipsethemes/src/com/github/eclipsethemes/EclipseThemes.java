@@ -9,13 +9,13 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
-import com.github.eclipsethemes.theme.ThemeManager;
+import com.github.eclipsethemes.eclipse.ThemeManager;
 
 public class EclipseThemes extends AbstractUIPlugin {
 
 	public static final String PLUGIN_ID = "com.github.eclipsethemes";
 	public static final String ADAPTER_EXT_ID = "com.github.eclipsethemes.theme.adapters";
-	
+
 	private static EclipseThemes instance;
 
 	private ILog pluginLog;
@@ -44,7 +44,7 @@ public class EclipseThemes extends AbstractUIPlugin {
 	public static EclipseThemes instance() {
 		return instance;
 	}
-	
+
 	public ILog getLogger() {
         if (pluginLog == null) {
             Bundle bundle = getBundle();

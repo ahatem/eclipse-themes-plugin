@@ -1,13 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
 <schema targetNamespace="com.github.eclipsethemes" xmlns="http://www.w3.org/2001/XMLSchema">
-<annotation>
+   <annotation>
       <appinfo>
-         <meta.schema plugin="com.github.eclipsethemes" id="com.github.eclipsethemes.theme.adapters" name="Theme Adapter"/>
+         <meta.schema plugin="com.github.eclipsethemes" id="com.github.eclipsethemes.theme.adapters"
+            name="Theme Adapter" />
       </appinfo>
-      <documentation>
-         Used to create adapters to allow theming other plugins.
-      </documentation>
+      <documentation> Used to create adapters to allow theming other plugins. </documentation>
    </annotation>
 
    <element name="extension">
@@ -18,29 +17,23 @@
       </annotation>
       <complexType>
          <sequence>
-            <element ref="adapter" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="adapter" minOccurs="1" maxOccurs="unbounded" />
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
-               <documentation>
-                  
-               </documentation>
+               <documentation> </documentation>
             </annotation>
          </attribute>
          <attribute name="id" type="string">
             <annotation>
-               <documentation>
-                  
-               </documentation>
+               <documentation> </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
-               <documentation>
-                  
-               </documentation>
+               <documentation> </documentation>
                <appinfo>
-                  <meta.attribute translatable="true"/>
+                  <meta.attribute translatable="true" />
                </appinfo>
             </annotation>
          </attribute>
@@ -51,19 +44,16 @@
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>
-               <documentation>
-                  
-               </documentation>
+               <documentation> </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="com.github.eclipsethemes.theme.adapters.EclipseThemeAdapter:"/>
+                  <meta.attribute kind="java"
+                     basedOn="com.github.eclipsethemes.eclipse.adapters.EclipseThemeAdapter:" />
                </appinfo>
             </annotation>
          </attribute>
          <attribute name="plugin" type="string">
             <annotation>
-               <documentation>
-                  
-               </documentation>
+               <documentation> </documentation>
             </annotation>
          </attribute>
       </complexType>
@@ -71,38 +61,30 @@
 
    <annotation>
       <appinfo>
-         <meta.section type="since"/>
+         <meta.section type="since" />
       </appinfo>
-      <documentation>
-         [Enter the first release in which this extension point appears.]
-      </documentation>
+      <documentation> [Enter the first release in which this extension point appears.] </documentation>
    </annotation>
 
    <annotation>
       <appinfo>
-         <meta.section type="examples"/>
+         <meta.section type="examples" />
       </appinfo>
-      <documentation>
-         [Enter extension point usage example here.]
-      </documentation>
+      <documentation> [Enter extension point usage example here.] </documentation>
    </annotation>
 
    <annotation>
       <appinfo>
-         <meta.section type="apiinfo"/>
+         <meta.section type="apiinfo" />
       </appinfo>
-      <documentation>
-         [Enter API information here.]
-      </documentation>
+      <documentation> [Enter API information here.] </documentation>
    </annotation>
 
    <annotation>
       <appinfo>
-         <meta.section type="implementation"/>
+         <meta.section type="implementation" />
       </appinfo>
-      <documentation>
-         [Enter information about supplied implementation of this extension point.]
-      </documentation>
+      <documentation> [Enter information about supplied implementation of this extension point.] </documentation>
    </annotation>
 
 
