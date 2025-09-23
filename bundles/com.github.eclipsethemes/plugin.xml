@@ -8,7 +8,7 @@
 			category="org.eclipse.ui.preferencePages.Views"
             class="com.github.eclipsethemes.preferences.EclipseThemesPreferencePage"
             id="com.github.eclipsethemes.preferences.EclipseThemesPreferencePage"
-            name="Eclipse Color Themes"></page>
+            name="Eclipse Themes"></page>
 	</extension>
 	<extension
          point="org.eclipse.core.runtime.preferences">
@@ -35,6 +35,6 @@
 		<adapter
             class="com.github.eclipsethemes.theme.adapters.AntEditorThemeAdapter"
             plugin="org.eclipse.ant.ui"></adapter>
-		
+
 	</extension>
 </plugin>
