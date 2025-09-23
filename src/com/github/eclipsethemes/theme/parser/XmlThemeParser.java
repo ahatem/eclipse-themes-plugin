@@ -31,8 +31,9 @@ public class XmlThemeParser implements ThemeParser {
 			String author = root.getAttribute("author");
 			String website = root.getAttribute("website");
 			String description = root.getAttribute("description");
+			String type = root.getAttribute("type");
 
-			Theme theme = new Theme(id, name, author, website, description, sourceFile, ThemeType.DARK);
+			Theme theme = new Theme(id, name, author, website, description, sourceFile, ThemeType.from(type));
 
 			NodeList colorNodes = root.getChildNodes();
 			for (int i = 0; i < colorNodes.getLength(); i++) {
