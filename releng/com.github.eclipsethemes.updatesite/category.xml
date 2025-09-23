@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+    <feature id="com.github.eclipsethemes.feature" version="0.0.0">
+        <category name="themes" />
+    </feature>
+    <category-def name="themes" label="Color Themes">
+        <description>
+            Color themes for Eclipse IDE
+        </description>
+    </category-def>
+</site>

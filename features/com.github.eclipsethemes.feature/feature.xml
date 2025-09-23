@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+    id="com.github.eclipsethemes.feature"
+    label="Eclipse Themes"
+    version="1.0.0.qualifier"
+    provider-name="Ahmed Hatem">
+
+    <description url="https://github.com/ahatem/eclipse-themes-plugin">
+        Modern color themes for Eclipse IDE with support for multiple editors and syntax
+        highlighting.
+    </description>
+
+    <copyright>
+        Copyright (c) 2024 Ahmed Hatem. All rights reserved.
+    </copyright>
+
+    <license url="https://www.eclipse.org/legal/epl-2.0/">
+        Eclipse Public License 2.0
+    </license>
+
+    <plugin
+        id="com.github.eclipsethemes"
+        download-size="0"
+        install-size="0"
+        version="0.0.0"
+        unpack="false" />
+
+</feature>
