@@ -24,3 +24,6 @@ local.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Other
+HOWTO.md
