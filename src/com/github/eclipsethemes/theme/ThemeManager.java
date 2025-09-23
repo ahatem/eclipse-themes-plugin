@@ -1,6 +1,9 @@
 package com.github.eclipsethemes.theme;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -44,7 +47,7 @@ public final class ThemeManager {
 		registerAdapters();
 	}
 
-	private void loadThemes() {
+	public void loadThemes() {
 		themes.clear();
 		loadPackedThemes();
 		loadInstalledThemes();
@@ -131,12 +134,11 @@ public final class ThemeManager {
 						.error("Could not register adapter " + element.getAttribute("class"), error);
 			}
 		}
-		
+
 		System.out.println("Adapters: " + adapters.values());
 	}
 
 	public List<Theme> getAllThemes() {
-		System.out.println(themes.values());
 		return new ArrayList<>(themes.values());
 	}
 
@@ -159,4 +161,39 @@ public final class ThemeManager {
 			}
 		});
 	}
+
+	public Optional<Theme> importTheme(File file) {
+		File copied = new File(installedThemesDir, file.getName());
+
+		// Install/Copy the theme to installed theme directory
+		try (var in = new FileInputStream(file); var out = new FileOutputStream(copied)) {
+			in.transferTo(out);
+		} catch (IOException error) {
+			EclipseThemes.instance().getLogger().error("Could not copy theme file", error);
+			return Optional.empty();
+		}
+
+		// Read the installed theme
+		try {
+			Optional<ThemeParser> parserOpt = ParserFactory.getParserFor(file.getName());
+			if (parserOpt.isEmpty()) {
+				EclipseThemes.instance().getLogger().error("No parser found for theme: " + file.getName());
+				return Optional.empty();
+			}
+
+			ThemeParser parser = parserOpt.get();
+			try (var in2 = new FileInputStream(copied)) {
+				Theme theme = parser.parse(in2, copied);
+				return Optional.of(theme);
+			}
+		} catch (ThemeParseException e) {
+			EclipseThemes.instance().getLogger().error("Failed to parse imported theme: " + file.getName(), e);
+			copied.delete();
+		} catch (IOException e) {
+			EclipseThemes.instance().getLogger().error("Could not open copied theme file: " + copied.getName(), e);
+		}
+
+		return Optional.empty();
+	}
+
 }
