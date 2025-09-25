@@ -1,7 +1,10 @@
 # Eclipse Themes
 
 [![Build Status](https://github.com/ahatem/eclipse-themes-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/ahatem/eclipse-themes-plugin/actions)
-[![License: EPL-2.0](https://img.shields.io/badge/License-EPL--2.0-brightgreen.svg)](https://opensource.org/licenses/EPL-2.0)
+![Eclipse Marketplace License](https://img.shields.io/eclipse-marketplace/l/eclipse-themes?color=brightgreen)
+![Eclipse Marketplace Last Update](https://img.shields.io/eclipse-marketplace/v/eclipse-themes)
+![Eclipse Marketplace Downloads](https://img.shields.io/eclipse-marketplace/dt/eclipse-themes)
+
 
 A simple plugin for finding and applying editor color themes in the Eclipse IDE.
 
@@ -24,6 +27,12 @@ I then realized the old plugin was also outdated, so I decided to build this one
 
 ## 🚀 Installation
 
+### From the Eclipse Marketplace (Recommended)
+
+1.  Go to `Help -> Eclipse Marketplace...`.
+2.  Search for `Eclipse Themes`.
+3.  Click **Install**.
+
 ### From the Update Site
 
 1.  Go to `Help -> Install New Software...`.
@@ -33,7 +42,7 @@ I then realized the old plugin was also outdated, so I decided to build this one
 ## 💻 Usage
 
 1.  Go to `Window -> Preferences` (or `Eclipse -> Settings...` on macOS).
-2.  Navigate to `General -> Appearance -> Editor Themes`.
+2.  Navigate to `General -> Appearance -> Eclipse Themes`.
 3.  Pick a theme from the list to see how it looks.
 4.  Click **Apply and Close** to set your new editor theme.
 
