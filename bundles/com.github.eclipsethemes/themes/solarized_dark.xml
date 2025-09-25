@@ -1,69 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <colorTheme ect-id="b1f0c9c4-05a3-416d-af27-ed62016dc665" id="4003" name="Solarized Dark" modified="2024-09-21" author="Eclipse Themes" type="dark">
-    
-    <!-- Background and Basic Colors -->
-    <background color="#002B36" />
+
+    <!-- CORE EDITOR COLORS -->
     <foreground color="#839496" />
+    <background color="#002B36" />
+    <selectionBackground color="#094450" />
+    <selectionForeground color="#839496" />
     <currentLine color="#073642" />
     <lineNumber color="#586E75" />
-    <selectionBackground color="#094450" />
-	<selectionForeground color="#839496" />
 
-	<!-- Occurrences and Search -->
-    <searchResultIndication color="#094352" />
-    <filteredSearchResultIndication color="#094352" />
-    <occurrenceIndication color="#094352" />
-    <writeOccurrenceIndication color="#094352" />
+    <!-- EDITOR FEATURES & NAVIGATION -->
+    <occurrence color="#094352" />
+    <writeOccurrence color="#094352" />
+    <removedLine color="#DC322F" />
+    <searchResult color="#094352" />
+    <filteredSearchResult color="#094352" />
 
-	<!-- Comments and Documentation -->
-    <singleLineComment color="#586E75" />
+    <!-- BASIC SYNTAX ELEMENTS -->
+    <comment color="#586E75" />
     <multiLineComment color="#586E75" />
-    <commentTaskTag color="#D33682" bold="true" />
-    <javadoc color="#586E75" />
-    <javadocTag color="#D33682" />
-    <javadocKeyword color="#D33682" />
+    <taskTag color="#D33682" bold="true" />
+    <keyword color="#859900" />
+    <number color="#D33682" />
+    <string color="#2AA198" />
+    <bracket color="#839496" />
+    <operator color="#839496" />
 
-	<!-- Java Language Elements -->
+    <!-- OBJECT-ORIENTED CONSTRUCTS -->
     <class color="#B58900" />
     <interface color="#B58900" />
     <enum color="#859900" />
-    <method color="#268BD2" />
-    <methodDeclaration color="#268BD2" />
-    <inheritedMethod color="#268BD2" />
-    <staticMethod color="#268BD2" />
-
-	<!-- Variables and Fields -->
-    <localVariable color="#6C71C4" />
-    <localVariableDeclaration color="#6C71C4" />
-    <field color="#6C71C4" />
-    <staticField color="#CB4B16" />
-    <staticFinalField color="#CB4B16" />
-    <parameterVariable color="#6C71C4" />
-    <constant color="#CB4B16" />
-
-	<!-- Language Constructs -->
-    <keyword color="#859900" />
-    <operator color="#839496" />
-    <bracket color="#839496" />
-    <number color="#D33682" />
-    <string color="#2AA198" />
     <annotation color="#CB4B16" />
 
-	<!-- Generic/Template Types -->
-    <typeArgument color="#6C71C4" />
-    <typeParameter color="#6C71C4" />
+    <!-- METHODS & FUNCTIONS -->
+    <method color="#268BD2" />
+    <staticMethod color="#268BD2" />
+    <inheritedMethod color="#268BD2" />
+    <methodDeclaration color="#268BD2" />
 
-	<!-- Special Cases -->
-    <deprecatedMember color="#586E75" strikethrough="true" />
+    <!-- VARIABLES & FIELDS -->
+    <field color="#6C71C4" />
+    <staticField color="#CB4B16" />
+    <constant color="#CB4B16" />
+    <localVariable color="#6C71C4" />
+    <localVariableDeclaration color="#6C71C4" />
+    <argument color="#6C71C4" />
 
-	<!-- XML Support -->
+    <!-- GENERIC PROGRAMMING -->
+    <templateParameter color="#6C71C4" />
+    <templateArgument color="#6C71C4" />
+
+    <!-- DOCUMENTATION -->
+    <doc color="#586E75" />
+    <docTag color="#D33682" />
+    <docXmlTag color="#D33682" />
+
+    <!-- SPECIAL STATES -->
+    <deprecated color="#586E75" strikethrough="true" />
+
+    <!-- LANGUAGE-SPECIFIC: XML -->
+    <xmlDirective color="#6C71C4" />
     <xmlTag color="#268BD2" />
     <xmlAttribute color="#B58900" />
-    <xmlComment color="#586E75" />
-    <xmlDirective color="#6C71C4" />
 
-	<!-- Additional Editor Support -->
-    <sourceHoverBackground color="#063643" />
-    <deletionIndication color="#DC322F" />
-    
 </colorTheme>
