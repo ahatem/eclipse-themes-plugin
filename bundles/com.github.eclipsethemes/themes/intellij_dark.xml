@@ -4,7 +4,7 @@
     <!-- CORE EDITOR COLORS -->
     <foreground color="#a1a1b1" />
     <background color="#161718" />
-    <selectionBackground color="#111111" />
+    <selectionBackground color="#293858" />
     <selectionForeground color="#A1A1B1" />
     <currentLine color="#1E1F22" />
     <lineNumber color="#4B5059" />
@@ -44,7 +44,7 @@
     <!-- VARIABLES & FIELDS -->
     <field color="#c77dbb" />
     <staticField color="#c77dbb" italic="true" />
-    <constant color="#c77dbb" bold="true" italic="true" />
+    <constant color="#c77dbb" italic="true" />
     <localVariable color="#bcbec4" />
     <localVariableDeclaration color="#bcbec4" />
     <argument color="#bcbec4" />
@@ -57,7 +57,7 @@
     <doc color="#505060" italic="true" />
     <docTag color="#505060" />
     <docLink color="#24A3FF" />
-    <docXmlTag color="#505060" />
+    <docXmlTag color="#b3ae60" italic="true" />
 
     <!-- SPECIAL STATES -->
     <deprecated color="#bcbec4" strikethrough="true" />

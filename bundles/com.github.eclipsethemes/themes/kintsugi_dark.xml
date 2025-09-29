@@ -4,8 +4,8 @@
     <!-- CORE EDITOR COLORS -->
     <foreground color="#dddddd" />
     <background color="#161618" />
-    <selectionBackground color="#26292d" />
-    <selectionForeground color="#dddddd" />
+    <selectionBackground color="#242424" />
+    <selectionForeground color="#C1C1C1" />
     <currentLine color="#1d1d1c" />
     <lineNumber color="#444444" />
 
@@ -60,7 +60,7 @@
     <docXmlTag color="#8A8970" />
 
     <!-- SPECIAL STATES -->
-    <deprecated color="#b38f8f" bold="true" />
+    <deprecated color="#454242" strikethrough="true" />
 
     <!-- LANGUAGE-SPECIFIC: XML -->
     <xmlTag color="#939799" />
