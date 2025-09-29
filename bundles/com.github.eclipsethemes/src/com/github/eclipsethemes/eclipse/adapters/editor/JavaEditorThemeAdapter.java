@@ -36,6 +36,7 @@ public final class JavaEditorThemeAdapter extends EclipseThemeAdapter {
 		mapSemanticStyle(preferences, theme, TokenKey.KEYWORD, "semanticHighlighting.restrictedKeywords");
 		mapSemanticStyle(preferences, theme, TokenKey.NUMBER, "semanticHighlighting.number");
 		mapSemanticStyle(preferences, theme, TokenKey.CLASS, "semanticHighlighting.class");
+		mapSemanticStyle(preferences, theme, TokenKey.CLASS, "semanticHighlighting.record");
 		mapSemanticStyle(preferences, theme, TokenKey.ABSTRACT_CLASS, "semanticHighlighting.abstractClass");
 		mapSemanticStyle(preferences, theme, TokenKey.INTERFACE, "semanticHighlighting.interface");
 		mapSemanticStyle(preferences, theme, TokenKey.ENUM, "semanticHighlighting.enum");
