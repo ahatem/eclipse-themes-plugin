@@ -36,15 +36,15 @@
 
     <!-- METHODS & FUNCTIONS -->
     <method color="#dddddd" />
-    <staticMethod color="#dddddd" />
+    <staticMethod color="#dddddd" italic="true"/>
     <abstractMethod color="#dddddd" />
     <inheritedMethod color="#dddddd" />
     <methodDeclaration color="#dddddd" />
 
     <!-- VARIABLES & FIELDS -->
     <field color="#dddddd" />
-    <staticField color="#939799" />
-    <constant color="#939799" />
+    <staticField color="#939799" italic="true" />
+    <constant color="#e5c07b" />
     <localVariable color="#dddddd" />
     <localVariableDeclaration color="#dddddd" />
     <argument color="#dddddd" />
