@@ -530,22 +530,23 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		}
 
 		try {
-			Optional<Theme> importedTheme = EclipseThemes.instance().getManager().importTheme(selectedFile);
-			if (importedTheme.isEmpty()) {
+			Optional<Theme> importedThemeOpt = EclipseThemes.instance().getManager().importTheme(selectedFile);
+			if (importedThemeOpt.isEmpty()) {
 				showErrorMessage("Import Failed",
 						"Could not import theme - it may conflict with an existing theme or have invalid format.");
 				return;
 			}
-
+			Theme importedTheme = importedThemeOpt.get();
+			
 			// Refresh and select the new theme
 			loadThemes();
 			filterThemes();
-
-			selectedTheme = importedTheme.get();
+			
+			selectedTheme = importedTheme;
 			themeViewer.setSelection(new StructuredSelection(selectedTheme));
 
 			showInfoMessage("Import Successful",
-					"Theme '" + selectedTheme.getName() + "' has been imported successfully.");
+					"Theme '" + importedTheme.getName() + "' has been imported successfully.");
 
 		} catch (Exception e) {
 			EclipseThemes.instance().getLogger().error("Import Error", e);
