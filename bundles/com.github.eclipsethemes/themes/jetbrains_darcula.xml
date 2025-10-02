@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<colorTheme ect-id="63d6a50b-371f-4211-9025-9bfea76cc850" id="5006" name="Darcula" modified="2024-09-21" author="Eclipse Themes" type="dark">
+<colorTheme ect-id="63d6a50b-371f-4211-9025-9bfea76cc850" id="5006" name="JetBrains Darcula" modified="2024-09-21" author="Eclipse Themes" type="dark">
 
     <!-- CORE EDITOR COLORS -->
     <foreground color="#A9B7C6" />
