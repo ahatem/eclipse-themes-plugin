@@ -537,11 +537,11 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 				return;
 			}
 			Theme importedTheme = importedThemeOpt.get();
-			
+
 			// Refresh and select the new theme
 			loadThemes();
 			filterThemes();
-			
+
 			selectedTheme = importedTheme;
 			themeViewer.setSelection(new StructuredSelection(selectedTheme));
 
@@ -677,8 +677,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	private Theme getDefaultThemeForCurrentMode() {
 		boolean isDarkMode = isEclipseDarkMode();
-		String targetThemeName = isDarkMode ? Constants.DEFAULT_DARK_THEME_NAME
-				: Constants.DEFAULT_LIGHT_THEME_NAME;
+		String targetThemeName = isDarkMode ? Constants.DEFAULT_DARK_THEME_NAME : Constants.DEFAULT_LIGHT_THEME_NAME;
 
 		Optional<Theme> defaultTheme = allThemes.stream().filter(theme -> targetThemeName.equals(theme.getName()))
 				.findFirst();

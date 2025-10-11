@@ -10,7 +10,8 @@ import com.github.eclipsethemes.core.Constants;
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	@Override
 	public void initializeDefaultPreferences() {
-		ScopedPreferenceStore store = new ScopedPreferenceStore(InstanceScope.INSTANCE, String.valueOf(FrameworkUtil.getBundle(getClass()).getBundleId()));
+		ScopedPreferenceStore store = new ScopedPreferenceStore(InstanceScope.INSTANCE,
+				String.valueOf(FrameworkUtil.getBundle(getClass()).getBundleId()));
 		store.setDefault(PreferenceKeys.ACTIVE_THEME_ID, Constants.DEFAULT_LIGHT_THEME_NAME);
 	}
 }

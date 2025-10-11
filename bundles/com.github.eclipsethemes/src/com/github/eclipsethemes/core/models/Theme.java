@@ -88,21 +88,23 @@ public class Theme {
 
 		return result;
 	}
-	
+
 	@Override
 	public String toString() {
-	    return String.format("%-20s  ->  %s", name, file.map(File::getPath).orElse("PACKED THEME"));
+		return String.format("%-20s  ->  %s", name, file.map(File::getPath).orElse("PACKED THEME"));
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-	    if (this == obj) return true;
-	    if (!(obj instanceof Theme other)) return false;
-	    return id != null && id.equals(other.id);
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Theme other))
+			return false;
+		return id != null && id.equals(other.id);
 	}
 
 	@Override
 	public int hashCode() {
-	    return id != null ? id.hashCode() : 0;
+		return id != null ? id.hashCode() : 0;
 	}
 }

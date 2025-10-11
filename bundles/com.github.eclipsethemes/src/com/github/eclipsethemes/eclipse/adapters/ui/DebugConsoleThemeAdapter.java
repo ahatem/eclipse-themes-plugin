@@ -9,18 +9,17 @@ import com.github.eclipsethemes.eclipse.adapters.EclipseThemeAdapter;
 
 public final class DebugConsoleThemeAdapter extends EclipseThemeAdapter {
 
-    @Override
-    public String getPreferencesId() {
-        return "org.eclipse.debug.ui"; // Debug UI preferences node
-    }
+	@Override
+	public String getPreferencesId() {
+		return "org.eclipse.debug.ui";
+	}
 
-    @Override
-    public void apply(Theme theme, IEclipsePreferences preferences) throws BackingStoreException {
-        // Debug console colors - these are simple color mappings without style flags
-        putColor(preferences, "org.eclipse.debug.ui.consoleBackground", theme.get(TokenKey.BACKGROUND));
-        putColor(preferences, "org.eclipse.debug.ui.outColor", theme.get(TokenKey.FOREGROUND));
-        putColor(preferences, "org.eclipse.debug.ui.errorColor", theme.get(TokenKey.ERROR));
-        
-        flushPreferences(preferences);
-    }
+	@Override
+	public void apply(Theme theme, IEclipsePreferences preferences) throws BackingStoreException {
+		putColor(preferences, "org.eclipse.debug.ui.consoleBackground", theme.get(TokenKey.BACKGROUND));
+		putColor(preferences, "org.eclipse.debug.ui.outColor", theme.get(TokenKey.FOREGROUND));
+		putColor(preferences, "org.eclipse.debug.ui.errorColor", theme.get(TokenKey.ERROR));
+
+		flushPreferences(preferences);
+	}
 }

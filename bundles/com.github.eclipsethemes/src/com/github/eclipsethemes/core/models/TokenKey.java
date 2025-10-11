@@ -23,7 +23,7 @@ public final class TokenKey {
 	public static TokenKey byId(String id) {
 		return TOKENS.get(id);
 	}
-	
+
 	// @formatter:off
 	public static final TokenKey 
 	    FOREGROUND                  = register("foreground", null),

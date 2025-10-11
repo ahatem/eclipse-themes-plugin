@@ -10,12 +10,10 @@ import com.github.eclipsethemes.core.models.Token;
 import com.github.eclipsethemes.core.models.TokenKey;
 import com.github.eclipsethemes.eclipse.adapters.EclipseThemeAdapter;
 
-
 public class TextEditorThemeAdapter extends EclipseThemeAdapter {
 
 	@Override
 	public String getPreferencesId() {
-		// Typically the text editor preferences node
 		return "org.eclipse.ui.editors";
 	}
 
@@ -85,10 +83,7 @@ public class TextEditorThemeAdapter extends EclipseThemeAdapter {
 				preferences.remove("deletionIndicationColor");
 			} else {
 				// Create a default color for dark themes
-				// Note: You'll need to adapt this based on your new Theme/Token model
 				Color defaultDeletionColor = Color.ofRgb(224, 226, 228);
-				// Assuming you have a way to create a Token from RGB - you may need to adjust
-				// this
 				Token defaultToken = createTokenFromRGB(defaultDeletionColor);
 				putColor(preferences, "deletionIndicationColor", defaultToken);
 			}

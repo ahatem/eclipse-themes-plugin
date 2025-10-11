@@ -59,15 +59,15 @@ public class XmlThemeParser implements ThemeParser {
 					TokenBuilder tokenBuilder = new TokenBuilder().setKey(key);
 					String colorAttr = element.getAttribute("color");
 					if (colorAttr == null || colorAttr.isBlank()) {
-					    continue;
+						continue;
 					}
 
 					try {
-					    tokenBuilder.setColor(Color.ofHex(colorAttr));
+						tokenBuilder.setColor(Color.ofHex(colorAttr));
 					} catch (IllegalArgumentException e) {
-					    EclipseThemes.instance().getLogger()
-					        .warn("Invalid color '" + colorAttr + "' for tag " + element.getTagName());
-					    continue;
+						EclipseThemes.instance().getLogger()
+								.warn("Invalid color '" + colorAttr + "' for tag " + element.getTagName());
+						continue;
 					}
 
 					if (element.hasAttribute("bold")) {
