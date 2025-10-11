@@ -22,6 +22,11 @@ public abstract class EclipseThemeAdapter {
 	 */
 	public abstract void apply(Theme theme, IEclipsePreferences preferences) throws BackingStoreException;
 
+	/**
+	 * Clears all theme-related preferences for this adapter.
+	 */
+	public abstract void clear(IEclipsePreferences preferences) throws BackingStoreException;
+
 	// === SEMANTIC STYLE PREFERENCES (using dots) ===
 
 	protected static void putSemanticStyle(IEclipsePreferences preferences, String baseName, Token token) {

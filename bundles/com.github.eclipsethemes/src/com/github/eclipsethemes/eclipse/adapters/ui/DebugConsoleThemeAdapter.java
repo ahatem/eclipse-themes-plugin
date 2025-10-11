@@ -22,4 +22,13 @@ public final class DebugConsoleThemeAdapter extends EclipseThemeAdapter {
 
 		flushPreferences(preferences);
 	}
+
+	@Override
+	public void clear(IEclipsePreferences preferences) throws BackingStoreException {
+		preferences.remove("org.eclipse.debug.ui.consoleBackground");
+		preferences.remove("org.eclipse.debug.ui.outColor");
+		preferences.remove("org.eclipse.debug.ui.errorColor");
+
+		flushPreferences(preferences);
+	}
 }

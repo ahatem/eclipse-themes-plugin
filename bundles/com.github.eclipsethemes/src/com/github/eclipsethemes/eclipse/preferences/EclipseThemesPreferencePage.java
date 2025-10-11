@@ -247,7 +247,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		removeButton.setToolTipText("Remove the selected custom theme");
 		removeButton.setEnabled(false);
 		setButtonWidth(removeButton, 120);
-		
+
 		// Reset to default button
 		resetPluginDefaultsButton = new Button(buttonArea, SWT.PUSH);
 		resetPluginDefaultsButton.setText("Reset Plugin Defaults");
@@ -420,8 +420,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 				removeSelectedTheme();
 			}
 		});
-		
-		
+
 		resetPluginDefaultsButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -730,7 +729,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	@Override
 	protected void performDefaults() {
-		resetToDefault();
+		EclipseThemes.instance().getManager().clearTheme();
 		super.performDefaults();
 	}
 }

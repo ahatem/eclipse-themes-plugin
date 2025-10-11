@@ -162,6 +162,25 @@ public final class ThemeManager {
 		});
 	}
 
+	public void clearTheme() {
+		adapters.forEach((adapter, plugin) -> {
+			if (plugin != null && Platform.getBundle(plugin) == null) {
+				return;
+			}
+			if (adapter.getPreferencesId() == null && plugin == null) {
+				return;
+			}
+
+			try {
+				String id = adapter.getPreferencesId() == null ? plugin : adapter.getPreferencesId();
+				IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode(id);
+				adapter.clear(preferences);
+			} catch (BackingStoreException e) {
+				EclipseThemes.instance().getLogger().error("Could not clear theme", e);
+			}
+		});
+	}
+
 	public Optional<Theme> importTheme(File file) {
 		File copied = new File(installedThemesDir, file.getName());
 

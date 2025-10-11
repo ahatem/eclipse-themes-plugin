@@ -25,4 +25,15 @@ public final class AntEditorThemeAdapter extends EclipseThemeAdapter {
 
 		flushPreferences(preferences);
 	}
+
+	@Override
+	public void clear(IEclipsePreferences preferences) throws BackingStoreException {
+		clearLegacyStyle(preferences, "org.eclipse.ant.ui.textColor");
+		clearLegacyStyle(preferences, "org.eclipse.ant.ui.commentsColor");
+		clearLegacyStyle(preferences, "org.eclipse.ant.ui.constantStringsColor");
+		clearLegacyStyle(preferences, "org.eclipse.ant.ui.processingInstructionsColor");
+		clearLegacyStyle(preferences, "org.eclipse.ant.ui.dtdColor");
+		clearLegacyStyle(preferences, "org.eclipse.ant.ui.tagsColor");
+		flushPreferences(preferences);
+	}
 }
