@@ -142,7 +142,7 @@ public final class ThemeManager {
 		return new ArrayList<>(themes.values());
 	}
 
-	public void applyTheme(IWorkbench workbench, Theme selectedTheme) {
+	public void applyTheme(Theme selectedTheme) {
 		adapters.forEach((adapter, plugin) -> {
 			if (plugin != null) {
 				if (Platform.getBundle(plugin) == null) {

@@ -513,7 +513,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 		try {
 			getPreferenceStore().setValue(PreferenceKeys.ACTIVE_THEME_ID, selectedTheme.getId());
-			EclipseThemes.instance().getManager().applyTheme(workbench, selectedTheme);
+			EclipseThemes.instance().getManager().applyTheme(selectedTheme);
 
 			currentTheme = selectedTheme;
 			updateButtonStates();
@@ -628,7 +628,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 			// Apply the default theme
 			if (defaultTheme != null) {
-				EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);
+				EclipseThemes.instance().getManager().applyTheme(defaultTheme);
 				currentTheme = defaultTheme;
 			}
 
@@ -654,7 +654,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		Theme defaultTheme = getDefaultThemeForCurrentMode();
 
 		if (defaultTheme != null) {
-			EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);
+			EclipseThemes.instance().getManager().applyTheme(defaultTheme);
 			currentTheme = defaultTheme;
 			getPreferenceStore().setValue(PreferenceKeys.ACTIVE_THEME_ID, defaultTheme.getId());
 		}
