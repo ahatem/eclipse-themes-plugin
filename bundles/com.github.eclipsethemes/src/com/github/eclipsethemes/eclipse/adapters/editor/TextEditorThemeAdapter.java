@@ -94,4 +94,48 @@ public class TextEditorThemeAdapter extends EclipseThemeAdapter {
 		return new Token(null, color, null);
 	}
 
+	@Override
+	public void clear(IEclipsePreferences preferences) throws BackingStoreException {
+		// System color defaults
+		preferences.remove("AbstractTextEditor.Color.Background.SystemDefault");
+		preferences.remove("AbstractTextEditor.Color.Foreground.SystemDefault");
+		preferences.remove("AbstractTextEditor.Color.SelectionBackground.SystemDefault");
+		preferences.remove("AbstractTextEditor.Color.SelectionForeground.SystemDefault");
+
+		// Basic editor colors
+		preferences.remove("AbstractTextEditor.Color.Background");
+		preferences.remove("AbstractTextEditor.Color.Foreground");
+		preferences.remove("AbstractTextEditor.Color.FindScope");
+		preferences.remove("AbstractTextEditor.Color.SelectionBackground");
+		preferences.remove("AbstractTextEditor.Color.SelectionForeground");
+
+		// Editor UI elements
+		preferences.remove("currentLineColor");
+		preferences.remove("lineNumberColor");
+		preferences.remove("printMarginColor");
+
+		// Occurrence highlighting
+		preferences.remove("occurrenceIndicationColor");
+		preferences.remove("LSP4EReadOccurrenceIndicationColor");
+		preferences.remove("org.eclipse.cdt.ui.occurrenceIndicationColor");
+		preferences.remove("writeOccurrenceIndicationColor");
+		preferences.remove("LSP4EWriteOccurrenceIndicationColor");
+		preferences.remove("org.eclipse.cdt.ui.writeOccurrenceIndicationColor");
+		preferences.remove("TextOccurrenceIndicationColor");
+		preferences.remove("LSP4ETextOccurrenceIndicationColor");
+
+		// Search and debug
+		preferences.remove("searchResultIndicationColor");
+		preferences.remove("filteredSearchResultIndicationColor");
+		preferences.remove("currentIPIndication");
+		preferences.remove("secondaryIPIndication");
+
+		// Version control annotations
+		preferences.remove("additionIndicationColor");
+		preferences.remove("changeIndicationColor");
+		preferences.remove("deletionIndicationColor");
+
+		flushPreferences(preferences);
+	}
+
 }

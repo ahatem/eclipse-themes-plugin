@@ -29,4 +29,21 @@ public final class PluginEditorThemeAdapter extends EclipseThemeAdapter {
 
 		flushPreferences(preferences);
 	}
+
+	@Override
+	public void clear(IEclipsePreferences preferences) throws BackingStoreException {
+		clearLegacyStyle(preferences, "editor.color.default");
+		clearLegacyStyle(preferences, "editor.color.header_assignment");
+		clearLegacyStyle(preferences, "editor.color.xml_comment");
+		clearLegacyStyle(preferences, "editor.color.string");
+		clearLegacyStyle(preferences, "editor.color.externalized_string");
+		clearLegacyStyle(preferences, "editor.color.header_value");
+		clearLegacyStyle(preferences, "editor.color.instr");
+		clearLegacyStyle(preferences, "editor.color.tag");
+		clearLegacyStyle(preferences, "editor.color.header_attributes");
+		clearLegacyStyle(preferences, "editor.color.header_osgi");
+
+		flushPreferences(preferences);
+	}
+
 }

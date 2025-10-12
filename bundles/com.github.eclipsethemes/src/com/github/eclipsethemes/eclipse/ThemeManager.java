@@ -142,7 +142,7 @@ public final class ThemeManager {
 		return new ArrayList<>(themes.values());
 	}
 
-	public void applyTheme(IWorkbench workbench, Theme selectedTheme) {
+	public void applyTheme(Theme selectedTheme) {
 		adapters.forEach((adapter, plugin) -> {
 			if (plugin != null) {
 				if (Platform.getBundle(plugin) == null) {
@@ -158,6 +158,25 @@ public final class ThemeManager {
 				adapter.apply(selectedTheme, preferences);
 			} catch (BackingStoreException error) {
 				EclipseThemes.instance().getLogger().error("Could not apply theme", error);
+			}
+		});
+	}
+
+	public void clearTheme() {
+		adapters.forEach((adapter, plugin) -> {
+			if (plugin != null && Platform.getBundle(plugin) == null) {
+				return;
+			}
+			if (adapter.getPreferencesId() == null && plugin == null) {
+				return;
+			}
+
+			try {
+				String id = adapter.getPreferencesId() == null ? plugin : adapter.getPreferencesId();
+				IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode(id);
+				adapter.clear(preferences);
+			} catch (BackingStoreException e) {
+				EclipseThemes.instance().getLogger().error("Could not clear theme", e);
 			}
 		});
 	}

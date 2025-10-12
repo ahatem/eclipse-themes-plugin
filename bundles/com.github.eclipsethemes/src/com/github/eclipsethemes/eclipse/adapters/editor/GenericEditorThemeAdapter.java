@@ -20,4 +20,10 @@ public final class GenericEditorThemeAdapter extends EclipseThemeAdapter {
 
 		flushPreferences(preferences);
 	}
+
+	@Override
+	public void clear(IEclipsePreferences preferences) throws BackingStoreException {
+		preferences.remove("matchingBracketsColor");
+		flushPreferences(preferences);
+	}
 }
