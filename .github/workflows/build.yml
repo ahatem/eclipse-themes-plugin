@@ -44,7 +44,7 @@ jobs:
   deploy-updatesite:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.event_name == 'release'
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v4
