@@ -23,7 +23,8 @@ public final class AntEditorThemeAdapter extends EclipseThemeAdapter {
         mapLegacyStyle(preferences, theme, TokenKey.XML_DIRECTIVE, "org.eclipse.ant.ui.processingInstructionsColor");
         mapLegacyStyle(preferences, theme, TokenKey.XML_DIRECTIVE, "org.eclipse.ant.ui.dtdColor");
         mapLegacyStyle(preferences, theme, TokenKey.XML_TAG, "org.eclipse.ant.ui.tagsColor");
-        
+        mapLegacyStyle(preferences, theme, TokenKey.XML_ATTRIBUTE, "org.eclipse.ant.ui.attributeColor");
+
         flushPreferences(preferences);
     }
 }

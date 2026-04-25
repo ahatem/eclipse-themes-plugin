@@ -19,7 +19,7 @@ Have an idea for a new feature? We'd love to hear it. [Open an issue](https://gi
 
 ### Pull Requests for Code Changes
 
-1.  Fork the repository and create a new branch from `main`.
+1.  Fork the repository and create a new branch from `develop`.
 2.  Make your changes, adhering to the existing code style.
 3.  Ensure the project builds successfully using the command below.
 4.  Submit a pull request with a clear description of your changes and why they are needed.

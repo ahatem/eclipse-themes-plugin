@@ -6,7 +6,6 @@ import org.osgi.service.prefs.BackingStoreException;
 import com.github.eclipsethemes.core.models.Color;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.ThemeType;
-import com.github.eclipsethemes.core.models.Token;
 import com.github.eclipsethemes.core.models.TokenKey;
 import com.github.eclipsethemes.eclipse.adapters.EclipseThemeAdapter;
 
@@ -59,6 +58,8 @@ public class TextEditorThemeAdapter extends EclipseThemeAdapter {
 		// Version control annotations (conditional)
 		handleVersionControlColors(preferences, theme);
 
+		putColor(preferences, "matchingBracketsColor", theme.get(TokenKey.MATCHING_BRACKET));
+
 		flushPreferences(preferences);
 	}
 
@@ -84,19 +85,9 @@ public class TextEditorThemeAdapter extends EclipseThemeAdapter {
 			if (theme.getType() == ThemeType.LIGHT) {
 				preferences.remove("deletionIndicationColor");
 			} else {
-				// Create a default color for dark themes
-				// Note: You'll need to adapt this based on your new Theme/Token model
-				Color defaultDeletionColor = Color.ofRgb(224, 226, 228);
-				// Assuming you have a way to create a Token from RGB - you may need to adjust
-				// this
-				Token defaultToken = createTokenFromRGB(defaultDeletionColor);
-				putColor(preferences, "deletionIndicationColor", defaultToken);
+				putColor(preferences, "deletionIndicationColor", Color.ofRgb(224, 226, 228));
 			}
 		}
-	}
-
-	private Token createTokenFromRGB(Color color) {
-		return new Token(null, color, null);
 	}
 
 }

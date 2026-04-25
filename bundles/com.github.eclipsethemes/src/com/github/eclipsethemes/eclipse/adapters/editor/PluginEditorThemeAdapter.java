@@ -25,6 +25,7 @@ public final class PluginEditorThemeAdapter extends EclipseThemeAdapter {
         mapLegacyStyle(preferences, theme, TokenKey.STRING, "editor.color.header_value");
         mapLegacyStyle(preferences, theme, TokenKey.XML_DIRECTIVE, "editor.color.instr");
         mapLegacyStyle(preferences, theme, TokenKey.XML_TAG, "editor.color.tag");
+        mapLegacyStyle(preferences, theme, TokenKey.XML_ATTRIBUTE, "editor.color.attribute");
         mapLegacyStyle(preferences, theme, TokenKey.KEY, "editor.color.header_attributes");
         mapLegacyStyle(preferences, theme, TokenKey.KEY, "editor.color.header_osgi");
         

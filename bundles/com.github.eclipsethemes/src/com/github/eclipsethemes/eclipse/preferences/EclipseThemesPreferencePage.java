@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -29,11 +30,11 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
-import org.osgi.framework.FrameworkUtil;
 
 import com.github.eclipsethemes.EclipseThemes;
 import com.github.eclipsethemes.core.Constants;
@@ -58,6 +59,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private Button importButton;
 	private Button removeButton;
 	private Button previewToggleButton;
+	private Label statusLabel;
 
 	// Data
 	private List<Theme> allThemes;
@@ -68,9 +70,9 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	public EclipseThemesPreferencePage() {
 		ScopedPreferenceStore scopedPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE,
-				String.valueOf(FrameworkUtil.getBundle(getClass()).getBundleId()));
+				EclipseThemes.PLUGIN_ID);
 		setPreferenceStore(scopedPreferenceStore);
-		setDescription("Select and customize color themes for Eclipse editors and UI elements");
+		setDescription("Select and apply color themes for Eclipse editors");
 	}
 
 	@Override
@@ -167,7 +169,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 		// Download link
 		downloadMoreLink = new Link(themeListGroup, SWT.NONE);
-		downloadMoreLink.setText("<a>Download more themes from eclipse-color-themes.vercel.app</a>");
+		downloadMoreLink.setText("<a>Download more themes →</a>");
+		downloadMoreLink.setToolTipText(Constants.MORE_THEMES_URL);
 		downloadMoreLink.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
 		createThemeDetailsPanel(leftPanel);
@@ -231,7 +234,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		separator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		Composite buttonArea = new Composite(parent, SWT.NONE);
-		buttonArea.setLayout(new GridLayout(5, false));
+		buttonArea.setLayout(new GridLayout(4, false));
 		buttonArea.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		// Import button
@@ -243,9 +246,20 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		// Remove button
 		removeButton = new Button(buttonArea, SWT.PUSH);
 		removeButton.setText("Remove");
-		removeButton.setToolTipText("Remove the selected custom theme");
+		removeButton.setToolTipText("Remove the selected imported theme (* marks imported themes)");
 		removeButton.setEnabled(false);
 		setButtonWidth(removeButton, 120);
+
+		// Hint label — fills remaining space
+		Label hintLabel = new Label(buttonArea, SWT.NONE);
+		hintLabel.setText("Double-click a theme, or select one and click Apply / OK");
+		hintLabel.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+		hintLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+		// Status label — right-aligned, shows feedback after apply
+		statusLabel = new Label(buttonArea, SWT.NONE);
+		statusLabel.setText("");
+		statusLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 	}
 
 	private void setButtonWidth(Button button, int width) {
@@ -262,10 +276,10 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 				String name = theme.getName();
 
 				if (theme.equals(currentTheme)) {
-					name += " (CURRENT)";
+					name = "● " + name;
 				}
 				if (theme.getFile().isPresent()) {
-					name += " [IMPORTED]";
+					name += " *";
 				}
 
 				return name;
@@ -278,7 +292,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		loadThemes();
 
 		String activeThemeId = getPreferenceStore().getString(PreferenceKeys.ACTIVE_THEME_ID);
-		this.currentTheme = findThemeById(activeThemeId);
+		this.currentTheme = findThemeById(activeThemeId).orElse(null);
 
 		refreshThemeList();
 		selectInitialTheme();
@@ -293,8 +307,10 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		this.filteredThemes = this.allThemes;
 	}
 
-	private Theme findThemeById(String themeId) {
-		return this.allThemes.stream().filter(theme -> theme.getId().equals(themeId)).findFirst().orElse(null);
+	private Optional<Theme> findThemeById(String themeId) {
+		if (themeId == null || themeId.isBlank())
+			return Optional.empty();
+		return this.allThemes.stream().filter(theme -> theme.getId().equals(themeId)).findFirst();
 	}
 
 	private void selectInitialTheme() {
@@ -366,6 +382,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			handleThemeSelectionChanged((Theme) selection.getFirstElement());
 		});
 
+		themeViewer.addDoubleClickListener(event -> applySelectedTheme());
+
 		// Search and filter
 		searchText.addModifyListener(event -> filterThemes());
 		themeTypeCombo.addSelectionListener(new SelectionAdapter() {
@@ -416,6 +434,10 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	}
 
 	private void handleThemeSelectionChanged(Theme newTheme) {
+		if (statusLabel != null && !statusLabel.isDisposed()) {
+			statusLabel.setText("");
+		}
+
 		if (newTheme == null) {
 			clearSelection();
 			return;
@@ -503,10 +525,16 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 			currentTheme = selectedTheme;
 			updateButtonStates();
-			refreshThemeList(); // to update "(CURRENT)" indicator
+			refreshThemeList(); // to update "●" indicator
 
-			// NOTE: Consider to remove it if it is annoying
-			showInfoMessage("Theme Applied", "Theme '" + selectedTheme.getName() + "' has been applied successfully.");
+			statusLabel.setText("✓ Applied");
+			statusLabel.getParent().layout();
+			Display.getCurrent().timerExec(3000, () -> {
+				if (!statusLabel.isDisposed()) {
+					statusLabel.setText("");
+					statusLabel.getParent().layout();
+				}
+			});
 		} catch (Exception e) {
 			showErrorMessage("Apply Theme Failed", "Failed to apply theme: " + e.getMessage());
 		}
@@ -590,51 +618,6 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		}
 	}
 
-	private void resetToDefault() {
-		boolean confirmed = showConfirmDialog("Reset to Default",
-				"This will:\n" + "• Reset to Eclipse default theme (matching your current Eclipse appearance mode)\n"
-						+ "• Remove all imported themes\n\n" + "This action cannot be undone. Continue?");
-
-		if (!confirmed) {
-			return;
-		}
-
-		try {
-			Theme defaultTheme = getDefaultThemeForCurrentMode();
-			if (defaultTheme != null) {
-				getPreferenceStore().setValue(PreferenceKeys.ACTIVE_THEME_ID, defaultTheme.getId());
-			} else {
-				getPreferenceStore().setToDefault(PreferenceKeys.ACTIVE_THEME_ID);
-			}
-
-			// Remove all imported theme files
-			allThemes.stream().filter(theme -> theme.getFile().isPresent())
-					.forEach(theme -> theme.getFile().ifPresent(File::delete));
-
-			// Apply the default theme
-			if (defaultTheme != null) {
-				EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);
-				currentTheme = defaultTheme;
-			}
-
-			// Reload and refresh
-			loadThemes();
-			filterThemes();
-
-			if (!filteredThemes.isEmpty()) {
-				Theme themeToSelect = currentTheme != null ? currentTheme : filteredThemes.get(0);
-				themeViewer.setSelection(new StructuredSelection(themeToSelect));
-			}
-
-			showInfoMessage("Reset Complete", "Themes have been reset to "
-					+ (isEclipseDarkMode() ? Constants.DEFAULT_DARK_THEME_NAME : Constants.DEFAULT_LIGHT_THEME_NAME)
-					+ " theme.");
-
-		} catch (Exception e) {
-			showErrorMessage("Reset Failed", "Failed to reset themes: " + e.getMessage());
-		}
-	}
-
 	private void resetToDefaultTheme() {
 		Theme defaultTheme = getDefaultThemeForCurrentMode();
 
@@ -676,8 +659,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	private Theme getDefaultThemeForCurrentMode() {
 		boolean isDarkMode = isEclipseDarkMode();
-		String targetThemeName = isDarkMode ? Constants.DEFAULT_DARK_THEME_NAME
-				: Constants.DEFAULT_LIGHT_THEME_NAME;
+		String targetThemeName = isDarkMode ? Constants.DEFAULT_DARK_THEME_NAME : Constants.DEFAULT_LIGHT_THEME_NAME;
 
 		Optional<Theme> defaultTheme = allThemes.stream().filter(theme -> targetThemeName.equals(theme.getName()))
 				.findFirst();
@@ -715,7 +697,125 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	@Override
 	protected void performDefaults() {
-		resetToDefault();
+		ResetChoiceDialog dialog = new ResetChoiceDialog(getShell());
+		if (dialog.open() != Dialog.OK) {
+			return;
+		}
+		if (dialog.isEclipseOriginalSelected()) {
+			resetToEclipseOriginal();
+		} else {
+			resetToPluginDefault();
+		}
 		super.performDefaults();
+	}
+
+	private void resetToPluginDefault() {
+		Theme defaultTheme = getDefaultThemeForCurrentMode();
+		if (defaultTheme != null) {
+			getPreferenceStore().setValue(PreferenceKeys.ACTIVE_THEME_ID, defaultTheme.getId());
+			EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);
+			currentTheme = defaultTheme;
+		} else {
+			getPreferenceStore().setToDefault(PreferenceKeys.ACTIVE_THEME_ID);
+			currentTheme = null;
+		}
+		refreshThemeList();
+		if (currentTheme != null) {
+			themeViewer.setSelection(new StructuredSelection(currentTheme));
+		}
+	}
+
+	private void resetToEclipseOriginal() {
+		// Clear all editor color preferences written by this plugin's adapters.
+		// Each node falls back to Eclipse's compiled-in factory defaults.
+		String[] nodes = { "org.eclipse.ui.editors", "org.eclipse.jdt.ui", "org.eclipse.cdt.ui", "org.eclipse.pde.ui",
+				"org.eclipse.ant.ui", "org.eclipse.debug.ui" };
+		for (String nodeId : nodes) {
+			try {
+				IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(nodeId);
+				prefs.clear();
+				prefs.flush();
+			} catch (Exception e) {
+				EclipseThemes.instance().getLogger().warn("Could not clear preferences for node: " + nodeId, e);
+			}
+		}
+		getPreferenceStore().setToDefault(PreferenceKeys.ACTIVE_THEME_ID);
+		currentTheme = null;
+		refreshThemeList();
+		clearSelection();
+	}
+
+	// ── Reset choice dialog ───────────────────────────────────────────────────
+
+	private static class ResetChoiceDialog extends Dialog {
+
+		private boolean eclipseOriginalSelected = false;
+
+		ResetChoiceDialog(Shell shell) {
+			super(shell);
+		}
+
+		@Override
+		protected void configureShell(Shell shell) {
+			super.configureShell(shell);
+			shell.setText("Restore Defaults");
+		}
+
+		@Override
+		protected Control createDialogArea(Composite parent) {
+			Composite area = (Composite) super.createDialogArea(parent);
+			GridLayout layout = new GridLayout(1, false);
+			layout.marginWidth = 16;
+			layout.marginHeight = 12;
+			layout.verticalSpacing = 6;
+			area.setLayout(layout);
+
+			// Question heading
+			Label heading = new Label(area, SWT.WRAP);
+			heading.setText("What would you like to restore?");
+			heading.setFont(org.eclipse.jface.resource.JFaceResources.getBannerFont());
+			GridData headingData = new GridData(SWT.FILL, SWT.TOP, true, false);
+			headingData.widthHint = 420;
+			headingData.verticalIndent = 4;
+			heading.setLayoutData(headingData);
+
+			// Option 1 — Plugin default
+			Button pluginDefaultRadio = new Button(area, SWT.RADIO);
+			pluginDefaultRadio.setText("Plugin default theme");
+			pluginDefaultRadio.setSelection(true);
+
+			Label pluginDesc = new Label(area, SWT.WRAP);
+			pluginDesc.setText("Applies the built-in theme matching your current Eclipse appearance (dark/light).");
+			pluginDesc.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+			GridData pluginDescData = new GridData(SWT.FILL, SWT.TOP, true, false);
+			pluginDescData.horizontalIndent = 18;
+			pluginDescData.verticalIndent = 0;
+			pluginDesc.setLayoutData(pluginDescData);
+
+			// Option 2 — Eclipse original
+			Button eclipseOriginalRadio = new Button(area, SWT.RADIO);
+			eclipseOriginalRadio.setText("Eclipse original colors");
+
+			Label eclipseDesc = new Label(area, SWT.WRAP);
+			eclipseDesc.setText("Clears all editor color preferences and restores Eclipse's factory defaults.\n"
+					+ "Note: this resets all color settings in editor preference nodes, not only those set by this plugin.");
+			eclipseDesc.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+			GridData eclipseDescData = new GridData(SWT.FILL, SWT.TOP, true, false);
+			eclipseDescData.horizontalIndent = 18;
+			eclipseDesc.setLayoutData(eclipseDescData);
+
+			eclipseOriginalRadio.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					eclipseOriginalSelected = eclipseOriginalRadio.getSelection();
+				}
+			});
+
+			return area;
+		}
+
+		boolean isEclipseOriginalSelected() {
+			return eclipseOriginalSelected;
+		}
 	}
 }

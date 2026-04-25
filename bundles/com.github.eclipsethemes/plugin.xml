@@ -20,9 +20,6 @@
 		<adapter
             class="com.github.eclipsethemes.eclipse.adapters.editor.TextEditorThemeAdapter" plugin="org.eclipse.ui.editors"></adapter>
 		<adapter
-            class="com.github.eclipsethemes.eclipse.adapters.editor.GenericEditorThemeAdapter"
-            plugin="org.eclipse.ui.genericeditor"></adapter>
-		<adapter
             class="com.github.eclipsethemes.eclipse.adapters.ui.DebugConsoleThemeAdapter"
             plugin="org.eclipse.debug.ui"></adapter>
 		<adapter
@@ -35,6 +32,5 @@
 		<adapter
             class="com.github.eclipsethemes.eclipse.adapters.editor.AntEditorThemeAdapter"
             plugin="org.eclipse.ant.ui"></adapter>
-
 	</extension>
 </plugin>
