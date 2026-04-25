@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse Themes
 Bundle-SymbolicName: com.github.eclipsethemes;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: com.github.eclipsethemes.EclipseThemes
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui
