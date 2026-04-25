@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
-import org.osgi.framework.FrameworkUtil;
 
 import com.github.eclipsethemes.EclipseThemes;
 import com.github.eclipsethemes.core.Constants;
@@ -57,7 +56,6 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private Link downloadMoreLink;
 	private Button importButton;
 	private Button removeButton;
-	private Button resetPluginDefaultsButton;
 	private Button previewToggleButton;
 
 	// Data
@@ -69,7 +67,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	public EclipseThemesPreferencePage() {
 		ScopedPreferenceStore scopedPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE,
-				String.valueOf(FrameworkUtil.getBundle(getClass()).getBundleId()));
+				EclipseThemes.PLUGIN_ID);
 		setPreferenceStore(scopedPreferenceStore);
 		setDescription("Select and customize color themes for Eclipse editors and UI elements");
 	}
@@ -247,12 +245,6 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		removeButton.setToolTipText("Remove the selected custom theme");
 		removeButton.setEnabled(false);
 		setButtonWidth(removeButton, 120);
-
-		// Reset to default button
-		resetPluginDefaultsButton = new Button(buttonArea, SWT.PUSH);
-		resetPluginDefaultsButton.setText("Reset Plugin Defaults");
-		resetPluginDefaultsButton.setToolTipText("Reset plugin settings to default values");
-		setButtonWidth(removeButton, 120);
 	}
 
 	private void setButtonWidth(Button button, int width) {
@@ -285,7 +277,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		loadThemes();
 
 		String activeThemeId = getPreferenceStore().getString(PreferenceKeys.ACTIVE_THEME_ID);
-		this.currentTheme = findThemeById(activeThemeId);
+		this.currentTheme = findThemeById(activeThemeId).orElse(null);
 
 		refreshThemeList();
 		selectInitialTheme();
@@ -300,8 +292,9 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		this.filteredThemes = this.allThemes;
 	}
 
-	private Theme findThemeById(String themeId) {
-		return this.allThemes.stream().filter(theme -> theme.getId().equals(themeId)).findFirst().orElse(null);
+	private Optional<Theme> findThemeById(String themeId) {
+		if (themeId == null || themeId.isBlank()) return Optional.empty();
+		return this.allThemes.stream().filter(theme -> theme.getId().equals(themeId)).findFirst();
 	}
 
 	private void selectInitialTheme() {
@@ -420,13 +413,6 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 				removeSelectedTheme();
 			}
 		});
-
-		resetPluginDefaultsButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				resetToDefault();
-			}
-		});
 	}
 
 	private void handleThemeSelectionChanged(Theme newTheme) {
@@ -513,7 +499,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 		try {
 			getPreferenceStore().setValue(PreferenceKeys.ACTIVE_THEME_ID, selectedTheme.getId());
-			EclipseThemes.instance().getManager().applyTheme(selectedTheme);
+			EclipseThemes.instance().getManager().applyTheme(workbench, selectedTheme);
 
 			currentTheme = selectedTheme;
 			updateButtonStates();
@@ -544,23 +530,22 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		}
 
 		try {
-			Optional<Theme> importedThemeOpt = EclipseThemes.instance().getManager().importTheme(selectedFile);
-			if (importedThemeOpt.isEmpty()) {
+			Optional<Theme> importedTheme = EclipseThemes.instance().getManager().importTheme(selectedFile);
+			if (importedTheme.isEmpty()) {
 				showErrorMessage("Import Failed",
 						"Could not import theme - it may conflict with an existing theme or have invalid format.");
 				return;
 			}
-			Theme importedTheme = importedThemeOpt.get();
 
 			// Refresh and select the new theme
 			loadThemes();
 			filterThemes();
 
-			selectedTheme = importedTheme;
+			selectedTheme = importedTheme.get();
 			themeViewer.setSelection(new StructuredSelection(selectedTheme));
 
 			showInfoMessage("Import Successful",
-					"Theme '" + importedTheme.getName() + "' has been imported successfully.");
+					"Theme '" + selectedTheme.getName() + "' has been imported successfully.");
 
 		} catch (Exception e) {
 			EclipseThemes.instance().getLogger().error("Import Error", e);
@@ -628,7 +613,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 			// Apply the default theme
 			if (defaultTheme != null) {
-				EclipseThemes.instance().getManager().applyTheme(defaultTheme);
+				EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);
 				currentTheme = defaultTheme;
 			}
 
@@ -654,7 +639,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		Theme defaultTheme = getDefaultThemeForCurrentMode();
 
 		if (defaultTheme != null) {
-			EclipseThemes.instance().getManager().applyTheme(defaultTheme);
+			EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);
 			currentTheme = defaultTheme;
 			getPreferenceStore().setValue(PreferenceKeys.ACTIVE_THEME_ID, defaultTheme.getId());
 		}
@@ -691,7 +676,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	private Theme getDefaultThemeForCurrentMode() {
 		boolean isDarkMode = isEclipseDarkMode();
-		String targetThemeName = isDarkMode ? Constants.DEFAULT_DARK_THEME_NAME : Constants.DEFAULT_LIGHT_THEME_NAME;
+		String targetThemeName = isDarkMode ? Constants.DEFAULT_DARK_THEME_NAME
+				: Constants.DEFAULT_LIGHT_THEME_NAME;
 
 		Optional<Theme> defaultTheme = allThemes.stream().filter(theme -> targetThemeName.equals(theme.getName()))
 				.findFirst();
@@ -729,7 +715,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	@Override
 	protected void performDefaults() {
-		EclipseThemes.instance().getManager().clearTheme();
+		resetToDefault();
 		super.performDefaults();
 	}
 }

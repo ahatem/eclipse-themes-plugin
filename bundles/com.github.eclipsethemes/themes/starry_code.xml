@@ -1,69 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <colorTheme ect-id="6a3488dd-5762-4723-a2f8-1c1adad3be52" id="4009" name="Starry Code" modified="2024-09-21" author="Ahmed Hatem" type="dark" website="https://github.com/ahatem">
-
-    <!-- CORE EDITOR COLORS -->
-    <foreground color="#e6e6e6" />
+    
+    <!-- Background and Basic Colors -->
     <background color="#1a1a1a" />
-    <selectionBackground color="#3d4c5f" />
-    <selectionForeground color="#e6e6e6" />
+    <foreground color="#e6e6e6" />
     <currentLine color="#2d2d2d" />
     <lineNumber color="#6b6b6b" />
-
-    <!-- EDITOR FEATURES & NAVIGATION -->
-    <occurrence color="#4a4a4a" />
-    <writeOccurrence color="#5a5a5a" />
-    <removedLine color="#dc143c" />
-    <findScope color="#4a4a4a" />
-    <searchResult color="#4a4a4a" />
-    <filteredSearchResult color="#4a4a4a" />
-
-    <!-- BASIC SYNTAX ELEMENTS -->
-    <comment color="#7c7c7c" italic="true" />
+    <selectionBackground color="#3d4c5f" />
+    <selectionForeground color="#e6e6e6" />
+    
+    <!-- Occurrences and Search -->
+    <searchResultIndication color="#4a4a4a" />
+    <filteredSearchResultIndication color="#4a4a4a" />
+    <occurrenceIndication color="#4a4a4a" />
+    <writeOccurrenceIndication color="#5a5a5a" />
+    
+    <!-- Comments and Documentation -->
+    <singleLineComment color="#7c7c7c" italic="true" />
     <multiLineComment color="#7c7c7c" italic="true" />
-    <taskTag color="#ffa500" bold="true" />
-    <keyword color="#da70d6" bold="true" />
-    <number color="#ff6347" />
-    <string color="#98fb98" />
-    <bracket color="#d4af37" />
-    <operator color="#e6e6e6" />
-
-    <!-- OBJECT-ORIENTED CONSTRUCTS -->
+    <commentTaskTag color="#ffa500" bold="true" />
+    <javadoc color="#7c7c7c" italic="true" />
+    <javadocTag color="#d4af37" />
+    <javadocKeyword color="#d4af37" />
+    <javadocLink color="#87ceeb" />
+    
+    <!-- Java Language Elements -->
     <class color="#f0e68c" />
-    <abstractClass color="#ffd700" />
     <interface color="#daa520" />
+    <abstractClass color="#ffd700" />
     <enum color="#9acd32" />
-    <annotation color="#ffa500" />
-
-    <!-- METHODS & FUNCTIONS -->
     <method color="#87ceeb" />
+    <methodDeclaration color="#87ceeb" />
+    <inheritedMethod color="#b0c4de" />
     <staticMethod color="#6495ed" />
     <abstractMethod color="#87ceeb" />
-    <inheritedMethod color="#b0c4de" />
-    <methodDeclaration color="#87ceeb" />
-
-    <!-- VARIABLES & FIELDS -->
-    <field color="#dda0dd" />
-    <staticField color="#d4af37" />
-    <constant color="#ffa500" />
+    
+    <!-- Variables and Fields -->
     <localVariable color="#e6e6e6" />
     <localVariableDeclaration color="#e6e6e6" />
-    <argument color="#f5deb3" />
-
-    <!-- GENERIC PROGRAMMING -->
-    <templateParameter color="#20b2aa" />
-    <templateArgument color="#20b2aa" />
-
-    <!-- DOCUMENTATION -->
-    <doc color="#7c7c7c" italic="true" />
-    <docTag color="#d4af37" />
-    <docLink color="#87ceeb" />
-    <docXmlTag color="#d4af37" />
-
-    <!-- SPECIAL STATES -->
-    <deprecated color="#696969" strikethrough="true" />
-
-    <!-- LANGUAGE-SPECIFIC: XML -->
+    <field color="#dda0dd" />
+    <staticField color="#d4af37" />
+    <staticFinalField color="#ffd700" />
+    <parameterVariable color="#f5deb3" />
+    <constant color="#ffa500" />
+    
+    <!-- Language Constructs -->
+    <keyword color="#da70d6" bold="true" />
+    <operator color="#e6e6e6" />
+    <bracket color="#d4af37" />
+    <number color="#ff6347" />
+    <string color="#98fb98" />
+    <annotation color="#ffa500" />
+    
+    <!-- Generic/Template Types -->
+    <typeArgument color="#20b2aa" />
+    <typeParameter color="#20b2aa" />
+    
+    <!-- Special Cases -->
+    <deprecatedMember color="#696969" strikethrough="true" />
+    
+    <!-- XML Support -->
     <xmlTag color="#da70d6" />
     <xmlAttribute color="#d4af37" />
-
+    <xmlComment color="#7c7c7c" italic="true" />
+    
+    <!-- Additional Editor Support -->
+    <sourceHoverBackground color="#2d2d2d" />
+    <deletionIndication color="#dc143c" />
+    <findScope color="#4a4a4a" />
+    
 </colorTheme>

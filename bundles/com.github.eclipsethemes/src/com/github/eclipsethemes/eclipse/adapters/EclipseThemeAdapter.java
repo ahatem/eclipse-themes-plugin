@@ -3,6 +3,7 @@ package com.github.eclipsethemes.eclipse.adapters;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 
+import com.github.eclipsethemes.core.models.Color;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.Token;
 import com.github.eclipsethemes.core.models.TokenKey;
@@ -21,11 +22,6 @@ public abstract class EclipseThemeAdapter {
 	 * Apply theme to Eclipse preferences.
 	 */
 	public abstract void apply(Theme theme, IEclipsePreferences preferences) throws BackingStoreException;
-
-	/**
-	 * Clears all theme-related preferences for this adapter.
-	 */
-	public abstract void clear(IEclipsePreferences preferences) throws BackingStoreException;
 
 	// === SEMANTIC STYLE PREFERENCES (using dots) ===
 
@@ -67,6 +63,10 @@ public abstract class EclipseThemeAdapter {
 		preferences.put(key, token.getColor().toEclipseFormat());
 	}
 
+	public static void putColor(IEclipsePreferences preferences, String key, Color color) {
+		preferences.put(key, color.toEclipseFormat());
+	}
+
 	private static void putStyleFlags(IEclipsePreferences preferences, String baseName,
 			Optional<TokenOptions> tokenOptions, String separator) {
 
@@ -75,10 +75,10 @@ public abstract class EclipseThemeAdapter {
 			options = tokenOptions.get();
 		}
 
-		preferences.putBoolean(baseName + separator + "bold", options.isBold());
-		preferences.putBoolean(baseName + separator + "italic", options.isItalic());
-		preferences.putBoolean(baseName + separator + "underline", options.isUnderline());
-		preferences.putBoolean(baseName + separator + "strikethrough", options.isStrikethrough());
+		preferences.putBoolean(baseName + separator + "bold", options.bold());
+		preferences.putBoolean(baseName + separator + "italic", options.italic());
+		preferences.putBoolean(baseName + separator + "underline", options.underline());
+		preferences.putBoolean(baseName + separator + "strikethrough", options.strikethrough());
 	}
 
 	/**

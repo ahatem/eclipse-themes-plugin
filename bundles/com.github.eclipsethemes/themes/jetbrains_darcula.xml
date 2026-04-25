@@ -1,69 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<colorTheme ect-id="63d6a50b-371f-4211-9025-9bfea76cc850" id="5006" name="JetBrains Darcula" modified="2024-09-21" author="Eclipse Themes" type="dark">
-
-    <!-- CORE EDITOR COLORS -->
-    <foreground color="#A9B7C6" />
+<colorTheme ect-id="63d6a50b-371f-4211-9025-9bfea76cc850" id="5006" name="Darcula" modified="2024-09-21" author="Eclipse Themes" type="dark">
+    
+    <!-- Background and Basic Colors (Darcula Classic) -->
     <background color="#2B2B2B" />
-    <selectionBackground color="#214283" />
-    <selectionForeground color="#A9B7C6" />
+    <foreground color="#A9B7C6" />
     <currentLine color="#323232" />
     <lineNumber color="#606366" />
-
-    <!-- EDITOR FEATURES & NAVIGATION -->
-    <occurrence color="#344134" />
-    <writeOccurrence color="#40332B" />
-    <removedLine color="#F50000" />
-    <findScope color="#32593D" />
-    <searchResult color="#32593D" />
-    <filteredSearchResult color="#32593D" />
-
-    <!-- BASIC SYNTAX ELEMENTS -->
-    <comment color="#808080" italic="true" />
+    <selectionBackground color="#214283" />
+    <selectionForeground color="#A9B7C6" />
+    
+    <!-- Occurrences and Search -->
+    <searchResultIndication color="#32593D" />
+    <filteredSearchResultIndication color="#32593D" />
+    <occurrenceIndication color="#344134" />
+    <writeOccurrenceIndication color="#40332B" />
+    
+    <!-- Comments and Documentation (Darcula gray) -->
+    <singleLineComment color="#808080" italic="true" />
     <multiLineComment color="#808080" italic="true" />
-    <taskTag color="#629755" bold="true" />
-    <keyword color="#CC7832" bold="true" />
-    <number color="#6897BB" />
-    <string color="#6A8759" />
-    <bracket color="#A9B7C6" />
-    <operator color="#A9B7C6" />
-
-    <!-- OBJECT-ORIENTED CONSTRUCTS -->
+    <commentTaskTag color="#629755" bold="true" />
+    <javadoc color="#629755" italic="true" />
+    <javadocTag color="#629755" bold="true" />
+    <javadocKeyword color="#629755" bold="true" />
+    <javadocLink color="#287BDE" />
+    
+    <!-- Java Language Elements (Darcula colors) -->
     <class color="#FFC66D" />
-    <abstractClass color="#FFC66D" />
     <interface color="#FFC66D" />
+    <abstractClass color="#FFC66D" />
     <enum color="#FFC66D" />
-    <annotation color="#BBB529" />
-
-    <!-- METHODS & FUNCTIONS -->
     <method color="#FFC66D" />
+    <methodDeclaration color="#FFC66D" />
+    <inheritedMethod color="#FFC66D" />
     <staticMethod color="#FFC66D" italic="true" />
     <abstractMethod color="#FFC66D" italic="true" />
-    <inheritedMethod color="#FFC66D" />
-    <methodDeclaration color="#FFC66D" />
-
-    <!-- VARIABLES & FIELDS -->
-    <field color="#9876AA" />
-    <staticField color="#9876AA" italic="true" />
-    <constant color="#9876AA" bold="true" italic="true" />
+    
+    <!-- Variables and Fields (Darcula white/purple) -->
     <localVariable color="#A9B7C6" />
     <localVariableDeclaration color="#A9B7C6" />
-    <argument color="#A9B7C6" />
-
-    <!-- GENERIC PROGRAMMING -->
-    <templateParameter color="#20999D" />
-    <templateArgument color="#20999D" />
-
-    <!-- DOCUMENTATION -->
-    <doc color="#629755" italic="true" />
-    <docTag color="#629755" bold="true" />
-    <docLink color="#287BDE" />
-    <docXmlTag color="#629755" bold="true" />
-
-    <!-- SPECIAL STATES -->
-    <deprecated color="#A9B7C6" strikethrough="true" />
-
-    <!-- LANGUAGE-SPECIFIC: XML -->
+    <field color="#9876AA" />
+    <staticField color="#9876AA" italic="true" />
+    <staticFinalField color="#9876AA" bold="true" italic="true" />
+    <parameterVariable color="#A9B7C6" />
+    <constant color="#9876AA" bold="true" />
+    
+    <!-- Language Constructs (Darcula orange) -->
+    <keyword color="#CC7832" bold="true" />
+    <operator color="#A9B7C6" />
+    <bracket color="#A9B7C6" />
+    <number color="#6897BB" />
+    <string color="#6A8759" />
+    <annotation color="#BBB529" />
+    
+    <!-- Generic/Template Types -->
+    <typeArgument color="#20999D" />
+    <typeParameter color="#20999D" />
+    
+    <!-- Special Cases -->
+    <deprecatedMember color="#A9B7C6" strikethrough="true" />
+    
+    <!-- XML Support -->
     <xmlTag color="#E8BF6A" />
     <xmlAttribute color="#BABABA" />
-
+    <xmlComment color="#808080" italic="true" />
+    
+    <!-- Additional Editor Support -->
+    <sourceHoverBackground color="#323232" />
+    <deletionIndication color="#F50000" />
+    <findScope color="#32593D" />
+    
 </colorTheme>

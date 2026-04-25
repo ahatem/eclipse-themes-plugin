@@ -6,14 +6,15 @@ import org.osgi.service.prefs.BackingStoreException;
 import com.github.eclipsethemes.core.models.Color;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.ThemeType;
-import com.github.eclipsethemes.core.models.Token;
 import com.github.eclipsethemes.core.models.TokenKey;
 import com.github.eclipsethemes.eclipse.adapters.EclipseThemeAdapter;
+
 
 public class TextEditorThemeAdapter extends EclipseThemeAdapter {
 
 	@Override
 	public String getPreferencesId() {
+		// Typically the text editor preferences node
 		return "org.eclipse.ui.editors";
 	}
 
@@ -57,6 +58,8 @@ public class TextEditorThemeAdapter extends EclipseThemeAdapter {
 		// Version control annotations (conditional)
 		handleVersionControlColors(preferences, theme);
 
+		putColor(preferences, "matchingBracketsColor", theme.get(TokenKey.MATCHING_BRACKET));
+
 		flushPreferences(preferences);
 	}
 
@@ -82,60 +85,9 @@ public class TextEditorThemeAdapter extends EclipseThemeAdapter {
 			if (theme.getType() == ThemeType.LIGHT) {
 				preferences.remove("deletionIndicationColor");
 			} else {
-				// Create a default color for dark themes
-				Color defaultDeletionColor = Color.ofRgb(224, 226, 228);
-				Token defaultToken = createTokenFromRGB(defaultDeletionColor);
-				putColor(preferences, "deletionIndicationColor", defaultToken);
+				putColor(preferences, "deletionIndicationColor", Color.ofRgb(224, 226, 228));
 			}
 		}
-	}
-
-	private Token createTokenFromRGB(Color color) {
-		return new Token(null, color, null);
-	}
-
-	@Override
-	public void clear(IEclipsePreferences preferences) throws BackingStoreException {
-		// System color defaults
-		preferences.remove("AbstractTextEditor.Color.Background.SystemDefault");
-		preferences.remove("AbstractTextEditor.Color.Foreground.SystemDefault");
-		preferences.remove("AbstractTextEditor.Color.SelectionBackground.SystemDefault");
-		preferences.remove("AbstractTextEditor.Color.SelectionForeground.SystemDefault");
-
-		// Basic editor colors
-		preferences.remove("AbstractTextEditor.Color.Background");
-		preferences.remove("AbstractTextEditor.Color.Foreground");
-		preferences.remove("AbstractTextEditor.Color.FindScope");
-		preferences.remove("AbstractTextEditor.Color.SelectionBackground");
-		preferences.remove("AbstractTextEditor.Color.SelectionForeground");
-
-		// Editor UI elements
-		preferences.remove("currentLineColor");
-		preferences.remove("lineNumberColor");
-		preferences.remove("printMarginColor");
-
-		// Occurrence highlighting
-		preferences.remove("occurrenceIndicationColor");
-		preferences.remove("LSP4EReadOccurrenceIndicationColor");
-		preferences.remove("org.eclipse.cdt.ui.occurrenceIndicationColor");
-		preferences.remove("writeOccurrenceIndicationColor");
-		preferences.remove("LSP4EWriteOccurrenceIndicationColor");
-		preferences.remove("org.eclipse.cdt.ui.writeOccurrenceIndicationColor");
-		preferences.remove("TextOccurrenceIndicationColor");
-		preferences.remove("LSP4ETextOccurrenceIndicationColor");
-
-		// Search and debug
-		preferences.remove("searchResultIndicationColor");
-		preferences.remove("filteredSearchResultIndicationColor");
-		preferences.remove("currentIPIndication");
-		preferences.remove("secondaryIPIndication");
-
-		// Version control annotations
-		preferences.remove("additionIndicationColor");
-		preferences.remove("changeIndicationColor");
-		preferences.remove("deletionIndicationColor");
-
-		flushPreferences(preferences);
 	}
 
 }

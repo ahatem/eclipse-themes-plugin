@@ -1,69 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <colorTheme ect-id="e541c789-7f90-4539-b1fc-3e086dd8e63e" id="5002" name="GitHub Light Default" modified="2024-09-21" author="Eclipse Themes" type="light">
-
-    <!-- CORE EDITOR COLORS -->
-    <foreground color="#1f2328" />
+    
+    <!-- Background and Basic Colors (GitHub Light Official) -->
     <background color="#ffffff" />
-    <selectionBackground color="#D6D6D6" />
-    <selectionForeground color="#1f2328" />
+    <foreground color="#1f2328" />
     <currentLine color="#f6f8fa" />
     <lineNumber color="#656d76" />
-
-    <!-- EDITOR FEATURES & NAVIGATION -->
-    <occurrence color="#fff8c5" />
-    <writeOccurrence color="#ffdf5d" />
-    <removedLine color="#cf222e" />
-    <findScope color="#fff8c5" />
-    <searchResult color="#fff8c5" />
-    <filteredSearchResult color="#fff8c5" />
-
-    <!-- BASIC SYNTAX ELEMENTS -->
-    <comment color="#656d76" italic="true" />
+    <selectionBackground color="#D6D6D6" />
+    <selectionForeground color="#1f2328" />
+    
+    <!-- Occurrences and Search -->
+    <searchResultIndication color="#fff8c5" />
+    <filteredSearchResultIndication color="#fff8c5" />
+    <occurrenceIndication color="#fff8c5" />
+    <writeOccurrenceIndication color="#ffdf5d" />
+    
+    <!-- Comments and Documentation (GitHub gray) -->
+    <singleLineComment color="#656d76" italic="true" />
     <multiLineComment color="#656d76" italic="true" />
-    <taskTag color="#cf222e" bold="true" />
-    <keyword color="#D73A49" bold="true" />
-    <number color="#0550ae" />
-    <string color="#0a3069" />
-    <bracket color="#1f2328" />
-    <operator color="#D73A49" />
-
-    <!-- OBJECT-ORIENTED CONSTRUCTS -->
+    <commentTaskTag color="#cf222e" bold="true" />
+    <javadoc color="#656d76" italic="true" />
+    <javadocTag color="#0969da" />
+    <javadocKeyword color="#0969da" />
+    <javadocLink color="#0969da" />
+    
+    <!-- Java Language Elements (GitHub blue) -->
     <class color="#0969da" />
-    <abstractClass color="#0969da" />
     <interface color="#0969da" />
+    <abstractClass color="#0969da" />
     <enum color="#1a7f37" />
-    <annotation color="#bc4c00" />
-
-    <!-- METHODS & FUNCTIONS -->
     <method color="#6F42C1" />
+    <methodDeclaration color="#6F42C1" />
+    <inheritedMethod color="#6F42C1" />
     <staticMethod color="#6F42C1" />
     <abstractMethod color="#6F42C1" />
-    <inheritedMethod color="#6F42C1" />
-    <methodDeclaration color="#6F42C1" />
-
-    <!-- VARIABLES & FIELDS -->
-    <field color="#1f2328" />
-    <staticField color="#bc4c00" />
-    <constant color="#0969da" />
+    
+    <!-- Variables and Fields (GitHub black/orange) -->
     <localVariable color="#1f2328" />
     <localVariableDeclaration color="#1f2328" />
-    <argument color="#bc4c00" />
-
-    <!-- GENERIC PROGRAMMING -->
-    <templateParameter color="#0969da" />
-    <templateArgument color="#0969da" />
-
-    <!-- DOCUMENTATION -->
-    <doc color="#656d76" italic="true" />
-    <docTag color="#0969da" />
-    <docLink color="#0969da" />
-    <docXmlTag color="#0969da" />
-
-    <!-- SPECIAL STATES -->
-    <deprecated color="#656d76" strikethrough="true" />
-
-    <!-- LANGUAGE-SPECIFIC: XML -->
+    <field color="#1f2328" />
+    <staticField color="#bc4c00" />
+    <staticFinalField color="#bc4c00" />
+    <parameterVariable color="#bc4c00" />
+    <constant color="#0969da" />
+    
+    <!-- Language Constructs (GitHub red) -->
+    <keyword color="#D73A49" bold="true" />
+    <operator color="#D73A49" />
+    <bracket color="#1f2328" />
+    <number color="#0550ae" />
+    <string color="#0a3069" />
+    <annotation color="#bc4c00" />
+    
+    <!-- Generic/Template Types -->
+    <typeArgument color="#0969da" />
+    <typeParameter color="#0969da" />
+    
+    <!-- Special Cases -->
+    <deprecatedMember color="#656d76" strikethrough="true" />
+    
+    <!-- XML Support -->
     <xmlTag color="#1a7f37" />
     <xmlAttribute color="#bc4c00" />
-
+    <xmlComment color="#656d76" italic="true" />
+    
+    <!-- Additional Editor Support -->
+    <sourceHoverBackground color="#f6f8fa" />
+    <deletionIndication color="#cf222e" />
+    <findScope color="#fff8c5" />
+    
 </colorTheme>

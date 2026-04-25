@@ -1,69 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <colorTheme ect-id="4b581381-48df-47b4-bef7-8ec2a1aa1c10" id="4010" name="Kintsugi Dark Flared" modified="2024-09-21" author="Ahmed Hatem" type="dark" website="https://github.com/ahatem">
-
-    <!-- CORE EDITOR COLORS -->
-    <foreground color="#BCAC8F" />
+    
+    <!-- Background and Basic Colors -->
     <background color="#161618" />
-    <selectionBackground color="#242424" />
-    <selectionForeground color="#C1C1C1" />
+    <foreground color="#BCAC8F" />
     <currentLine color="#1d1d1c" />
     <lineNumber color="#444444" />
-
-    <!-- EDITOR FEATURES & NAVIGATION -->
-    <occurrence color="#26292d" />
-    <writeOccurrence color="#31353c" />
-    <removedLine color="#b38f8f" />
-    <findScope color="#1b1c1f" />
-    <searchResult color="#2c2f35" />
-    <filteredSearchResult color="#212326" />
-
-    <!-- BASIC SYNTAX ELEMENTS -->
-    <comment color="#5f5f5f" />
+    <selectionBackground color="#26292d" />
+    <selectionForeground color="#dddddd" />
+    
+    <!-- Occurrences and Search -->
+    <searchResultIndication color="#2c2f35" />
+    <filteredSearchResultIndication color="#212326" />
+    <occurrenceIndication color="#26292d" />
+    <writeOccurrenceIndication color="#31353c" />
+    
+    <!-- Comments and Documentation -->
+    <singleLineComment color="#5f5f5f" />
     <multiLineComment color="#5f5f5f" />
-    <taskTag color="#5f5f5f" />
-    <keyword color="#D66848" bold="true" />
-    <number color="#DB9833" />
-    <string color="#cc7f66" />
-    <bracket color="#7f7b66" />
-    <operator color="#E08542" />
-
-    <!-- OBJECT-ORIENTED CONSTRUCTS -->
+    <commentTaskTag color="#5f5f5f" />
+    <javadoc color="#5f5f5f" />
+    <javadocTag color="#8A8970" />
+    <javadocKeyword color="#8A8970" />
+    <javadocLink color="#8A8970" />
+    
+    <!-- Java Language Elements -->
     <class color="#798283" />
-    <abstractClass color="#798283" />
     <interface color="#798283" />
+    <abstractClass color="#798283" />
     <enum color="#798283" />
-    <annotation color="#678E87" />
-
-    <!-- METHODS & FUNCTIONS -->
     <method color="#798283" />
+    <methodDeclaration color="#798283" />
+    <inheritedMethod color="#798283" />
     <staticMethod color="#798283" />
     <abstractMethod color="#798283" />
-    <inheritedMethod color="#798283" />
-    <methodDeclaration color="#798283" />
-
-    <!-- VARIABLES & FIELDS -->
-    <field color="#BCAC8F" />
-    <staticField color="#798283" />
-    <constant color="#DB9833" />
+    
+    <!-- Variables and Fields -->
     <localVariable color="#BCAC8F" />
     <localVariableDeclaration color="#BCAC8F" />
-    <argument color="#BCAC8F" />
-
-    <!-- GENERIC PROGRAMMING -->
-    <templateParameter color="#E08542" />
-    <templateArgument color="#E08542" />
-
-    <!-- DOCUMENTATION -->
-    <doc color="#5f5f5f" />
-    <docTag color="#8A8970" />
-    <docLink color="#8A8970" />
-    <docXmlTag color="#8A8970" />
-
-    <!-- SPECIAL STATES -->
-    <deprecated color="#454242" strikethrough="true"/>
-
-    <!-- LANGUAGE-SPECIFIC: XML -->
+    <field color="#BCAC8F" />
+    <staticField color="#798283" />
+    <staticFinalField color="#DB9833" />
+    <parameterVariable color="#BCAC8F" />
+    <constant color="#DB9833" />
+    
+    <!-- Language Constructs -->
+    <keyword color="#D66848" bold="true" />
+    <operator color="#E08542" />
+    <bracket color="#7f7b66" />
+    <number color="#DB9833" />
+    <string color="#cc7f66" />
+    <annotation color="#678E87" />
+    
+    <!-- Generic/Template Types -->
+    <typeArgument color="#E08542" />
+    <typeParameter color="#E08542" />
+    
+    <!-- Special Cases -->
+    <deprecatedMember color="#b38f8f" italic="true" bold="true" />
+    
+    <!-- XML Support -->
     <xmlTag color="#DBAD49" bold="true" />
     <xmlAttribute color="#798283" />
-
+    <xmlComment color="#5f5f5f" />
+    
+    <!-- Additional Editor Support -->
+    <sourceHoverBackground color="#1c1c1c" />
+    <deletionIndication color="#b38f8f" />
+    <findScope color="#1b1c1f" />
+    
 </colorTheme>

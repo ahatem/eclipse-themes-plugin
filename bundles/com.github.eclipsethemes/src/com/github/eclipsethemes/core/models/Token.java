@@ -4,9 +4,6 @@ import java.util.Optional;
 
 public final class Token {
 
-	public static final Token BLACK = new Token(null, Color.ofRgb(30, 30, 30), null);
-	public static final Token WHITE = new Token(null, Color.ofRgb(255, 255, 255), null);
-
 	private final TokenKey key;
 	private final Color color;
 	private final Optional<TokenOptions> options;

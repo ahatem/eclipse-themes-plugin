@@ -6,19 +6,16 @@ import java.util.Objects;
  * An immutable, type-safe representation of a color. Use the static factory
  * methods like Color.ofHex() or Color.ofRgb() to create instances.
  */
-public final class Color {
+public record Color(int red, int green, int blue) {
 
 	public static final Color BLACK = new Color(0, 0, 0);
 	public static final Color WHITE = new Color(255, 255, 255);
 
-	private final int red;
-	private final int green;
-	private final int blue;
-
-	private Color(int red, int green, int blue) {
-		this.red = red;
-		this.green = green;
-		this.blue = blue;
+	public Color {
+		if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255) {
+			throw new IllegalArgumentException(
+					String.format("Invalid RGB value: r=%d, g=%d, b=%d", red, green, blue));
+		}
 	}
 
 	public static Color ofHex(String hex) {
@@ -49,29 +46,7 @@ public final class Color {
 	}
 
 	public static Color ofRgb(int red, int green, int blue) {
-		if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255) {
-			throw new IllegalArgumentException(String.format("Invalid RGB value: r=%d, g=%d, b=%d", red, green, blue));
-		}
-
-		// Example of using our cache
-		if (red == 0 && green == 0 && blue == 0)
-			return BLACK;
-		if (red == 255 && green == 255 && blue == 255)
-			return WHITE;
-
 		return new Color(red, green, blue);
-	}
-
-	public int getRed() {
-		return this.red;
-	}
-
-	public int getGreen() {
-		return this.green;
-	}
-
-	public int getBlue() {
-		return this.blue;
 	}
 
 	public String toEclipseFormat() {
@@ -80,21 +55,6 @@ public final class Color {
 
 	@Override
 	public String toString() {
-		return String.format("#%02x%02x%02x", this.red, this.green, this.blue);
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Color color = (Color) o;
-		return red == color.red && green == color.green && blue == color.blue;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(red, green, blue);
+		return String.format("#%02x%02x%02x", red, green, blue);
 	}
 }

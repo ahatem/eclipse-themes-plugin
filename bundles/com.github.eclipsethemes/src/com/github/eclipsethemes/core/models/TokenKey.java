@@ -23,7 +23,7 @@ public final class TokenKey {
 	public static TokenKey byId(String id) {
 		return TOKENS.get(id);
 	}
-
+	
 	// @formatter:off
 	public static final TokenKey 
 	    FOREGROUND                  = register("foreground", null),
@@ -88,7 +88,7 @@ public final class TokenKey {
 	    KEY                         = register("key", FIELD);
 	// @formatter:on
 
-	public TokenKey(String name, TokenKey inheritsFrom) {
+	private TokenKey(String name, TokenKey inheritsFrom) {
 		this.name = name;
 		this.inheritsFrom = inheritsFrom;
 	}
@@ -103,20 +103,11 @@ public final class TokenKey {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, inheritsFrom);
+		return Objects.hash(name);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof TokenKey)) {
-			return false;
-		}
-
-		TokenKey other = (TokenKey) obj;
-		return Objects.equals(name, other.name) && Objects.equals(inheritsFrom, other.inheritsFrom);
+		return obj instanceof TokenKey other && Objects.equals(name, other.name);
 	}
 }

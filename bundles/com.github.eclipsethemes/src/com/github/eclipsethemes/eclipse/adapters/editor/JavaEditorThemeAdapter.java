@@ -36,7 +36,6 @@ public final class JavaEditorThemeAdapter extends EclipseThemeAdapter {
 		mapSemanticStyle(preferences, theme, TokenKey.KEYWORD, "semanticHighlighting.restrictedKeywords");
 		mapSemanticStyle(preferences, theme, TokenKey.NUMBER, "semanticHighlighting.number");
 		mapSemanticStyle(preferences, theme, TokenKey.CLASS, "semanticHighlighting.class");
-		mapSemanticStyle(preferences, theme, TokenKey.CLASS, "semanticHighlighting.record");
 		mapSemanticStyle(preferences, theme, TokenKey.ABSTRACT_CLASS, "semanticHighlighting.abstractClass");
 		mapSemanticStyle(preferences, theme, TokenKey.INTERFACE, "semanticHighlighting.interface");
 		mapSemanticStyle(preferences, theme, TokenKey.ENUM, "semanticHighlighting.enum");
@@ -67,58 +66,7 @@ public final class JavaEditorThemeAdapter extends EclipseThemeAdapter {
 		putColor(preferences, "matchingBracketsColor", theme.get(TokenKey.MATCHING_BRACKET));
 
 		flushPreferences(preferences);
-	}
 
-	@Override
-	public void clear(IEclipsePreferences preferences) throws BackingStoreException {
-		// Legacy style mappings (using underscores)
-		clearLegacyStyle(preferences, "java_default");
-		clearLegacyStyle(preferences, "java_single_line_comment");
-		clearLegacyStyle(preferences, "java_multi_line_comment");
-		clearLegacyStyle(preferences, "java_comment_task_tag");
-		clearLegacyStyle(preferences, "java_keyword");
-		clearLegacyStyle(preferences, "java_keyword_return");
-		clearLegacyStyle(preferences, "java_number");
-		clearLegacyStyle(preferences, "java_string");
-		clearLegacyStyle(preferences, "java_bracket");
-		clearLegacyStyle(preferences, "java_operator");
-		clearLegacyStyle(preferences, "java_doc_default");
-		clearLegacyStyle(preferences, "java_doc_keyword");
-		clearLegacyStyle(preferences, "java_doc_link");
-		clearLegacyStyle(preferences, "java_doc_tag");
-
-		// Semantic style mappings (using dots)
-		clearSemanticStyle(preferences, "semanticHighlighting.restrictedKeywords");
-		clearSemanticStyle(preferences, "semanticHighlighting.number");
-		clearSemanticStyle(preferences, "semanticHighlighting.class");
-		clearSemanticStyle(preferences, "semanticHighlighting.record");
-		clearSemanticStyle(preferences, "semanticHighlighting.abstractClass");
-		clearSemanticStyle(preferences, "semanticHighlighting.interface");
-		clearSemanticStyle(preferences, "semanticHighlighting.enum");
-		clearSemanticStyle(preferences, "semanticHighlighting.method");
-		clearSemanticStyle(preferences, "semanticHighlighting.staticMethodInvocation");
-		clearSemanticStyle(preferences, "semanticHighlighting.abstractMethodInvocation");
-		clearSemanticStyle(preferences, "semanticHighlighting.methodDeclarationName");
-		clearSemanticStyle(preferences, "semanticHighlighting.field");
-		clearSemanticStyle(preferences, "semanticHighlighting.staticField");
-		clearSemanticStyle(preferences, "semanticHighlighting.staticFinalField");
-		clearSemanticStyle(preferences, "semanticHighlighting.localVariable");
-		clearSemanticStyle(preferences, "semanticHighlighting.localVariableDeclaration");
-		clearSemanticStyle(preferences, "semanticHighlighting.parameterVariable");
-		clearSemanticStyle(preferences, "semanticHighlighting.annotation");
-		clearSemanticStyle(preferences, "semanticHighlighting.annotationElementReference");
-		clearSemanticStyle(preferences, "semanticHighlighting.typeParameter");
-
-		// Optional semantic style mappings
-		clearSemanticStyle(preferences, "semanticHighlighting.inheritedMethodInvocation");
-		clearSemanticStyle(preferences, "semanticHighlighting.inheritedField");
-		clearSemanticStyle(preferences, "semanticHighlighting.typeArgument");
-		clearSemanticStyle(preferences, "semanticHighlighting.deprecatedMember");
-
-		// Special case - direct color mapping for matching brackets
-		preferences.remove("matchingBracketsColor");
-
-		flushPreferences(preferences);
 	}
 
 }

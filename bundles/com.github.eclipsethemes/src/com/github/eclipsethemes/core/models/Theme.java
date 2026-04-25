@@ -1,6 +1,7 @@
 package com.github.eclipsethemes.core.models;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -60,7 +61,7 @@ public class Theme {
 	}
 
 	public Map<TokenKey, Token> getTokens() {
-		return tokens;
+		return Collections.unmodifiableMap(tokens);
 	}
 
 	public void addToken(Token token) {
@@ -76,35 +77,31 @@ public class Theme {
 			throw new NullPointerException();
 		}
 
-		Token result = null;
-		while (result == null) {
-			if (key == null) {
-				return Token.BLACK;
-			}
-
-			result = tokens.get(key);
-			key = key.getInheritsFrom();
+		TokenKey current = key;
+		while (current != null) {
+			Token result = tokens.get(current);
+			if (result != null) return result;
+			current = current.getInheritsFrom();
 		}
 
-		return result;
+		throw new IllegalStateException("Token chain broken — no value found for key: " + key.getName()
+				+ ". Ensure BACKGROUND and FOREGROUND are always populated.");
 	}
-
+	
 	@Override
 	public String toString() {
-		return String.format("%-20s  ->  %s", name, file.map(File::getPath).orElse("PACKED THEME"));
+	    return String.format("%-20s  ->  %s", name, file.map(File::getPath).orElse("PACKED THEME"));
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof Theme other))
-			return false;
-		return id != null && id.equals(other.id);
+	    if (this == obj) return true;
+	    if (!(obj instanceof Theme other)) return false;
+	    return id != null && id.equals(other.id);
 	}
 
 	@Override
 	public int hashCode() {
-		return id != null ? id.hashCode() : 0;
+	    return id != null ? id.hashCode() : 0;
 	}
 }

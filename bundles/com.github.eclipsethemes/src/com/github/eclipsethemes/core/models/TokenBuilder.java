@@ -61,8 +61,8 @@ public final class TokenBuilder {
 			throw new IllegalStateException("Token key cannot be null.");
 		}
 		if (color == null) {
-			throw new IllegalStateException("Token color cannot be null.");
-		}
+            throw new IllegalStateException("Token color cannot be null.");
+        }
 
 		TokenOptions options = null;
 		if (hasOptions) {

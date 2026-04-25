@@ -1,5 +1,6 @@
 package com.github.eclipsethemes.eclipse.adapters.editor;
 
+
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -9,108 +10,57 @@ import com.github.eclipsethemes.eclipse.adapters.EclipseThemeAdapter;
 
 public final class CppEditorThemeAdapter extends EclipseThemeAdapter {
 
-	@Override
-	public String getPreferencesId() {
-		return "org.eclipse.cdt.ui";
-	}
+    @Override
+    public String getPreferencesId() {
+        return "org.eclipse.cdt.ui"; // CDT preferences node
+    }
 
-	@Override
-	public void apply(Theme theme, IEclipsePreferences preferences) throws BackingStoreException {
-		// Legacy style mappings (using underscores)
-		mapLegacyStyle(preferences, theme, TokenKey.FOREGROUND, "c_default");
-		mapLegacyStyle(preferences, theme, TokenKey.FOREGROUND, "pp_default");
-		mapLegacyStyle(preferences, theme, TokenKey.COMMENT, "c_single_line_comment");
-		mapLegacyStyle(preferences, theme, TokenKey.MULTILINE_COMMENT, "c_multi_line_comment");
-		mapLegacyStyle(preferences, theme, TokenKey.TASK_TAG, "c_comment_task_tag");
-		mapLegacyStyle(preferences, theme, TokenKey.KEYWORD, "c_keyword");
-		mapLegacyStyle(preferences, theme, TokenKey.KEYWORD, "c_type");
-		mapLegacyStyle(preferences, theme, TokenKey.DIRECTIVE, "pp_directive");
-		mapLegacyStyle(preferences, theme, TokenKey.NUMBER, "c_numbers");
-		mapLegacyStyle(preferences, theme, TokenKey.STRING, "c_string");
-		mapLegacyStyle(preferences, theme, TokenKey.STRING, "pp_header");
-		mapLegacyStyle(preferences, theme, TokenKey.BRACKET, "c_braces");
-		mapLegacyStyle(preferences, theme, TokenKey.OPERATOR, "c_operators");
-		mapLegacyStyle(preferences, theme, TokenKey.DOC, "org.eclipse.cdt.internal.ui.text.doctools.doxygen.single");
-		mapLegacyStyle(preferences, theme, TokenKey.DOC, "org.eclipse.cdt.internal.ui.text.doctools.doxygen.multi");
-		mapLegacyStyle(preferences, theme, TokenKey.DOC_TAG,
-				"org.eclipse.cdt.internal.ui.text.doctools.doxygen.recognizedTag");
-
-		// Semantic style mappings (using dots)
-		mapSemanticStyle(preferences, theme, TokenKey.CLASS, "semanticHighlighting.class");
-		mapSemanticStyle(preferences, theme, TokenKey.CLASS, "semanticHighlighting.typedef");
-		mapSemanticStyle(preferences, theme, TokenKey.ENUM, "semanticHighlighting.enumClass");
-		mapSemanticStyle(preferences, theme, TokenKey.ENUM, "semanticHighlighting.enum");
-		mapSemanticStyle(preferences, theme, TokenKey.METHOD, "semanticHighlighting.method");
-		mapSemanticStyle(preferences, theme, TokenKey.METHOD, "semanticHighlighting.externalSDK");
-		mapSemanticStyle(preferences, theme, TokenKey.METHOD, "semanticHighlighting.function");
-		mapSemanticStyle(preferences, theme, TokenKey.STATIC_METHOD, "semanticHighlighting.staticMethod");
-		mapSemanticStyle(preferences, theme, TokenKey.METHOD_DECLARATION, "semanticHighlighting.methodDeclaration");
-		mapSemanticStyle(preferences, theme, TokenKey.METHOD_DECLARATION, "semanticHighlighting.functionDeclaration");
-		mapSemanticStyle(preferences, theme, TokenKey.FIELD, "semanticHighlighting.field");
-		mapSemanticStyle(preferences, theme, TokenKey.FIELD, "semanticHighlighting.globalVariable");
-		mapSemanticStyle(preferences, theme, TokenKey.STATIC_FIELD, "semanticHighlighting.staticField");
-		mapSemanticStyle(preferences, theme, TokenKey.CONSTANT, "semanticHighlighting.enumerator");
-		mapSemanticStyle(preferences, theme, TokenKey.LOCAL_VARIABLE, "semanticHighlighting.localVariable");
-		mapSemanticStyle(preferences, theme, TokenKey.LOCAL_VARIABLE_DECLARATION,
-				"semanticHighlighting.localVariableDeclaration");
-		mapSemanticStyle(preferences, theme, TokenKey.ARGUMENT, "semanticHighlighting.parameterVariable");
-		mapSemanticStyle(preferences, theme, TokenKey.TEMPLATE_PARAMETER, "semanticHighlighting.templateParameter");
-		mapSemanticStyle(preferences, theme, TokenKey.MACRO, "semanticHighlighting.macroSubstitution");
-		mapSemanticStyle(preferences, theme, TokenKey.MACRO_DECLARATION, "semanticHighlighting.macroDefinition");
-		mapSemanticStyle(preferences, theme, TokenKey.NAMESPACE, "semanticHighlighting.namespace");
-
-		// Special case - direct color mapping for matching brackets
-		putColor(preferences, "matchingBracketsColor", theme.get(TokenKey.MATCHING_BRACKET));
-
-		flushPreferences(preferences);
-	}
-
-	@Override
-	public void clear(IEclipsePreferences preferences) throws BackingStoreException {
-		// Legacy style mappings (using underscores)
-		clearLegacyStyle(preferences, "c_default");
-		clearLegacyStyle(preferences, "pp_default");
-		clearLegacyStyle(preferences, "c_single_line_comment");
-		clearLegacyStyle(preferences, "c_multi_line_comment");
-		clearLegacyStyle(preferences, "c_comment_task_tag");
-		clearLegacyStyle(preferences, "c_keyword");
-		clearLegacyStyle(preferences, "c_type");
-		clearLegacyStyle(preferences, "pp_directive");
-		clearLegacyStyle(preferences, "c_numbers");
-		clearLegacyStyle(preferences, "c_string");
-		clearLegacyStyle(preferences, "pp_header");
-		clearLegacyStyle(preferences, "c_braces");
-		clearLegacyStyle(preferences, "c_operators");
-		clearLegacyStyle(preferences, "org.eclipse.cdt.internal.ui.text.doctools.doxygen.single");
-		clearLegacyStyle(preferences, "org.eclipse.cdt.internal.ui.text.doctools.doxygen.multi");
-		clearLegacyStyle(preferences, "org.eclipse.cdt.internal.ui.text.doctools.doxygen.recognizedTag");
-
-		// Semantic style mappings (using dots)
-		clearSemanticStyle(preferences, "semanticHighlighting.class");
-		clearSemanticStyle(preferences, "semanticHighlighting.typedef");
-		clearSemanticStyle(preferences, "semanticHighlighting.enumClass");
-		clearSemanticStyle(preferences, "semanticHighlighting.enum");
-		clearSemanticStyle(preferences, "semanticHighlighting.method");
-		clearSemanticStyle(preferences, "semanticHighlighting.externalSDK");
-		clearSemanticStyle(preferences, "semanticHighlighting.function");
-		clearSemanticStyle(preferences, "semanticHighlighting.staticMethod");
-		clearSemanticStyle(preferences, "semanticHighlighting.methodDeclaration");
-		clearSemanticStyle(preferences, "semanticHighlighting.functionDeclaration");
-		clearSemanticStyle(preferences, "semanticHighlighting.field");
-		clearSemanticStyle(preferences, "semanticHighlighting.globalVariable");
-		clearSemanticStyle(preferences, "semanticHighlighting.staticField");
-		clearSemanticStyle(preferences, "semanticHighlighting.enumerator");
-		clearSemanticStyle(preferences, "semanticHighlighting.localVariable");
-		clearSemanticStyle(preferences, "semanticHighlighting.localVariableDeclaration");
-		clearSemanticStyle(preferences, "semanticHighlighting.parameterVariable");
-		clearSemanticStyle(preferences, "semanticHighlighting.templateParameter");
-		clearSemanticStyle(preferences, "semanticHighlighting.macroSubstitution");
-		clearSemanticStyle(preferences, "semanticHighlighting.macroDefinition");
-		clearSemanticStyle(preferences, "semanticHighlighting.namespace");
-
-		// Special case - direct color mapping for matching brackets
-		preferences.remove("matchingBracketsColor");
-
-		flushPreferences(preferences);
-	}
+    @Override
+    public void apply(Theme theme, IEclipsePreferences preferences) throws BackingStoreException {
+        // Legacy style mappings (using underscores)
+        mapLegacyStyle(preferences, theme, TokenKey.FOREGROUND, "c_default");
+        mapLegacyStyle(preferences, theme, TokenKey.FOREGROUND, "pp_default");
+        mapLegacyStyle(preferences, theme, TokenKey.COMMENT, "c_single_line_comment");
+        mapLegacyStyle(preferences, theme, TokenKey.MULTILINE_COMMENT, "c_multi_line_comment");
+        mapLegacyStyle(preferences, theme, TokenKey.TASK_TAG, "c_comment_task_tag");
+        mapLegacyStyle(preferences, theme, TokenKey.KEYWORD, "c_keyword");
+        mapLegacyStyle(preferences, theme, TokenKey.KEYWORD, "c_type");
+        mapLegacyStyle(preferences, theme, TokenKey.DIRECTIVE, "pp_directive");
+        mapLegacyStyle(preferences, theme, TokenKey.NUMBER, "c_numbers");
+        mapLegacyStyle(preferences, theme, TokenKey.STRING, "c_string");
+        mapLegacyStyle(preferences, theme, TokenKey.STRING, "pp_header");
+        mapLegacyStyle(preferences, theme, TokenKey.BRACKET, "c_braces");
+        mapLegacyStyle(preferences, theme, TokenKey.OPERATOR, "c_operators");
+        mapLegacyStyle(preferences, theme, TokenKey.DOC, "org.eclipse.cdt.internal.ui.text.doctools.doxygen.single");
+        mapLegacyStyle(preferences, theme, TokenKey.DOC, "org.eclipse.cdt.internal.ui.text.doctools.doxygen.multi");
+        mapLegacyStyle(preferences, theme, TokenKey.DOC_TAG, "org.eclipse.cdt.internal.ui.text.doctools.doxygen.recognizedTag");
+        
+        // Semantic style mappings (using dots)
+        mapSemanticStyle(preferences, theme, TokenKey.CLASS, "semanticHighlighting.class");
+        mapSemanticStyle(preferences, theme, TokenKey.CLASS, "semanticHighlighting.typedef");
+        mapSemanticStyle(preferences, theme, TokenKey.ENUM, "semanticHighlighting.enumClass");
+        mapSemanticStyle(preferences, theme, TokenKey.ENUM, "semanticHighlighting.enum");
+        mapSemanticStyle(preferences, theme, TokenKey.METHOD, "semanticHighlighting.method");
+        mapSemanticStyle(preferences, theme, TokenKey.METHOD, "semanticHighlighting.externalSDK");
+        mapSemanticStyle(preferences, theme, TokenKey.METHOD, "semanticHighlighting.function");
+        mapSemanticStyle(preferences, theme, TokenKey.STATIC_METHOD, "semanticHighlighting.staticMethod");
+        mapSemanticStyle(preferences, theme, TokenKey.METHOD_DECLARATION, "semanticHighlighting.methodDeclaration");
+        mapSemanticStyle(preferences, theme, TokenKey.METHOD_DECLARATION, "semanticHighlighting.functionDeclaration");
+        mapSemanticStyle(preferences, theme, TokenKey.FIELD, "semanticHighlighting.field");
+        mapSemanticStyle(preferences, theme, TokenKey.FIELD, "semanticHighlighting.globalVariable");
+        mapSemanticStyle(preferences, theme, TokenKey.STATIC_FIELD, "semanticHighlighting.staticField");
+        mapSemanticStyle(preferences, theme, TokenKey.CONSTANT, "semanticHighlighting.enumerator");
+        mapSemanticStyle(preferences, theme, TokenKey.LOCAL_VARIABLE, "semanticHighlighting.localVariable");
+        mapSemanticStyle(preferences, theme, TokenKey.LOCAL_VARIABLE_DECLARATION, "semanticHighlighting.localVariableDeclaration");
+        mapSemanticStyle(preferences, theme, TokenKey.ARGUMENT, "semanticHighlighting.parameterVariable");
+        mapSemanticStyle(preferences, theme, TokenKey.TEMPLATE_PARAMETER, "semanticHighlighting.templateParameter");
+        mapSemanticStyle(preferences, theme, TokenKey.MACRO, "semanticHighlighting.macroSubstitution");
+        mapSemanticStyle(preferences, theme, TokenKey.MACRO_DECLARATION, "semanticHighlighting.macroDefinition");
+        mapSemanticStyle(preferences, theme, TokenKey.NAMESPACE, "semanticHighlighting.namespace");
+        
+        // Special case - direct color mapping for matching brackets
+        putColor(preferences, "matchingBracketsColor", theme.get(TokenKey.MATCHING_BRACKET));
+        
+        flushPreferences(preferences);
+    }
 }

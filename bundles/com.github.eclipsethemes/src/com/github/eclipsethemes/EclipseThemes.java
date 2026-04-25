@@ -23,7 +23,7 @@ public class EclipseThemes extends AbstractUIPlugin {
 
 	public ThemeManager getManager() {
 		if (this.themeManager == null) {
-			this.themeManager = new ThemeManager();
+			this.themeManager = new ThemeManager(getLogger());
 		}
 
 		return this.themeManager;
@@ -46,12 +46,12 @@ public class EclipseThemes extends AbstractUIPlugin {
 	}
 
 	public ILog getLogger() {
-        if (pluginLog == null) {
-            Bundle bundle = getBundle();
-            pluginLog = Platform.getLog(bundle);
-        }
-        return pluginLog;
-    }
+		if (pluginLog == null) {
+			Bundle bundle = getBundle();
+			pluginLog = Platform.getLog(bundle);
+		}
+		return pluginLog;
+	}
 
 	public static File getPluginDataDirectory() {
 		Bundle bundle = FrameworkUtil.getBundle(EclipseThemes.class);
