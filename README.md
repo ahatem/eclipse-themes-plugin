@@ -46,6 +46,12 @@ I then realized the old plugin was also outdated, so I decided to build this one
 3.  Pick a theme from the list to see how it looks.
 4.  Click **Apply and Close** to set your new editor theme.
 
+## ☕ Support
+
+Eclipse Themes is free and open source. If it improves your daily setup, support helps with compatibility fixes, maintenance, and new releases.
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ahmedhatem-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/ahmedhatem)
+
 ## 🤝 Contributing
 
 Contributions are always welcome! The best way to help is to add a new theme to the collection.
