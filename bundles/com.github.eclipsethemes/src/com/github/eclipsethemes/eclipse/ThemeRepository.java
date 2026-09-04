@@ -46,6 +46,13 @@ public final class ThemeRepository {
 		return new ArrayList<>(themes.values());
 	}
 
+	public Optional<Theme> findById(String id) {
+		if (id == null || id.isBlank()) {
+			return Optional.empty();
+		}
+		return themes.values().stream().filter(theme -> id.equals(theme.getId())).findFirst();
+	}
+
 	public Optional<Theme> importTheme(File file) {
 		File copied = new File(installedThemesDir, file.getName());
 

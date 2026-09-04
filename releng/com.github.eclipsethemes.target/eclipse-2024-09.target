@@ -7,6 +7,7 @@
             <unit id="org.eclipse.rcp.feature.group" version="0.0.0"/>
             <unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
             <unit id="org.eclipse.pde.feature.group" version="0.0.0"/>
+            <unit id="junit-jupiter-api" version="0.0.0"/>
         </location>
     </locations>
 </target>

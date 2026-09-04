@@ -24,6 +24,7 @@
     <modules>
         <module>releng/com.github.eclipsethemes.target</module>
         <module>bundles/com.github.eclipsethemes</module>
+        <module>tests/com.github.eclipsethemes.tests</module>
         <module>features/com.github.eclipsethemes.feature</module>
         <module>releng/com.github.eclipsethemes.updatesite</module>
     </modules>

@@ -2,18 +2,38 @@
 <?eclipse version="3.4"?>
 <plugin>
 	<extension-point id="com.github.eclipsethemes.theme.adapters" name="Theme Adapter" schema="schema/com.github.eclipsethemes.theme.adapters.exsd"/>
+	<extension point="org.eclipse.ui.keywords">
+		<keyword
+			id="com.github.eclipsethemes.keywords.themes"
+			label="eclipse themes colors syntax highlighting workbench gtk"/>
+		<keyword
+			id="com.github.eclipsethemes.keywords.colors"
+			label="eclipse themes colors syntax coloring highlighting keyword token workbench"/>
+	</extension>
 	<extension
          point="org.eclipse.ui.preferencePages">
 		<page
 			category="org.eclipse.ui.preferencePages.Views"
             class="com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage"
             id="com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage"
-            name="Eclipse Themes"></page>
+            name="Eclipse Themes">
+			<keywordReference id="com.github.eclipsethemes.keywords.themes"/>
+		</page>
+		<page
+			category="com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage"
+			class="com.github.eclipsethemes.eclipse.preferences.ThemeColorPreferencePage"
+			id="com.github.eclipsethemes.eclipse.preferences.ThemeColorPreferencePage"
+			name="Colors">
+			<keywordReference id="com.github.eclipsethemes.keywords.colors"/>
+		</page>
 	</extension>
 	<extension
          point="org.eclipse.core.runtime.preferences">
 		<initializer
             class="com.github.eclipsethemes.eclipse.preferences.PreferenceInitializer"></initializer>
+	</extension>
+	<extension point="org.eclipse.ui.startup">
+		<startup class="com.github.eclipsethemes.eclipse.ThemeStartup"/>
 	</extension>
 	<extension
          point="com.github.eclipsethemes.theme.adapters">
@@ -32,5 +52,11 @@
 		<adapter
             class="com.github.eclipsethemes.eclipse.adapters.editor.AntEditorThemeAdapter"
             plugin="org.eclipse.ant.ui"></adapter>
+		<adapter
+            class="com.github.eclipsethemes.eclipse.adapters.ui.WorkbenchCssThemeAdapter"
+            plugin="org.eclipse.e4.ui.css.swt.theme"></adapter>
+		<adapter
+            class="com.github.eclipsethemes.eclipse.adapters.ui.GtkCssThemeAdapter"
+            plugin="org.eclipse.swt"></adapter>
 	</extension>
 </plugin>

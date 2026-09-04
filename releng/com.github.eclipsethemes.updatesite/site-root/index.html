@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eclipse Themes Update Site</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+      line-height: 1.6;
+    }
+    h1 { margin-bottom: 0.25rem; }
+    p.lead { color: #57606a; margin-top: 0; }
+    ol { padding-left: 1.25rem; }
+    code {
+      background: rgba(127, 127, 127, 0.15);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      font-size: 0.95em;
+    }
+    .url {
+      display: block;
+      margin: 1rem 0;
+      padding: 0.85rem 1rem;
+      background: rgba(127, 127, 127, 0.12);
+      border-radius: 8px;
+      word-break: break-all;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    footer { margin-top: 2.5rem; font-size: 0.9em; color: #57606a; }
+  </style>
+</head>
+<body>
+  <h1>Eclipse Themes</h1>
+  <p class="lead">This page is an Eclipse p2 update site, not a downloadable app.</p>
+
+  <h2>Install into Eclipse</h2>
+  <ol>
+    <li>Go to <strong>Help &rarr; Install New Software&hellip;</strong></li>
+    <li>Click <strong>Add&hellip;</strong> and paste the URL below</li>
+    <li>Select <strong>Eclipse Themes</strong> under the <em>Appearance</em> category, then finish the wizard</li>
+  </ol>
+
+  <span class="url">__UPDATE_SITE_URL__</span>
+
+  <p>
+    Themes live under <strong>Window &rarr; Preferences &rarr; General &rarr; Appearance &rarr; Eclipse Themes</strong>
+    after the install and a restart.
+  </p>
+
+  <footer>
+    Rebuilt and republished automatically from
+    <a href="__REPO_URL__">__REPO_URL__</a>.
+  </footer>
+</body>
+</html>

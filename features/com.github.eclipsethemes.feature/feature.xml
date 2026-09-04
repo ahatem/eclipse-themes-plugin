@@ -6,13 +6,13 @@
     provider-name="Ahmed Hatem">
 
     <description>
-        Transform your coding experience with a fresh look for your editor.
+        Transform your coding experience with a fresh look for Eclipse.
         This feature provides a curated collection of popular color themes that beautify your syntax
         highlighting, including favorites like Solarized, Catppuccin, and GitHub Dark.
 
-        Enjoy a more comfortable and visually appealing workspace within the Eclipse editor area,
-        with support for multiple languages like Java, C++, and XML.
-        (Note: This plugin styles the code editor, not the entire Eclipse IDE user interface.)
+        Style editors, views, tabs, toolbars, trees, and tables consistently, with an optional
+        application-only GTK overlay for native Linux backgrounds and selections.
+        Some operating-system and third-party controls may retain their native colors.
     </description>
 
     <copyright>

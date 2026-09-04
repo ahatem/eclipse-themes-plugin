@@ -31,6 +31,7 @@ public final class TokenKey {
 	    SELECTION_BACKGROUND        = register("selectionBackground", BACKGROUND),
 	    SELECTION_FOREGROUND        = register("selectionForeground", FOREGROUND),
 	    CURRENT_LINE                = register("currentLine", BACKGROUND),
+	    SOURCE_HOVER_BACKGROUND     = register("sourceHoverBackground", BACKGROUND),
 	    ERROR                       = register("error", FOREGROUND),
 	    OCCURRENCE                  = register("occurrence", CURRENT_LINE),
 	    WRITE_OCCURRENCE            = register("writeOccurrence", OCCURRENCE),
@@ -95,6 +96,29 @@ public final class TokenKey {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getDisplayName() {
+		String spaced = name.replaceAll("([a-z])([A-Z])", "$1 $2").replace('_', ' ');
+		String[] words = spaced.split(" ");
+		StringBuilder label = new StringBuilder();
+		for (String word : words) {
+			if (word.isEmpty()) {
+				continue;
+			}
+			if (label.length() > 0) {
+				label.append(' ');
+			}
+			if ("xml".equalsIgnoreCase(word) || "cpp".equalsIgnoreCase(word)) {
+				label.append(word.toUpperCase());
+			} else {
+				label.append(Character.toUpperCase(word.charAt(0)));
+				if (word.length() > 1) {
+					label.append(word.substring(1));
+				}
+			}
+		}
+		return label.toString();
 	}
 
 	public TokenKey getInheritsFrom() {

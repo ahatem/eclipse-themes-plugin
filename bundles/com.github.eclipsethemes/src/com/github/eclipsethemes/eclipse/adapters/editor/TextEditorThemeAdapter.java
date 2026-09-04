@@ -32,6 +32,7 @@ public class TextEditorThemeAdapter extends EclipseThemeAdapter {
 		putColor(preferences, "AbstractTextEditor.Color.FindScope", theme.get(TokenKey.FIND_SCOPE));
 		putColor(preferences, "AbstractTextEditor.Color.SelectionBackground", theme.get(TokenKey.SELECTION_BACKGROUND));
 		putColor(preferences, "AbstractTextEditor.Color.SelectionForeground", theme.get(TokenKey.SELECTION_FOREGROUND));
+		putColor(preferences, "sourceHoverBackgroundColor", theme.get(TokenKey.SOURCE_HOVER_BACKGROUND));
 
 		// Editor UI elements
 		putColor(preferences, "currentLineColor", theme.get(TokenKey.CURRENT_LINE));

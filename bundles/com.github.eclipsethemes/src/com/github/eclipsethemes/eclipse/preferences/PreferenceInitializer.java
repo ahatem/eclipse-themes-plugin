@@ -12,5 +12,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	public void initializeDefaultPreferences() {
 		ScopedPreferenceStore store = new ScopedPreferenceStore(InstanceScope.INSTANCE, EclipseThemes.PLUGIN_ID);
 		store.setDefault(PreferenceKeys.ACTIVE_THEME_ID, Constants.DEFAULT_LIGHT_THEME_NAME);
+		store.setDefault(PreferenceKeys.APPLY_WORKBENCH_THEME, true);
+		store.setDefault(PreferenceKeys.ENABLE_ECLIPSE_CSS_MODERNIZATION, true);
+		store.setDefault(PreferenceKeys.ENABLE_GTK_MODERNIZATION, true);
 	}
 }

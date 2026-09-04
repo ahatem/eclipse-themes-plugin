@@ -9,6 +9,7 @@ import org.eclipse.ui.IWorkbench;
 
 import com.github.eclipsethemes.EclipseThemes;
 import com.github.eclipsethemes.core.models.Theme;
+import com.github.eclipsethemes.eclipse.preferences.ColorCustomizationStore;
 
 public final class ThemeManager {
 
@@ -35,7 +36,15 @@ public final class ThemeManager {
 	}
 
 	public void applyTheme(IWorkbench workbench, Theme theme) {
-		service.applyTheme(workbench, theme);
+		service.applyTheme(workbench, ColorCustomizationStore.customize(theme));
+	}
+
+	public Optional<Theme> findById(String id) {
+		return repository.findById(id);
+	}
+
+	public void restoreActiveTheme(IWorkbench workbench, String themeId) {
+		repository.findById(themeId).ifPresent(theme -> applyTheme(workbench, theme));
 	}
 
 	public Optional<Theme> importTheme(File file) {

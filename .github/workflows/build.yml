@@ -4,9 +4,10 @@ on:
   push:
     branches: [main, develop]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
   release:
     types: [created]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -44,20 +45,104 @@ jobs:
   deploy-updatesite:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    if: >-
+      github.event_name == 'release' ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' &&
+       (github.ref_name == 'main' ||
+        github.ref_name == github.event.repository.default_branch))
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: updatesite-deploy
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Download build artifacts
+      - name: Get site extras
+        uses: actions/checkout@v5
+        with:
+          sparse-checkout: releng/com.github.eclipsethemes.updatesite/site-root
+          sparse-checkout-cone-mode: true
+
+      - name: Download p2 repository
         uses: actions/download-artifact@v4
         with:
           name: eclipse-themes-updatesite
           path: updatesite/
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      # configure-pages only selects the Actions build type when it creates the
+      # site, so a repository whose Pages was first enabled from a branch keeps
+      # serving that branch and silently ignores everything uploaded below.
+      - name: Check the Pages source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          build_type=""
+          # A repository without Pages answers 404, which gh reports by printing
+          # the error body, so only a successful call may set the build type.
+          if response="$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq '.build_type // ""' 2>/dev/null)"; then
+            build_type="${response}"
+          fi
+          case "${build_type}" in
+            workflow)
+              ;;
+            "")
+              echo "Pages is not enabled yet; the next step creates it." ;;
+            *)
+              echo "::error::GitHub Pages for ${GITHUB_REPOSITORY} builds from '${build_type}', so this p2 repository would never be served. Set Settings -> Pages -> Build and deployment -> Source to 'GitHub Actions', then re-run this workflow."
+              exit 1 ;;
+          esac
+
+      # Creates the Pages site on first run, so a fork publishes without
+      # touching repository settings by hand.
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./updatesite
-          publish_branch: gh-pages
+          enablement: true
+
+      # Creating the site over the API needs admin rights the workflow token
+      # does not always have, and the failure it raises names neither.
+      - name: Explain a failed Pages setup
+        if: failure() && steps.pages.conclusion == 'failure'
+        run: |
+          echo "::error::Could not enable GitHub Pages automatically. Open Settings -> Pages and set Build and deployment -> Source to 'GitHub Actions', then re-run this workflow."
+
+      - name: Add landing page
+        env:
+          UPDATE_SITE_URL: ${{ steps.pages.outputs.base_url }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          set -euo pipefail
+          test -f updatesite/p2.index
+          test -d updatesite/plugins
+          test -d updatesite/features
+          cp -a releng/com.github.eclipsethemes.updatesite/site-root/. updatesite/
+          sed -i \
+            -e "s|__UPDATE_SITE_URL__|${UPDATE_SITE_URL}|g" \
+            -e "s|__REPO_URL__|${REPO_URL}|g" \
+            updatesite/index.html
+          grep -q "${UPDATE_SITE_URL}" updatesite/index.html
+          test -f updatesite/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: updatesite
+          include-hidden-files: true
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Summarize update site
+        run: |
+          echo "p2 update site: ${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_STEP_SUMMARY"
 
   create-release:
     needs: build

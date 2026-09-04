@@ -81,7 +81,7 @@ public class LegacyEclipsePropertyMapper {
         PROPERTY_MAP.put("xmlComment", TokenKey.COMMENT.getName());
 
         // Additional Editor Support
-        PROPERTY_MAP.put("sourceHoverBackground", TokenKey.SELECTION_BACKGROUND.getName());
+        PROPERTY_MAP.put("sourceHoverBackground", TokenKey.SOURCE_HOVER_BACKGROUND.getName());
     }
 
 	public static String mapProperty(String property) {

@@ -68,6 +68,12 @@ public class Theme {
 		tokens.put(token.getKey(), token);
 	}
 
+	public Theme copy() {
+		Theme copy = new Theme(id, name, author, website, description, file.orElse(null), type);
+		tokens.values().forEach(copy::addToken);
+		return copy;
+	}
+
 	public boolean has(TokenKey key) {
 		return tokens.containsKey(key);
 	}
