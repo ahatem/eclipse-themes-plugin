@@ -46,6 +46,24 @@ I then realized the old plugin was also outdated, so I decided to build this one
 3.  Pick a theme from the list to see how it looks.
 4.  Click **Apply and Close** to set your new editor theme.
 
+### Importing XML themes
+
+Theme XML must not contain a `DOCTYPE`, even an empty or internal-only declaration.
+Themes that rely on DTD defaults or custom entities must be flattened into trusted,
+ordinary XML offline before loading. Predefined XML escapes (such as `&amp;`) and
+numeric character references remain supported. All 33 bundled themes are covered
+by compatibility tests; this does not establish compatibility with every third-party theme.
+
+The parser blocks external entities, DTDs, schemas and XInclude retrieval. If the
+selected Java/Eclipse XML provider cannot establish and verify the required security
+controls, loading fails with a parsing error. There is no insecure opt-out. This
+hardening does not add general file-size or depth quotas.
+
+Import replacement safety remains a known limitation: importing a file with the
+same filename can overwrite an existing installed theme before parsing, and a
+parse failure can delete that copy. Keep a separate backup and use a distinct
+filename when importing. Parser hardening does not provide file recovery.
+
 ## ☕ Support
 
 Eclipse Themes is free and open source. If it improves your daily setup, support helps with compatibility fixes, maintenance, and new releases.
