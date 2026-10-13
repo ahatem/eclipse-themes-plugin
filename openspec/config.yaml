@@ -16,6 +16,14 @@ rules:
     - Keep one coherent user/system outcome per change; split unrelated audit findings.
     - State affected capabilities, compatibility surface, migration/state risk, and rollback/recovery impact when relevant.
     - Link the motivating audit finding or GitHub issue when one exists, but do not treat it as unquestionable current truth.
+    - Every behavioral proposal must include a `## Decision Gate` section before implementation is authorized.
+    - Classify material unresolved questions as Evidence-dependent, Engineering, Product / Maintainer decision, or Deferred.
+    - Investigate Evidence-dependent questions before converting assumptions into requirements whenever practical; otherwise record the required experiment or compatibility evidence.
+    - Product / Maintainer decisions must present realistic options, consequences, and a recommended option with rationale; do not silently choose them.
+    - Any BREAKING compatibility behavior, migration policy, fallback semantics, supported-platform/version boundary, public extension/API commitment, or destructive/recovery behavior requires explicit maintainer review.
+    - If no maintainer decision is required, say so explicitly in the Decision Gate section.
+    - Deferred questions must identify their future roadmap/spec owner when known and must not be accidentally decided by the current change.
+    - Do not ask the maintainer to answer questions that should first be resolved through technical investigation.
   specs:
     - Describe observable behavior, invariants, inputs/outputs, failure behavior, security and compatibility constraints; keep Java classes and step-by-step implementation out unless contractual.
     - Use testable GIVEN/WHEN/THEN-style scenarios and include negative/failure/transition scenarios where state is involved.

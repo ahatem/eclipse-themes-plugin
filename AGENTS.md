@@ -46,6 +46,48 @@ Use the current OpenSpec workflow installed for the active coding tool. Conceptu
 
 Do not create a giant "modernize everything" change. Prefer small, independently reviewable changes that advance the roadmap.
 
+## Decision gates before finalizing a change
+
+Before finalizing any new OpenSpec proposal, classify material unresolved questions into the following categories:
+
+### Evidence-dependent
+Questions that require repository inspection, experiments, Eclipse/runtime verification, compatibility testing, or external API research.
+
+The agent must investigate these before turning an assumption into a contract. If evidence cannot be obtained during planning, record the uncertainty and required spike/test explicitly.
+
+### Engineering
+Implementation choices that do not materially change product semantics, supported compatibility, user-visible behavior, data/state ownership, or extension contracts.
+
+The agent may choose these independently, but must record significant choices and rationale in `design.md`.
+
+### Product / Maintainer decision
+Questions that materially affect user-visible behavior, compatibility, migration, supported platforms/versions, fallback semantics, destructive/recovery behavior, extension/API commitments, theme-author requirements, or product scope.
+
+The agent MUST NOT silently choose these.
+
+For each such question, present:
+- the decision to make;
+- realistic options;
+- consequences/trade-offs;
+- the agent's recommended option and rationale.
+
+The proposal must remain unapproved for implementation until the maintainer explicitly resolves every blocking Product / Maintainer decision.
+
+### Deferred
+Questions intentionally outside the bounded change.
+
+Record the owning roadmap/spec area when known and ensure the current change does not accidentally decide them.
+
+### Decision Gate section
+
+Every behavioral OpenSpec proposal must contain a `## Decision Gate` section before implementation begins.
+
+If no maintainer decision is required, state that explicitly and list any material evidence-dependent, engineering, or deferred questions.
+
+Any `BREAKING` compatibility behavior automatically requires explicit maintainer review, even when the recommended behavior is security-motivated.
+
+Do not ask the maintainer to decide questions that can first be resolved through technical evidence. Investigate first, then present the actual product choice.
+
 ## Branch and PR policy
 
 - Integration branch: `develop`.
