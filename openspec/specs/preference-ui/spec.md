@@ -42,3 +42,13 @@ The preference UI SHALL distinguish successful operations from failures and SHAL
 - **THEN** the UI presents a failure/diagnostic state rather than an unconditional success indication
 
 > Preview fidelity and coherent Apply/OK/Cancel/default semantics are planned R4 changes.
+
+### Requirement: Reset messaging does not overpromise historical restoration
+
+The preference UI SHALL describe reset/stop-management behavior according to what the system can safely restore from available ownership information.
+
+#### Scenario: No legacy snapshot exists
+- **GIVEN** an existing installation has no trustworthy record of the user's pre-theme values
+- **WHEN** the reset action is presented or completed
+- **THEN** the UI does not claim that all original user preferences were reconstructed
+- **AND** it communicates any conservative recovery limitation that materially affects the user

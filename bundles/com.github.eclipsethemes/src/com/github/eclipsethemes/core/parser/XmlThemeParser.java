@@ -16,10 +16,22 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.InputStream;
+import java.util.function.Supplier;
 
 public class XmlThemeParser implements ThemeParser {
+
+	private final Supplier<DocumentBuilderFactory> factorySupplier;
+
+	public XmlThemeParser() {
+		this(DocumentBuilderFactory::newInstance);
+	}
+
+	XmlThemeParser(Supplier<DocumentBuilderFactory> factorySupplier) {
+		this.factorySupplier = factorySupplier;
+	}
 
 	/**
 	 * @param inputStream The stream to parse.
@@ -27,8 +39,7 @@ public class XmlThemeParser implements ThemeParser {
 	 */
 	public Theme parse(InputStream inputStream, File sourceFile) throws ThemeParseException {
 		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
+			DocumentBuilder builder = SecureXmlBuilder.create(factorySupplier);
 			Document document = builder.parse(inputStream);
 
 			Element root = document.getDocumentElement();
@@ -94,6 +105,10 @@ public class XmlThemeParser implements ThemeParser {
 				theme.addToken(tokenBuilder.build());
 			}
 			return theme;
+		} catch (ThemeParseException e) {
+			throw e;
+		} catch (SAXException e) {
+			throw new ThemeParseException("Failed to parse theme XML: " + e.getMessage(), e);
 		} catch (Exception e) {
 			throw new ThemeParseException("Failed to parse theme from stream", e);
 		}
