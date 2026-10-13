@@ -1,5 +1,10 @@
 package com.github.eclipsethemes.eclipse.adapters.editor;
 
+import java.util.List;
+import java.util.Set;
+
+import static com.github.eclipsethemes.eclipse.adapters.ManagedPreference.*;
+
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -8,6 +13,7 @@ import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.ThemeType;
 import com.github.eclipsethemes.core.models.TokenKey;
 import com.github.eclipsethemes.eclipse.adapters.EclipseThemeAdapter;
+import com.github.eclipsethemes.eclipse.adapters.ManagedPreference;
 
 
 public class TextEditorThemeAdapter extends EclipseThemeAdapter {
@@ -18,76 +24,57 @@ public class TextEditorThemeAdapter extends EclipseThemeAdapter {
 		return "org.eclipse.ui.editors";
 	}
 
-	@Override
-	public void apply(Theme theme, IEclipsePreferences preferences) throws BackingStoreException {
+	private static final List<ManagedPreference> MAPPINGS = List.of(
 		// System color defaults
-		preferences.putBoolean("AbstractTextEditor.Color.Background.SystemDefault", false);
-		preferences.putBoolean("AbstractTextEditor.Color.Foreground.SystemDefault", false);
-		preferences.putBoolean("AbstractTextEditor.Color.SelectionBackground.SystemDefault", false);
-		preferences.putBoolean("AbstractTextEditor.Color.SelectionForeground.SystemDefault", false);
+		booleanValue("AbstractTextEditor.Color.Background.SystemDefault", false),
+		booleanValue("AbstractTextEditor.Color.Foreground.SystemDefault", false),
+		booleanValue("AbstractTextEditor.Color.SelectionBackground.SystemDefault", false),
+		booleanValue("AbstractTextEditor.Color.SelectionForeground.SystemDefault", false),
 
 		// Basic editor colors
-		putColor(preferences, "AbstractTextEditor.Color.Background", theme.get(TokenKey.BACKGROUND));
-		putColor(preferences, "AbstractTextEditor.Color.Foreground", theme.get(TokenKey.FOREGROUND));
-		putColor(preferences, "AbstractTextEditor.Color.FindScope", theme.get(TokenKey.FIND_SCOPE));
-		putColor(preferences, "AbstractTextEditor.Color.SelectionBackground", theme.get(TokenKey.SELECTION_BACKGROUND));
-		putColor(preferences, "AbstractTextEditor.Color.SelectionForeground", theme.get(TokenKey.SELECTION_FOREGROUND));
+		color(TokenKey.BACKGROUND, "AbstractTextEditor.Color.Background"),
+		color(TokenKey.FOREGROUND, "AbstractTextEditor.Color.Foreground"),
+		color(TokenKey.FIND_SCOPE, "AbstractTextEditor.Color.FindScope"),
+		color(TokenKey.SELECTION_BACKGROUND, "AbstractTextEditor.Color.SelectionBackground"),
+		color(TokenKey.SELECTION_FOREGROUND, "AbstractTextEditor.Color.SelectionForeground"),
 
 		// Editor UI elements
-		putColor(preferences, "currentLineColor", theme.get(TokenKey.CURRENT_LINE));
-		putColor(preferences, "lineNumberColor", theme.get(TokenKey.LINE_NUMBER));
-		putColor(preferences, "printMarginColor", theme.get(TokenKey.LINE_NUMBER)); // Same as line numbers
+		color(TokenKey.CURRENT_LINE, "currentLineColor"),
+		color(TokenKey.LINE_NUMBER, "lineNumberColor"),
+		color(TokenKey.LINE_NUMBER, "printMarginColor"), // Same as line numbers
 
 		// Occurrence highlighting
-		putColor(preferences, "occurrenceIndicationColor", theme.get(TokenKey.OCCURRENCE));
-		putColor(preferences, "LSP4EReadOccurrenceIndicationColor", theme.get(TokenKey.OCCURRENCE));
-		putColor(preferences, "org.eclipse.cdt.ui.occurrenceIndicationColor", theme.get(TokenKey.OCCURRENCE));
-		putColor(preferences, "writeOccurrenceIndicationColor", theme.get(TokenKey.WRITE_OCCURRENCE));
-		putColor(preferences, "LSP4EWriteOccurrenceIndicationColor", theme.get(TokenKey.WRITE_OCCURRENCE));
-		putColor(preferences, "org.eclipse.cdt.ui.writeOccurrenceIndicationColor",
-				theme.get(TokenKey.WRITE_OCCURRENCE));
-		putColor(preferences, "TextOccurrenceIndicationColor", theme.get(TokenKey.TEXT_OCCURRENCE));
-		putColor(preferences, "LSP4ETextOccurrenceIndicationColor", theme.get(TokenKey.WRITE_OCCURRENCE)); // Note:
-																											// Using
+		color(TokenKey.OCCURRENCE, "occurrenceIndicationColor"),
+		color(TokenKey.OCCURRENCE, "LSP4EReadOccurrenceIndicationColor"),
+		color(TokenKey.OCCURRENCE, "org.eclipse.cdt.ui.occurrenceIndicationColor"),
+		color(TokenKey.WRITE_OCCURRENCE, "writeOccurrenceIndicationColor"),
+		color(TokenKey.WRITE_OCCURRENCE, "LSP4EWriteOccurrenceIndicationColor"),
+		color(TokenKey.WRITE_OCCURRENCE, "org.eclipse.cdt.ui.writeOccurrenceIndicationColor"),
+		color(TokenKey.TEXT_OCCURRENCE, "TextOccurrenceIndicationColor"),
+		color(TokenKey.WRITE_OCCURRENCE, "LSP4ETextOccurrenceIndicationColor"),
+
 		// Search and debug
-		putColor(preferences, "searchResultIndicationColor", theme.get(TokenKey.SEARCH_RESULT));
-		putColor(preferences, "filteredSearchResultIndicationColor", theme.get(TokenKey.FILTERED_SEARCH_RESULT));
-		putColor(preferences, "currentIPIndication", theme.get(TokenKey.CURRENT_INSTRUCTION_POINTER));
-		putColor(preferences, "secondaryIPIndication", theme.get(TokenKey.DEBUG_CALL_STACK));
+		color(TokenKey.SEARCH_RESULT, "searchResultIndicationColor"),
+		color(TokenKey.FILTERED_SEARCH_RESULT, "filteredSearchResultIndicationColor"),
+		color(TokenKey.CURRENT_INSTRUCTION_POINTER, "currentIPIndication"),
+		color(TokenKey.DEBUG_CALL_STACK, "secondaryIPIndication"),
 
 		// Version control annotations (conditional)
-		handleVersionControlColors(preferences, theme);
+		optionalColor(TokenKey.ADDED_LINE, "additionIndicationColor", theme -> null),
+		optionalColor(TokenKey.MODIFIED_LINE, "changeIndicationColor", theme -> null),
+		optionalColor(TokenKey.REMOVED_LINE, "deletionIndicationColor",
+				theme -> theme.getType() == ThemeType.LIGHT ? null : Color.ofRgb(224, 226, 228)),
 
-		putColor(preferences, "matchingBracketsColor", theme.get(TokenKey.MATCHING_BRACKET));
+		color(TokenKey.MATCHING_BRACKET, "matchingBracketsColor")
+	);
 
-		flushPreferences(preferences);
+	@Override
+	public Set<String> getManagedKeys() {
+		return managedKeys(MAPPINGS);
 	}
 
-	private void handleVersionControlColors(IEclipsePreferences preferences, Theme theme) {
-		// Added lines
-		if (theme.has(TokenKey.ADDED_LINE)) {
-			putColor(preferences, "additionIndicationColor", theme.get(TokenKey.ADDED_LINE));
-		} else {
-			preferences.remove("additionIndicationColor");
-		}
-
-		// Modified lines
-		if (theme.has(TokenKey.MODIFIED_LINE)) {
-			putColor(preferences, "changeIndicationColor", theme.get(TokenKey.MODIFIED_LINE));
-		} else {
-			preferences.remove("changeIndicationColor");
-		}
-
-		// Removed lines - special handling for light themes
-		if (theme.has(TokenKey.REMOVED_LINE)) {
-			putColor(preferences, "deletionIndicationColor", theme.get(TokenKey.REMOVED_LINE));
-		} else {
-			if (theme.getType() == ThemeType.LIGHT) {
-				preferences.remove("deletionIndicationColor");
-			} else {
-				putColor(preferences, "deletionIndicationColor", Color.ofRgb(224, 226, 228));
-			}
-		}
+	@Override
+	public void apply(Theme theme, IEclipsePreferences preferences) throws BackingStoreException {
+		applyMappings(MAPPINGS, theme, preferences);
 	}
-
 }

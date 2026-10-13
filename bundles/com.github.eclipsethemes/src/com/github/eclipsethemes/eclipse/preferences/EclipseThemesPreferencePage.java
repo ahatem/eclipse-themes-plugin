@@ -701,8 +701,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		if (dialog.open() != Dialog.OK) {
 			return;
 		}
-		if (dialog.isEclipseOriginalSelected()) {
-			resetToEclipseOriginal();
+		if (dialog.isStopManagementSelected()) {
+			if (!stopThemeManagement()) return;
 		} else {
 			resetToPluginDefault();
 		}
@@ -725,31 +725,30 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		}
 	}
 
-	private void resetToEclipseOriginal() {
-		// Clear all editor color preferences written by this plugin's adapters.
-		// Each node falls back to Eclipse's compiled-in factory defaults.
-		String[] nodes = { "org.eclipse.ui.editors", "org.eclipse.jdt.ui", "org.eclipse.cdt.ui", "org.eclipse.pde.ui",
-				"org.eclipse.ant.ui", "org.eclipse.debug.ui" };
-		for (String nodeId : nodes) {
-			try {
-				IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(nodeId);
-				prefs.clear();
-				prefs.flush();
-			} catch (Exception e) {
-				EclipseThemes.instance().getLogger().warn("Could not clear preferences for node: " + nodeId, e);
-			}
+	private boolean stopThemeManagement() {
+		PreferenceReset.Result result = new PreferenceReset(InstanceScope.INSTANCE::getNode).resetAndCommit(() -> {
+			getPreferenceStore().setToDefault(PreferenceKeys.ACTIVE_THEME_ID);
+			currentTheme = null;
+			refreshThemeList();
+			clearSelection();
+		});
+		if (!result.successful()) {
+			result.failures().forEach(failure -> EclipseThemes.instance().getLogger()
+					.error(failure.description(), failure.cause()));
+			statusLabel.setText("Reset incomplete");
+			statusLabel.getParent().layout();
+			showErrorMessage("Reset Incomplete", "Some managed appearance overrides could not be removed or saved. "
+					+ "The reset may be partial; the active theme selection has been retained. You can retry.\n\n"
+					+ result.describeFailures());
 		}
-		getPreferenceStore().setToDefault(PreferenceKeys.ACTIVE_THEME_ID);
-		currentTheme = null;
-		refreshThemeList();
-		clearSelection();
+		return result.successful();
 	}
 
 	// ── Reset choice dialog ───────────────────────────────────────────────────
 
 	private static class ResetChoiceDialog extends Dialog {
 
-		private boolean eclipseOriginalSelected = false;
+		private boolean stopManagementSelected = false;
 
 		ResetChoiceDialog(Shell shell) {
 			super(shell);
@@ -772,7 +771,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 			// Question heading
 			Label heading = new Label(area, SWT.WRAP);
-			heading.setText("What would you like to restore?");
+			heading.setText("How would you like to reset editor appearance?");
 			heading.setFont(org.eclipse.jface.resource.JFaceResources.getBannerFont());
 			GridData headingData = new GridData(SWT.FILL, SWT.TOP, true, false);
 			headingData.widthHint = 420;
@@ -792,30 +791,30 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			pluginDescData.verticalIndent = 0;
 			pluginDesc.setLayoutData(pluginDescData);
 
-			// Option 2 — Eclipse original
-			Button eclipseOriginalRadio = new Button(area, SWT.RADIO);
-			eclipseOriginalRadio.setText("Eclipse original colors");
+			// Option 2 — Remove only managed overrides
+			Button stopManagementRadio = new Button(area, SWT.RADIO);
+			stopManagementRadio.setText("Stop Eclipse Themes management");
 
 			Label eclipseDesc = new Label(area, SWT.WRAP);
-			eclipseDesc.setText("Clears all editor color preferences and restores Eclipse's factory defaults.\n"
-					+ "Note: this resets all color settings in editor preference nodes, not only those set by this plugin.");
+			eclipseDesc.setText("Removes only appearance overrides managed by this plugin, leaving unrelated settings unchanged.\n"
+					+ "Eclipse resolves the remaining preference defaults. Previous custom values were not recorded and cannot be recovered.");
 			eclipseDesc.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 			GridData eclipseDescData = new GridData(SWT.FILL, SWT.TOP, true, false);
 			eclipseDescData.horizontalIndent = 18;
 			eclipseDesc.setLayoutData(eclipseDescData);
 
-			eclipseOriginalRadio.addSelectionListener(new SelectionAdapter() {
+			stopManagementRadio.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					eclipseOriginalSelected = eclipseOriginalRadio.getSelection();
+					stopManagementSelected = stopManagementRadio.getSelection();
 				}
 			});
 
 			return area;
 		}
 
-		boolean isEclipseOriginalSelected() {
-			return eclipseOriginalSelected;
+		boolean isStopManagementSelected() {
+			return stopManagementSelected;
 		}
 	}
 }
