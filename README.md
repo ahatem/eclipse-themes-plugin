@@ -58,6 +58,12 @@ Contributions are always welcome! The best way to help is to add a new theme to 
 
 Please read the [**Contributing Guidelines**](CONTRIBUTING.md) to get started.
 
+## ☕ Support
+
+If this plugin helped you find a theme that makes Eclipse feel like home, a coffee goes a long way!
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ahmedhatem-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/ahmedhatem)
+
 ## 📜 License
 
 This project is licensed under the **Eclipse Public License 2.0**. See the [LICENSE](LICENSE) file for details.

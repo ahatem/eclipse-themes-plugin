@@ -10,6 +10,10 @@ import com.github.eclipsethemes.core.models.TokenKey;
 import com.github.eclipsethemes.core.models.TokenOptions;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.Set;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 
 public abstract class EclipseThemeAdapter {
 
@@ -22,6 +26,23 @@ public abstract class EclipseThemeAdapter {
 	 * Apply theme to Eclipse preferences.
 	 */
 	public abstract void apply(Theme theme, IEclipsePreferences preferences) throws BackingStoreException;
+
+	/** No ownership is inferred for third-party adapters that do not declare it. */
+	public Set<String> getManagedKeys() {
+		return Set.of();
+	}
+
+	protected static Set<String> managedKeys(List<ManagedPreference> mappings) {
+		Set<String> keys = new LinkedHashSet<>();
+		mappings.forEach(mapping -> keys.addAll(mapping.keys()));
+		return Collections.unmodifiableSet(keys);
+	}
+
+	protected static void applyMappings(List<ManagedPreference> mappings, Theme theme, IEclipsePreferences preferences)
+			throws BackingStoreException {
+		mappings.forEach(mapping -> mapping.application().accept(theme, preferences));
+		flushPreferences(preferences);
+	}
 
 	// === SEMANTIC STYLE PREFERENCES (using dots) ===
 
