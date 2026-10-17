@@ -13,6 +13,7 @@ Themes currently have incompatible identity rules: XML `ect-id` controls equalit
 - Keep identity across metadata/content changes to an established theme. A newly arriving file does not establish continuity by matching label, path, bytes, or `ect-id`; choosing an update target remains later import work.
 - Make catalog references and equality use established logical identity, including separate same-name themes. Honor explicit Apply/OK requests without an ID-only skip.
 - Introduce identity bindings lazily for existing installed files without rewriting XML or relocating files. Read old selection intent conservatively; represent unresolved intent separately from an applied theme.
+- PM6-A: refuse import before mutation if the managed file exists or a binding reserves its locator, including a missing-file reservation. For an unused locator, exclusively create/copy the destination before persisting the new binding, and best-effort remove only the destination created by a failed attempt. This temporary boundary does not select update/replacement/keep-both policy.
 - **BREAKING, approved:** separate imported themes claiming the same source ID; expose distinct same-name catalog entries; change internal selected references and fresh/unresolved default handling; repeated OK with a selection can reapply unchanged colors. These compatibility and fallback consequences are covered by PM1–PM5 approval.
 
 ## Capabilities
@@ -26,8 +27,9 @@ None. Existing capabilities own this behavior.
 - `theme-definition`: stable logical identity distinct from legacy source metadata and current content.
 - `theme-catalog`: persistent identity bindings and lookup independent of display-name uniqueness.
 - `theme-application`: logical selection references, conservative legacy resolution, and no ID-only application suppression.
+- `theme-import`: conservative refusal of occupied or binding-reserved managed locators before mutation (PM6-A only).
 
-`theme-import` is deliberately unchanged: replacement targeting, collision choices, staging, atomicity and removal correctness belong to the next change. These remain known defects during this intermediate foundation; identity alone does not make import safe.
+Beyond PM6-A's temporary refusal boundary, replacement targeting, update-vs-new/keep-both choices, staging, atomic XML replacement and removal correctness belong to the next change. Identity and this guard do not constitute general transactional import.
 
 ## Decision Gate
 
@@ -70,3 +72,19 @@ Re-import as update versus another installation, duplicate-claim resolution, bun
 Implementation touches theme identity/model consumers, repository catalog/binding persistence, selected-reference lookup/defaults and the narrow OK guard. Preserve JavaSE-17, current target/platform scope, token semantics, XML security, adapters, unrelated preferences and files. No new dependencies, exported API, schema/package format, database, UUID infrastructure or migration framework is justified.
 
 The compatibility reader and lazy binding are approved by PM3/PM4. Older versions will ignore new identity metadata and cannot interpret newly written selected references; downgrade may require reselection. They must still be able to read untouched XML at its existing location. No rollback claim is made for colors already applied by either version. See `design.md` for failure boundaries and `verification.md` for phase-specific results.
+
+## Implementation Decision Gate return — PM6 Option A approved
+
+The first implementation review found that legacy basename overwrites plus durable locator bindings transferred logical identity through a filename match, contradicting PM1. Work stopped and the alternatives below were presented; they remain historical context. No generalized storage framework was needed (ED3 was satisfied).
+
+**Resolution:** the maintainer explicitly approved **PM6 Option A** and authorized resuming this slice. Before copying/truncating/replacing XML or changing bindings, catalog or selection, refuse if the managed file exists **or** a binding owns/reserves its locator. A binding with a missing file is inconsistent existing state: diagnose/refuse and preserve it. Refusal preserves XML bytes, bindings, catalog/selected intent and established identity; it neither reuses the old ID nor allocates a replacement at that locator. Only genuinely unused locators can be admitted.
+
+**Exact question:** what interim behavior is authorized when an incoming import targets an already managed filename, while full import update-vs-new/collision policy remains deferred?
+
+| Option | Consequences / trade-offs |
+| --- | --- |
+| **A — approved:** refuse occupied or binding-reserved locators before mutation; continue allowing imports to unused destinations | Temporary compatibility restriction: re-import to an existing/reserved basename is refused until the later import change. Preserves PM1 and existing state without inventing continuity, a conflict UI or a transaction. A missing file does not release a binding reservation. |
+| **B — not approved:** explicitly grandfather the old basename overwrite as mutation of the existing record, retaining its logical ID | Keeps legacy re-import behavior, but makes a filename match sufficient to transfer the old logical identity to possibly unrelated content. Requires an explicit exception to PM1 and risks attaching future references/customizations to the wrong logical theme. |
+| **C — not approved:** keep this change blocked until the separately authorized import change can own target selection | Avoids an interim policy, but the current R2 change cannot be completed independently as requested. No next change is started by this option without a further instruction. |
+
+Option A is the smallest sufficient correction within this approval. Options B/C are not selected. The later `atomic-deterministic-theme-import` change still owns real update/install-new targeting, collision/duplicate-claim resolution, keep-both/storage allocation, atomic replacement, conflict UI and deduplication; none is implemented here.

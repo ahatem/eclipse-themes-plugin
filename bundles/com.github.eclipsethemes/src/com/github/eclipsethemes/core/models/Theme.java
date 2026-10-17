@@ -9,6 +9,7 @@ import java.util.Optional;
 public class Theme {
 
 	private final String id;
+	private final String logicalId;
 	private final String name;
 	private final String author;
 	private final String website;
@@ -20,6 +21,11 @@ public class Theme {
 	private final Map<TokenKey, Token> tokens;
 
 	public Theme(String id, String name, String author, String website, String description, File file, ThemeType type) {
+		this(null, id, name, author, website, description, file, type);
+	}
+
+	private Theme(String logicalId, String id, String name, String author, String website, String description, File file, ThemeType type) {
+		this.logicalId = logicalId;
 		this.id = id;
 		this.name = name;
 		this.author = author;
@@ -32,8 +38,21 @@ public class Theme {
 		this.tokens = new HashMap<>();
 	}
 
+	/** Raw XML ect-id, retained for legacy lookup and preview, not logical identity. */
 	public String getId() {
 		return this.id;
+	}
+
+	/** Null for parser-only candidates; assigned by the repository on admission. */
+	public String getLogicalId() {
+		return logicalId;
+	}
+
+	public Theme withLogicalId(String logicalId) {
+		if (logicalId == null || logicalId.isBlank()) throw new IllegalArgumentException("Logical identity is required");
+		Theme established = new Theme(logicalId, id, name, author, website, description, file.orElse(null), type);
+		established.tokens.putAll(tokens);
+		return established;
 	}
 
 	public String getName() {
@@ -97,11 +116,11 @@ public class Theme {
 	public boolean equals(Object obj) {
 	    if (this == obj) return true;
 	    if (!(obj instanceof Theme other)) return false;
-	    return id != null && id.equals(other.id);
+	    return logicalId != null && logicalId.equals(other.logicalId);
 	}
 
 	@Override
 	public int hashCode() {
-	    return id != null ? id.hashCode() : 0;
+	    return logicalId != null ? logicalId.hashCode() : System.identityHashCode(this);
 	}
 }
