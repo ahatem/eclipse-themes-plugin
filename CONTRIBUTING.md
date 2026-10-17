@@ -28,8 +28,8 @@ Have an idea for a new feature? We'd love to hear it. [Open an issue](https://gi
 
 To build and run the plugin locally, you will need:
 
-- JDK 17 or higher
-- Maven 3.9.0 or higher
+- JDK 21 for the Maven/Tycho build (the plugin still targets JavaSE-17)
+- Maven 3.9.9 or higher
 
 Clone your forked repository and run the following command from the root directory to build the project:
 
@@ -38,3 +38,5 @@ mvn clean verify
 ```
 
 This will compile the code, run tests, and create a local update site in `releng/com.github.eclipsethemes.updatesite/target/repository`. You can then install the plugin from this local site into your development Eclipse instance to test your changes.
+
+See [Test Strategy](docs/TEST_STRATEGY.md) for focused tests, the complete deterministic suite, full reactor checks, and when bounded Eclipse runtime evidence is required. Ordinary Maven tests do not require a local Eclipse installation.

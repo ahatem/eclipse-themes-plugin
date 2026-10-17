@@ -1,5 +1,8 @@
 package com.github.eclipsethemes.eclipse.preferences;
 
+import static com.github.eclipsethemes.eclipse.preferences.AdapterTestSupport.adapters;
+import static com.github.eclipsethemes.eclipse.preferences.AdapterTestSupport.theme;
+
 import static org.junit.Assert.*;
 
 import java.util.LinkedHashMap;
@@ -84,7 +87,7 @@ public class PreferenceResetTest {
 
 	private Map<String, MemoryPreferences> seededNodes() {
 		Map<String, MemoryPreferences> nodes = new LinkedHashMap<>();
-		for (EclipseThemeAdapter adapter : AdapterBaselineTest.adapters()) {
+		for (EclipseThemeAdapter adapter : adapters()) {
 			MemoryPreferences prefs = new MemoryPreferences();
 			adapter.getManagedKeys().forEach(key -> prefs.values.put(key, "legacy override"));
 			prefs.values.put("unrelated.preference", "keep\n=☃");
@@ -113,10 +116,10 @@ public class PreferenceResetTest {
 
 	@Test
 	public void ownershipExactlyMatchesExistingFullAndSparseAdapterMutations() throws Exception {
-		for (EclipseThemeAdapter adapter : AdapterBaselineTest.adapters()) {
+		for (EclipseThemeAdapter adapter : adapters()) {
 			Set<String> observed = new LinkedHashSet<>();
-			for (Theme theme : List.of(AdapterBaselineTest.theme(ThemeType.DARK, true),
-					AdapterBaselineTest.theme(ThemeType.DARK, false), AdapterBaselineTest.theme(ThemeType.LIGHT, false))) {
+			for (Theme theme : List.of(theme(ThemeType.DARK, true),
+					theme(ThemeType.DARK, false), theme(ThemeType.LIGHT, false))) {
 				MemoryPreferences prefs = new MemoryPreferences();
 				adapter.apply(theme, prefs.node);
 				prefs.mutations.stream().map(mutation -> mutation.substring(mutation.indexOf(' ') + 1).split("=", 2)[0])

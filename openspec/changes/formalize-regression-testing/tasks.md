@@ -1,0 +1,40 @@
+# Tasks
+
+PM1–PM3 Option A were explicitly approved on 2026-10-17, with implementation authorized after artifact synchronization. The approved boundaries and ED2 stop conditions in the proposal remain binding. The two authorized roadmap/queue naming lines were synchronized during planning and require no further resequencing.
+
+## 1. Record authorization and retain the verified baseline
+
+- [x] 1.1 Record explicit maintainer resolutions of PM1, PM2 and PM3 in the proposal and reconcile all dependent artifacts; verify each blocking decision has an actual resolution and a separate apply request authorizes implementation.
+- [x] 1.2 Recheck the implementation base against the recorded `e1736e1`/`28401ae` source inventory and run the documented clean complete suite; record counts/results and any changed test or runtime inputs in the evidence record rather than assuming the 40-test baseline remains identical.
+
+## 2. Formalize existing deterministic tests and their contributor workflow
+
+- [x] 2.1 Extract the shared parser input/corpus and activator logging fixtures into test-owned helpers without changing product code or existing behavioral assertions; verify compatibility, mapping and repository warning classes pass individually and together and that normal/failed fixture acquisition restores previous global state.
+- [x] 2.2 Extract shared adapter list/generated-theme and sparse/token fixtures from test classes while preserving current assignments, controlled stores and package-private access; verify adapter baseline, editor mapping, PDE/Ant and reset tests pass with unchanged fingerprint expectations and exact state/failure assertions.
+- [x] 2.3 Expose deterministic readable corpus and ordered adapter projections on hash mismatch; verify with a controlled mismatch or narrow diagnostic regression that the failing adapter/fixture/key or corpus/role is inspectable, restore correct expectations, and rerun the affected classes successfully. Do not add an automatic hash replacement path.
+- [x] 2.4 Keep one Surefire test execution and serial fixture lifecycle; if its historical execution ID is renamed, verify exactly one execution discovers the full suite and that an unmatched explicit selector still fails. Keep framework/dependency/source-root/product metadata unchanged.
+- [x] 2.5 Document focused class/method/group selection, initial clean compilation, complete suite/report location and fingerprint review in `docs/TEST_STRATEGY.md`; link it from `CONTRIBUTING.md` and correct the testing build prerequisites to JDK 21/Maven 3.9.9+, separately from JavaSE-17 output. Verify the documented parser, reset, mapping and PDE/Ant selectors run the intended classes without fail-on-no-match suppression; retain future R2–R7 test aspirations as future work.
+
+## 3. Maintain isolated runtime preparation and prove ED2's setup boundary
+
+- [x] 3.1 Add the approved non-reactor runtime asset directory, explicit 2024-09 IU/consumer-version inputs and test-only application metadata; verify no root reactor module, product target, manifest, export, feature or published packaging input is changed and all probe metadata references maintained sources.
+- [x] 3.2 Implement the approved PowerShell-compatible preparation entry point using caller-supplied p2 bootstrap/JDK and new owned output; verify clean independent present and platform-only absent profiles with the observed versions/preconditions, explicit network/cache errors and no changes to bootstrap or normal workspace/config/user storage. This is ED2's provisioning experiment, not an assumption of success.
+- [x] 3.3 Verify preparation rejects source/ancestor/bootstrap/user-workspace paths, aliases/reparse escapes and existing unowned output before mutation; exercise missing-tool, failed-download and timeout paths with non-success status and preserved diagnostics, without deleting unrelated directories or requiring extra tooling.
+- [x] 3.4 Write the preparation README beside the scripts, covering bootstrap acquisition/prerequisites, exact supported baseline, inputs, generated state, logs and failure recovery; execute the instructions using only tracked source assets and newly generated state. Record a concrete blocker and return to the gate if a new module/tooling/platform contract is needed.
+
+## 4. Promote and verify reusable R1 runtime checks
+
+- [x] 4.1 Maintain packaged parser/catalog/provider and reset checks from the inspected XML/reset probes; replace hidden Surefire-classpath and compiled-helper dependencies with explicit source/runtime inputs. Verify harmless DTD failures, calibrated zero external access, dynamic managed-key sets, repeated reset, unrelated values/absence/child/default scopes and persistence through a fresh preference lifecycle on the isolated baseline.
+- [x] 4.2 Promote the approved final mapping probe's debug/JDT/PDE/Ant consumer assertions with behavioral names and failure-safe SWT/listener/resource cleanup; verify rich/sparse/repeated transitions, packaged default PDE access before probe store acquisition, typed true/false/default-valued flags and zero unexpected listener exceptions, without weakening archived assertions or suppressing logs.
+- [x] 4.3 Promote present/absent discovery and incompatible-access checks using the independently provisioned profiles; verify genuine absent preconditions, untouched unrelated/absent state, continuing text behavior, and contextual incompatible PDE failure. Preserve the diagnostic PM5 experiment as historical rather than executing defective controls in the passing lane.
+- [x] 4.4 Implement the verification entry point to compile JavaSE-17 test-only application output, register explicit built-product/probe jars only in generated configurations, bound subprocess execution and preserve unfiltered logs. Verify assertion failure, missing completion, incompatible baseline, listener errors and timeout produce non-success with cleanup; verify a passing run requires completed checks and process termination.
+- [x] 4.5 Complete runtime instructions and result format with exact revision/product digest/runtime/JDK versions, per-check outcomes, output locations and evidence limits; run the documented prepare/build/verify sequence without manually editing runtime registration or using ignored old probes. Distinguish fresh results from archived evidence and disclose any cold-cache/network limitation.
+- [x] 4.6 Update the test strategy's runtime-required boundary table and contributor instructions according to approved PM3; repair relevant mapping-support links to archived evidence. Verify documentation does not imply CDT runtime, Java-17 workbench, visual/multi-OS support, hosted runtime CI or product p2-install acceptance, and leaves later R5 policy changes deferred.
+
+## 5. Integration verification and handoff
+
+- [x] 5.1 Run the affected focused regressions, then the complete automated suite and `mvn clean verify -B` for the combined test/build-infrastructure change; verify no test/helper/probe/JUnit code is shipped and fresh product output remains major version 61/JavaSE-17. Record failures or concrete blockers separately from passing checks.
+- [x] 5.2 Verify the documented automated and runtime workflow from a tracked-source-only checkout/export with newly generated runtime state, recording cache/network reuse precisely; include a Java-17 focused parser fork when provider/runtime-compatibility changes warrant it. Confirm the ordinary suite needs neither Eclipse installation nor runtime-probe preparation.
+- [x] 5.3 Run `openspec validate formalize-regression-testing --strict`, `openspec validate --all --strict`, `git diff --check` and full-diff/link review; verify all delta scenarios have implementation/evidence coverage, PM1–PM3 remain accurately recorded, only the approved roadmap/queue naming lines changed, and no production semantics, CI/release work or broader compatibility claim entered the change.
+
+No archive, commit, push, PR, release or subsequent change is part of this request.

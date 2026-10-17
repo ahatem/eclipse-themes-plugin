@@ -88,6 +88,20 @@ Any `BREAKING` compatibility behavior automatically requires explicit maintainer
 
 Do not ask the maintainer to decide questions that can first be resolved through technical evidence. Investigate first, then present the actual product choice.
 
+## Proportional Engineering
+
+Implement the smallest design that fully satisfies approved behavior and demonstrated risks. Justify new complexity by an approved requirement, demonstrated defect/regression, concrete repository/platform constraint, a boundary cheaper verification cannot prove, or prevention of false passing results or meaningful user/contributor-state damage.
+
+Do not add modules, abstractions, frameworks, compatibility layers, generalized infrastructure, defensive mechanisms, or verification for theoretical completeness, elegance, or speculative reuse. Do not generalize one-use solutions or implement future roadmap work early.
+
+Keep verification proportional: prefer deterministic tests, then controlled integration tests, then real runtime verification only for boundaries the cheaper levels cannot prove. Do not exhaustively test hypothetical environmental/adversarial cases or duplicate evidence without a distinct reason.
+
+Once approved acceptance criteria and necessary evidence are satisfied, stop. Defer useful but unnecessary work. If additional scope appears necessary, state the concrete evidence and return to the Decision Gate when it materially changes architecture, tooling, compatibility, contributor obligations, or roadmap scope.
+
+### Proportionality review
+
+Before declaring substantial work complete, check both underengineering (anything required omitted?) and overengineering (anything added without contract/evidence justification?). The correct solution is the smallest demonstrably sufficient solution, not the largest safe solution.
+
 ## Branch and PR policy
 
 - Integration branch: `develop`.

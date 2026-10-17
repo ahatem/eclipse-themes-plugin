@@ -11,12 +11,7 @@ import org.junit.Test;
 import com.github.eclipsethemes.core.models.*;
 
 public class XmlThemeMappingTest {
-    @org.junit.BeforeClass public static void logger() throws Exception {
-        XmlThemeParserCompatibilityTest.loggerStandIn();
-    }
-    @org.junit.AfterClass public static void restoreLogger() throws Exception {
-        XmlThemeParserCompatibilityTest.restoreActivator();
-    }
+    @org.junit.ClassRule public static final org.junit.rules.ExternalResource LOGGER = ParserTestSupport.loggerRule();
 
     private static final String[][] ALIASES = {
         {"occurrenceIndication", "occurrence"}, {"writeOccurrenceIndication", "writeOccurrence"},
@@ -46,7 +41,7 @@ public class XmlThemeMappingTest {
         }
     }
     static Theme parse(String properties) throws Exception {
-        return new XmlThemeParser().parse(XmlThemeParserCompatibilityTest.xml(
+        return new XmlThemeParser().parse(ParserTestSupport.xml(
                 "<colorTheme name='Mapping'>" + properties + "</colorTheme>"));
     }
 
@@ -89,35 +84,20 @@ public class XmlThemeMappingTest {
         }
     }
 
-    static Path themes() {
-        Path path = Path.of("themes");
-        return Files.isDirectory(path) ? path : Path.of("bundles/com.github.eclipsethemes/themes");
-    }
-
-    static Theme bundled(String name) throws Exception {
-        try (var files = Files.list(themes())) {
-            for (Path file : files.toList()) {
-                Theme theme = new XmlThemeParser().parse(file.toFile());
-                if (theme.getName().equals(name)) return theme;
-            }
-        }
-        throw new AssertionError("Missing theme " + name);
-    }
-
     @Test public void namedBundledRegressions() throws Exception {
-        Theme github = bundled("GitHub Dark Dimmed");
+        Theme github = ParserTestSupport.bundled("GitHub Dark Dimmed");
         assertToken(github, "selectionBackground", "#3d4149", false);
         assertToken(github, "sourceHoverBackground", "#2d333b", false);
         assertEquals(Color.ofHex("#e0823d"), github.get(TokenKey.byId("staticFinalField")).getColor());
         assertEquals(Color.ofHex("#6cb6ff"), github.get(TokenKey.CONSTANT).getColor());
-        Theme frappe = bundled("Catppuccin Frappé");
+        Theme frappe = ParserTestSupport.bundled("Catppuccin Frappé");
         assertTrue(frappe.get(TokenKey.COMMENT).getOptions().orElseThrow().italic());
         assertEquals(TokenOptions.EMPTY, frappe.get(TokenKey.byId("xmlComment")).getOptions().orElse(TokenOptions.EMPTY));
         TokenOptions field = frappe.get(TokenKey.byId("staticFinalField")).getOptions().orElseThrow();
         assertTrue(field.bold());
         assertTrue(field.italic());
         assertEquals(TokenOptions.EMPTY, frappe.get(TokenKey.CONSTANT).getOptions().orElse(TokenOptions.EMPTY));
-        Theme jupyter = bundled("Jupyter");
+        Theme jupyter = ParserTestSupport.bundled("Jupyter");
         assertTrue(jupyter.get(TokenKey.byId("staticFinalField")).getOptions().orElseThrow().bold());
         assertTrue(jupyter.get(TokenKey.byId("staticFinalField")).getOptions().orElseThrow().italic());
     }
@@ -128,7 +108,7 @@ public class XmlThemeMappingTest {
                 java.util.List<String> warnings = new java.util.ArrayList<>();
                 String canonical = property(alias[1], "#123456", false);
                 String legacy = property(alias[0], "#abcdef", true);
-                new XmlThemeParser(warnings::add).parse(XmlThemeParserCompatibilityTest.xml(
+                new XmlThemeParser(warnings::add).parse(ParserTestSupport.xml(
                         "<colorTheme>" + (reverse ? legacy + canonical : canonical + legacy) + "</colorTheme>"));
                 assertEquals(1, warnings.size());
                 String warning = warnings.get(0);
@@ -137,12 +117,12 @@ public class XmlThemeMappingTest {
                 assertTrue(warning.contains("selected " + alias[1] + "#" + (reverse ? 2 : 1)));
             }
             java.util.List<String> warnings = new java.util.ArrayList<>();
-            new XmlThemeParser(warnings::add).parse(XmlThemeParserCompatibilityTest.xml("<colorTheme>"
+            new XmlThemeParser(warnings::add).parse(ParserTestSupport.xml("<colorTheme>"
                     + "<" + alias[1] + " color='#123456'/>" + property(alias[0], "#123456", false) + "</colorTheme>"));
             assertTrue(warnings.toString(), warnings.isEmpty());
         }
         java.util.List<String> warnings = new java.util.ArrayList<>();
-        new XmlThemeParser(warnings::add).parse(XmlThemeParserCompatibilityTest.xml("<colorTheme>"
+        new XmlThemeParser(warnings::add).parse(ParserTestSupport.xml("<colorTheme>"
                 + property("comment", "#abcdef", true) + "<comment color='#123456'/>"
                 + property("xmlComment", "#fedcba", true) + "</colorTheme>"));
         assertEquals(1, warnings.size());
@@ -151,7 +131,7 @@ public class XmlThemeMappingTest {
     }
 
     @Test public void allBundledPairsRetainExactSourceColorsAndEffectiveStyles() throws Exception {
-        try (var files = Files.list(themes())) {
+        try (var files = Files.list(ParserTestSupport.themes())) {
             for (Path file : files.toList()) {
                 Theme theme = new XmlThemeParser().parse(file.toFile());
                 var document = javax.xml.parsers.DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file.toFile());

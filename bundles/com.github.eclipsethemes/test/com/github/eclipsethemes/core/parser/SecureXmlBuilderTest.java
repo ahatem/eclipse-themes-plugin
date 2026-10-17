@@ -151,7 +151,7 @@ public class SecureXmlBuilderTest {
         XmlThemeParser parser = new XmlThemeParser(() -> {
             XmlProviderSpy provider = new XmlProviderSpy(); providers.add(provider); return provider;
         });
-        for (int i = 0; i < 3; i++) parser.parse(XmlThemeParserCompatibilityTest.xml("<colorTheme name='Safe'/>"));
+        for (int i = 0; i < 3; i++) parser.parse(ParserTestSupport.xml("<colorTheme name='Safe'/>"));
         assertEquals(3, providers.size());
         for (XmlProviderSpy p : providers) { assertEquals(1, p.builders); assertEquals(1, p.parses); }
         assertEquals(property, System.getProperty("javax.xml.parsers.DocumentBuilderFactory"));
@@ -163,7 +163,7 @@ public class SecureXmlBuilderTest {
     @Test public void ordinaryXmlAndIoFailuresAreNotMisidentifiedAsDtds() throws Exception {
         XmlThemeParser parser = new XmlThemeParser();
         ThemeParseException xml = assertThrows(ThemeParseException.class,
-                () -> parser.parse(XmlThemeParserCompatibilityTest.xml("<colorTheme>")));
+                () -> parser.parse(ParserTestSupport.xml("<colorTheme>")));
         assertTrue(xml.getCause() instanceof SAXException);
         assertFalse(xml.getMessage().contains("DOCTYPE"));
         IOException failure = new IOException("test input failure");

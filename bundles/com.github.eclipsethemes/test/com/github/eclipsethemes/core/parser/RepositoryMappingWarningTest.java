@@ -26,10 +26,9 @@ public class RepositoryMappingWarningTest {
         List<String> warnings = new ArrayList<>();
         ILog log = (ILog) Proxy.newProxyInstance(ILog.class.getClassLoader(), new Class<?>[] {ILog.class},
                 (proxy, method, args) -> { if (method.getName().equals("warn")) warnings.add((String) args[0]); return null; });
-        XmlThemeParserCompatibilityTest.loggerStandIn();
         Field bundleField = Plugin.class.getDeclaredField("bundle");
         bundleField.setAccessible(true);
-        try {
+        try (var logger = ParserTestSupport.installLogger(ParserTestSupport.quietLog())) {
             var repository = new ThemeRepository(directory.toFile(), log);
             assertTrue(repository.importTheme(source.toFile()).isPresent());
             assertEquals(1, warnings.size());
@@ -48,7 +47,6 @@ public class RepositoryMappingWarningTest {
                 assertTrue(warning.contains("selected deprecated#1"));
             }
         } finally {
-            XmlThemeParserCompatibilityTest.restoreActivator();
             try (var files = Files.walk(directory)) {
                 for (var file : files.sorted(java.util.Comparator.reverseOrder()).toList()) Files.delete(file);
             }
