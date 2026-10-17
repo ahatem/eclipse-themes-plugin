@@ -30,6 +30,8 @@ final class MemoryPreferences {
 					return null;
 				case "get":
 					return values.getOrDefault(args[0], (String) args[1]);
+				case "getBoolean":
+					return values.containsKey(args[0]) ? Boolean.parseBoolean(values.get(args[0])) : args[1];
 				case "remove":
 					if (args[0].equals(failingKey)) throw new IllegalStateException("Injected key failure");
 					values.remove(args[0]);
