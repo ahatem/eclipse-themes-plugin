@@ -29,7 +29,7 @@ public class AdapterBaselineTest {
 
 	static List<EclipseThemeAdapter> adapters() {
 		return List.of(new TextEditorThemeAdapter(), new JavaEditorThemeAdapter(), new CppEditorThemeAdapter(),
-				new PluginEditorThemeAdapter(), new AntEditorThemeAdapter(), new DebugConsoleThemeAdapter());
+				PdeAdapterFixture.create(), new AntEditorThemeAdapter(), new DebugConsoleThemeAdapter());
 	}
 
 	static Theme theme(ThemeType type, boolean full) {
@@ -42,7 +42,14 @@ public class AdapterBaselineTest {
 				}).sorted(Comparator.comparing(TokenKey::getName)).toList()) {
 			// Stable token-name order avoids relying on reflection order. Increment even
 			// for omitted tokens so full and sparse fixtures use the same token values.
-			int tokenValue = ++value;
+			// Preserve the pre-change values for every existing role. New roles use
+			// distinct values outside that range, so unrelated mappings keep their digests.
+			int tokenValue = switch (key.getName()) {
+				case "sourceHoverBackground" -> 200;
+				case "staticFinalField" -> 201;
+				case "xmlComment" -> 202;
+				default -> ++value;
+			};
 			if (full || key == TokenKey.BACKGROUND || key == TokenKey.FOREGROUND) {
 				// Encode a unique RGB value and vary all four style flags by token.
 				theme.addToken(new TokenBuilder().setKey(key)
@@ -82,27 +89,26 @@ public class AdapterBaselineTest {
 				BASELINE[1], digest(changed));
 	}
 
-	// Recorded from the unmodified develop adapters at ebec341 with the distinct-token fixture.
-	// Includes ordered puts/removes,
-	// so this safety fix cannot silently change mapping values or optional-token behavior.
+	// Reviewed ordered baseline projections for all six adapters. Only approved debug,
+	// hover, XML-comment/static-final routing and optional-enable removals differ.
 	private static final String[] BASELINE = {
-		"ade047864f04769cd404a8fd2c89fc3410b90d04a031390ac44a44265537c9de",
-		"87c462d0f43978d75785154c0076ef451cffdf6ca0669953e78416c9479a9dac",
+		"b8a7506a529e91e6bcee22fc91b36560db81512775f0326ff0416c9aecb91406",
+		"3ae04b1807d16c66fabefedd2867d7c80bc2be8ad7f1623ee7b8b794400fea50",
 		"5cd942dfbac704ed231cc94582570b203ab09a3f4d3b2899878cb0d1df440404",
-		"e104e2fbf96e1ccb638b9c179d1c42b08a6c6d1d44061d5348ff39edc118f342",
-		"c6c1cac2f573676a47925c2393db2c33aa24d6839535003676b64a851fea6aed",
+		"c42b1e922feb5d315607b9f178bf32b1a9eb944b3483e784d3e405874d552d50",
+		"b23844606f37e28853b278b77007561ed9a678856e46354143912bc936e76748",
 		"b579e72bd9923204075b4304e42d8995d0ca7d3f40b4ac84a9fbb16e0e41623a",
-		"29d7561dea290ef1ece6cab830685b86221f2a98bfea0ae6ae965f52670fef9a",
-		"f225d1a50cb2c7315810ca956525ff2c1f129c5979f7ca67f76fe78788f65d0d",
+		"1120cbb823dc3345d736f34795a1e977a71865fcef25453cbb0e95c22549ff46",
+		"2ae5cc511ab7857b55f82d8cc0b8f13934cd95fcc801bc657c228b81971f8460",
 		"af527ee2c839ba3a0ff4d4e64d418d35da129fdb50e42bc39fdb7ad91f7125ef",
-		"e330fa3f3ba6f0880cd826e6f94af44ed9311dfc187c13cca805e058e4104270",
-		"1c533ce66fb0c568edb02f095f9aa99cbc09dfe2c041f2e95bbd0439fb678151",
+		"48bba3c5ff9955d75220da2c0c7045cc465f3973547586b958a91707065da9d3",
+		"95a98c1df9f6ab3521195f1e33756ee440377daf0261971568a021cd07c39fea",
 		"df28957be209af298c510e0264418bcc214277668519e5f4a4e00ca563a589fb",
-		"3a130c02444a440829829736b9c2fa81497475bf45bfed5ba9a4be966fc625ab",
-		"f225d1a50cb2c7315810ca956525ff2c1f129c5979f7ca67f76fe78788f65d0d",
+		"68ed51e3170ba6e25634495d946dd9ed18bb64dfb6c77d7bf4557327459835e1",
+		"2ae5cc511ab7857b55f82d8cc0b8f13934cd95fcc801bc657c228b81971f8460",
 		"af527ee2c839ba3a0ff4d4e64d418d35da129fdb50e42bc39fdb7ad91f7125ef",
-		"e330fa3f3ba6f0880cd826e6f94af44ed9311dfc187c13cca805e058e4104270",
-		"1c533ce66fb0c568edb02f095f9aa99cbc09dfe2c041f2e95bbd0439fb678151",
+		"48bba3c5ff9955d75220da2c0c7045cc465f3973547586b958a91707065da9d3",
+		"95a98c1df9f6ab3521195f1e33756ee440377daf0261971568a021cd07c39fea",
 		"df28957be209af298c510e0264418bcc214277668519e5f4a4e00ca563a589fb"
 	};
 

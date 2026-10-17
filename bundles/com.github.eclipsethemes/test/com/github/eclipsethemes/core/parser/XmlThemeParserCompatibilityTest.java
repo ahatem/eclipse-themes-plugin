@@ -85,7 +85,7 @@ public class XmlThemeParserCompatibilityTest {
         } finally { Files.delete(file); }
     }
 
-    @Test public void bundledCorpusMatchesPreSecurityInterpretation() throws Exception {
+    @Test public void bundledCorpusMatchesApprovedMappingInterpretation() throws Exception {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         Path themes = Path.of("themes");
         if (!Files.isDirectory(themes)) themes = Path.of("bundles/com.github.eclipsethemes/themes");
@@ -113,7 +113,8 @@ public class XmlThemeParserCompatibilityTest {
         }
         String actual = HexFormat.of().formatHex(digest.digest());
         System.out.println("Bundled corpus interpretation SHA-256: " + actual);
-        // Captured from the production parser at 3d303ee before hardening.
-        assertEquals("626074e623e76c11348885c24230f6f4d9aafcc8cc6f0c9a8176542ff902d38e", actual);
+        // Reviewed against named/source assertions and baseline projections for all 33 themes.
+        // Only separated roles and descendants using the unchanged fallback chains differ.
+        assertEquals("251c86d30bd40784acd92b7e92a61ab96a4635536161d29a106678bb3beeea02", actual);
     }
 }

@@ -103,8 +103,8 @@ public abstract class EclipseThemeAdapter {
 	}
 
 	/**
-	 * Clears all semantic style preferences for a given base name This removes
-	 * color and all style flags from the preferences
+	 * Removes color/style overrides only. Optional legacy-XML roles retain the
+	 * explicit enable decision above; stop/reset separately removes all managed keys.
 	 */
 	protected static void clearSemanticStyle(IEclipsePreferences preferences, String baseName) {
 		// Clear color preference
@@ -115,9 +115,6 @@ public abstract class EclipseThemeAdapter {
 		preferences.remove(baseName + ".italic");
 		preferences.remove(baseName + ".underline");
 		preferences.remove(baseName + ".strikethrough");
-
-		// Clear enabled flag (commonly used with semantic styles)
-		preferences.remove(baseName + ".enabled");
 	}
 
 	/**

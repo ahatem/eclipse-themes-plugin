@@ -7,6 +7,8 @@ import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.ThemeType;
 import com.github.eclipsethemes.core.models.TokenBuilder;
 import com.github.eclipsethemes.core.models.TokenKey;
+import com.github.eclipsethemes.core.models.Token;
+import com.github.eclipsethemes.core.models.TokenOptions;
 import com.github.eclipsethemes.core.parser.mapper.LegacyEclipsePropertyMapper;
 
 import org.w3c.dom.Document;
@@ -20,17 +22,38 @@ import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.InputStream;
 import java.util.function.Supplier;
+import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class XmlThemeParser implements ThemeParser {
 
 	private final Supplier<DocumentBuilderFactory> factorySupplier;
+	private final Consumer<String> mappingWarning;
 
 	public XmlThemeParser() {
-		this(DocumentBuilderFactory::newInstance);
+		this(message -> {});
+	}
+
+	/** Internal loading-boundary sink; no per-parse state is retained on the parser. */
+	public XmlThemeParser(Consumer<String> mappingWarning) {
+		this(DocumentBuilderFactory::newInstance, mappingWarning);
 	}
 
 	XmlThemeParser(Supplier<DocumentBuilderFactory> factorySupplier) {
+		this(factorySupplier, message -> {});
+	}
+
+	private XmlThemeParser(Supplier<DocumentBuilderFactory> factorySupplier, Consumer<String> mappingWarning) {
 		this.factorySupplier = factorySupplier;
+		this.mappingWarning = java.util.Objects.requireNonNull(mappingWarning);
+	}
+
+	private record Candidate(String source, int occurrence, Token token) {
+		boolean canonical() { return source.equals(token.getTokenName()); }
+		String location() { return source + "#" + occurrence; }
 	}
 
 	/**
@@ -58,10 +81,13 @@ public class XmlThemeParser implements ThemeParser {
 			theme.addToken(new TokenBuilder().setKey(TokenKey.FOREGROUND).setColor(Color.ofRgb(212, 212, 212)).build());
 
 			NodeList colorNodes = root.getChildNodes();
+			Map<TokenKey, List<Candidate>> candidates = new LinkedHashMap<>();
+			int occurrence = 0;
 			for (int i = 0; i < colorNodes.getLength(); i++) {
 				Node node = colorNodes.item(i);
 				if (node.getNodeType() != Node.ELEMENT_NODE) continue;
 				Element element = (Element) node;
+				occurrence++;
 
 				String newTagName = LegacyEclipsePropertyMapper.mapProperty(element.getTagName());
 				TokenKey key = TokenKey.byId(newTagName);
@@ -102,7 +128,25 @@ public class XmlThemeParser implements ThemeParser {
 					tokenBuilder.setStrikethrough(Boolean.parseBoolean(element.getAttribute("strikethrough")));
 				}
 
-				theme.addToken(tokenBuilder.build());
+				candidates.computeIfAbsent(key, unused -> new ArrayList<>())
+						.add(new Candidate(element.getTagName(), occurrence, tokenBuilder.build()));
+			}
+			for (var entry : candidates.entrySet()) {
+				List<Candidate> accepted = entry.getValue();
+				Candidate winner = accepted.get(0);
+				for (Candidate candidate : accepted) {
+					if (candidate.canonical() || !winner.canonical()) winner = candidate;
+				}
+				theme.addToken(winner.token());
+				for (Candidate candidate : accepted) {
+					if (!candidate.token().getColor().equals(winner.token().getColor())
+						|| !candidate.token().getOptions().orElse(TokenOptions.EMPTY)
+							.equals(winner.token().getOptions().orElse(TokenOptions.EMPTY))) {
+						mappingWarning.accept("Theme mapping conflict for role " + entry.getKey().getName()
+								+ ": " + candidate.location() + " versus " + winner.location()
+								+ "; selected " + winner.location());
+					}
+				}
 			}
 			return theme;
 		} catch (ThemeParseException e) {

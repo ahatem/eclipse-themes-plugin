@@ -56,8 +56,10 @@ public class TextEditorThemeAdapter extends EclipseThemeAdapter {
 		// Search and debug
 		color(TokenKey.SEARCH_RESULT, "searchResultIndicationColor"),
 		color(TokenKey.FILTERED_SEARCH_RESULT, "filteredSearchResultIndicationColor"),
-		color(TokenKey.CURRENT_INSTRUCTION_POINTER, "currentIPIndication"),
-		color(TokenKey.DEBUG_CALL_STACK, "secondaryIPIndication"),
+		// Eclipse 2024-09 (R4_33), org.eclipse.debug.ui/plugin.xml annotation specs:
+		// *IPColor stores RGB; *IPIndication stores a boolean and is never ours to repair.
+		color(TokenKey.CURRENT_INSTRUCTION_POINTER, "currentIPColor"),
+		color(TokenKey.DEBUG_CALL_STACK, "secondaryIPColor"),
 
 		// Version control annotations (conditional)
 		optionalColor(TokenKey.ADDED_LINE, "additionIndicationColor", theme -> null),

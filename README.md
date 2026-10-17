@@ -64,6 +64,10 @@ same filename can overwrite an existing installed theme before parsing, and a
 parse failure can delete that copy. Keep a separate backup and use a distinct
 filename when importing. Parser hardening does not provide file recovery.
 
+See [editor mapping compatibility](docs/EDITOR_MAPPING_COMPATIBILITY.md) for
+distinct roles, alias precedence, sparse JDT semantics, source-hover defaults and
+the limits of recovery for historical debug indication values.
+
 ## ☕ Support
 
 Eclipse Themes is free and open source. If it improves your daily setup, support helps with compatibility fixes, maintenance, and new releases.

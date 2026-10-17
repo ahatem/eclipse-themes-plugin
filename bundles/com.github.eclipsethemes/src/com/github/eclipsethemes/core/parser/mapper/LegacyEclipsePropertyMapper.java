@@ -55,7 +55,7 @@ public class LegacyEclipsePropertyMapper {
         PROPERTY_MAP.put("localVariableDeclaration", TokenKey.LOCAL_VARIABLE_DECLARATION.getName());
         PROPERTY_MAP.put("field", TokenKey.FIELD.getName());
         PROPERTY_MAP.put("staticField", TokenKey.STATIC_FIELD.getName());
-        PROPERTY_MAP.put("staticFinalField", TokenKey.CONSTANT.getName());
+        PROPERTY_MAP.put("staticFinalField", TokenKey.STATIC_FINAL_FIELD.getName());
         PROPERTY_MAP.put("constant", TokenKey.CONSTANT.getName());
         PROPERTY_MAP.put("parameterVariable", TokenKey.ARGUMENT.getName());
 
@@ -78,10 +78,10 @@ public class LegacyEclipsePropertyMapper {
         // XML Support
         PROPERTY_MAP.put("xmlTag", TokenKey.XML_TAG.getName());
         PROPERTY_MAP.put("xmlAttribute", TokenKey.XML_ATTRIBUTE.getName());
-        PROPERTY_MAP.put("xmlComment", TokenKey.COMMENT.getName());
+        PROPERTY_MAP.put("xmlComment", TokenKey.XML_COMMENT.getName());
 
         // Additional Editor Support
-        PROPERTY_MAP.put("sourceHoverBackground", TokenKey.SELECTION_BACKGROUND.getName());
+        PROPERTY_MAP.put("sourceHoverBackground", TokenKey.SOURCE_HOVER_BACKGROUND.getName());
     }
 
 	public static String mapProperty(String property) {

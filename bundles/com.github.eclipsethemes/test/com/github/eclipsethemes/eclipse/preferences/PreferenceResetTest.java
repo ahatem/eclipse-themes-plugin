@@ -16,6 +16,71 @@ import com.github.eclipsethemes.core.models.ThemeType;
 import com.github.eclipsethemes.eclipse.adapters.EclipseThemeAdapter;
 
 public class PreferenceResetTest {
+	@Test
+	public void hoverAndOptionalEnableOverridesResetWithContextualFailures() throws Exception {
+		for (String key : List.of("sourceHoverBackgroundColor", "sourceHoverBackgroundColor.SystemDefault",
+				"semanticHighlighting.inheritedMethodInvocation.enabled", "semanticHighlighting.inheritedField.enabled",
+				"semanticHighlighting.typeArgument.enabled", "semanticHighlighting.deprecatedMember.enabled")) {
+			for (boolean failRemoval : List.of(false, true)) {
+				for (boolean failFlush : List.of(false, true)) {
+					Map<String, MemoryPreferences> nodes = seededNodes();
+					MemoryPreferences jdt = nodes.get("org.eclipse.jdt.ui");
+					assertTrue("Managed " + key, jdt.values.containsKey(key));
+					jdt.failingKey = failRemoval ? key : null;
+					jdt.failFlush = failFlush;
+					AtomicInteger commits = new AtomicInteger();
+					PreferenceReset reset = new PreferenceReset(id -> nodes.get(id).node);
+					for (int run = 0; run < 2; run++) {
+						PreferenceReset.Result result = reset.resetAndCommit(commits::incrementAndGet);
+						assertEquals(!failRemoval && !failFlush, result.successful());
+						if (!result.successful()) {
+							assertTrue(result.describeFailures().contains("JavaEditorThemeAdapter"));
+							assertTrue(result.describeFailures().contains("org.eclipse.jdt.ui"));
+							assertTrue(result.describeFailures().contains(key));
+						}
+						assertEquals(failRemoval ? "legacy override" : null, jdt.values.get(key));
+						assertEquals("7", jdt.values.get("editor.tab.width"));
+						assertEquals(0, jdt.clears);
+					}
+					assertEquals(!failRemoval && !failFlush ? 2 : 0, commits.get());
+				}
+			}
+		}
+	}
+
+	@Test
+	public void correctedKeysResetWithoutGuessingHistoricalIndications() {
+		for (String indication : java.util.Arrays.asList("true", "false", null, "1,2,3")) {
+			for (String failingKey : java.util.Arrays.asList(null, "currentIPColor", "secondaryIPColor")) {
+				for (boolean failFlush : List.of(false, true)) {
+					Map<String, MemoryPreferences> nodes = seededNodes();
+					MemoryPreferences editor = nodes.get("org.eclipse.ui.editors");
+					if (indication != null) {
+						editor.values.put("currentIPIndication", indication);
+						editor.values.put("secondaryIPIndication", indication);
+					}
+					editor.failingKey = failingKey;
+					editor.failFlush = failFlush;
+					AtomicInteger commits = new AtomicInteger();
+					PreferenceReset reset = new PreferenceReset(id -> nodes.get(id).node);
+					for (int run = 0; run < 2; run++) {
+						PreferenceReset.Result result = reset.resetAndCommit(commits::incrementAndGet);
+						assertEquals(failingKey == null && !failFlush, result.successful());
+						if (failingKey != null) assertTrue(result.describeFailures().contains(failingKey));
+						if (failFlush) assertTrue(result.describeFailures().contains("persist removals"));
+						assertEquals(indication, editor.values.get("currentIPIndication"));
+						assertEquals(indication, editor.values.get("secondaryIPIndication"));
+						for (String key : List.of("currentIPColor", "secondaryIPColor")) {
+							assertEquals(key.equals(failingKey) ? "legacy override" : null, editor.values.get(key));
+						}
+						assertEquals("7", editor.values.get("editor.tab.width"));
+						assertEquals(0, editor.clears);
+					}
+					assertEquals(failingKey == null && !failFlush ? 2 : 0, commits.get());
+				}
+			}
+		}
+	}
 
 	private Map<String, MemoryPreferences> seededNodes() {
 		Map<String, MemoryPreferences> nodes = new LinkedHashMap<>();

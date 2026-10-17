@@ -50,7 +50,8 @@ public final class JavaEditorThemeAdapter extends EclipseThemeAdapter {
 		semanticStyle(TokenKey.METHOD_DECLARATION, "semanticHighlighting.methodDeclarationName"),
 		semanticStyle(TokenKey.FIELD, "semanticHighlighting.field"),
 		semanticStyle(TokenKey.STATIC_FIELD, "semanticHighlighting.staticField"),
-		semanticStyle(TokenKey.CONSTANT, "semanticHighlighting.staticFinalField"),
+		// Separate Java static-final fields; omitted role inherits CONSTANT, never the reverse.
+		semanticStyle(TokenKey.STATIC_FINAL_FIELD, "semanticHighlighting.staticFinalField"),
 		semanticStyle(TokenKey.LOCAL_VARIABLE, "semanticHighlighting.localVariable"),
 		semanticStyle(TokenKey.LOCAL_VARIABLE_DECLARATION, "semanticHighlighting.localVariableDeclaration"),
 		semanticStyle(TokenKey.ARGUMENT, "semanticHighlighting.parameterVariable"),
@@ -63,6 +64,20 @@ public final class JavaEditorThemeAdapter extends EclipseThemeAdapter {
 		optionalSemanticStyle(TokenKey.INHERITED_FIELD, "semanticHighlighting.inheritedField"),
 		optionalSemanticStyle(TokenKey.TEMPLATE_ARGUMENT, "semanticHighlighting.typeArgument"),
 		optionalSemanticStyle(TokenKey.DEPRECATED, "semanticHighlighting.deprecatedMember"),
+
+		// Eclipse JDT R4_33 PreferenceConstants / SourceViewerInformationControl:
+		// this pair controls only the source-viewer hover background. Explicit-only;
+		// omission exposes editor defaults. Color first, then the system-default switch.
+		new ManagedPreference(List.of("sourceHoverBackgroundColor", "sourceHoverBackgroundColor.SystemDefault"),
+				(theme, prefs) -> {
+					if (theme.has(TokenKey.SOURCE_HOVER_BACKGROUND)) {
+						putColor(prefs, "sourceHoverBackgroundColor", theme.get(TokenKey.SOURCE_HOVER_BACKGROUND));
+						prefs.putBoolean("sourceHoverBackgroundColor.SystemDefault", false);
+					} else {
+						prefs.remove("sourceHoverBackgroundColor");
+						prefs.remove("sourceHoverBackgroundColor.SystemDefault");
+					}
+				}),
 
 		// Special case - direct color mapping for matching brackets
 		color(TokenKey.MATCHING_BRACKET, "matchingBracketsColor")

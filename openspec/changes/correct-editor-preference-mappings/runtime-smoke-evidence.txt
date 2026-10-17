@@ -1,0 +1,141 @@
+Eclipse 2024-09 runtime smoke, 2026-10-13; packaged product, unopened SWT viewers on UI thread.
+Probe: tmp/MappingSmoke.java; full log: tmp/mapping-runtime-smoke.log.
+
+PASS packaged product available
+RUNTIME 4.33.0.v20240903-0240 JDT=3.33.0.v20240822-0459 Java=21.0.12.1
+PASS debug current painter listener consumes currentIPColor
+PASS debug secondary painter listener consumes secondaryIPColor
+PASS debug indication switches preserved
+PASS deprecated-member default is enabled
+PASS semantic listener inheritedMethodInvocation enabled=true
+PASS semantic role found inheritedMethodInvocation
+PASS stored optional state inheritedMethodInvocation
+PASS semantic listener inheritedField enabled=true
+PASS semantic role found inheritedField
+PASS stored optional state inheritedField
+PASS semantic listener typeArgument enabled=true
+PASS semantic role found typeArgument
+PASS stored optional state typeArgument
+PASS semantic listener deprecatedMember enabled=true
+PASS semantic role found deprecatedMember
+PASS stored optional state deprecatedMember
+PASS new source hover consumes explicit background
+HOVER present=true actual=RGB {35, 69, 103}
+PASS semantic listener inheritedMethodInvocation enabled=false
+PASS semantic role found inheritedMethodInvocation
+PASS stored optional state inheritedMethodInvocation
+PASS sparse override absent inheritedMethodInvocation.color
+PASS sparse override absent inheritedMethodInvocation.bold
+PASS sparse override absent inheritedMethodInvocation.italic
+PASS sparse override absent inheritedMethodInvocation.underline
+PASS sparse override absent inheritedMethodInvocation.strikethrough
+PASS semantic listener inheritedField enabled=false
+PASS semantic role found inheritedField
+PASS stored optional state inheritedField
+PASS sparse override absent inheritedField.color
+PASS sparse override absent inheritedField.bold
+PASS sparse override absent inheritedField.italic
+PASS sparse override absent inheritedField.underline
+PASS sparse override absent inheritedField.strikethrough
+PASS semantic listener typeArgument enabled=false
+PASS semantic role found typeArgument
+PASS stored optional state typeArgument
+PASS sparse override absent typeArgument.color
+PASS sparse override absent typeArgument.bold
+PASS sparse override absent typeArgument.italic
+PASS sparse override absent typeArgument.underline
+PASS sparse override absent typeArgument.strikethrough
+PASS semantic listener deprecatedMember enabled=false
+PASS semantic role found deprecatedMember
+PASS stored optional state deprecatedMember
+PASS sparse override absent deprecatedMember.color
+PASS sparse override absent deprecatedMember.bold
+PASS sparse override absent deprecatedMember.italic
+PASS sparse override absent deprecatedMember.underline
+PASS sparse override absent deprecatedMember.strikethrough
+PASS omitted hover exposes system-default preference
+HOVER present=false actual=RGB {16, 17, 18}
+PASS semantic listener inheritedMethodInvocation enabled=false
+PASS semantic role found inheritedMethodInvocation
+PASS stored optional state inheritedMethodInvocation
+PASS sparse override absent inheritedMethodInvocation.color
+PASS sparse override absent inheritedMethodInvocation.bold
+PASS sparse override absent inheritedMethodInvocation.italic
+PASS sparse override absent inheritedMethodInvocation.underline
+PASS sparse override absent inheritedMethodInvocation.strikethrough
+PASS semantic listener inheritedField enabled=false
+PASS semantic role found inheritedField
+PASS stored optional state inheritedField
+PASS sparse override absent inheritedField.color
+PASS sparse override absent inheritedField.bold
+PASS sparse override absent inheritedField.italic
+PASS sparse override absent inheritedField.underline
+PASS sparse override absent inheritedField.strikethrough
+PASS semantic listener typeArgument enabled=false
+PASS semantic role found typeArgument
+PASS stored optional state typeArgument
+PASS sparse override absent typeArgument.color
+PASS sparse override absent typeArgument.bold
+PASS sparse override absent typeArgument.italic
+PASS sparse override absent typeArgument.underline
+PASS sparse override absent typeArgument.strikethrough
+PASS semantic listener deprecatedMember enabled=false
+PASS semantic role found deprecatedMember
+PASS stored optional state deprecatedMember
+PASS sparse override absent deprecatedMember.color
+PASS sparse override absent deprecatedMember.bold
+PASS sparse override absent deprecatedMember.italic
+PASS sparse override absent deprecatedMember.underline
+PASS sparse override absent deprecatedMember.strikethrough
+PASS omitted hover exposes system-default preference
+HOVER present=false actual=RGB {16, 17, 18}
+PASS semantic listener inheritedMethodInvocation enabled=true
+PASS semantic role found inheritedMethodInvocation
+PASS stored optional state inheritedMethodInvocation
+PASS semantic listener inheritedField enabled=true
+PASS semantic role found inheritedField
+PASS stored optional state inheritedField
+PASS semantic listener typeArgument enabled=true
+PASS semantic role found typeArgument
+PASS stored optional state typeArgument
+PASS semantic listener deprecatedMember enabled=true
+PASS semantic role found deprecatedMember
+PASS stored optional state deprecatedMember
+PASS new source hover consumes explicit background
+HOVER present=true actual=RGB {35, 69, 103}
+org.eclipse.jface.resource.DataFormatException
+	at org.eclipse.ant.internal.ui.editor.text.AbstractAntEditorScanner.adaptToColorChange(AbstractAntEditorScanner.java:38)
+org.eclipse.jface.resource.DataFormatException
+	at org.eclipse.ant.internal.ui.editor.text.AbstractAntEditorScanner.adaptToColorChange(AbstractAntEditorScanner.java:38)
+org.eclipse.jface.resource.DataFormatException
+org.eclipse.jface.resource.DataFormatException
+org.eclipse.jface.resource.DataFormatException
+	at org.eclipse.ant.internal.ui.editor.text.AbstractAntEditorScanner.adaptToColorChange(AbstractAntEditorScanner.java:38)
+org.eclipse.jface.resource.DataFormatException
+	at org.eclipse.ant.internal.ui.editor.text.AbstractAntEditorScanner.adaptToColorChange(AbstractAntEditorScanner.java:38)
+org.eclipse.jface.resource.DataFormatException
+	at org.eclipse.ant.internal.ui.editor.text.AbstractAntEditorScanner.adaptToColorChange(AbstractAntEditorScanner.java:38)
+org.eclipse.jface.resource.DataFormatException
+	at org.eclipse.ant.internal.ui.editor.text.AbstractAntEditorScanner.adaptToColorChange(AbstractAntEditorScanner.java:38)
+org.eclipse.jface.resource.DataFormatException
+org.eclipse.jface.resource.DataFormatException
+org.eclipse.jface.resource.DataFormatException
+	at org.eclipse.ant.internal.ui.editor.text.AbstractAntEditorScanner.adaptToColorChange(AbstractAntEditorScanner.java:38)
+org.eclipse.jface.resource.DataFormatException
+	at org.eclipse.ant.internal.ui.editor.text.AbstractAntEditorScanner.adaptToColorChange(AbstractAntEditorScanner.java:38)
+PDE actual=Color {0, 0, 0, 255} style=0 ANT actual=Color {69, 103, 137, 255} style=1
+java.lang.AssertionError: PDE comment listener consumes XML role
+
+Stored PDE XML-comment overrides:
+editor.color.xml_comment=69,103,137
+editor.color.xml_comment_bold=true
+editor.color.xml_comment_italic=false
+editor.color.xml_comment_strikethrough=false
+editor.color.xml_comment_underline=false
+
+Stored Ant comment overrides:
+org.eclipse.ant.ui.commentsColor=69,103,137
+org.eclipse.ant.ui.commentsColor_bold=true
+org.eclipse.ant.ui.commentsColor_italic=false
+org.eclipse.ant.ui.commentsColor_strikethrough=false
+org.eclipse.ant.ui.commentsColor_underline=false

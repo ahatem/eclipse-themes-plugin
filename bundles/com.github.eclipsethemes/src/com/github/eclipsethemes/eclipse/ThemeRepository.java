@@ -57,7 +57,7 @@ public final class ThemeRepository {
 		}
 
 		try {
-			Optional<ThemeParser> parserOpt = ParserFactory.getParserFor(file.getName());
+			Optional<ThemeParser> parserOpt = ParserFactory.getParserFor(file.getName(), log::warn);
 			if (parserOpt.isEmpty()) {
 				log.error("No parser found for theme: " + file.getName());
 				return Optional.empty();
@@ -91,7 +91,7 @@ public final class ThemeRepository {
 			String path = res.getPath();
 
 			try (var in = res.openStream()) {
-				var parserOpt = ParserFactory.getParserFor(path);
+				var parserOpt = ParserFactory.getParserFor(path, log::warn);
 				if (parserOpt.isEmpty()) {
 					log.warn("No parser for: " + path);
 					continue;
@@ -123,7 +123,7 @@ public final class ThemeRepository {
 
 			for (Path themePath : themeFiles) {
 				File themeFile = themePath.toFile();
-				Optional<ThemeParser> parserOpt = ParserFactory.getParserFor(themeFile.getName());
+				Optional<ThemeParser> parserOpt = ParserFactory.getParserFor(themeFile.getName(), log::warn);
 				if (parserOpt.isEmpty()) {
 					log.info("No parser found for file: " + themeFile.getName());
 					continue;
