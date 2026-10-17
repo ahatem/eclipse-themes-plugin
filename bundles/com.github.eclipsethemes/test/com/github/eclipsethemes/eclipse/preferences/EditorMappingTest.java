@@ -1,5 +1,8 @@
 package com.github.eclipsethemes.eclipse.preferences;
 
+import static com.github.eclipsethemes.eclipse.preferences.AdapterTestSupport.sparse;
+import static com.github.eclipsethemes.eclipse.preferences.AdapterTestSupport.token;
+
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
@@ -112,18 +115,6 @@ public class EditorMappingTest {
             }
         }
     }
-    static Theme sparse() {
-        Theme theme = new Theme("mapping", "mapping", null, null, null, null, ThemeType.DARK);
-        token(theme, TokenKey.BACKGROUND, 1, false);
-        token(theme, TokenKey.FOREGROUND, 2, false);
-        return theme;
-    }
-
-    static void token(Theme theme, TokenKey key, int blue, boolean flags) {
-        theme.addToken(new TokenBuilder().setKey(key).setColor(Color.ofRgb(10, 20, blue))
-                .setBold(flags).setItalic(flags).setUnderline(flags).setStrikethrough(flags).build());
-    }
-
     @Test
     public void debugColorsPreserveEveryHistoricalIndicationState() throws Exception {
         TextEditorThemeAdapter adapter = new TextEditorThemeAdapter();

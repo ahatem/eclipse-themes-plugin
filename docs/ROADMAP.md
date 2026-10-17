@@ -30,7 +30,7 @@ Planned changes, in dependency order:
 1. `eliminate-destructive-preference-reset` — Q1.
 2. `secure-xml-theme-parsing` — Q2, Q10 (security/validation subset).
 3. `correct-editor-preference-mappings` — Q6, Q7, Q8.
-4. `establish-regression-test-harness` — Q16/B3, initially focused on the above contracts.
+4. `formalize-regression-testing` — Q16/B3, initially focused on the above contracts.
 
 Exit:
 - stopping theme management cannot erase unrelated Eclipse/plugin preferences;

@@ -1,5 +1,9 @@
 package com.github.eclipsethemes.eclipse.preferences;
 
+import static com.github.eclipsethemes.eclipse.preferences.AdapterTestSupport.adapters;
+import static com.github.eclipsethemes.eclipse.preferences.AdapterTestSupport.sparse;
+import static com.github.eclipsethemes.eclipse.preferences.AdapterTestSupport.token;
+
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -30,7 +34,7 @@ public class PdeAntListenerTest {
         prefs.values.put(base + "_strikethrough", "old unsupported false");
         prefs.values.put("unrelated", "keep");
         for (int step : new int[] {1, 2, 0, 3, 3, 1}) {
-            Theme theme = EditorMappingTest.sparse();
+            Theme theme = sparse();
             if (step != 0) theme.addToken(new TokenBuilder()
                     .setKey(step == 2 ? TokenKey.COMMENT : TokenKey.XML_COMMENT)
                     .setColor(Color.ofRgb(10, 20, step))
@@ -57,7 +61,7 @@ public class PdeAntListenerTest {
 
     @Test public void unsupportedHistoricalValuesSurviveApplyAndRepeatedReset() throws Exception {
         Map<String, MemoryPreferences> nodes = new HashMap<>();
-        for (EclipseThemeAdapter adapter : AdapterBaselineTest.adapters()) {
+        for (EclipseThemeAdapter adapter : adapters()) {
             MemoryPreferences prefs = new MemoryPreferences();
             nodes.put(adapter.getPreferencesId(), prefs);
             if (adapter instanceof PluginEditorThemeAdapter || adapter instanceof AntEditorThemeAdapter) {
@@ -65,7 +69,7 @@ public class PdeAntListenerTest {
                 prefs.values.put(base + "_underline", "preserve true");
                 prefs.values.put(base + "_strikethrough", "preserve false");
                 prefs.values.put("unrelated", "keep");
-                adapter.apply(EditorMappingTest.sparse(), prefs.node);
+                adapter.apply(sparse(), prefs.node);
             }
         }
         PreferenceReset reset = new PreferenceReset(id -> nodes.get(id).node);
@@ -85,13 +89,13 @@ public class PdeAntListenerTest {
             MemoryPreferences prefs = new MemoryPreferences();
             prefs.values.put("unrelated", "keep");
             BackingStoreException error = assertThrows(BackingStoreException.class,
-                    () -> PdeAdapterFixture.create(supplier).apply(EditorMappingTest.sparse(), prefs.node));
+                    () -> PdeAdapterFixture.create(supplier).apply(sparse(), prefs.node));
             assertTrue(error.getMessage().contains("no PDE mappings applied"));
             assertNotNull(error.getCause());
             assertTrue(prefs.mutations.isEmpty());
             assertEquals(0, prefs.flushes);
             assertEquals(Map.of("unrelated", "keep"), prefs.values);
-            new TextEditorThemeAdapter().apply(EditorMappingTest.sparse(), prefs.node);
+            new TextEditorThemeAdapter().apply(sparse(), prefs.node);
             assertEquals("10,20,1", prefs.values.get("AbstractTextEditor.Color.Background"));
         }
     }
@@ -102,13 +106,13 @@ public class PdeAntListenerTest {
                 (proxy, method, args) -> { throw new AbstractMethodError("PDE store incompatible"); });
         MemoryPreferences prefs = new MemoryPreferences();
         BackingStoreException error = assertThrows(BackingStoreException.class,
-                () -> PdeAdapterFixture.create(() -> broken).apply(EditorMappingTest.sparse(), prefs.node));
+                () -> PdeAdapterFixture.create(() -> broken).apply(sparse(), prefs.node));
         assertTrue(error.getMessage().contains("editor.color.default_bold"));
         assertTrue(error.getCause() instanceof AbstractMethodError);
         assertEquals(0, prefs.flushes);
         MemoryPreferences flush = new MemoryPreferences();
         flush.failFlush = true;
-        assertThrows(BackingStoreException.class, () -> PdeAdapterFixture.create().apply(EditorMappingTest.sparse(), flush.node));
+        assertThrows(BackingStoreException.class, () -> PdeAdapterFixture.create().apply(sparse(), flush.node));
         assertEquals(1, flush.flushes);
         assertEquals(0, flush.clears);
     }
@@ -116,8 +120,8 @@ public class PdeAntListenerTest {
     @Test public void unsupportedSuffixesNeverBecomeColorNotifications() throws Exception {
         for (EclipseThemeAdapter adapter : List.of(PdeAdapterFixture.create(), new AntEditorThemeAdapter())) {
             MemoryPreferences prefs = new MemoryPreferences();
-            Theme theme = EditorMappingTest.sparse();
-            EditorMappingTest.token(theme, TokenKey.XML_COMMENT, 45, true);
+            Theme theme = sparse();
+            token(theme, TokenKey.XML_COMMENT, 45, true);
             adapter.apply(theme, prefs.node);
             // R4_33 XMLConfiguration/AntSourceViewerConfiguration dispatch these as colors.
             assertFalse(adapter.getPreferencesId(), prefs.mutations.stream().anyMatch(

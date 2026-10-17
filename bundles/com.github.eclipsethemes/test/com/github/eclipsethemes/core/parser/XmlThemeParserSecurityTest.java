@@ -18,7 +18,7 @@ public class XmlThemeParserSecurityTest {
             String input = "<!DOCTYPE colorTheme [<!ENTITY token SYSTEM '" + canary.toUri()
                     + "'>]><colorTheme name='Canary'>&token;</colorTheme>";
             XmlProviderSpy provider = new XmlProviderSpy();
-            assertDtdFailure(() -> new XmlThemeParser(() -> provider).parse(XmlThemeParserCompatibilityTest.xml(input)));
+            assertDtdFailure(() -> new XmlThemeParser(() -> provider).parse(ParserTestSupport.xml(input)));
             assertEquals(0, provider.resolutions);
         } finally { Files.delete(canary); }
     }
@@ -92,7 +92,7 @@ public class XmlThemeParserSecurityTest {
             for (String target : List.of(canary.toUri().toString(), network.url())) {
                 XmlProviderSpy provider = new XmlProviderSpy();
                 var builder = SecureXmlBuilder.create(() -> provider);
-                var document = builder.parse(XmlThemeParserCompatibilityTest.xml(
+                var document = builder.parse(ParserTestSupport.xml(
                         "<colorTheme xmlns:xi='http://www.w3.org/2001/XInclude'"
                         + " xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'"
                         + " xsi:noNamespaceSchemaLocation='" + target + "' xsi:schemaLocation='urn:canary " + target + "'>"

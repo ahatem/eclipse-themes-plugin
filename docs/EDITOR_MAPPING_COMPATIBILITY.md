@@ -2,7 +2,7 @@
 
 PM1–PM6 are approved. The bounded corrections are covered by focused tests and
 real Eclipse 2024-09 consumer/listener checks. See the
-[verification record](../openspec/changes/correct-editor-preference-mappings/verification.md)
+[verification record](../openspec/changes/archive/2026-10-17-correct-editor-preference-mappings/verification.md)
 for exact evidence and compatibility limits.
 
 Legacy XML keeps separate `selectionBackground` and `sourceHoverBackground`,
@@ -30,7 +30,7 @@ style flags are never merged. Accepted conflicting colors or effective flags
 produce a warning with the role, source names/occurrences and selected winner.
 Equivalent candidates produce no conflict warning. Invalid/missing colors retain
 the existing skip behavior. This does not define a new XML format or relax XML
-security. The alias table is in the [change design](../openspec/changes/correct-editor-preference-mappings/design.md).
+security. The alias table is in the [change design](../openspec/changes/archive/2026-10-17-correct-editor-preference-mappings/design.md).
 
 JDT uses static-final fields, CDT enumerators use constants, JDT/CDT use generic
 comments, and PDE/Ant use XML comments. Explicit source-hover background controls
