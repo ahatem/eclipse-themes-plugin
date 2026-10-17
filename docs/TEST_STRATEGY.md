@@ -10,6 +10,10 @@ Deterministic tests remain in `bundles/com.github.eclipsethemes/test/`. Tycho co
 
 The original 40 behavioral tests remain, plus a fixture lifecycle regression. Shared parser/logging/theme fixtures belong to test helpers, not other test classes or production APIs. Tests using the activator stand-in run serially. `PdeAntListenerTest` uses a controlled JFace store; only the runtime checks instantiate the actual PDE/Ant consumers. CDT has controlled adapter coverage, not runtime coverage. Temporary canaries/stores never use personal workspace data.
 
+R2 identity coverage uses the same JUnit/Surefire setup: `ThemeIdentityTest` exercises parser candidates, curated bundled loading, independent installed records and restart-equivalent repository reconstruction; `ThemeIdentityBindingsTest` exercises real isolated binding files and failed metadata replacement; `ThemeSelectionTest` exercises controlled preference intent and the preference page's pre-widget restore and Apply/OK dispatch boundaries. These do not launch SWT widgets or claim visual/workbench persistence evidence. The state-area-to-`File` lookup itself is unchanged, so deterministic files/reconstruction and controlled preference tests cover the added boundary without a new runtime harness. Import transactions and R3 applied-state truth remain deferred.
+
+PM6-A repository regressions also prove refusal before mutation for occupied/unbound destinations, same-destination sources and binding-reserved missing files. They retain byte snapshots of XML/bindings/persisted selected intent, compare canonical catalog objects, and require no incoming theme/ID on refusal. Admission-failure regressions force exclusive destination creation failure and metadata replacement failure after copy, proving no new binding or catalog entry, removal of only the new destination, preserved prior bindings/XML and a usable retry after the obstruction is removed. The existing unused-locator success test covers normal admission. This bounded conservative guard does not test or implement update, replacement or keep-both policy.
+
 ## Commands from a clean checkout
 
 Use Maven 3.9.9+ and JDK 21 for Tycho 5.0.0. Set `JAVA_HOME` and put Maven on PATH, or invoke your supplied Maven executable explicitly. These are build prerequisites, separate from JavaSE-17 product bytecode/runtime requirements. No local Eclipse installation is needed for ordinary tests. Initial dependency/target resolution needs network access or a populated Maven/p2 cache.
@@ -30,6 +34,7 @@ mvn test -B -pl releng/com.github.eclipsethemes.target,bundles/com.github.eclips
 mvn test -B -pl releng/com.github.eclipsethemes.target,bundles/com.github.eclipsethemes -am "-Dtest=XmlThemeMappingTest,EditorMappingTest"
 mvn test -B -pl releng/com.github.eclipsethemes.target,bundles/com.github.eclipsethemes -am "-Dtest=PdeAntListenerTest"
 mvn test -B -pl releng/com.github.eclipsethemes.target,bundles/com.github.eclipsethemes -am "-Dtest=XmlThemeParserCompatibilityTest#metadataStylesAliasesAndReferences"
+mvn test -B -pl releng/com.github.eclipsethemes.target,bundles/com.github.eclipsethemes -am "-Dtest=ThemeIdentityTest,ThemeIdentityBindingsTest,ThemeSelectionTest"
 ```
 
 Class globs such as `"-Dtest=XmlThemeParser*Test"` work too. Keep both the target-definition and bundle module selection with `-am`; target resolution is part of this reactor. Focused tests still incur Tycho startup/resolution. If helper/source changes produce stale incremental output, repeat with `clean test`.

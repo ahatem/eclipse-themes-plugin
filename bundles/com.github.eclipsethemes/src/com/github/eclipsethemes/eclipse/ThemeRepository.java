@@ -2,12 +2,14 @@ package com.github.eclipsethemes.eclipse;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.LinkOption;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -26,11 +28,19 @@ public final class ThemeRepository {
 
 	private final File installedThemesDir;
 	private final ILog log;
+	private final ThemeIdentityBindings identities;
 	private final TreeMap<String, Theme> themes = new TreeMap<>();
 
 	public ThemeRepository(File pluginDataDirectory, ILog log) {
+		this(pluginDataDirectory, log,
+				new ThemeIdentityBindings(new File(pluginDataDirectory, "theme-identities.properties").toPath()));
+	}
+
+	// Test seam for exercising identity persistence failure without production hooks.
+	ThemeRepository(File pluginDataDirectory, ILog log, ThemeIdentityBindings identities) {
 		this.log = log;
 		this.installedThemesDir = new File(pluginDataDirectory, "installed_themes");
+		this.identities = identities;
 		if (!installedThemesDir.exists()) {
 			installedThemesDir.mkdirs();
 		}
@@ -43,42 +53,67 @@ public final class ThemeRepository {
 	}
 
 	public List<Theme> getAllThemes() {
-		return new ArrayList<>(themes.values());
+		var result = new ArrayList<>(themes.values());
+		result.sort(Comparator.comparing(Theme::getName).thenComparing(Theme::getLogicalId));
+		return result;
 	}
 
 	public Optional<Theme> importTheme(File file) {
 		File copied = new File(installedThemesDir, file.getName());
-
-		try (var in = new FileInputStream(file); var out = new FileOutputStream(copied)) {
-			in.transferTo(out);
-		} catch (IOException e) {
-			log.error("Could not copy theme file", e);
-			return Optional.empty();
-		}
+		boolean created = false;
 
 		try {
+			// PM6-A: a locator must be unused both on disk and in identity metadata.
+			// Unknown filesystem state also fails closed; no destination has been opened.
+			if (!Files.notExists(copied.toPath(), LinkOption.NOFOLLOW_LINKS)) {
+				log.error("Import refused: managed theme locator is occupied or unavailable: " + copied.getName());
+				return Optional.empty();
+			}
+			identities.requireUnused(copied.getName());
 			Optional<ThemeParser> parserOpt = ParserFactory.getParserFor(file.getName(), log::warn);
 			if (parserOpt.isEmpty()) {
 				log.error("No parser found for theme: " + file.getName());
 				return Optional.empty();
 			}
 
-			try (var in = new FileInputStream(copied)) {
-				Theme theme = parserOpt.get().parse(in, copied);
-				if (themes.containsKey(theme.getName())) {
-					log.info("Re-importing theme '" + theme.getName() + "' — overwriting previous version");
-				}
-				themes.put(theme.getName(), theme);
-				return Optional.of(theme);
+			Theme candidate;
+			try (var in = new FileInputStream(file)) {
+				candidate = parserOpt.get().parse(in, copied);
 			}
+			// Establish the new file before its identity. A failure at either step removes only
+			// the destination created by this attempt; no binding or catalog entry exists yet.
+			try (var in = new FileInputStream(file); var out = Files.newOutputStream(copied.toPath(),
+					StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE)) {
+				created = true;
+				in.transferTo(out);
+			}
+			// Imports establish a new identity; only reload may reuse an existing binding.
+			Theme theme = candidate.withLogicalId(identities.newIdentityFor(copied.getName()));
+			themes.put(theme.getLogicalId(), theme);
+			return Optional.of(theme);
 		} catch (ThemeParseException e) {
 			log.error("Failed to parse imported theme: " + file.getName(), e);
-			copied.delete();
 		} catch (IOException e) {
-			log.error("Could not open copied theme file: " + copied.getName(), e);
+			if (created) {
+				discardNewDestination(copied);
+			}
+			log.error("Could not admit imported theme or persist identity: " + copied.getName(), e);
 		}
 
 		return Optional.empty();
+	}
+
+	/**
+	 * Best-effort removal of a destination created by the current import attempt. The
+	 * caller only invokes this after exclusive creation succeeded, so a pre-existing file
+	 * is never deleted.
+	 */
+	private void discardNewDestination(File destination) {
+		try {
+			Files.deleteIfExists(destination.toPath());
+		} catch (IOException e) {
+			log.error("Could not remove incomplete imported theme: " + destination.getName(), e);
+		}
 	}
 
 	private void loadPackedThemes() {
@@ -103,11 +138,14 @@ public final class ThemeRepository {
 					continue;
 				}
 
-				if (themes.containsKey(theme.getName())) {
-					log.warn("Duplicate theme name '" + theme.getName() + "' in " + path + " — skipping");
+				if (theme.getId() == null || theme.getId().isBlank()) {
+					log.warn("Bundled theme without curated identity: " + path);
 					continue;
 				}
-				themes.put(theme.getName(), theme);
+				theme = theme.withLogicalId("bundled:" + theme.getId());
+				if (themes.putIfAbsent(theme.getLogicalId(), theme) != null) {
+					log.warn("Duplicate bundled theme identity: " + path);
+				}
 			} catch (Exception e) {
 				log.error("Failed to load theme: " + path, e);
 			}
@@ -130,18 +168,20 @@ public final class ThemeRepository {
 				}
 
 				try {
-					Theme theme = parserOpt.get().parse(themeFile);
-					if (themes.containsKey(theme.getName())) {
-						log.warn("Duplicate theme name '" + theme.getName() + "' in " + themeFile.getName() + " — skipping");
-					} else {
-						themes.put(theme.getName(), theme);
-					}
+					Theme theme = installedIdentity(parserOpt.get().parse(themeFile), themeFile);
+					themes.put(theme.getLogicalId(), theme);
 				} catch (ThemeParseException e) {
 					log.error("Failed to parse imported theme: " + themeFile.getName(), e);
+				} catch (IOException e) {
+					log.error("Could not establish theme identity: " + themeFile.getName(), e);
 				}
 			}
 		} catch (IOException e) {
 			log.error("Could not load themes", e);
 		}
+	}
+
+	private Theme installedIdentity(Theme candidate, File file) throws IOException {
+		return candidate.withLogicalId(identities.identityFor(file.getName()));
 	}
 }
