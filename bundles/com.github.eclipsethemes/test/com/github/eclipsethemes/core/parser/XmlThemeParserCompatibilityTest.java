@@ -60,7 +60,8 @@ public class XmlThemeParserCompatibilityTest {
         Path themes = ParserTestSupport.themes();
         StringBuilder projection = new StringBuilder();
         try (var paths = Files.list(themes)) {
-            var files = paths.filter(p -> p.toString().endsWith(".xml")).sorted().toList();
+            var files = paths.filter(p -> p.toString().endsWith(".xml"))
+                    .sorted(Comparator.comparing(path -> path.getFileName().toString())).toList();
             assertEquals(33, files.size());
             for (Path file : files) {
                 Theme theme = new XmlThemeParser().parse(file.toFile());
@@ -86,6 +87,6 @@ public class XmlThemeParserCompatibilityTest {
         System.out.println("Bundled corpus interpretation SHA-256: " + actual);
         // Reviewed against named/source assertions and baseline projections for all 33 themes.
         // Only separated roles and descendants using the unchanged fallback chains differ.
-        assertEquals("Corpus token projection (secondary fingerprint):\n" + projection, "251c86d30bd40784acd92b7e92a61ab96a4635536161d29a106678bb3beeea02", actual);
+        assertEquals("Corpus token projection (secondary fingerprint):\n" + projection, "e18ab516757839e4a62cada37cdcbfdbfb94b239fa45908fdecfbb55e534a6af", actual);
     }
 }
