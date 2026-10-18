@@ -794,7 +794,9 @@ Minimal production prerequisites for R8a (planning inputs, not implemented):
 4. Own `Display.getHighContrast()` refusal (the `ITheme` overload has none).
 5. Postcondition `getActiveTheme()` equals the target before reporting success or recording state.
 6. Capture the prior instance-scope `themeid` (including absence) before a `restore=true` call.
-7. Declare and test an explicit supported-release list (only 4.33 and 4.41 are measured).
+7. Record measured releases as confidence metadata (only 4.33, 4.40 and 4.41 are measured; see
+   §37.4 for the VERIFIED / EXPERIMENTAL / UNAVAILABLE reading). Measured releases are not a
+   hard allow-list.
 8. Pre-release: real Windows high contrast, GTK, macOS, and the live switch-back tab-colour issue.
 
 Remaining compatibility risks: friend-package removal or signature change in a future release;
@@ -856,8 +858,14 @@ unavailable saved theme (4.40 and 4.41 are equal), real Windows high contrast, G
 
 ### 37.4 Maintainer decision (range for R8a planning)
 
-The maintainer accepted **Eclipse 4.40 and 4.41 on Windows** as the supported range for R8a
-planning. Eclipse 4.34–4.39 are outside the range (unsupported for the coordinated capability;
-the manual Appearance fallback applies). Pre-release items, not yet verified: real Windows high
-contrast, GTK, macOS and Wayland, and any release after 4.41. This is a planning decision, not an
-authorization to implement R8a.
+The maintainer accepted **Eclipse 4.40 and 4.41 on Windows** as the **VERIFIED** set for R8a
+planning, with 4.40 as the initial verified floor. "4.40+" is not an unbounded verification claim
+and not a hard allow-list: only {win32 × 4.40, 4.41} are measured. Other combinations (4.34–4.39,
+4.42+, GTK, macOS, Wayland) are **not verified**; they are not excluded by this record. Under the
+maintainer's policy they may be offered as **EXPERIMENTAL** (explicit user opt-in, runtime
+capability and postcondition checks still required) or are **UNAVAILABLE** when a required
+capability or safety gate fails. The manual Appearance fallback applies whenever the capability
+is not usable. Static findings that bear on experimental eligibility (e.g. 4.35–4.39 never call
+`setDarkThemePreferred`; CSS engine drift) are in the static matrix. Pre-release items, not yet
+verified: real Windows high contrast, GTK, macOS and Wayland, and any release after 4.41. This is
+a planning decision, not an authorization to implement R8a.
