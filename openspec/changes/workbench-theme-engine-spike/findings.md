@@ -853,3 +853,11 @@ for their `STATICALLY EQUIVALENT` / `UNVERIFIED` status. With a floor of 4.40 th
 exactly {4.40, 4.41}, both on Windows only. Still open for the range: restore-time behaviour for an
 unavailable saved theme (4.40 and 4.41 are equal), real Windows high contrast, GTK/macOS/Wayland,
 4.42+.
+
+### 37.4 Maintainer decision (range for R8a planning)
+
+The maintainer accepted **Eclipse 4.40 and 4.41 on Windows** as the supported range for R8a
+planning. Eclipse 4.34–4.39 are outside the range (unsupported for the coordinated capability;
+the manual Appearance fallback applies). Pre-release items, not yet verified: real Windows high
+contrast, GTK, macOS and Wayland, and any release after 4.41. This is a planning decision, not an
+authorization to implement R8a.
