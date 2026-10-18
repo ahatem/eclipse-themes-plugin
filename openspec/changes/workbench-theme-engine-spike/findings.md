@@ -11,6 +11,12 @@ The strict criterion is R7's own contract; repository policy is softer (see §6)
 maintainer may reasonably consider a bounded compatibility exception (§24, §30). Full R3 is not a
 prerequisite for R7.
 
+**P4 CURRENT-RELEASE GO (Eclipse 4.41 GA, Windows only).** The maintainer approved P4 (one
+bounded, version-aware `IThemeEngine` compatibility boundary with a manual Appearance fallback).
+The bounded 4.41 verification in §36 found the narrow mechanism viable. This does not authorise
+production implementation; R8a/R3 remain unstarted. The 4.33 evidence above is unchanged and
+remains 4.33-only.
+
 Revision note (independent review): the runtime findings are 4.33-specific. Later upstream
 changes alter some of them (§34), and ecosystem practice is recorded in §35 as de facto practice
 only. Sections 12, 14, 15, 20 and 30 carry 4.33 qualifications.
@@ -606,3 +612,197 @@ not part of the R7 experiments.
 
 Widespread use is relevant to a maintainer's judgement of break risk and to the strength of a
 promotion request. It does not change the formal status in §6 or the R7 gate outcome.
+
+## 36. Eclipse 4.41 measured evidence (P4 current-release verification)
+
+This section is a **separate, later experiment**. Nothing in §1–§35 was run on 4.41, and nothing
+here changes the 4.33 observations. Raw evidence: [obs/eclipse-4.41/](obs/eclipse-4.41/)
+(`runtime-evidence.txt`, `bundle-evidence.txt`, `log-hashes.csv`, two screenshots). Probe
+code stays in ignored `tmp/workbench-spike/v3/`; the probe is disposable and not committed.
+
+### 36.1 Scope and method
+
+Only Candidate A plus the P4 boundary was exercised. B stays rejected and C deferred. The
+candidate path used **only** `PlatformUI.getWorkbench().getService(IThemeEngine.class)`,
+`getThemes()`, `getActiveTheme()` and `setTheme(ITheme, true)`. The probe was compiled with a plain
+`javac --release 17` against the 4.41 plugin jars (no reflection, no `internal.*` import). The
+runtime class name of the service (`...internal.theme.ThemeEngine`) was logged as a diagnostic
+label only. `setTheme(String, ...)`, `registerTheme`, `registerStylesheet`, `restore`,
+`applyStyles`, `getStyle` and `Events` were not called. Resolved values were read with public SWT
+getters. Preference scopes were read with `InstanceScope`, `ConfigurationScope`, `DefaultScope`
+and `IPreferencesService`. Internal `ThemeEngine` bytecode was read with `javap` for diagnosis
+only (non-candidate evidence).
+
+### 36.2 Environment
+
+| Item | Value |
+| --- | --- |
+| Eclipse | 2026-09 / Platform 4.41.0, build `4.41.0.20260903-0719` (EPP Java package; SHA-512 matches the published value) |
+| CSS theme bundle | `org.eclipse.e4.ui.css.swt.theme` 0.15.200.v20260806-0515, JavaSE-21, jar SHA-256 `95d992f4f9c0f08274f3fac6c53b4939e46a04da40eb471bd28cb99f8533b522` (other hashes in `bundle-evidence.txt`) |
+| Equinox | `org.eclipse.osgi` 3.24.300.v20260721-1251 |
+| SWT | 3.135.0.v20260819-1952 (`SWT.getVersion()` 4974), win32 |
+| JDK actually used | launcher JRE `org.eclipse.justj.openjdk.hotspot.jre.full` 25.0.4, runtime `25.0.4.1+1-LTS` (Eclipse Adoptium). The probe was *compiled* with JDK 21 `--release 17` |
+| OS / WS | Windows 11 10.0 amd64, `ws=win32`. No GTK, macOS or Wayland run in this pass |
+| OS dark mode | `Display.isSystemDarkTheme()` true throughout |
+| Runs | R1 selection and round trip, R2 restart plus real Appearance switch, R3strict, R4/R5 visual restart. Disposable configurations and workspaces under `tmp/workbench-spike/v3/` |
+
+The repository target platform was not modified.
+
+### 36.3 Results
+
+1. **Export directive (unchanged).** Exact 4.41 manifest:
+   `Export-Package: org.eclipse.e4.ui.css.swt.internal.theme;x-internal:=true,org.eclipse.e4.ui.css.swt.theme;x-friends:="org.eclipse.e4.ui.workbench.renderers.swt,org.eclipse.e4.ui.workbench.swt,org.eclipse.ui.workbench"`.
+   Our bundle is not in the friends list and remains a non-friend. This is accepted
+   compatibility debt under P4 and must stay documented. It did not prevent compilation,
+   resolution or service use at runtime.
+2. **Service acquisition.** `getService(IThemeEngine.class)` returned a non-null service in
+   every run under ordinary Equinox, loadable and callable through the public interface with no
+   reflection and no internal class reference.
+3. **Enumeration.** `getThemes()` returned `[e4_dark=Dark, e4_default=Light, spike.p4.theme=P4
+   Proof (research)]`. Classic and High Contrast are absent (consistent with §34). Our exact
+   `ITheme` was found by ID lookup.
+4. **Selection.** `setTheme(ourITheme, true)` selected it. Postcondition: the active theme ID
+   equals the expected ID and `getActiveTheme()` is the **same object** that was passed in.
+   Repeated for built-in Dark, built-in Light and back to ours: all matched.
+5. **Appearance page.** Our label appears in the real Appearance combo (`[Dark, Light, P4 Proof
+   (research)]`, selected = ours after restart). See `appearance-page.png`.
+6. **Surfaces.** The deliberately garish proof stylesheet changed Shell, view/editor tab folders
+   and selected tabs, trim toolbars, Tree, Table, status line and the editor area. Resolved
+   colours for the compared widgets equal the 4.33 values (Shell `#f8bbd0`, Tree `#ffcc80`,
+   Table `#b2ebf2`, status `#a5d6a7`, selected tab `#d1c4e9`). Not styled by the proof CSS (and
+   not claimed): the Project Explorer content area and the native button, which stay white. Only
+   these surfaces were tested.
+7. **Missing capability.** An exact ID not in `getThemes()` produced `CAPABILITY-FAILURE` with no
+   fallback attempted and no state change.
+
+### 36.4 Four distinct preference observations
+
+Fresh workspace, OS dark, **before any selection call**: active `e4_dark`; instance **absent**;
+`DefaultScope` `e4_dark` (published effective theme); effective lookup `e4_dark`.
+After `setTheme(ours, true)`: active, instance, `DefaultScope` and effective lookup all equal
+ours. ConfigurationScope stayed absent. After the real Appearance page chose Light: all four
+equal Light.
+
+The baseline row is the evidence for the model: **explicit persisted choice (instance) ≠
+effective published theme (`DefaultScope` and lookup) ≠ active engine object**. They agree after
+a successful explicit selection only because `restore=true` also writes the instance node
+(bytecode: `setTheme(ITheme,boolean,boolean)` reads the previous value, passes it to
+`EclipsePreferencesHelper.setPreviousThemeId`, writes `themeid`, flushes, then
+`publishEffectiveThemeId()` puts the ID into `DefaultScope`). Calling with `restore=true`
+therefore replaces any prior explicit instance choice, so R8a must record the prior state
+(including absence) before the call, as the existing R7 decision already requires.
+`restore=false` was not tested.
+
+### 36.5 Restart
+
+R1 ended with ours active. R2 started a new process on the same configuration and workspace.
+Before any probe selection call the boot state had active, instance, `DefaultScope` and
+effective all equal to ours, and the surfaces were ours (`runtime-evidence.txt` R2; the
+`Shell.print` capture `restart-print.png` from R5 shows the styled workbench). The declaratively
+contributed theme therefore applies at startup without a probe call on 4.41. (An R2 `copyArea`
+screenshot captured the desktop instead; resolved values and the R5 capture are the visual
+evidence.)
+
+### 36.6 External Appearance switch
+
+With ours active, the real Appearance page (`PreferencesUtil.createPreferenceDialogOn`, page
+`org.eclipse.ui.preferencePages.Views`, class `...internal.dialogs.ViewsPreferencePage`) was
+opened, **Light** chosen, and **Apply and Close** clicked. Choosing in the combo changed nothing
+until applied. On apply, the active theme and instance, default and effective values all became
+Light, so the platform can take control away from us as P4 assumes. Nothing was reconciled. The
+4.41 page shows a **Theme Changed** dialog with `Use as default theme (only applies to workspaces
+without a configured theme)`, `Restart` and `Don't restart`. The probe's button matcher was
+case-sensitive and missed the buttons, so the dialog was closed with its window close (not a
+restart) and the checkbox was not toggled. The `setTheme(ITheme, true)` API path showed no such
+dialog and needed no restart.
+
+### 36.7 Appearance page ID and manual fallback
+
+`PreferencesUtil.createPreferenceDialogOn(shell, "org.eclipse.ui.preferencePages.Views", null,
+null)` returned a dialog (not null) and opened the Appearance page, so the ID is valid on 4.41
+and the public fallback "open Appearance so the user picks the contributed theme" works. No
+product UI was built.
+
+### 36.8 High contrast
+
+`Display.getHighContrast()` was `false` in all runs; the OS accessibility configuration was not
+touched. Bytecode: the only `getHighContrast()` call in `ThemeEngine` is inside
+`setTheme(String, boolean)` (it logs warnings and falls back to the default theme for an unknown
+ID). **`setTheme(ITheme, boolean[, boolean])` contains no high-contrast check**, so the engine
+will not stop us. The future boundary must itself refuse coordinated switching when
+`Display.getHighContrast()` is true. Real Windows high-contrast behaviour was **not** validated
+and is pre-release work.
+
+### 36.9 Strict resolver
+
+`-Dosgi.resolverMode=strict` was passed (and read back by the probe as `strict`). The probe
+bundle (`Require-Bundle` on the theme bundle) resolved, the service was available and selection
+succeeded with identical results (R3strict). Static check: Equinox 3.24.300's framework classes
+contain no `resolverMode` string and no `x-internal` or `x-friends` string; the only occurrences
+are in its own `MANIFEST.MF` export headers (`bundle-evidence.txt`). Conclusion with its limits:
+the strict property is **not honoured** by this Equinox and the framework does not read the
+friend directive at runtime, so friend access is a PDE/compile-time and API-policy matter on
+4.41. This is evidence by absence for one resolver build. The `Import-Package` binding variant
+and other Equinox versions were not run. "Fail closed so the core plugin still loads" is a
+production design requirement and was not built here.
+
+### 36.10 Dark/light semantics on 4.41
+
+`ITheme` exposes only `getId()` and `getLabel()`. **`isDark()` does not exist in 4.41** (it is
+master/4.42-only, §34) and must not be assumed. The engine still classifies by ID:
+`setTheme(ITheme, ...)` calls `Display.setDarkThemePreferred(id.contains("dark"))`, and
+`restore()` uses the same `"dark"` substring for an unavailable saved ID (OS-dark inheritance
+only when no saved ID, §34). Hence ID naming **still matters** on 4.41. Our `spike.p4.theme`
+contains no `dark`, so it is classed light (the `setDarkThemePreferred` effect itself is not
+publicly observable and was not measured). A future dark family needs an ID containing `dark`,
+and a light family must not contain it.
+
+### 36.11 Differences from 4.33
+
+- Inventory: Classic and High Contrast themes are gone; only Dark, Light and ours.
+- The built-in Dark palette changed (Shell `#48484c`, was `#515658`); our CSS values did not.
+- `DefaultScope` now carries the effective ID even with no explicit choice (§34, observed here).
+- The Appearance page has a new **Manage default...** button and the Theme Changed dialog with a
+  default-theme option. The Eclipse runtime requires Java 25.
+- A live switch **back** to ours from a built-in theme left the selected-tab background of three
+  tab folders at the previous theme's `#ffffff` (R1 `p4-again`). A fresh process (R2, R5) and
+  R3strict's first selection show the correct `#d1c4e9`. Not investigated and not compared with
+  4.33; a visual-quality risk for live switching.
+- Unknown-ID `setTheme(String, ...)` semantics were read from bytecode only (fallback to the
+  default Light theme); not run, and not a candidate path.
+
+### 36.12 Verdict
+
+**P4 CURRENT-RELEASE GO** for Eclipse 4.41 on Windows. Every §17 criterion held: declarative A
+works, the theme is an enumerable `ITheme`, `setTheme(ITheme, true)` works with a verifiable
+postcondition, the choice survives a full restart, the real Appearance page can displace it, no
+internal implementation, reflection or String-fallback path was needed, the access is a small
+isolable surface, and failures (missing theme, high contrast, service unavailable) can route to
+the manual Appearance fallback without mutating state. The `x-friends` restriction does not fail
+the gate under P4. None of the BLOCKED conditions occurred.
+
+Minimal production prerequisites for R8a (planning inputs, not implemented):
+
+1. Declarative own theme(s) with static IDs; a dark family's ID contains `dark`, a light
+   family's does not.
+2. One isolated compatibility class using only `getService(IThemeEngine.class)`, `getThemes()`,
+   `getActiveTheme()` and `setTheme(ITheme, true)`; catch `LinkageError` and runtime failures;
+   the core editor plugin must load and work if the capability is absent (optional import or
+   separate optional bundle: an engineering choice for the design).
+3. Exact-ID lookup in `getThemes()`; absent means capability failure and Appearance fallback,
+   never another theme.
+4. Own `Display.getHighContrast()` refusal (the `ITheme` overload has none).
+5. Postcondition `getActiveTheme()` equals the target before reporting success or recording state.
+6. Capture the prior instance-scope `themeid` (including absence) before a `restore=true` call.
+7. Declare and test an explicit supported-release list (only 4.33 and 4.41 are measured).
+8. Pre-release: real Windows high contrast, GTK, macOS, and the live switch-back tab-colour issue.
+
+Remaining compatibility risks: friend-package removal or signature change in a future release;
+unmeasured releases 4.34–4.40 and 4.42+; `restore=false` behaviour; the Theme Changed
+default-theme semantics on the Appearance path; GTK, macOS, Wayland and real high contrast;
+live-switch rendering residue; the `"dark"` ID heuristic until an API replaces it.
+
+Decisions still required from the maintainer: the supported Eclipse release range (and whether
+4.34–4.40 get verification or are declared unsupported for the coordinated capability); whether
+the capability uses `restore=true` (explicit persisted choice) with the consequent conflict
+handling; confirmation of the high-contrast refusal policy.

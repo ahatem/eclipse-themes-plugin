@@ -89,3 +89,18 @@ All runs here are Eclipse 4.33. Post-4.33 upstream semantics and ecosystem pract
 No committed probe is required to assess these findings. Recreating executable instrumentation
 for a later independent verification is a separate local activity; this record does not create
 a new contributor toolchain or test obligation.
+
+## Eclipse 4.41 evidence
+
+`eclipse-4.41/` holds a separate, later pass on Eclipse 4.41 GA (findings §36). It is kept apart
+from the 4.33 record above:
+
+- `runtime-evidence.txt`: selected original lines from R1, R2, R3strict, R4 and R5, without the
+  per-toolbar `SURFACE ... ToolBar#` lines;
+- `bundle-evidence.txt`: install hash, bundle versions and hashes, the manifest export line,
+  `javap` surface and bytecode excerpts, and the Equinox directive search;
+- `log-hashes.csv`: SHA256 of the full local logs and of the final probe jar;
+- `restart-print.png` and `appearance-page.png`.
+
+The disposable probe and full outputs remain in ignored `tmp/workbench-spike/v3/`; the official
+install is in ignored `tmp/eclipse-4.41/`. No probe code, CSS or bundle is committed.
