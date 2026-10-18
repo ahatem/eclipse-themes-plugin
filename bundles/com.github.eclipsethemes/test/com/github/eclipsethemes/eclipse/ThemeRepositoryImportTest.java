@@ -14,7 +14,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.eclipse.preferences.PreferenceKeys;
 
 public class ThemeRepositoryImportTest {
@@ -34,17 +33,17 @@ public class ThemeRepositoryImportTest {
         Path source = Files.writeString(directory.resolve("theme.xml"), STORED);
 
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
-        Theme imported = repository.importTheme(source.toFile()).theme();
+        ThemeRecord imported = repository.importTheme(source.toFile()).record();
 
-        assertNotEquals("Equal basename and bytes never reuse identity", establishedId, imported.getLogicalId());
-        Path managed = imported.getFile().orElseThrow().toPath();
+        assertNotEquals("Equal basename and bytes never reuse identity", establishedId, imported.logicalId());
+        Path managed = RepositoryTestSupport.managed(directory, imported);
         assertEquals(installed.toAbsolutePath().normalize(), managed.getParent().toAbsolutePath().normalize());
         assertTrue("Locator is repository-allocated",
                 managed.getFileName().toString().matches("[0-9a-f-]{36}\\.xml"));
         assertArrayEquals("Committed bytes are the staged bytes", bytes(STORED), Files.readAllBytes(managed));
         assertEquals("Existing bytes are untouched", STORED, Files.readString(existing));
         assertEquals(establishedId, bindings.establishedIdentityFor("theme.xml").orElseThrow());
-        assertEquals(imported.getLogicalId(),
+        assertEquals(imported.logicalId(),
                 bindings.establishedIdentityFor(managed.getFileName().toString()).orElseThrow());
         assertEquals(Set.of(imported), Set.copyOf(repository.getAllThemes()));
         assertEquals("No staging residue after a successful import", List.of(),
@@ -62,20 +61,21 @@ public class ThemeRepositoryImportTest {
         try (var activator = RepositoryTestSupport.installActivator()) {
             RepositoryTestSupport.installBundled(List.of());
             var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
-            Theme imported = repository.importTheme(source.toFile()).theme();
+            ThemeRecord imported = repository.importTheme(source.toFile()).record();
             Files.writeString(Files.createDirectories(installed.resolve(".staging")).resolve("leftover.part"),
                     INCOMING);
 
             repository.reload();
 
-            List<Theme> catalog = repository.getAllThemes();
+            List<ThemeRecord> catalog = repository.getAllThemes();
             assertEquals(2, catalog.size());
-            Theme established = catalog.stream()
-                    .filter(theme -> establishedId.equals(theme.getLogicalId())).findFirst().orElseThrow();
-            assertEquals("theme.xml", established.getFile().orElseThrow().getName());
-            Theme reloaded = catalog.stream().filter(imported::equals).findFirst().orElseThrow();
-            assertEquals(imported.getLogicalId(), reloaded.getLogicalId());
-            assertArrayEquals(bytes(INCOMING), Files.readAllBytes(reloaded.getFile().orElseThrow().toPath()));
+            ThemeRecord established = catalog.stream()
+                    .filter(record -> establishedId.equals(record.logicalId())).findFirst().orElseThrow();
+            assertEquals("theme.xml", established.locator().orElseThrow());
+            ThemeRecord reloaded = catalog.stream().filter(imported::equals).findFirst().orElseThrow();
+            assertEquals(imported.logicalId(), reloaded.logicalId());
+            assertArrayEquals(bytes(INCOMING),
+                    Files.readAllBytes(RepositoryTestSupport.managed(directory, reloaded)));
         }
     }
 
@@ -84,11 +84,11 @@ public class ThemeRepositoryImportTest {
         Path source = Files.writeString(directory.resolve("theme.xml"), INCOMING);
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
 
-        Theme first = repository.importTheme(source.toFile()).theme();
-        Theme second = repository.importTheme(source.toFile()).theme();
+        ThemeRecord first = repository.importTheme(source.toFile()).record();
+        ThemeRecord second = repository.importTheme(source.toFile()).record();
 
-        assertNotEquals(first.getLogicalId(), second.getLogicalId());
-        assertNotEquals(first.getFile().orElseThrow(), second.getFile().orElseThrow());
+        assertNotEquals(first.logicalId(), second.logicalId());
+        assertNotEquals(first.locator().orElseThrow(), second.locator().orElseThrow());
         assertEquals(2, repository.getAllThemes().size());
         assertArrayEquals(bytes(INCOMING), Files.readAllBytes(source));
     }
@@ -98,9 +98,9 @@ public class ThemeRepositoryImportTest {
         Path source = Files.writeString(directory.resolve("THEME.XML"), INCOMING);
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
 
-        Theme imported = repository.importTheme(source.toFile()).theme();
+        ThemeRecord imported = repository.importTheme(source.toFile()).record();
 
-        assertTrue(imported.getFile().orElseThrow().getName().endsWith(".xml"));
+        assertTrue(imported.locator().orElseThrow().endsWith(".xml"));
         assertEquals(INCOMING, Files.readString(source));
     }
 
@@ -119,12 +119,12 @@ public class ThemeRepositoryImportTest {
         // The failed attempt left no reservation: once the obstruction is removed, a retry admits normally.
         Files.delete(blocked);
         Files.createDirectory(blocked);
-        Theme admitted = repository.importTheme(source.toFile()).theme();
-        assertTrue(admitted.getLogicalId().startsWith("local:"));
-        assertEquals(List.of(admitted.getFile().orElseThrow().getName()),
+        ThemeRecord admitted = repository.importTheme(source.toFile()).record();
+        assertTrue(admitted.logicalId().startsWith("local:"));
+        assertEquals(List.of(admitted.locator().orElseThrow()),
                 RepositoryTestSupport.fileNames(blocked));
-        assertEquals(admitted.getLogicalId(), RepositoryTestSupport.establishedIdentity(directory,
-                admitted.getFile().orElseThrow().getName()));
+        assertEquals(admitted.logicalId(), RepositoryTestSupport.establishedIdentity(directory,
+                admitted.locator().orElseThrow()));
         assertEquals(INCOMING, Files.readString(source));
     }
 
@@ -194,13 +194,13 @@ public class ThemeRepositoryImportTest {
             RepositoryTestSupport.installBundled(List.of());
             var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
             repository.reload();
-            assertEquals(sourceId, repository.getAllThemes().get(0).getLogicalId());
+            assertEquals(sourceId, repository.getAllThemes().get(0).logicalId());
 
-            Theme imported = repository.importTheme(source.toFile()).theme();
+            ThemeRecord imported = repository.importTheme(source.toFile()).record();
 
-            assertNotEquals(sourceId, imported.getLogicalId());
+            assertNotEquals(sourceId, imported.logicalId());
             assertNotEquals(source.toAbsolutePath().normalize(),
-                    imported.getFile().orElseThrow().toPath().toAbsolutePath().normalize());
+                    RepositoryTestSupport.managed(directory, imported).toAbsolutePath().normalize());
             assertEquals(STORED, Files.readString(source));
             assertEquals(sourceId, RepositoryTestSupport.establishedIdentity(directory, "source.xml"));
             assertEquals(2, repository.getAllThemes().size());

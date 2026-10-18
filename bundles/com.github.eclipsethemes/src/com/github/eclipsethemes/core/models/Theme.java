@@ -1,58 +1,44 @@
 package com.github.eclipsethemes.core.models;
 
-import java.io.File;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 
-public class Theme {
+/**
+ * One immutable, validated visual theme definition. Catalog identity, origin,
+ * and managed storage belong to the repository record, never to this class.
+ */
+public final class Theme {
 
 	private final String id;
-	private final String logicalId;
 	private final String name;
 	private final String author;
 	private final String website;
 	private final String description;
 
-	private final Optional<File> file;
 	private final ThemeType type;
 
 	private final Map<TokenKey, Token> tokens;
 
-	public Theme(String id, String name, String author, String website, String description, File file, ThemeType type) {
-		this(null, id, name, author, website, description, file, type);
-	}
-
-	private Theme(String logicalId, String id, String name, String author, String website, String description, File file, ThemeType type) {
-		this.logicalId = logicalId;
+	public Theme(String id, String name, String author, String website, String description, ThemeType type,
+			Map<TokenKey, Token> tokens) {
 		this.id = id;
 		this.name = name;
 		this.author = author;
 		this.website = website;
 		this.description = description;
-
-		this.file = Optional.ofNullable(file);
-		this.type = type;
-
-		this.tokens = new HashMap<>();
+		this.type = Objects.requireNonNull(type, "type");
+		this.tokens = Map.copyOf(Objects.requireNonNull(tokens, "tokens"));
+		for (Map.Entry<TokenKey, Token> entry : this.tokens.entrySet()) {
+			if (!entry.getKey().equals(entry.getValue().getKey())) {
+				throw new IllegalArgumentException("Token map key does not match token role: "
+						+ entry.getKey().getName());
+			}
+		}
 	}
 
 	/** Raw XML ect-id, retained for legacy lookup and preview, not logical identity. */
 	public String getId() {
 		return this.id;
-	}
-
-	/** Null for parser-only candidates; assigned by the repository on admission. */
-	public String getLogicalId() {
-		return logicalId;
-	}
-
-	public Theme withLogicalId(String logicalId) {
-		if (logicalId == null || logicalId.isBlank()) throw new IllegalArgumentException("Logical identity is required");
-		Theme established = new Theme(logicalId, id, name, author, website, description, file.orElse(null), type);
-		established.tokens.putAll(tokens);
-		return established;
 	}
 
 	public String getName() {
@@ -71,20 +57,13 @@ public class Theme {
 		return this.description;
 	}
 
-	public Optional<File> getFile() {
-		return this.file;
-	}
-
 	public ThemeType getType() {
 		return this.type;
 	}
 
+	/** The immutable token snapshot; callers cannot add, replace, or remove tokens. */
 	public Map<TokenKey, Token> getTokens() {
-		return Collections.unmodifiableMap(tokens);
-	}
-
-	public void addToken(Token token) {
-		tokens.put(token.getKey(), token);
+		return this.tokens;
 	}
 
 	public boolean has(TokenKey key) {
@@ -106,21 +85,9 @@ public class Theme {
 		throw new IllegalStateException("Token chain broken — no value found for key: " + key.getName()
 				+ ". Ensure BACKGROUND and FOREGROUND are always populated.");
 	}
-	
-	@Override
-	public String toString() {
-	    return String.format("%-20s  ->  %s", name, file.map(File::getPath).orElse("PACKED THEME"));
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-	    if (this == obj) return true;
-	    if (!(obj instanceof Theme other)) return false;
-	    return logicalId != null && logicalId.equals(other.logicalId);
-	}
 
 	@Override
-	public int hashCode() {
-	    return logicalId != null ? logicalId.hashCode() : System.identityHashCode(this);
+	public String toString() {
+		return name;
 	}
 }

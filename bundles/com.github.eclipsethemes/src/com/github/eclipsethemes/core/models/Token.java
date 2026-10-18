@@ -1,5 +1,6 @@
 package com.github.eclipsethemes.core.models;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public final class Token {
@@ -9,8 +10,8 @@ public final class Token {
 	private final Optional<TokenOptions> options;
 
 	public Token(TokenKey key, Color color, TokenOptions options) {
-		this.key = key;
-		this.color = color;
+		this.key = Objects.requireNonNull(key, "key");
+		this.color = Objects.requireNonNull(color, "color");
 		this.options = Optional.ofNullable(options);
 	}
 

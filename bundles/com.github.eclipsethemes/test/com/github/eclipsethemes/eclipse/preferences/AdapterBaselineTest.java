@@ -1,6 +1,7 @@
 package com.github.eclipsethemes.eclipse.preferences;
 
 import static com.github.eclipsethemes.eclipse.preferences.AdapterTestSupport.adapters;
+import static com.github.eclipsethemes.eclipse.preferences.AdapterTestSupport.replacing;
 import static com.github.eclipsethemes.eclipse.preferences.AdapterTestSupport.theme;
 
 import static org.junit.Assert.assertEquals;
@@ -29,19 +30,20 @@ public class AdapterBaselineTest {
 	@Test
 	public void fixtureDistinguishesTokensAndDetectsMappingSwaps() throws Exception {
 		Theme original = theme(ThemeType.DARK, true);
-		Theme swapped = theme(ThemeType.DARK, true);
+		Theme repeat = theme(ThemeType.DARK, true);
 		Set<Color> colors = new HashSet<>();
 		for (Token token : original.getTokens().values()) {
 			assertTrue("Duplicate fixture color for " + token.getTokenName(), colors.add(token.getColor()));
-			assertEquals(token.getColor(), swapped.get(token.getKey()).getColor());
-			assertEquals(token.getOptions(), swapped.get(token.getKey()).getOptions());
+			assertEquals(token.getColor(), repeat.get(token.getKey()).getColor());
+			assertEquals(token.getOptions(), repeat.get(token.getKey()).getOptions());
 		}
 		Token keyword = original.get(TokenKey.KEYWORD);
 		Token string = original.get(TokenKey.STRING);
 		assertNotEquals(keyword.getOptions(), string.getOptions());
 		// Swapping source values simulates a token mapping swap without touching production.
-		swapped.addToken(new Token(TokenKey.KEYWORD, string.getColor(), string.getOptions().orElseThrow()));
-		swapped.addToken(new Token(TokenKey.STRING, keyword.getColor(), keyword.getOptions().orElseThrow()));
+		Theme swapped = replacing(original,
+				new Token(TokenKey.KEYWORD, string.getColor(), string.getOptions().orElseThrow()),
+				new Token(TokenKey.STRING, keyword.getColor(), keyword.getOptions().orElseThrow()));
 		MemoryPreferences expected = new MemoryPreferences();
 		MemoryPreferences changed = new MemoryPreferences();
 		JavaEditorThemeAdapter adapter = new JavaEditorThemeAdapter();

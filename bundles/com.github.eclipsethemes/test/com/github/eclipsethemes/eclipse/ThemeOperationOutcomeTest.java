@@ -3,6 +3,7 @@ package com.github.eclipsethemes.eclipse;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -18,13 +19,14 @@ public class ThemeOperationOutcomeTest {
 	}
 
 	@Test public void committedOutcomeCarriesTheThemeAndItsWarnings() {
-		Theme theme = new Theme("id", "Name", "Author", "", "", null, ThemeType.LIGHT);
+		ThemeRecord record = ThemeRecord.installed("local:id", "id.xml",
+				new Theme("id", "Name", "Author", "", "", ThemeType.LIGHT, Map.of()));
 
-		ThemeOperationOutcome outcome = ThemeOperationOutcome.committed(theme,
+		ThemeOperationOutcome outcome = ThemeOperationOutcome.committed(record,
 				List.of(finding(ThemeDiagnostic.Severity.WARNING, "warned")));
 
 		assertTrue(outcome.successful());
-		assertSame(theme, outcome.theme());
+		assertSame(record, outcome.record());
 		assertEquals(1, outcome.diagnostics().size());
 	}
 
@@ -33,7 +35,7 @@ public class ThemeOperationOutcomeTest {
 				List.of(finding(ThemeDiagnostic.Severity.ERROR, "root is wrong")));
 
 		assertFalse(outcome.successful());
-		assertNull(outcome.theme());
+		assertNull(outcome.record());
 		assertEquals("root is wrong", outcome.describeFailure());
 	}
 

@@ -36,7 +36,7 @@ public class ThemeRepository {
 	private final Path stagingDir;
 	private final ILog log;
 	private final ThemeIdentityBindings identities;
-	private final TreeMap<String, Theme> themes = new TreeMap<>();
+	private final TreeMap<String, ThemeRecord> themes = new TreeMap<>();
 
 	public ThemeRepository(File pluginDataDirectory, ILog log) {
 		this(pluginDataDirectory, log,
@@ -60,9 +60,10 @@ public class ThemeRepository {
 		loadInstalledThemes();
 	}
 
-	public List<Theme> getAllThemes() {
+	public List<ThemeRecord> getAllThemes() {
 		var result = new ArrayList<>(themes.values());
-		result.sort(Comparator.comparing(Theme::getName).thenComparing(Theme::getLogicalId));
+		result.sort(Comparator.comparing((ThemeRecord record) -> record.theme().getName())
+				.thenComparing(ThemeRecord::logicalId));
 		return result;
 	}
 
@@ -97,10 +98,12 @@ public class ThemeRepository {
 			staged = null;
 			moved = true;
 
-			Theme theme = candidate.withLogicalId(identities.newIdentityFor(locator.getFileName().toString()));
-			themes.put(theme.getLogicalId(), theme);
+			ThemeRecord record = ThemeRecord.installed(
+					identities.newIdentityFor(locator.getFileName().toString()),
+					locator.getFileName().toString(), candidate);
+			themes.put(record.logicalId(), record);
 			committed = true;
-			return ThemeOperationOutcome.committed(theme, findings);
+			return ThemeOperationOutcome.committed(record, findings);
 		} catch (ThemeParseException e) {
 			log.error("Failed to parse imported theme: " + source.getName() + ": " + describe(e), e);
 			findings.addAll(e.diagnostics());
@@ -122,7 +125,7 @@ public class ThemeRepository {
 	 * Replaces the bytes of one explicitly selected installed record while
 	 * preserving its logical identity, locator, and binding.
 	 */
-	public ThemeOperationOutcome updateTheme(Theme selected, File source) {
+	public ThemeOperationOutcome updateTheme(ThemeRecord selected, File source) {
 		Path staged = null;
 		List<ThemeDiagnostic> findings = new ArrayList<>();
 
@@ -151,8 +154,9 @@ public class ThemeRepository {
 			replaceManagedFile(staged, target);
 			staged = null;
 
-			Theme updated = candidate.withLogicalId(selected.getLogicalId());
-			themes.put(updated.getLogicalId(), updated);
+			ThemeRecord updated = ThemeRecord.installed(selected.logicalId(),
+					selected.locator().orElseThrow(), candidate);
+			themes.put(updated.logicalId(), updated);
 			return ThemeOperationOutcome.committed(updated, findings);
 		} catch (ThemeParseException e) {
 			log.error("Failed to parse replacement theme: " + source.getName() + ": " + describe(e), e);
@@ -171,14 +175,14 @@ public class ThemeRepository {
 	 * Removes one selected installed record. The binding is removed first; a
 	 * failed file deletion restores that exact binding and reports failure.
 	 */
-	public boolean removeTheme(Theme selected) {
+	public boolean removeTheme(ThemeRecord selected) {
 		Path target;
 		String locator;
 		String identity;
 		try {
 			target = managedTarget(selected);
 			locator = target.getFileName().toString();
-			identity = selected.getLogicalId();
+			identity = selected.logicalId();
 			identities.remove(locator, identity);
 		} catch (IOException e) {
 			log.error("Removal refused or failed before file deletion: " + describe(selected), e);
@@ -230,28 +234,24 @@ public class ThemeRepository {
 	 * location, and binding preconditions. Bundled, foreign, and unbound records
 	 * are refused before any managed write.
 	 */
-	private Path managedTarget(Theme selected) throws IOException {
-		if (selected == null || selected.getLogicalId() == null
-				|| !selected.getLogicalId().startsWith("local:")) {
-			throw new IOException("Only installed themes with local identities can be changed: " + describe(selected));
+	private Path managedTarget(ThemeRecord selected) throws IOException {
+		if (selected == null || selected.origin() != ThemeOrigin.INSTALLED) {
+			throw new IOException("Only installed themes can be changed: " + describe(selected));
 		}
-		Optional<File> file = selected.getFile();
-		if (file.isEmpty()) {
-			throw new IOException("Selected installed theme has no managed file: " + describe(selected));
-		}
-
-		Path target = file.get().toPath().toAbsolutePath().normalize();
+		String locator = selected.locator()
+				.orElseThrow(() -> new IOException("Selected installed theme has no managed locator"));
+		Path target = installedThemesDir.toPath().resolve(locator).toAbsolutePath().normalize();
 		Path managedDirectory = installedThemesDir.toPath().toAbsolutePath().normalize();
 		if (!managedDirectory.equals(target.getParent())
 				|| target.getFileName() == null
+				|| !target.getFileName().toString().equals(locator)
 				|| !target.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(MANAGED_EXTENSION)) {
 			throw new IOException("Selected theme is outside managed theme storage: " + target);
 		}
 
-		String locator = target.getFileName().toString();
 		String established = identities.establishedIdentityFor(locator)
 				.orElseThrow(() -> new IOException("No established identity binding for " + locator));
-		if (!established.equals(selected.getLogicalId())) {
+		if (!established.equals(selected.logicalId())) {
 			throw new IOException("Identity binding for " + locator + " does not match the selected record");
 		}
 		return target;
@@ -347,8 +347,8 @@ public class ThemeRepository {
 		}
 	}
 
-	private static String describe(Theme theme) {
-		return theme == null ? "no selection" : theme.getName();
+	private static String describe(ThemeRecord record) {
+		return record == null ? "no selection" : record.theme().getName();
 	}
 
 	private static String describe(ThemeParseException failure) {
@@ -378,8 +378,8 @@ public class ThemeRepository {
 					log.warn("Bundled theme without curated identity: " + path);
 					continue;
 				}
-				theme = theme.withLogicalId("bundled:" + theme.getId());
-				if (themes.putIfAbsent(theme.getLogicalId(), theme) != null) {
+				ThemeRecord record = ThemeRecord.bundled("bundled:" + theme.getId(), theme);
+				if (themes.putIfAbsent(record.logicalId(), record) != null) {
 					log.warn("Duplicate bundled theme identity: " + path);
 				}
 			} catch (ThemeParseException e) {
@@ -406,8 +406,8 @@ public class ThemeRepository {
 				}
 
 				try {
-					Theme theme = installedIdentity(parserOpt.get().parse(themeFile), themeFile);
-					themes.put(theme.getLogicalId(), theme);
+					ThemeRecord record = installedIdentity(parserOpt.get().parse(themeFile), themeFile);
+					themes.put(record.logicalId(), record);
 				} catch (ThemeParseException e) {
 					log.error("Installed theme file is not valid: " + themeFile.getName() + ": " + describe(e), e);
 				} catch (IOException e) {
@@ -419,7 +419,8 @@ public class ThemeRepository {
 		}
 	}
 
-	private Theme installedIdentity(Theme candidate, File file) throws IOException {
-		return candidate.withLogicalId(identities.identityFor(file.getName()));
+	private ThemeRecord installedIdentity(Theme candidate, File file) throws IOException {
+		String locator = file.getName();
+		return ThemeRecord.installed(identities.identityFor(locator), locator, candidate);
 	}
 }

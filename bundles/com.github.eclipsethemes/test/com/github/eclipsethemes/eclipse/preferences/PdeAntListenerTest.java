@@ -34,13 +34,13 @@ public class PdeAntListenerTest {
         prefs.values.put(base + "_strikethrough", "old unsupported false");
         prefs.values.put("unrelated", "keep");
         for (int step : new int[] {1, 2, 0, 3, 3, 1}) {
-            Theme theme = sparse();
-            if (step != 0) theme.addToken(new TokenBuilder()
+            var theme = sparse();
+            if (step != 0) theme.add(new TokenBuilder()
                     .setKey(step == 2 ? TokenKey.COMMENT : TokenKey.XML_COMMENT)
                     .setColor(Color.ofRgb(10, 20, step))
                     .setBold(step == 1).setItalic(step == 2).setUnderline(true).setStrikethrough(true).build());
             events.clear();
-            adapter.apply(theme, prefs.node);
+            adapter.apply(theme.build(), prefs.node);
             assertEquals(22, events.size()); // Two supported flags for each of eleven existing mappings.
             for (PropertyChangeEvent event : events) {
                 assertTrue(event.getNewValue() instanceof Boolean);
@@ -69,7 +69,7 @@ public class PdeAntListenerTest {
                 prefs.values.put(base + "_underline", "preserve true");
                 prefs.values.put(base + "_strikethrough", "preserve false");
                 prefs.values.put("unrelated", "keep");
-                adapter.apply(sparse(), prefs.node);
+                adapter.apply(sparse().build(), prefs.node);
             }
         }
         PreferenceReset reset = new PreferenceReset(id -> nodes.get(id).node);
@@ -89,13 +89,13 @@ public class PdeAntListenerTest {
             MemoryPreferences prefs = new MemoryPreferences();
             prefs.values.put("unrelated", "keep");
             BackingStoreException error = assertThrows(BackingStoreException.class,
-                    () -> PdeAdapterFixture.create(supplier).apply(sparse(), prefs.node));
+                    () -> PdeAdapterFixture.create(supplier).apply(sparse().build(), prefs.node));
             assertTrue(error.getMessage().contains("no PDE mappings applied"));
             assertNotNull(error.getCause());
             assertTrue(prefs.mutations.isEmpty());
             assertEquals(0, prefs.flushes);
             assertEquals(Map.of("unrelated", "keep"), prefs.values);
-            new TextEditorThemeAdapter().apply(sparse(), prefs.node);
+            new TextEditorThemeAdapter().apply(sparse().build(), prefs.node);
             assertEquals("10,20,1", prefs.values.get("AbstractTextEditor.Color.Background"));
         }
     }
@@ -106,13 +106,13 @@ public class PdeAntListenerTest {
                 (proxy, method, args) -> { throw new AbstractMethodError("PDE store incompatible"); });
         MemoryPreferences prefs = new MemoryPreferences();
         BackingStoreException error = assertThrows(BackingStoreException.class,
-                () -> PdeAdapterFixture.create(() -> broken).apply(sparse(), prefs.node));
+                () -> PdeAdapterFixture.create(() -> broken).apply(sparse().build(), prefs.node));
         assertTrue(error.getMessage().contains("editor.color.default_bold"));
         assertTrue(error.getCause() instanceof AbstractMethodError);
         assertEquals(0, prefs.flushes);
         MemoryPreferences flush = new MemoryPreferences();
         flush.failFlush = true;
-        assertThrows(BackingStoreException.class, () -> PdeAdapterFixture.create().apply(sparse(), flush.node));
+        assertThrows(BackingStoreException.class, () -> PdeAdapterFixture.create().apply(sparse().build(), flush.node));
         assertEquals(1, flush.flushes);
         assertEquals(0, flush.clears);
     }
@@ -120,9 +120,9 @@ public class PdeAntListenerTest {
     @Test public void unsupportedSuffixesNeverBecomeColorNotifications() throws Exception {
         for (EclipseThemeAdapter adapter : List.of(PdeAdapterFixture.create(), new AntEditorThemeAdapter())) {
             MemoryPreferences prefs = new MemoryPreferences();
-            Theme theme = sparse();
+            var theme = sparse();
             token(theme, TokenKey.XML_COMMENT, 45, true);
-            adapter.apply(theme, prefs.node);
+            adapter.apply(theme.build(), prefs.node);
             // R4_33 XMLConfiguration/AntSourceViewerConfiguration dispatch these as colors.
             assertFalse(adapter.getPreferencesId(), prefs.mutations.stream().anyMatch(
                     m -> m.contains("_underline=") || m.contains("_strikethrough=")));

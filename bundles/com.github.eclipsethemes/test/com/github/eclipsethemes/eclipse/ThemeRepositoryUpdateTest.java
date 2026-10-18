@@ -8,6 +8,7 @@ import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,11 +32,11 @@ public class ThemeRepositoryUpdateTest {
             Seeded seeded = seed(directory, "theme.xml", ORIGINAL);
             Path source = Files.writeString(directory.resolve("replacement.xml"), REPLACEMENT);
 
-            Theme updated = seeded.repository.updateTheme(seeded.record, source.toFile()).theme();
+            ThemeRecord updated = seeded.repository.updateTheme(seeded.record, source.toFile()).record();
 
-            assertEquals("Identity is preserved, not regenerated", seeded.identity, updated.getLogicalId());
+            assertEquals("Identity is preserved, not regenerated", seeded.identity, updated.logicalId());
             assertEquals(seeded.file.toAbsolutePath().normalize(),
-                    updated.getFile().orElseThrow().toPath().toAbsolutePath().normalize());
+                    RepositoryTestSupport.managed(directory, updated).toAbsolutePath().normalize());
             assertEquals("Committed bytes are exactly the replacement bytes", REPLACEMENT,
                     Files.readString(seeded.file));
             assertEquals(seeded.identity, RepositoryTestSupport.establishedIdentity(directory, "theme.xml"));
@@ -44,9 +45,9 @@ public class ThemeRepositoryUpdateTest {
             assertEquals(List.of(updated), seeded.repository.getAllThemes());
 
             seeded.repository.reload();
-            Theme reloaded = seeded.repository.getAllThemes().get(0);
-            assertEquals(seeded.identity, reloaded.getLogicalId());
-            assertEquals("source-replacement", reloaded.getId());
+            ThemeRecord reloaded = seeded.repository.getAllThemes().get(0);
+            assertEquals(seeded.identity, reloaded.logicalId());
+            assertEquals("source-replacement", reloaded.theme().getId());
             assertArrayEquals(bytes(REPLACEMENT), Files.readAllBytes(seeded.file));
             assertEquals(REPLACEMENT, Files.readString(source));
         }
@@ -89,7 +90,7 @@ public class ThemeRepositoryUpdateTest {
                 }
             };
             repository.reload();
-            Theme record = find(repository, identity);
+            ThemeRecord record = find(repository, identity);
 
             assertFalse(repository.updateTheme(record, source.toFile()).successful());
 
@@ -143,8 +144,8 @@ public class ThemeRepositoryUpdateTest {
             RepositoryTestSupport.installBundled(List.of());
             Seeded seeded = seed(directory, "theme.xml", ORIGINAL);
             Path source = Files.writeString(directory.resolve("replacement.xml"), REPLACEMENT);
-            Theme bundled = new Theme("curated", "Bundled", null, null, null, null, ThemeType.DARK)
-                    .withLogicalId("bundled:curated");
+            ThemeRecord bundled = ThemeRecord.bundled("bundled:curated",
+                    new Theme("curated", "Bundled", null, null, null, ThemeType.DARK, Map.of()));
 
             assertFalse(seeded.repository.updateTheme(bundled, source.toFile()).successful());
 
@@ -162,8 +163,8 @@ public class ThemeRepositoryUpdateTest {
             Seeded seeded = seed(directory, "theme.xml", ORIGINAL);
             Path outside = Files.writeString(directory.resolve("outside.xml"), ORIGINAL);
             Path source = Files.writeString(directory.resolve("replacement.xml"), REPLACEMENT);
-            Theme foreign = new Theme("outside", "Outside", null, null, null, outside.toFile(), ThemeType.DARK)
-                    .withLogicalId("local:outside");
+            ThemeRecord foreign = ThemeRecord.installed("local:outside", "../outside.xml",
+                    new Theme("outside", "Outside", null, null, null, ThemeType.DARK, Map.of()));
 
             assertFalse(seeded.repository.updateTheme(foreign, source.toFile()).successful());
 
@@ -221,20 +222,20 @@ public class ThemeRepositoryUpdateTest {
                     .identity;
             var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
             repository.reload();
-            Theme first = find(repository, firstId);
-            Theme second = find(repository, secondId);
-            Path secondFile = second.getFile().orElseThrow().toPath();
+            ThemeRecord first = find(repository, firstId);
+            ThemeRecord second = find(repository, secondId);
+            Path secondFile = RepositoryTestSupport.managed(directory, second);
             byte[] secondBefore = Files.readAllBytes(secondFile);
             Path source = Files.writeString(directory.resolve("replacement.xml"),
                     "<colorTheme name='Second' ect-id='source-second'><background color='#444444'/></colorTheme>");
 
-            Theme updated = repository.updateTheme(first, source.toFile()).theme();
+            ThemeRecord updated = repository.updateTheme(first, source.toFile()).record();
 
-            assertEquals(firstId, updated.getLogicalId());
-            assertEquals("Second", updated.getName());
-            assertEquals("source-second", updated.getId());
-            assertEquals(secondId, find(repository, secondId).getLogicalId());
-            assertEquals("Second", find(repository, secondId).getName());
+            assertEquals(firstId, updated.logicalId());
+            assertEquals("Second", updated.theme().getName());
+            assertEquals("source-second", updated.theme().getId());
+            assertEquals(secondId, find(repository, secondId).logicalId());
+            assertEquals("Second", find(repository, secondId).theme().getName());
             assertArrayEquals("The other record's bytes are unchanged", secondBefore, Files.readAllBytes(secondFile));
             assertEquals(secondId, RepositoryTestSupport.establishedIdentity(directory, "second.xml"));
             assertEquals(2, repository.getAllThemes().size());
@@ -248,19 +249,19 @@ public class ThemeRepositoryUpdateTest {
                 .newIdentityFor(locator);
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
         repository.reload();
-        Theme record = repository.getAllThemes().stream()
-                .filter(theme -> identity.equals(theme.getLogicalId())).findFirst().orElseThrow();
+        ThemeRecord record = repository.getAllThemes().stream()
+                .filter(candidate -> identity.equals(candidate.logicalId())).findFirst().orElseThrow();
         return new Seeded(repository, record, file, identity);
     }
 
-    private static Theme find(ThemeRepository repository, String identity) {
+    private static ThemeRecord find(ThemeRepository repository, String identity) {
         return repository.getAllThemes().stream()
-                .filter(theme -> identity.equals(theme.getLogicalId())).findFirst().orElseThrow();
+                .filter(candidate -> identity.equals(candidate.logicalId())).findFirst().orElseThrow();
     }
 
     private static byte[] bytes(String value) {
         return value.getBytes(StandardCharsets.UTF_8);
     }
 
-    private record Seeded(ThemeRepository repository, Theme record, Path file, String identity) {}
+    private record Seeded(ThemeRepository repository, ThemeRecord record, Path file, String identity) {}
 }

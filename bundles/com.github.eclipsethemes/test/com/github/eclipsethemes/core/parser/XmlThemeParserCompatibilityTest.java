@@ -33,7 +33,6 @@ public class XmlThemeParserCompatibilityTest {
             assertEquals("https://example.invalid/", theme.getWebsite());
             assertEquals("Description", theme.getDescription());
             assertEquals(ThemeType.DARK, theme.getType());
-            assertEquals(source.toFile(), theme.getFile().orElseThrow());
             assertEquals(Color.ofHex("#112233"), theme.get(TokenKey.BACKGROUND).getColor());
             assertEquals(new TokenOptions(true, true, true, true), theme.get(TokenKey.COMMENT).getOptions().orElseThrow());
             assertEquals(Color.ofHex("#334455"), theme.get(TokenKey.CONSTANT).getColor());
@@ -45,13 +44,12 @@ public class XmlThemeParserCompatibilityTest {
         XmlThemeParser parser = new XmlThemeParser();
         Theme sparse = parser.parse(ParserTestSupport.xml("<colorTheme name='Sparse'/>"));
         assertEquals(ThemeType.LIGHT, sparse.getType());
-        assertTrue(sparse.getFile().isEmpty());
         assertEquals(Color.ofRgb(30, 30, 30), sparse.get(TokenKey.BACKGROUND).getColor());
         assertEquals(Color.ofRgb(212, 212, 212), sparse.get(TokenKey.KEYWORD).getColor());
         Path file = Files.createTempFile("safe-theme-", ".xml");
         try {
             Files.writeString(file, "<colorTheme name='File'/>");
-            assertEquals(file.toFile(), parser.parse(file.toFile()).getFile().orElseThrow());
+            assertEquals("File", parser.parse(file.toFile()).getName());
         } finally { Files.delete(file); }
     }
 

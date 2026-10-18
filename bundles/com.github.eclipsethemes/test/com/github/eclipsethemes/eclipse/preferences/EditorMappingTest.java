@@ -33,7 +33,7 @@ public class EditorMappingTest {
 
     @Test public void separatedRolesReachExactDestinationsAndOneWayFallbacks() throws Exception {
         for (int presence = 0; presence < 4; presence++) {
-            Theme theme = sparse();
+            var theme = sparse();
             if ((presence & 1) != 0) {
                 token(theme, TokenKey.COMMENT, 30, true);
                 token(theme, TokenKey.CONSTANT, 40, true);
@@ -48,10 +48,10 @@ public class EditorMappingTest {
             int field = (presence & 2) != 0 ? 60 : constant;
             MemoryPreferences jdt = new MemoryPreferences(), cdt = new MemoryPreferences();
             MemoryPreferences pde = new MemoryPreferences(), ant = new MemoryPreferences();
-            new JavaEditorThemeAdapter().apply(theme, jdt.node);
-            new CppEditorThemeAdapter().apply(theme, cdt.node);
-            PdeAdapterFixture.create().apply(theme, pde.node);
-            new AntEditorThemeAdapter().apply(theme, ant.node);
+            new JavaEditorThemeAdapter().apply(theme.build(), jdt.node);
+            new CppEditorThemeAdapter().apply(theme.build(), cdt.node);
+            PdeAdapterFixture.create().apply(theme.build(), pde.node);
+            new AntEditorThemeAdapter().apply(theme.build(), ant.node);
             assertStyle(jdt, "java_single_line_comment", "_", generic, (presence & 1) != 0);
             assertStyle(cdt, "c_single_line_comment", "_", generic, (presence & 1) != 0);
             assertStyle(jdt, "semanticHighlighting.staticFinalField", ".", field, (presence & 2) == 0 && (presence & 1) != 0);
@@ -66,17 +66,17 @@ public class EditorMappingTest {
         MemoryPreferences jdt = new MemoryPreferences();
         jdt.values.put("unrelated", "keep");
         for (boolean present : java.util.List.of(true, false, false, true)) {
-            Theme theme = sparse();
+            var theme = sparse();
             token(theme, TokenKey.SELECTION_BACKGROUND, 70, false);
             if (present) token(theme, TokenKey.SOURCE_HOVER_BACKGROUND, 80, true);
             jdt.mutations.clear();
-            adapter.apply(theme, jdt.node);
+            adapter.apply(theme.build(), jdt.node);
             assertEquals(present ? "10,20,80" : null, jdt.values.get("sourceHoverBackgroundColor"));
             assertEquals(present ? "false" : null, jdt.values.get("sourceHoverBackgroundColor.SystemDefault"));
             if (present) assertTrue(jdt.mutations.indexOf("put sourceHoverBackgroundColor=10,20,80")
                     < jdt.mutations.indexOf("put sourceHoverBackgroundColor.SystemDefault=false"));
             MemoryPreferences text = new MemoryPreferences();
-            new TextEditorThemeAdapter().apply(theme, text.node);
+            new TextEditorThemeAdapter().apply(theme.build(), text.node);
             assertEquals("10,20,70", text.values.get("AbstractTextEditor.Color.SelectionBackground"));
             assertEquals("keep", jdt.values.get("unrelated"));
         }
@@ -92,15 +92,15 @@ public class EditorMappingTest {
             MemoryPreferences prefs = new MemoryPreferences();
             prefs.values.put("semanticHighlighting.unmapped.enabled", "user-value");
             for (int step : new int[] {0, 1, 0, 0, 2, 3}) {
-                Theme theme = sparse();
+                var theme = sparse();
                 token(theme, TokenKey.METHOD, 90, true);
                 token(theme, TokenKey.FIELD, 91, true);
                 token(theme, TokenKey.CLASS, 92, true);
                 if (step > 0) for (TokenKey key : keys) {
-                    if (step == 3) theme.addToken(new Token(key, Color.ofRgb(10,20,step), null));
+                    if (step == 3) theme.add(new Token(key, Color.ofRgb(10,20,step), null));
                     else token(theme, key, step, step == 1);
                 }
-                adapter.apply(theme, prefs.node);
+                adapter.apply(theme.build(), prefs.node);
                 for (String role : bases) {
                     String base = "semanticHighlighting." + role;
                     assertEquals(base, step > 0, prefs.node.getBoolean(base + ".enabled", editorDefault));
@@ -118,7 +118,7 @@ public class EditorMappingTest {
     @Test
     public void debugColorsPreserveEveryHistoricalIndicationState() throws Exception {
         TextEditorThemeAdapter adapter = new TextEditorThemeAdapter();
-        Theme theme = sparse();
+        var theme = sparse();
         token(theme, TokenKey.CURRENT_INSTRUCTION_POINTER, 30, true);
         token(theme, TokenKey.DEBUG_CALL_STACK, 40, false);
         for (String current : Arrays.asList("true", "false", null, "9,8,7")) {
@@ -130,8 +130,8 @@ public class EditorMappingTest {
                         "currentIPTextStyle", "secondaryIPTextStyle", "currentIPVerticalRuler",
                         "secondaryIPVerticalRuler", "unrelated"}) prefs.values.put(key, "keep");
                 Map<String, String> originals = new LinkedHashMap<>(prefs.values);
-                adapter.apply(theme, prefs.node);
-                adapter.apply(theme, prefs.node);
+                adapter.apply(theme.build(), prefs.node);
+                adapter.apply(theme.build(), prefs.node);
                 assertEquals("10,20,30", prefs.values.get("currentIPColor"));
                 assertEquals("10,20,40", prefs.values.get("secondaryIPColor"));
                 originals.forEach((key, value) -> assertEquals(key, value, prefs.values.get(key)));

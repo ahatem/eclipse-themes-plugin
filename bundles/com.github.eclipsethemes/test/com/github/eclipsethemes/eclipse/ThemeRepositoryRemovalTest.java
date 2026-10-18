@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Rule;
@@ -36,9 +37,9 @@ public class ThemeRepositoryRemovalTest {
 
             assertFalse(Files.exists(first.file));
             assertTrue(second.repository.getAllThemes().stream()
-                    .noneMatch(theme -> first.identity.equals(theme.getLogicalId())));
+                    .noneMatch(record -> first.identity.equals(record.logicalId())));
             assertEquals(second.file.toAbsolutePath().normalize(),
-                    second.record.getFile().orElseThrow().toPath().toAbsolutePath().normalize());
+                    RepositoryTestSupport.managed(directory, second.record).toAbsolutePath().normalize());
             assertArrayEquals("The other record's bytes are unchanged", secondBytes,
                     Files.readAllBytes(second.file));
             assertNull(RepositoryTestSupport.establishedIdentity(directory, "first.xml"));
@@ -50,10 +51,10 @@ public class ThemeRepositoryRemovalTest {
 
             assertTrue("Removed logical identity remains absent after reload",
                     second.repository.getAllThemes().stream()
-                            .noneMatch(theme -> first.identity.equals(theme.getLogicalId())));
+                            .noneMatch(record -> first.identity.equals(record.logicalId())));
             assertTrue("Unrelated logical identity remains present after reload",
                     second.repository.getAllThemes().stream()
-                            .anyMatch(theme -> second.identity.equals(theme.getLogicalId())));
+                            .anyMatch(record -> second.identity.equals(record.logicalId())));
         }
     }
 
@@ -92,7 +93,7 @@ public class ThemeRepositoryRemovalTest {
                 }
             };
             repository.reload();
-            Theme record = repository.getAllThemes().get(0);
+            ThemeRecord record = repository.getAllThemes().get(0);
 
             assertFalse("The failed deletion is reported", repository.removeTheme(record));
             assertEquals("The file remains after a failed deletion", STORED, Files.readString(file));
@@ -142,7 +143,7 @@ public class ThemeRepositoryRemovalTest {
             RepositoryTestSupport.installBundled(List.of());
             var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog(), failing);
             repository.reload();
-            Theme record = repository.getAllThemes().get(0);
+            ThemeRecord record = repository.getAllThemes().get(0);
 
             assertFalse(repository.removeTheme(record));
 
@@ -158,8 +159,8 @@ public class ThemeRepositoryRemovalTest {
             RepositoryTestSupport.installBundled(List.of());
             Seeded seeded = seed(directory, "theme.xml", STORED);
             byte[] bindingsBefore = Files.readAllBytes(RepositoryTestSupport.bindingsFile(directory));
-            Theme bundled = new Theme("curated", "Bundled", null, null, null, null, ThemeType.DARK)
-                    .withLogicalId("bundled:curated");
+            ThemeRecord bundled = ThemeRecord.bundled("bundled:curated",
+                    new Theme("curated", "Bundled", null, null, null, ThemeType.DARK, Map.of()));
 
             assertFalse(seeded.repository.removeTheme(bundled));
 
@@ -174,8 +175,8 @@ public class ThemeRepositoryRemovalTest {
             RepositoryTestSupport.installBundled(List.of());
             Seeded seeded = seed(directory, "theme.xml", STORED);
             Path outside = Files.writeString(directory.resolve("outside.xml"), OTHER);
-            Theme foreign = new Theme("outside", "Outside", null, null, null, outside.toFile(), ThemeType.DARK)
-                    .withLogicalId("local:outside");
+            ThemeRecord foreign = ThemeRecord.installed("local:outside", "../outside.xml",
+                    new Theme("outside", "Outside", null, null, null, ThemeType.DARK, Map.of()));
 
             assertFalse(seeded.repository.removeTheme(foreign));
 
@@ -207,7 +208,8 @@ public class ThemeRepositoryRemovalTest {
             RepositoryTestSupport.installBundled(List.of());
             Seeded seeded = seed(directory, "theme.xml", STORED);
             byte[] bindingsBefore = Files.readAllBytes(RepositoryTestSupport.bindingsFile(directory));
-            Theme forged = seeded.record.withLogicalId("local:forged");
+            ThemeRecord forged = ThemeRecord.installed("local:forged", seeded.record.locator().orElseThrow(),
+                    seeded.record.theme());
 
             assertFalse(seeded.repository.removeTheme(forged));
 
@@ -225,10 +227,10 @@ public class ThemeRepositoryRemovalTest {
                 .newIdentityFor(locator);
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
         repository.reload();
-        Theme record = repository.getAllThemes().stream()
-                .filter(theme -> identity.equals(theme.getLogicalId())).findFirst().orElseThrow();
+        ThemeRecord record = repository.getAllThemes().stream()
+                .filter(candidate -> identity.equals(candidate.logicalId())).findFirst().orElseThrow();
         return new Seeded(repository, record, file, identity);
     }
 
-    private record Seeded(ThemeRepository repository, Theme record, Path file, String identity) {}
+    private record Seeded(ThemeRepository repository, ThemeRecord record, Path file, String identity) {}
 }

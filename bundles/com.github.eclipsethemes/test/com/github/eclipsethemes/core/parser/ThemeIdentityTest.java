@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Proxy;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -17,8 +18,8 @@ import org.junit.rules.TemporaryFolder;
 import org.osgi.framework.Bundle;
 
 import com.github.eclipsethemes.EclipseThemes;
+import com.github.eclipsethemes.eclipse.ThemeRecord;
 import com.github.eclipsethemes.eclipse.ThemeRepository;
-import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.TokenKey;
 import com.github.eclipsethemes.core.models.Color;
 
@@ -48,17 +49,18 @@ public class ThemeIdentityTest {
             repository.reload();
             assertEquals("All independent records remain selectable", 4, repository.getAllThemes().size());
             assertEquals("No source-ID based equality collapse", 4, new HashSet<>(repository.getAllThemes()).size());
-            List<Theme> first = repository.getAllThemes();
+            List<ThemeRecord> first = repository.getAllThemes();
             var reconstructed = new ThemeRepository(directory.toFile(), ParserTestSupport.quietLog());
             reconstructed.reload();
             assertEquals(first, reconstructed.getAllThemes());
-            List<String> ids = first.stream().map(Theme::getLogicalId).toList();
+            List<String> ids = first.stream().map(ThemeRecord::logicalId).toList();
             assertEquals(ids.stream().sorted().toList(), ids);
-            for (Theme theme : first) {
-                assertTrue(theme.getLogicalId().startsWith("local:"));
+            for (ThemeRecord theme : first) {
+                assertTrue(theme.logicalId().startsWith("local:"));
+                Path file = installed.resolve(theme.locator().orElseThrow());
                 assertEquals("XML remains unchanged", "<colorTheme name='Same'"
-                        + (theme.getFile().orElseThrow().getName().charAt(0) < '2' ? "" : " ect-id='same-source'")
-                        + "/>", Files.readString(theme.getFile().orElseThrow().toPath()));
+                        + (file.getFileName().toString().charAt(0) < '2' ? "" : " ect-id='same-source'")
+                        + "/>", Files.readString(file));
             }
         }
     }
@@ -72,17 +74,17 @@ public class ThemeIdentityTest {
             bundled(List.of());
             var repository = new ThemeRepository(directory.toFile(), ParserTestSupport.quietLog());
             repository.reload();
-            Theme old = repository.getAllThemes().get(0);
+            ThemeRecord old = repository.getAllThemes().get(0);
             Files.writeString(xml, "<colorTheme name='New' ect-id='new-source'><background color='#445566'/></colorTheme>");
             repository = new ThemeRepository(directory.toFile(), ParserTestSupport.quietLog());
             repository.reload();
-            Theme changed = repository.getAllThemes().get(0);
+            ThemeRecord changed = repository.getAllThemes().get(0);
             assertEquals(old, changed);
             assertEquals(old.hashCode(), changed.hashCode());
-            assertEquals("New", changed.getName());
-            assertEquals("new-source", changed.getId());
-            assertEquals(Color.ofHex("#445566"), changed.get(TokenKey.BACKGROUND).getColor());
-            assertEquals(Color.ofHex("#112233"), old.get(TokenKey.BACKGROUND).getColor());
+            assertEquals("New", changed.theme().getName());
+            assertEquals("new-source", changed.theme().getId());
+            assertEquals(Color.ofHex("#445566"), changed.theme().get(TokenKey.BACKGROUND).getColor());
+            assertEquals(Color.ofHex("#112233"), old.theme().get(TokenKey.BACKGROUND).getColor());
         }
     }
 
@@ -98,12 +100,12 @@ public class ThemeIdentityTest {
             var repository = new ThemeRepository(directory.toFile(), ParserTestSupport.quietLog());
             repository.reload();
             assertEquals(2, repository.getAllThemes().size());
-            Theme packed = repository.getAllThemes().stream().filter(t -> t.getFile().isEmpty()).findFirst().orElseThrow();
-            assertEquals("bundled:curated", packed.getLogicalId());
-            assertEquals("curated", packed.getId());
+            ThemeRecord packed = repository.getAllThemes().stream().filter(t -> t.locator().isEmpty()).findFirst().orElseThrow();
+            assertEquals("bundled:curated", packed.logicalId());
+            assertEquals("curated", packed.theme().getId());
             Files.writeString(resource, "<colorTheme name='Renamed' ect-id='curated'><background color='#abcdef'/></colorTheme>");
             repository.reload();
-            assertEquals(packed, repository.getAllThemes().stream().filter(t -> t.getFile().isEmpty()).findFirst().orElseThrow());
+            assertEquals(packed, repository.getAllThemes().stream().filter(t -> t.locator().isEmpty()).findFirst().orElseThrow());
         }
     }
 
@@ -118,10 +120,11 @@ public class ThemeIdentityTest {
             var source = directory.resolve("THEME.XML");
             Files.writeString(source, "<colorTheme name='Uppercase'/>");
             var repository = new ThemeRepository(directory.toFile(), ParserTestSupport.quietLog());
-            Theme imported = repository.importTheme(source.toFile()).theme();
-            assertTrue(imported.getLogicalId().startsWith("local:"));
-            assertEquals(installed, imported.getFile().orElseThrow().toPath().getParent());
-            assertTrue(imported.getFile().orElseThrow().getName().matches("[0-9a-f-]{36}\\.xml"));
+            ThemeRecord imported = repository.importTheme(source.toFile()).record();
+            assertTrue(imported.logicalId().startsWith("local:"));
+            Path installedFile = installed.resolve(imported.locator().orElseThrow());
+            assertEquals(installed, installedFile.getParent());
+            assertTrue(installedFile.getFileName().toString().matches("[0-9a-f-]{36}\\.xml"));
             try (var files = Files.list(installed)) {
                 assertEquals(1, files.filter(Files::isRegularFile).count());
             }
@@ -147,20 +150,20 @@ public class ThemeIdentityTest {
             repository.reload();
             assertEquals(33, repository.getAllThemes().size());
             assertEquals(33, new HashSet<>(repository.getAllThemes()).size());
-            for (Theme theme : repository.getAllThemes()) {
-                assertEquals("bundled:" + theme.getId(), theme.getLogicalId());
+            for (ThemeRecord theme : repository.getAllThemes()) {
+                assertEquals("bundled:" + theme.theme().getId(), theme.logicalId());
             }
             var source = directory.resolve("external.xml");
             Files.writeString(source, "<colorTheme name='Darcula' ect-id='63d6a50b-371f-4211-9025-9bfea76cc850'/>");
-            Theme imported = repository.importTheme(source.toFile()).theme();
-            assertTrue(imported.getLogicalId().startsWith("local:"));
+            ThemeRecord imported = repository.importTheme(source.toFile()).record();
+            assertTrue(imported.logicalId().startsWith("local:"));
             assertTrue(repository.getAllThemes().stream().anyMatch(t -> t == imported));
             // Moving the external origin leaves the installed record and its identity untouched.
             Files.move(source, directory.resolve("moved-origin.xml"));
             repository.reload();
             assertEquals(34, repository.getAllThemes().size());
             assertEquals(1, repository.getAllThemes().stream().filter(imported::equals).count());
-            assertEquals(2, repository.getAllThemes().stream().filter(t -> t.getName().equals("Darcula")).count());
+            assertEquals(2, repository.getAllThemes().stream().filter(t -> t.theme().getName().equals("Darcula")).count());
         }
     }
 
