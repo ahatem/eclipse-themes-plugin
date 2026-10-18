@@ -15,7 +15,7 @@ final class AdapterTestSupport {
 	}
 
 	static Theme theme(ThemeType type, boolean full) {
-		Theme theme = new Theme("test", "test", null, null, null, null, type);
+		Draft theme = new Draft("test", type);
 		int value = 0;
 		for (TokenKey key : Arrays.stream(TokenKey.class.getFields())
 				.filter(field -> field.getType() == TokenKey.class).map(field -> {
@@ -34,25 +34,54 @@ final class AdapterTestSupport {
 			};
 			if (full || key == TokenKey.BACKGROUND || key == TokenKey.FOREGROUND) {
 				// Encode a unique RGB value and vary all four style flags by token.
-				theme.addToken(new TokenBuilder().setKey(key)
+				theme.add(new TokenBuilder().setKey(key)
 						.setColor(Color.ofRgb((tokenValue >> 16) & 255, (tokenValue >> 8) & 255, tokenValue & 255))
 						.setBold((tokenValue & 1) != 0).setItalic((tokenValue & 2) != 0)
 						.setUnderline((tokenValue & 4) != 0).setStrikethrough((tokenValue & 8) != 0).build());
 			}
 		}
-		return theme;
+		return theme.build();
 	}
 
-    static Theme sparse() {
-        Theme theme = new Theme("mapping", "mapping", null, null, null, null, ThemeType.DARK);
+    static Draft sparse() {
+        Draft theme = new Draft("mapping", ThemeType.DARK);
         token(theme, TokenKey.BACKGROUND, 1, false);
         token(theme, TokenKey.FOREGROUND, 2, false);
         return theme;
     }
 
-    static void token(Theme theme, TokenKey key, int blue, boolean flags) {
-        theme.addToken(new TokenBuilder().setKey(key).setColor(Color.ofRgb(10, 20, blue))
+    static void token(Draft theme, TokenKey key, int blue, boolean flags) {
+        theme.add(new TokenBuilder().setKey(key).setColor(Color.ofRgb(10, 20, blue))
                 .setBold(flags).setItalic(flags).setUnderline(flags).setStrikethrough(flags).build());
+    }
+
+    /** Rebuilds a fixture with replaced tokens; the production theme stays immutable. */
+    static Theme replacing(Theme base, Token... replacements) {
+        Map<TokenKey, Token> tokens = new LinkedHashMap<>(base.getTokens());
+        for (Token replacement : replacements) tokens.put(replacement.getKey(), replacement);
+        return new Theme(base.getId(), base.getName(), base.getAuthor(), base.getWebsite(),
+                base.getDescription(), base.getType(), tokens);
+    }
+
+    /** Test-only accumulation of fixture tokens before one immutable Theme is built. */
+    static final class Draft {
+        private final String id;
+        private final ThemeType type;
+        private final Map<TokenKey, Token> tokens = new LinkedHashMap<>();
+
+        private Draft(String id, ThemeType type) {
+            this.id = id;
+            this.type = type;
+        }
+
+        Draft add(Token token) {
+            tokens.put(token.getKey(), token);
+            return this;
+        }
+
+        Theme build() {
+            return new Theme(id, id, null, null, null, type, tokens);
+        }
     }
 
 }

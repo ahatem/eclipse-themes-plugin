@@ -90,6 +90,11 @@ final class RepositoryTestSupport {
         return directory.resolve("theme-identities.properties");
     }
 
+    /** The managed file a record locator names inside this repository. */
+    static Path managed(Path directory, ThemeRecord record) {
+        return directory.resolve("installed_themes").resolve(record.locator().orElseThrow());
+    }
+
     static final class ActivatorStandIn implements AutoCloseable {
         private final Field singleton;
         private final Object previous;

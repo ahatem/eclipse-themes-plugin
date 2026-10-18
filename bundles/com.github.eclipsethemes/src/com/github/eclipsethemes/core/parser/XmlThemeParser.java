@@ -93,12 +93,14 @@ public class XmlThemeParser implements ThemeParser {
 				validateWebsite(website, source);
 			}
 
-			Theme theme = new Theme(id, name, author, website, description, sourceFile, ThemeType.from(type));
-
-			// Pre-populate root tokens so Theme.get() always has a fallback via inheritance.
-			// These are overwritten if the XML defines them explicitly.
-			theme.addToken(new TokenBuilder().setKey(TokenKey.BACKGROUND).setColor(Color.ofRgb(30, 30, 30)).build());
-			theme.addToken(new TokenBuilder().setKey(TokenKey.FOREGROUND).setColor(Color.ofRgb(212, 212, 212)).build());
+			// PM-V7 accepted compatibility behavior: pre-populate root tokens so
+			// Theme.get() always has a fallback via inheritance. These are overwritten
+			// if the XML defines them explicitly. Do not change these values here.
+			Map<TokenKey, Token> tokens = new LinkedHashMap<>();
+			tokens.put(TokenKey.BACKGROUND,
+					new TokenBuilder().setKey(TokenKey.BACKGROUND).setColor(Color.ofRgb(30, 30, 30)).build());
+			tokens.put(TokenKey.FOREGROUND,
+					new TokenBuilder().setKey(TokenKey.FOREGROUND).setColor(Color.ofRgb(212, 212, 212)).build());
 
 			NodeList colorNodes = root.getChildNodes();
 			Map<TokenKey, List<Candidate>> candidates = new LinkedHashMap<>();
@@ -167,7 +169,7 @@ public class XmlThemeParser implements ThemeParser {
 				for (Candidate candidate : accepted) {
 					if (candidate.canonical() || !winner.canonical()) winner = candidate;
 				}
-				theme.addToken(winner.token());
+				tokens.put(entry.getKey(), winner.token());
 				for (Candidate candidate : accepted) {
 					if (!candidate.token().getColor().equals(winner.token().getColor())
 						|| !candidate.token().getOptions().orElse(TokenOptions.EMPTY)
@@ -179,7 +181,7 @@ public class XmlThemeParser implements ThemeParser {
 					}
 				}
 			}
-			return theme;
+			return new Theme(id, name, author, website, description, ThemeType.from(type), tokens);
 		} catch (ThemeParseException e) {
 			throw e;
 		} catch (SAXException e) {

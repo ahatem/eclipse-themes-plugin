@@ -11,13 +11,12 @@ public final class TokenKey {
 
 	private static final Map<String, TokenKey> TOKENS = new HashMap<>();
 
-	public static TokenKey register(TokenKey key) {
-		TOKENS.put(key.name, key);
+	private static TokenKey register(String name, TokenKey inheritsFrom) {
+		TokenKey key = new TokenKey(Objects.requireNonNull(name, "name"), inheritsFrom);
+		if (TOKENS.putIfAbsent(name, key) != null) {
+			throw new IllegalStateException("Duplicate token role declaration: " + name);
+		}
 		return key;
-	}
-
-	public static TokenKey register(String name, TokenKey inheritsFrom) {
-		return register(new TokenKey(name, inheritsFrom));
 	}
 
 	public static TokenKey byId(String id) {

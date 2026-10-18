@@ -38,10 +38,11 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import com.github.eclipsethemes.EclipseThemes;
 import com.github.eclipsethemes.core.Constants;
-import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.validation.WebsiteUri;
 import com.github.eclipsethemes.eclipse.ThemeManager;
 import com.github.eclipsethemes.eclipse.ThemeOperationOutcome;
+import com.github.eclipsethemes.eclipse.ThemeOrigin;
+import com.github.eclipsethemes.eclipse.ThemeRecord;
 
 public class EclipseThemesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
@@ -65,10 +66,10 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private Label statusLabel;
 
 	// Data
-	private List<Theme> allThemes;
-	private List<Theme> filteredThemes;
-	private Theme selectedTheme;
-	private Theme currentTheme;
+	private List<ThemeRecord> allThemes;
+	private List<ThemeRecord> filteredThemes;
+	private ThemeRecord selectedTheme;
+	private ThemeRecord currentTheme;
 	private boolean previewVisible = true;
 
 	public EclipseThemesPreferencePage() {
@@ -283,14 +284,13 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private class ThemeLabelProvider extends LabelProvider {
 		@Override
 		public String getText(Object element) {
-			if (element instanceof Theme) {
-				Theme theme = (Theme) element;
-				String name = theme.getName();
+			if (element instanceof ThemeRecord theme) {
+				String name = theme.theme().getName();
 
 				if (theme.equals(currentTheme)) {
 					name = "● " + name;
 				}
-				if (theme.getFile().isPresent()) {
+				if (theme.origin() == ThemeOrigin.INSTALLED) {
 					name += " *";
 				}
 
@@ -310,7 +310,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		handleThemeSelectionChanged(currentTheme); // Important because listeners not added yet
 	}
 
-	void restoreSelectedIntent(List<Theme> themes) {
+	void restoreSelectedIntent(List<ThemeRecord> themes) {
 		currentTheme = ThemeSelection.resolve(getPreferenceStore(), themes).orElse(null);
 		selectedTheme = currentTheme;
 	}
@@ -360,12 +360,13 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		return (searchTerm == null || searchTerm.trim().isEmpty()) && "All".equals(selectedType);
 	}
 
-	private boolean matchesSearchCriteria(Theme theme, String searchTerm, String selectedType) {
+	private boolean matchesSearchCriteria(ThemeRecord theme, String searchTerm, String selectedType) {
 		// Check search term match
 		if (searchTerm != null && !searchTerm.trim().isEmpty()) {
 			String lowerSearch = searchTerm.toLowerCase().trim();
-			boolean matchesName = theme.getName().toLowerCase().contains(lowerSearch);
-			boolean matchesAuthor = theme.getAuthor() != null && theme.getAuthor().toLowerCase().contains(lowerSearch);
+			boolean matchesName = theme.theme().getName().toLowerCase().contains(lowerSearch);
+			boolean matchesAuthor = theme.theme().getAuthor() != null
+					&& theme.theme().getAuthor().toLowerCase().contains(lowerSearch);
 
 			// If search term doesn't match name or author, return false
 			if (!matchesName && !matchesAuthor) {
@@ -375,7 +376,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 		// Check theme type match
 		if (!"All".equals(selectedType)) {
-			String themeType = theme.getType().name();
+			String themeType = theme.theme().getType().name();
 			if (!selectedType.equalsIgnoreCase(themeType)) {
 				return false;
 			}
@@ -388,7 +389,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		// Theme selection
 		themeViewer.addSelectionChangedListener(event -> {
 			IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-			handleThemeSelectionChanged((Theme) selection.getFirstElement());
+			handleThemeSelectionChanged((ThemeRecord) selection.getFirstElement());
 		});
 
 		themeViewer.addDoubleClickListener(event -> applySelectedTheme());
@@ -414,7 +415,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// The same policy that decides the link markup decides the launch.
-				WebsiteUri.Check check = WebsiteUri.check(selectedTheme == null ? null : selectedTheme.getWebsite());
+				WebsiteUri.Check check = WebsiteUri.check(selectedTheme == null ? null : selectedTheme.theme().getWebsite());
 				if (check.launchable()) {
 					Program.launch(check.value());
 				}
@@ -451,7 +452,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		});
 	}
 
-	private void handleThemeSelectionChanged(Theme newTheme) {
+	private void handleThemeSelectionChanged(ThemeRecord newTheme) {
 		if (statusLabel != null && !statusLabel.isDisposed()) {
 			statusLabel.setText("");
 		}
@@ -477,11 +478,11 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		updateButtonStates();
 	}
 
-	private void updateThemeDetails(Theme theme) {
-		themeNameLabel.setText(theme.getName());
-		authorLabel.setText(theme.getAuthor() != null ? theme.getAuthor() : "N/A");
-		themeTypeLabel.setText(theme.getType().nameCapitalized());
-		websiteLink.setText(websiteText(theme.getWebsite()));
+	private void updateThemeDetails(ThemeRecord theme) {
+		themeNameLabel.setText(theme.theme().getName());
+		authorLabel.setText(theme.theme().getAuthor() != null ? theme.theme().getAuthor() : "N/A");
+		themeTypeLabel.setText(theme.theme().getType().nameCapitalized());
+		websiteLink.setText(websiteText(theme.theme().getWebsite()));
 
 		themeNameLabel.getParent().layout();
 	}
@@ -499,7 +500,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		return check.launchable() ? "<a>" + text + "</a>" : text;
 	}
 
-	private void updatePreview(Theme theme) {
+	private void updatePreview(ThemeRecord theme) {
 		if (!previewVisible) {
 			return;
 		}
@@ -512,8 +513,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		}
 	}
 
-	static String previewUrl(Theme theme) {
-		return Constants.PREVIEW_SERVER_URL + theme.getId();
+	static String previewUrl(ThemeRecord theme) {
+		return Constants.PREVIEW_SERVER_URL + theme.theme().getId();
 	}
 
 	private void showDefaultPreview() {
@@ -534,8 +535,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		removeButton.setEnabled(installedSelected);
 	}
 
-	private static boolean isInstalledTheme(Theme theme) {
-		return theme != null && theme.getLogicalId() != null && theme.getLogicalId().startsWith("local:");
+	private static boolean isInstalledTheme(ThemeRecord theme) {
+		return theme != null && theme.origin() == ThemeOrigin.INSTALLED;
 	}
 
 	private void togglePreviewVisibility() {
@@ -586,17 +587,17 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 				return;
 			}
 
-			String identity = outcome.theme().getLogicalId();
+			String identity = outcome.record().logicalId();
 			loadThemes();
 			filterThemes();
-			Theme admitted = selectThemeByIdentity(identity);
+			ThemeRecord admitted = selectThemeByIdentity(identity);
 			if (admitted == null) {
 				showErrorMessage("Import Failed", "The imported theme could not be admitted to the catalog.");
 				return;
 			}
 
 			showInfoMessage("Import Successful",
-					"Theme '" + admitted.getName() + "' has been imported successfully.");
+					"Theme '" + admitted.theme().getName() + "' has been imported successfully.");
 		} catch (Exception e) {
 			EclipseThemes.instance().getLogger().error("Import Error", e);
 			showErrorMessage("Import Error", "Error importing theme: " + e.getMessage());
@@ -613,13 +614,13 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			return;
 		}
 		boolean confirmed = showConfirmDialog("Update Theme",
-				"Replace the installed XML content of '" + selectedTheme.getName() + "'?\n\n"
+				"Replace the installed XML content of '" + selectedTheme.theme().getName() + "'?\n\n"
 						+ "The theme keeps its identity and remains selected. This cannot be undone.");
 		if (!confirmed) {
 			return;
 		}
 
-		String identity = selectedTheme.getLogicalId();
+		String identity = selectedTheme.logicalId();
 		try {
 			ThemeOperationOutcome outcome = EclipseThemes.instance().getManager().updateTheme(selectedTheme, selectedFile);
 			if (!outcome.successful()) {
@@ -629,13 +630,13 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 			loadThemes();
 			filterThemes();
-			Theme admitted = selectThemeByIdentity(identity);
+			ThemeRecord admitted = selectThemeByIdentity(identity);
 			if (admitted == null) {
 				showErrorMessage("Update Failed", "The replaced theme could not be reloaded from managed storage.");
 				return;
 			}
 
-			showInfoMessage("Update Successful", "Theme '" + admitted.getName() + "' has been updated.");
+			showInfoMessage("Update Successful", "Theme '" + admitted.theme().getName() + "' has been updated.");
 		} catch (Exception e) {
 			EclipseThemes.instance().getLogger().error("Update Error", e);
 			showErrorMessage("Update Error", "Error updating theme: " + e.getMessage());
@@ -661,9 +662,9 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		return selectedFile;
 	}
 
-	private Theme selectThemeByIdentity(String logicalId) {
-		Theme match = allThemes.stream()
-				.filter(theme -> logicalId.equals(theme.getLogicalId()))
+	private ThemeRecord selectThemeByIdentity(String logicalId) {
+		ThemeRecord match = allThemes.stream()
+				.filter(theme -> logicalId.equals(theme.logicalId()))
 				.findFirst()
 				.orElse(null);
 		if (match != null) {
@@ -678,14 +679,14 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		}
 
 		boolean confirmed = showConfirmDialog("Remove Theme", "Are you sure you want to remove the theme '"
-				+ selectedTheme.getName() + "'?\n\n"
+				+ selectedTheme.theme().getName() + "'?\n\n"
 				+ "This permanently deletes its installed theme file. This action cannot be undone.");
 
 		if (!confirmed) {
 			return;
 		}
 
-		Theme removed = selectedTheme;
+		ThemeRecord removed = selectedTheme;
 		try {
 			boolean removedFromStorage = EclipseThemes.instance().getManager().removeTheme(removed);
 			if (!removedFromStorage) {
@@ -733,7 +734,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	}
 
 	private boolean resetToDefaultTheme() {
-		Theme defaultTheme = getDefaultThemeForCurrentMode();
+		ThemeRecord defaultTheme = getDefaultThemeForCurrentMode();
 
 		if (defaultTheme == null) {
 			return false;
@@ -773,7 +774,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		}
 	}
 
-	private Theme getDefaultThemeForCurrentMode() {
+	private ThemeRecord getDefaultThemeForCurrentMode() {
 		return ThemeSelection.defaultTheme(allThemes, isEclipseDarkMode());
 	}
 
@@ -818,7 +819,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	}
 
 	private void resetToPluginDefault() {
-		Theme defaultTheme = getDefaultThemeForCurrentMode();
+		ThemeRecord defaultTheme = getDefaultThemeForCurrentMode();
 		if (defaultTheme != null) {
 			ThemeSelection.remember(getPreferenceStore(), defaultTheme);
 			EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);

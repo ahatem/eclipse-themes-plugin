@@ -11,7 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.validation.ThemeDiagnostic;
 
 /** Admission semantics: warnings admit, errors refuse, nothing else changes. */
@@ -38,7 +37,7 @@ public class ThemeRepositoryValidationTest {
 		ThemeOperationOutcome outcome = repository.importTheme(source.toFile());
 
 		assertFalse(outcome.successful());
-		assertNull(outcome.theme());
+		assertNull(outcome.record());
 		ThemeDiagnostic finding = outcome.diagnostics().get(0);
 		assertTrue(finding.error());
 		assertEquals(ThemeDiagnostic.NAME, finding.kind());
@@ -58,9 +57,9 @@ public class ThemeRepositoryValidationTest {
 		Path directory = directory();
 		var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
 		Path original = Files.writeString(directory.resolve("valid.xml"), VALID);
-		Theme stored = repository.importTheme(original.toFile()).theme();
-		Path managed = stored.getFile().orElseThrow().toPath();
-		String locator = managed.getFileName().toString();
+		ThemeRecord stored = repository.importTheme(original.toFile()).record();
+		Path managed = RepositoryTestSupport.managed(directory, stored);
+		String locator = stored.locator().orElseThrow();
 		Path replacement = Files.writeString(directory.resolve("broken.xml"), MISSING_NAME);
 
 		ThemeOperationOutcome outcome = repository.updateTheme(stored, replacement.toFile());
@@ -69,7 +68,7 @@ public class ThemeRepositoryValidationTest {
 		assertEquals(ThemeDiagnostic.NAME, outcome.diagnostics().get(0).kind());
 		assertEquals("Committed bytes are unchanged", VALID, Files.readString(managed));
 		assertEquals(List.of(stored), repository.getAllThemes());
-		assertEquals(stored.getLogicalId(), RepositoryTestSupport.establishedIdentity(directory, locator));
+		assertEquals(stored.logicalId(), RepositoryTestSupport.establishedIdentity(directory, locator));
 		assertEquals("No staging residue", List.of(), RepositoryTestSupport.stagedPieces(managed.getParent()));
 		assertEquals(MISSING_NAME, Files.readString(replacement));
 	}
@@ -82,12 +81,12 @@ public class ThemeRepositoryValidationTest {
 		ThemeOperationOutcome outcome = repository.importTheme(source.toFile());
 
 		assertTrue("Warnings never block admission", outcome.successful());
-		assertEquals("Warned", outcome.theme().getName());
+		assertEquals("Warned", outcome.record().theme().getName());
 		assertEquals(1, outcome.diagnostics().size());
 		assertFalse(outcome.diagnostics().get(0).error());
 		assertEquals(ThemeDiagnostic.TYPE, outcome.diagnostics().get(0).kind());
-		assertEquals(List.of(outcome.theme()), repository.getAllThemes());
-		assertTrue(Files.isRegularFile(outcome.theme().getFile().orElseThrow().toPath()));
+		assertEquals(List.of(outcome.record()), repository.getAllThemes());
+		assertTrue(Files.isRegularFile(RepositoryTestSupport.managed(directory, outcome.record())));
 	}
 
 	@Test public void reloadSkipsInvalidInstalledFileWithoutDeletingOrDisturbingOthers() throws Exception {
@@ -103,7 +102,7 @@ public class ThemeRepositoryValidationTest {
 			repository.reload();
 
 			assertEquals(List.of("Valid"),
-					repository.getAllThemes().stream().map(Theme::getName).toList());
+					repository.getAllThemes().stream().map(record -> record.theme().getName()).toList());
 			assertTrue("The invalid file is not deleted", Files.isRegularFile(broken));
 			assertTrue("The valid file is untouched", Files.isRegularFile(valid));
 			assertEquals(List.of("broken.xml", "valid.xml"), RepositoryTestSupport.fileNames(installed));
@@ -127,7 +126,7 @@ public class ThemeRepositoryValidationTest {
 			repository.reload();
 
 			assertEquals(List.of("Warned"),
-					repository.getAllThemes().stream().map(Theme::getName).toList());
+					repository.getAllThemes().stream().map(record -> record.theme().getName()).toList());
 		}
 
 		assertTrue("The admitted warning is logged: " + log,
