@@ -8,11 +8,11 @@ Deterministic tests remain in `bundles/com.github.eclipsethemes/test/`. Tycho co
 - Controlled preference/repository/adapter contracts: exact values and absence, rich/sparse/repeat transitions, managed-key reset, unrelated state, failure diagnostics, success gating and typed notification intent.
 - Actual Eclipse/OSGi: separate, explicitly invoked [R1 runtime assets](../tools/runtime-tests/eclipse-2024-09/README.md), for classloading, scopes, availability and real consumers that controlled stores cannot establish.
 
-The original 40 behavioral tests remain, plus a fixture lifecycle regression. Shared parser/logging/theme fixtures belong to test helpers, not other test classes or production APIs. Tests using the activator stand-in run serially. `PdeAntListenerTest` uses a controlled JFace store; only the runtime checks instantiate the actual PDE/Ant consumers. CDT has controlled adapter coverage, not runtime coverage. Temporary canaries/stores never use personal workspace data.
+The existing behavioral suite remains and has expanded through identity and import-lifecycle regressions. Shared parser/logging/theme fixtures belong to test helpers, not other test classes or production APIs. Tests using the activator stand-in run serially. `PdeAntListenerTest` uses a controlled JFace store; only the runtime checks instantiate the actual PDE/Ant consumers. CDT has controlled adapter coverage, not runtime coverage. Temporary canaries/stores never use personal workspace data.
 
-R2 identity coverage uses the same JUnit/Surefire setup: `ThemeIdentityTest` exercises parser candidates, curated bundled loading, independent installed records and restart-equivalent repository reconstruction; `ThemeIdentityBindingsTest` exercises real isolated binding files and failed metadata replacement; `ThemeSelectionTest` exercises controlled preference intent and the preference page's pre-widget restore and Apply/OK dispatch boundaries. These do not launch SWT widgets or claim visual/workbench persistence evidence. The state-area-to-`File` lookup itself is unchanged, so deterministic files/reconstruction and controlled preference tests cover the added boundary without a new runtime harness. Import transactions and R3 applied-state truth remain deferred.
+R2 identity coverage uses the same JUnit/Surefire setup: `ThemeIdentityTest` exercises parser candidates, curated bundled loading, independent installed records, extension/locale acceptance and restart-equivalent repository reconstruction; `ThemeIdentityBindingsTest` exercises real isolated binding files, established-only reads, removal/restoration and failed metadata replacement; `ThemeSelectionTest` exercises controlled preference intent and the preference page's pre-widget restore and Apply/OK dispatch boundaries. `ThemeRepositoryImportTest`, `ThemeRepositoryUpdateTest` and `ThemeRepositoryRemovalTest` exercise staged-byte commits, repository-allocated locators, atomic update failure, removal ordering and preservation of unrelated files, bindings and catalog records using real temporary managed storage. These do not launch SWT widgets or claim visual/workbench persistence evidence. The state-area-to-`File` lookup itself is unchanged, so deterministic files/reconstruction and controlled preference tests cover the added boundary without a new runtime harness. R3 applied-state truth remains deferred.
 
-PM6-A repository regressions also prove refusal before mutation for occupied/unbound destinations, same-destination sources and binding-reserved missing files. They retain byte snapshots of XML/bindings/persisted selected intent, compare canonical catalog objects, and require no incoming theme/ID on refusal. Admission-failure regressions force exclusive destination creation failure and metadata replacement failure after copy, proving no new binding or catalog entry, removal of only the new destination, preserved prior bindings/XML and a usable retry after the obstruction is removed. The existing unused-locator success test covers normal admission. This bounded conservative guard does not test or implement update, replacement or keep-both policy.
+Import/update/removal regressions retain byte snapshots of XML and bindings, compare canonical catalog objects and assert no staged residue after success or failure. They cover same-basename and identical-bytes coexistence, staged-byte preservation, binding failure cleanup, missing/bundled/foreign/unbound/inconsistent targets, missing update targets versus already-absent removal, fail-closed unexpected path states, atomic-move refusal without fallback, and restoration of an exact binding after file-deletion failure. Narrow package-private seams inject binding replacement, managed replacement and deletion failures; no SWT harness or production test-only abstraction is added.
 
 ## Commands from a clean checkout
 
@@ -71,7 +71,7 @@ Reports distinguish passing automated tests, reactor packaging, actual runtime r
 
 ## Future roadmap coverage
 
-The layers/cases below remain planning guidance for later product changes. They are not claims that identity/import transactions, ownership recovery, Apply/Cancel behavior, workbench CSS, p2 installation acceptance or compatibility matrices are already implemented. Promote only the next bounded contract through OpenSpec.
+The layers/cases below remain planning guidance for later product changes. They are not claims that ownership recovery, Apply/Cancel behavior, workbench CSS, p2 installation acceptance or compatibility matrices are already implemented. Promote only the next bounded contract through OpenSpec.
 
 ## Layer 1 — pure/core tests
 
@@ -86,10 +86,6 @@ Cover:
 ## Layer 2 — repository/application contract tests
 
 Cover:
-- failed replacement preserves prior valid file;
-- duplicate id/name/basename conflict policy;
-- same-file import safety;
-- staged/atomic replacement semantics;
 - application result aggregation;
 - ownership snapshot including absence;
 - A → B → disable restoration;

@@ -59,10 +59,16 @@ selected Java/Eclipse XML provider cannot establish and verify the required secu
 controls, loading fails with a parsing error. There is no insecure opt-out. This
 hardening does not add general file-size or depth quotas.
 
-Import replacement safety remains a known limitation: importing a file with the
-same filename can overwrite an existing installed theme before parsing, and a
-parse failure can delete that copy. Keep a separate backup and use a distinct
-filename when importing. Parser hardening does not provide file recovery.
+Import always creates an independent installed record. Selecting a file whose
+name, display name, source ID, or content matches an existing theme does not
+overwrite or silently replace that theme; same-named sources coexist under
+repository-allocated filenames. The imported bytes are copied to staging and
+validated there before the managed file and identity are committed.
+
+Use **Update Selected Theme...** to replace the XML of the selected installed
+theme while keeping its identity, and **Remove** to permanently delete its
+managed file after confirmation. Updating a theme does not reapply its colors
+automatically.
 
 See [editor mapping compatibility](docs/EDITOR_MAPPING_COMPATIBILITY.md) for
 distinct roles, alias precedence, sparse JDT semantics, source-hover defaults and

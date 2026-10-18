@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ArrayList;
 import java.net.URL;
 
 import org.eclipse.core.runtime.Plugin;
@@ -22,8 +21,6 @@ import com.github.eclipsethemes.eclipse.ThemeRepository;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.TokenKey;
 import com.github.eclipsethemes.core.models.Color;
-import org.eclipse.jface.preference.PreferenceStore;
-import com.github.eclipsethemes.eclipse.preferences.PreferenceKeys;
 
 public class ThemeIdentityTest {
     @Rule public TemporaryFolder temporary = new TemporaryFolder();
@@ -110,99 +107,28 @@ public class ThemeIdentityTest {
         }
     }
 
-    @Test public void bindingReadFailureWithholdsAdmissionAndCannotCreateIncomingXml() throws Exception {
-        var directory = temporary.newFolder().toPath();
-        var installed = Files.createDirectory(directory.resolve("installed_themes"));
-        var target = installed.resolve("same.xml");
-        Files.writeString(target, "<colorTheme name='Stored'/>");
-        var source = directory.resolve("incoming.xml");
-        Files.writeString(source, "<colorTheme name='Incoming'/>");
-        Files.createDirectory(directory.resolve("theme-identities.properties"));
-        List<String> errors = new ArrayList<>();
-        var log = (org.eclipse.core.runtime.ILog) Proxy.newProxyInstance(getClass().getClassLoader(),
-                new Class<?>[] {org.eclipse.core.runtime.ILog.class}, (proxy, method, args) -> {
-                    if (method.getName().equals("error")) errors.add(String.valueOf(args[0]));
-                    return null;
-                });
-        try (var logger = ParserTestSupport.installLogger(ParserTestSupport.quietLog())) {
-            bundled(List.of());
-            var repository = new ThemeRepository(directory.toFile(), log);
-            repository.reload();
-            assertTrue(repository.getAllThemes().isEmpty());
-            assertTrue(repository.importTheme(source.toFile()).isEmpty());
-            assertEquals("<colorTheme name='Stored'/>", Files.readString(target));
-            assertEquals("<colorTheme name='Incoming'/>", Files.readString(source));
-            assertFalse(Files.exists(installed.resolve("incoming.xml")));
-            assertTrue(errors.stream().anyMatch(e -> e.contains("identity")));
-            assertTrue(Files.isDirectory(directory.resolve("theme-identities.properties")));
-        }
-    }
-
-    @Test public void occupiedOrReservedLocatorRefusesImportWithoutChangingEstablishedState() throws Exception {
-        for (boolean missingFile : List.of(false, true)) {
+    @Test public void uppercaseXmlImportIsAcceptedUnderTurkishDefaultLocale() throws Exception {
+        var previous = java.util.Locale.getDefault();
+        try {
+            java.util.Locale.setDefault(java.util.Locale.forLanguageTag("tr-TR"));
+            assertTrue(ParserFactory.getParserFor("THEME.XML").isPresent());
+            assertTrue(ParserFactory.getParserFor("Theme.XmL").isPresent());
             var directory = temporary.newFolder().toPath();
             var installed = Files.createDirectory(directory.resolve("installed_themes"));
-            var target = installed.resolve("same.xml");
-            Files.writeString(target, "<colorTheme name='Established' ect-id='old-source'/>");
-            var source = directory.resolve("same.xml");
-            Files.writeString(source, "<colorTheme name='Unrelated' ect-id='incoming-source'/>");
-            List<String> diagnostics = new ArrayList<>();
-            var log = (org.eclipse.core.runtime.ILog) Proxy.newProxyInstance(getClass().getClassLoader(),
-                    new Class<?>[] {org.eclipse.core.runtime.ILog.class}, (proxy, method, args) -> {
-                        if (method.getName().equals("error")) diagnostics.add(java.util.Arrays.toString(args));
-                        return null;
-                    });
-            try (var logger = ParserTestSupport.installLogger(ParserTestSupport.quietLog())) {
-                bundled(List.of());
-                var repository = new ThemeRepository(directory.toFile(), log);
-                repository.reload();
-                var catalog = repository.getAllThemes();
-                Theme established = catalog.get(0);
-                byte[] xmlBefore = Files.readAllBytes(target);
-                var binding = directory.resolve("theme-identities.properties");
-                byte[] bindingsBefore = Files.readAllBytes(binding);
-                var intentFile = directory.resolve("selected-intent.properties");
-                var intent = new PreferenceStore(intentFile.toString());
-                intent.setValue(PreferenceKeys.SELECTED_THEME_LOGICAL_ID, established.getLogicalId());
-                intent.setValue(PreferenceKeys.ACTIVE_THEME_ID, "old-source");
-                intent.save();
-                byte[] intentBefore = Files.readAllBytes(intentFile);
-                if (missingFile) Files.delete(target);
-
-                assertTrue("Refusal returns no incoming theme/identity", repository.importTheme(source.toFile()).isEmpty());
-                assertEquals(catalog, repository.getAllThemes());
-                assertSame("Catalog entry is not replaced/reloaded", established, repository.getAllThemes().get(0));
-                assertArrayEquals(bindingsBefore, Files.readAllBytes(binding));
-                assertArrayEquals(intentBefore, Files.readAllBytes(intentFile));
-                assertEquals(established.getLogicalId(), intent.getString(PreferenceKeys.SELECTED_THEME_LOGICAL_ID));
-                if (missingFile) {
-                    assertFalse("Reservation must not be recycled", Files.exists(target));
-                    assertTrue(diagnostics.toString(), diagnostics.stream().anyMatch(d -> d.contains("reserved")));
-                } else {
-                    assertArrayEquals(xmlBefore, Files.readAllBytes(target));
-                    assertTrue(diagnostics.toString(), diagnostics.stream().anyMatch(d -> d.contains("occupied")));
-                    // Selecting the managed destination itself must not truncate it either.
-                    assertTrue(repository.importTheme(target.toFile()).isEmpty());
-                    assertArrayEquals(xmlBefore, Files.readAllBytes(target));
-                    assertArrayEquals(bindingsBefore, Files.readAllBytes(binding));
-                }
+            var source = directory.resolve("THEME.XML");
+            Files.writeString(source, "<colorTheme name='Uppercase'/>");
+            var repository = new ThemeRepository(directory.toFile(), ParserTestSupport.quietLog());
+            Theme imported = repository.importTheme(source.toFile()).orElseThrow();
+            assertTrue(imported.getLogicalId().startsWith("local:"));
+            assertEquals(installed, imported.getFile().orElseThrow().toPath().getParent());
+            assertTrue(imported.getFile().orElseThrow().getName().matches("[0-9a-f-]{36}\\.xml"));
+            try (var files = Files.list(installed)) {
+                assertEquals(1, files.filter(Files::isRegularFile).count());
             }
+            assertEquals("<colorTheme name='Uppercase'/>", Files.readString(source));
+        } finally {
+            java.util.Locale.setDefault(previous);
         }
-    }
-
-    @Test public void occupiedUnboundLocatorIsRefusedWithoutAllocatingIdentity() throws Exception {
-        var directory = temporary.newFolder().toPath();
-        var installed = Files.createDirectory(directory.resolve("installed_themes"));
-        var target = installed.resolve("same.xml");
-        Files.writeString(target, "<colorTheme name='Unbound'/>");
-        var source = directory.resolve("same.xml");
-        Files.writeString(source, "<colorTheme name='Incoming'/>");
-        byte[] before = Files.readAllBytes(target);
-        var repository = new ThemeRepository(directory.toFile(), ParserTestSupport.quietLog());
-        assertTrue(repository.importTheme(source.toFile()).isEmpty());
-        assertArrayEquals(before, Files.readAllBytes(target));
-        assertFalse(Files.exists(directory.resolve("theme-identities.properties")));
-        assertTrue(repository.getAllThemes().isEmpty());
     }
 
     @Test public void bundledCorpusHasCuratedIdentitiesAndImportReturnsAnAdmittedRecord() throws Exception {

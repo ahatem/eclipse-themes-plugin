@@ -36,9 +36,9 @@ Baseline: branch `feat/atomic-deterministic-theme-import`, HEAD `d6c6c82364c1a2f
 
 ## Extension and locale behavior
 
-- `ParserFactory.getParserFor` accepts only `fileName.endsWith(".xml")` (line 22), while the repository filter is ASCII-lowercased. A file named `THEME.XML` is listed and then rejected.
-- `ThemeType.nameCapitalized` uses `toUpperCase()`/`toLowerCase()` without a locale (line 7), and `ThemeType.from` uses `type.toLowerCase().equals("dark")` without a locale (line 11). In a Turkish default locale, `"DARK".toLowerCase()` produces a dotless `ı` and classification fails.
-- The preference page search also lowercases with the default locale, but that is presentation/search and is deferred (proposal Deferred section), not part of this import contract.
+- `ParserFactory.getParserFor` accepts only `fileName.endsWith(".xml")` (line 22), while the repository filter is ASCII-lowercased. A file named `THEME.XML` is listed and then rejected. This is the demonstrated extension inconsistency; it does not depend on a Turkish locale.
+- `ThemeType.nameCapitalized` uses `toUpperCase()`/`toLowerCase()` without a locale (line 7), and `ThemeType.from` uses `type.toLowerCase().equals("dark")` without a locale (line 11). No Turkish-locale failure is claimed for `ThemeType.from("DARK")`: `DARK` contains no `I`, so dotless-I casing does not affect it. Applying `Locale.ROOT` to machine tokens is the deterministic implementation policy for locale-independent classification, not evidence of that specific defect.
+- `nameCapitalized` and preference-page search are presentation/localization concerns and remain deferred (proposal Deferred section); this change does not alter their behavior.
 
 ## Platform probes
 

@@ -1,5 +1,6 @@
 package com.github.eclipsethemes.core.parser;
 
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -19,7 +20,7 @@ public final class ParserFactory {
 			return Optional.empty();
 		}
 
-		if (fileName.endsWith(".xml")) {
+		if (fileName.toLowerCase(Locale.ROOT).endsWith(".xml")) {
 			return Optional.of(XML_PARSER);
 		}
 

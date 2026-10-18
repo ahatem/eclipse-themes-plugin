@@ -58,6 +58,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private Link websiteLink;
 	private Link downloadMoreLink;
 	private Button importButton;
+	private Button updateButton;
 	private Button removeButton;
 	private Button previewToggleButton;
 	private Label statusLabel;
@@ -92,7 +93,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		createToolbar(container);
 		// Themes List and Theme Details, Preview browser
 		createMainArea(container);
-		// Import, Remove
+		// Import, Update, Remove
 		createActionButtons(container);
 
 		// Load themes and set initial components state (eg. selected theme in list and
@@ -237,7 +238,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		separator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		Composite buttonArea = new Composite(parent, SWT.NONE);
-		buttonArea.setLayout(new GridLayout(4, false));
+		buttonArea.setLayout(new GridLayout(5, false));
 		buttonArea.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		// Import button
@@ -246,10 +247,17 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		importButton.setToolTipText("Import a new theme from file");
 		setButtonWidth(importButton, 120);
 
+		// Update button
+		updateButton = new Button(buttonArea, SWT.PUSH);
+		updateButton.setText("Update Selected Theme...");
+		updateButton.setToolTipText("Replace the XML of the selected installed theme, keeping its identity");
+		updateButton.setEnabled(false);
+		setButtonWidth(updateButton, 150);
+
 		// Remove button
 		removeButton = new Button(buttonArea, SWT.PUSH);
 		removeButton.setText("Remove");
-		removeButton.setToolTipText("Remove the selected imported theme (* marks imported themes)");
+		removeButton.setToolTipText("Remove the selected installed theme (* marks installed themes)");
 		removeButton.setEnabled(false);
 		setButtonWidth(removeButton, 120);
 
@@ -425,6 +433,13 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			}
 		});
 
+		updateButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateSelectedTheme();
+			}
+		});
+
 		removeButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -503,10 +518,14 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	}
 
 	private void updateButtonStates() {
-		boolean hasSelection = selectedTheme != null;
-		boolean isImportedTheme = hasSelection && selectedTheme.getFile().isPresent();
+		boolean installedSelected = isInstalledTheme(selectedTheme);
 
-		removeButton.setEnabled(isImportedTheme);
+		updateButton.setEnabled(installedSelected);
+		removeButton.setEnabled(installedSelected);
+	}
+
+	private static boolean isInstalledTheme(Theme theme) {
+		return theme != null && theme.getLogicalId() != null && theme.getLogicalId().startsWith("local:");
 	}
 
 	private void togglePreviewVisibility() {
@@ -545,19 +564,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	}
 
 	private void importTheme() {
-		FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
-		dialog.setText("Import Theme");
-		dialog.setFilterExtensions(new String[] { "*.xml" });
-		dialog.setFilterNames(new String[] { "Eclipse Theme Files (*.xml)" });
-
-		String selectedFilePath = dialog.open();
-		if (selectedFilePath == null) {
-			return;
-		}
-
-		File selectedFile = new File(selectedFilePath);
-		if (!selectedFile.exists() || !selectedFile.canRead()) {
-			showErrorMessage("Import Failed", "Cannot read the selected file.");
+		File selectedFile = chooseThemeFile("Import Theme");
+		if (selectedFile == null) {
 			return;
 		}
 
@@ -565,75 +573,167 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			Optional<Theme> importedTheme = EclipseThemes.instance().getManager().importTheme(selectedFile);
 			if (importedTheme.isEmpty()) {
 				showErrorMessage("Import Failed",
-						"Could not import theme - it may conflict with an existing theme or have invalid format.");
+						"The theme could not be validated or stored. The existing catalog was not changed.");
 				return;
 			}
 
-			// Refresh and select the new theme
+			String identity = importedTheme.get().getLogicalId();
 			loadThemes();
 			filterThemes();
-
-			selectedTheme = allThemes.stream().filter(importedTheme.get()::equals).findFirst().orElse(null);
-			if (selectedTheme == null) {
+			Theme admitted = selectThemeByIdentity(identity);
+			if (admitted == null) {
 				showErrorMessage("Import Failed", "The imported theme could not be admitted to the catalog.");
 				return;
 			}
-			themeViewer.setSelection(new StructuredSelection(selectedTheme));
 
 			showInfoMessage("Import Successful",
-					"Theme '" + selectedTheme.getName() + "' has been imported successfully.");
-
+					"Theme '" + admitted.getName() + "' has been imported successfully.");
 		} catch (Exception e) {
 			EclipseThemes.instance().getLogger().error("Import Error", e);
 			showErrorMessage("Import Error", "Error importing theme: " + e.getMessage());
 		}
 	}
 
+	private void updateSelectedTheme() {
+		if (!isInstalledTheme(selectedTheme)) {
+			return;
+		}
+
+		File selectedFile = chooseThemeFile("Update Selected Theme");
+		if (selectedFile == null) {
+			return;
+		}
+		boolean confirmed = showConfirmDialog("Update Theme",
+				"Replace the installed XML content of '" + selectedTheme.getName() + "'?\n\n"
+						+ "The theme keeps its identity and remains selected. This cannot be undone.");
+		if (!confirmed) {
+			return;
+		}
+
+		String identity = selectedTheme.getLogicalId();
+		try {
+			Optional<Theme> updated = EclipseThemes.instance().getManager().updateTheme(selectedTheme, selectedFile);
+			if (updated.isEmpty()) {
+				showErrorMessage("Update Failed",
+						"The theme file was not replaced. The installed theme is unchanged.");
+				return;
+			}
+
+			loadThemes();
+			filterThemes();
+			Theme admitted = selectThemeByIdentity(identity);
+			if (admitted == null) {
+				showErrorMessage("Update Failed", "The replaced theme could not be reloaded from managed storage.");
+				return;
+			}
+
+			showInfoMessage("Update Successful", "Theme '" + admitted.getName() + "' has been updated.");
+		} catch (Exception e) {
+			EclipseThemes.instance().getLogger().error("Update Error", e);
+			showErrorMessage("Update Error", "Error updating theme: " + e.getMessage());
+		}
+	}
+
+	private File chooseThemeFile(String dialogTitle) {
+		FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
+		dialog.setText(dialogTitle);
+		dialog.setFilterExtensions(new String[] { "*.xml", "*.XML" });
+		dialog.setFilterNames(new String[] { "Eclipse Theme Files (*.xml)", "Eclipse Theme Files (*.XML)" });
+
+		String selectedFilePath = dialog.open();
+		if (selectedFilePath == null) {
+			return null;
+		}
+
+		File selectedFile = new File(selectedFilePath);
+		if (!selectedFile.exists() || !selectedFile.canRead()) {
+			showErrorMessage(dialogTitle, "Cannot read the selected file.");
+			return null;
+		}
+		return selectedFile;
+	}
+
+	private Theme selectThemeByIdentity(String logicalId) {
+		Theme match = allThemes.stream()
+				.filter(theme -> logicalId.equals(theme.getLogicalId()))
+				.findFirst()
+				.orElse(null);
+		if (match != null) {
+			themeViewer.setSelection(new StructuredSelection(match));
+		}
+		return match;
+	}
+
 	private void removeSelectedTheme() {
-		if (selectedTheme == null || !selectedTheme.getFile().isPresent()) {
+		if (!isInstalledTheme(selectedTheme)) {
 			return;
 		}
 
 		boolean confirmed = showConfirmDialog("Remove Theme", "Are you sure you want to remove the theme '"
-				+ selectedTheme.getName() + "'?\n\n" + "This action cannot be undone.");
+				+ selectedTheme.getName() + "'?\n\n"
+				+ "This permanently deletes its installed theme file. This action cannot be undone.");
 
 		if (!confirmed) {
 			return;
 		}
 
+		Theme removed = selectedTheme;
 		try {
-			// Delete the theme file
-			selectedTheme.getFile().ifPresent(File::delete);
-			// If this was the current theme, reset to default
-			if (selectedTheme.equals(currentTheme)) {
-				resetToDefaultTheme();
+			boolean removedFromStorage = EclipseThemes.instance().getManager().removeTheme(removed);
+			if (!removedFromStorage) {
+				showErrorMessage("Remove Failed",
+						"The theme was not removed. Its installed file and identity are unchanged.");
+				return;
 			}
 
-			// Refresh the theme list
-			loadThemes();
-			filterThemes();
+			// Reset only after removal is committed; a reset failure does not
+			// turn the committed removal into a removal failure.
+			boolean resetFailed = false;
+			if (removed.equals(currentTheme)) {
+				try {
+					resetFailed = !resetToDefaultTheme();
+				} catch (Exception e) {
+					EclipseThemes.instance().getLogger().error("Reset After Removal Error", e);
+					resetFailed = true;
+				}
+			}
 
-			// Select another theme
-			if (!filteredThemes.isEmpty()) {
-				themeViewer.setSelection(new StructuredSelection(filteredThemes.get(0)));
-			} else {
+			// Reload without reselecting the removed identity, and verify the
+			// refreshed catalog no longer contains it before reporting success.
+			loadThemes();
+			if (allThemes.stream().anyMatch(removed::equals)) {
+				showErrorMessage("Remove Verification Failed",
+						"Removal was committed, but the refreshed catalog still contains the theme. "
+								+ "Reopen the preference page to reload the catalog.");
+				return;
+			}
+			filterThemes();
+			if (filteredThemes.isEmpty()) {
 				clearSelection();
 			}
 
-			showInfoMessage("Theme Removed", "Theme has been removed successfully.");
+			if (resetFailed) {
+				showErrorMessage("Theme Removed",
+						"The theme was removed, but resetting the applied theme to the default failed. "
+								+ "Please select and apply a theme again.");
+			} else {
+				showInfoMessage("Theme Removed", "Theme has been removed successfully.");
+			}
 		} catch (Exception e) {
 			showErrorMessage("Remove Failed", "Failed to remove theme: " + e.getMessage());
 		}
 	}
 
-	private void resetToDefaultTheme() {
+	private boolean resetToDefaultTheme() {
 		Theme defaultTheme = getDefaultThemeForCurrentMode();
 
-		if (defaultTheme != null) {
-			EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);
-			currentTheme = defaultTheme;
-			ThemeSelection.remember(getPreferenceStore(), defaultTheme);
+		if (defaultTheme == null) {
+			return false;
 		}
+		EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);
+		currentTheme = defaultTheme;
+		ThemeSelection.remember(getPreferenceStore(), defaultTheme);
+		return true;
 	}
 
 	// See:

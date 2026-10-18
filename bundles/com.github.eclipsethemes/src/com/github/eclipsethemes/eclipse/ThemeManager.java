@@ -41,4 +41,12 @@ public final class ThemeManager {
 	public Optional<Theme> importTheme(File file) {
 		return repository.importTheme(file);
 	}
+
+	public Optional<Theme> updateTheme(Theme selected, File file) {
+		return repository.updateTheme(selected, file);
+	}
+
+	public boolean removeTheme(Theme selected) {
+		return repository.removeTheme(selected);
+	}
 }
