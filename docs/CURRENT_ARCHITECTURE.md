@@ -47,7 +47,7 @@ The project currently does not contribute a workbench CSS theme, `org.eclipse.ui
 
 ## Layering concern
 
-The audit identified a parser -> activator -> manager -> repository -> parser back-edge caused by parser diagnostics flowing through the UI/plugin activator. Target architecture removes this dependency by returning diagnostics or injecting a sink.
+The audit identified a parser -> activator -> manager -> repository -> parser back-edge caused by parser diagnostics flowing through the UI/plugin activator. That dependency is gone: parsing reports `core.validation.ThemeDiagnostic` findings through a `Consumer` sink supplied by the caller, so `core` has no activator, SWT or preference dependency and the parser retains no findings. `ThemeRepository` owns both sinks — an admission sink that returns findings to the caller and logs them, and a reload sink that only logs — while logging findings from repository admission and reload remains at this boundary.
 
 ## Fragile integration surface
 
@@ -76,7 +76,32 @@ Installed identity bindings live in `theme-identities.properties` in the existin
 
 New selected intent uses `SELECTED_THEME_LOGICAL_ID`. With no modern explicit reference, a nonblank explicit legacy `ACTIVE_THEME_ID` resolves only when exactly one loaded candidate claims it. Ambiguous/missing/blank intent remains unresolved. Opening/restoring selection does not rewrite old intent, apply colors or select a guessed fallback. An explicit application writes modern intent and dispatches current content, including when its identity is unchanged. Unchanged explicit Apply/OK can therefore reapply. Default actions use the curated bundled identities. This remains selected intent, not successful-applied-state tracking; R3 owns application truth and recovery.
 
-No revision ID, production digest, history or content-comparison mechanism is present. Downgrades can read unchanged XML but may require reselection. New imports use fresh repository-allocated locators; removed locators are not silently reassigned to a different identity. Staging files under `installed_themes/.staging` are never catalogued, and parse/copy/binding failures clean only attempt-created artifacts while preserving prior records, bindings and selected intent. Update requires one atomic replacement and fails without a non-atomic fallback. Removal may succeed when the exact managed file is already absent, but fails closed for an unexpected path type; a crash between binding removal and file deletion can leave an unbound file that is later re-admitted under a new identity. Broader validation, immutable definitions, offline preview, R3 applied-state truth and the conflict/diagnostic UI remain later work.
+No revision ID, production digest, history or content-comparison mechanism is present. Downgrades can read unchanged XML but may require reselection. New imports use fresh repository-allocated locators; removed locators are not silently reassigned to a different identity. Staging files under `installed_themes/.staging` are never catalogued, and parse/copy/binding failures clean only attempt-created artifacts while preserving prior records, bindings and selected intent. Update requires one atomic replacement and fails without a non-atomic fallback. Removal may succeed when the exact managed file is already absent, but fails closed for an unexpected path type; a crash between binding removal and file deletion can leave an unbound file that is later re-admitted under a new identity. Immutable definitions, offline preview, R3 applied-state truth and the conflict/diagnostic UI remain later work.
+
+## Validation and diagnostics
+
+One validation boundary covers bundled loading, installed-reload, import and update. Structural failures
+refuse the document: the root element must be `colorTheme` and `name` must be present and non-blank. These are
+the only errors; every other defect is a warning attached to an admitted theme, including unknown and nested
+elements, tokens with an absent, blank or unparseable `color`, non-boolean style flags, mapping conflicts, a
+present-but-unrecognised `type`, and a `website` that is not an absolute `http`/`https` URI. Warnings never
+block admission, so a sparse or slightly non-conforming historical theme still imports.
+
+Findings travel as a small `core.validation.ThemeDiagnostic` value (severity, stable kind, message, source,
+element/attribute) through an injected sink; the parser holds no findings of its own. Refusals also carry their
+error findings on `ThemeParseException.diagnostics()`, and import/update report a small
+`ThemeOperationOutcome` (committed theme, findings, `describeFailure()`) shaped like `PreferenceReset.Result`.
+Refused admission leaves bytes, bindings, identity and catalog unchanged on every source; an installed file
+that no longer validates is skipped on reload without being deleted or rebound.
+
+Website metadata is untrusted display data. A single SWT-free check decides launchability by trim, absolute
+URI syntax and a case-insensitive `http`/`https` scheme; the details pane renders link markup only for a
+launchable value and escaped inert text otherwise, and the selection listener reuses that same check before
+`Program.launch`.
+
+Accepted for now: the parser still applies its hard-coded dark root defaults when a light theme omits them
+(PM-V7). Correcting those defaults changes rendered colors for existing themes and is deferred to the
+immutable/validated theme-model work rather than folded into validation.
 
 ## Build baseline
 

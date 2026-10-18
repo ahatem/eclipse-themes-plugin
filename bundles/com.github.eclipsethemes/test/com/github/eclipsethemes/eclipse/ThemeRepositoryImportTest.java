@@ -34,7 +34,7 @@ public class ThemeRepositoryImportTest {
         Path source = Files.writeString(directory.resolve("theme.xml"), STORED);
 
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
-        Theme imported = repository.importTheme(source.toFile()).orElseThrow();
+        Theme imported = repository.importTheme(source.toFile()).theme();
 
         assertNotEquals("Equal basename and bytes never reuse identity", establishedId, imported.getLogicalId());
         Path managed = imported.getFile().orElseThrow().toPath();
@@ -62,7 +62,7 @@ public class ThemeRepositoryImportTest {
         try (var activator = RepositoryTestSupport.installActivator()) {
             RepositoryTestSupport.installBundled(List.of());
             var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
-            Theme imported = repository.importTheme(source.toFile()).orElseThrow();
+            Theme imported = repository.importTheme(source.toFile()).theme();
             Files.writeString(Files.createDirectories(installed.resolve(".staging")).resolve("leftover.part"),
                     INCOMING);
 
@@ -84,8 +84,8 @@ public class ThemeRepositoryImportTest {
         Path source = Files.writeString(directory.resolve("theme.xml"), INCOMING);
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
 
-        Theme first = repository.importTheme(source.toFile()).orElseThrow();
-        Theme second = repository.importTheme(source.toFile()).orElseThrow();
+        Theme first = repository.importTheme(source.toFile()).theme();
+        Theme second = repository.importTheme(source.toFile()).theme();
 
         assertNotEquals(first.getLogicalId(), second.getLogicalId());
         assertNotEquals(first.getFile().orElseThrow(), second.getFile().orElseThrow());
@@ -98,7 +98,7 @@ public class ThemeRepositoryImportTest {
         Path source = Files.writeString(directory.resolve("THEME.XML"), INCOMING);
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
 
-        Theme imported = repository.importTheme(source.toFile()).orElseThrow();
+        Theme imported = repository.importTheme(source.toFile()).theme();
 
         assertTrue(imported.getFile().orElseThrow().getName().endsWith(".xml"));
         assertEquals(INCOMING, Files.readString(source));
@@ -111,7 +111,7 @@ public class ThemeRepositoryImportTest {
 
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
         assertEquals(List.of(), repository.getAllThemes());
-        assertFalse("The storage failure is reported", repository.importTheme(source.toFile()).isPresent());
+        assertFalse("The storage failure is reported", repository.importTheme(source.toFile()).successful());
         assertFalse("No binding may outlive a failed copy",
                 Files.exists(RepositoryTestSupport.bindingsFile(directory)));
         assertTrue(repository.getAllThemes().isEmpty());
@@ -119,7 +119,7 @@ public class ThemeRepositoryImportTest {
         // The failed attempt left no reservation: once the obstruction is removed, a retry admits normally.
         Files.delete(blocked);
         Files.createDirectory(blocked);
-        Theme admitted = repository.importTheme(source.toFile()).orElseThrow();
+        Theme admitted = repository.importTheme(source.toFile()).theme();
         assertTrue(admitted.getLogicalId().startsWith("local:"));
         assertEquals(List.of(admitted.getFile().orElseThrow().getName()),
                 RepositoryTestSupport.fileNames(blocked));
@@ -153,7 +153,7 @@ public class ThemeRepositoryImportTest {
         };
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog(), failing);
 
-        assertFalse(repository.importTheme(source.toFile()).isPresent());
+        assertFalse(repository.importTheme(source.toFile()).successful());
 
         assertEquals("Only this attempt's managed file is absent",
                 List.of("existing.xml"), RepositoryTestSupport.fileNames(installed));
@@ -174,7 +174,7 @@ public class ThemeRepositoryImportTest {
         Files.createDirectory(RepositoryTestSupport.bindingsFile(directory));
 
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
-        assertFalse(repository.importTheme(source.toFile()).isPresent());
+        assertFalse(repository.importTheme(source.toFile()).successful());
 
         assertEquals(List.of("stored.xml"), RepositoryTestSupport.fileNames(installed));
         assertEquals(List.of(), RepositoryTestSupport.stagedPieces(installed));
@@ -196,7 +196,7 @@ public class ThemeRepositoryImportTest {
             repository.reload();
             assertEquals(sourceId, repository.getAllThemes().get(0).getLogicalId());
 
-            Theme imported = repository.importTheme(source.toFile()).orElseThrow();
+            Theme imported = repository.importTheme(source.toFile()).theme();
 
             assertNotEquals(sourceId, imported.getLogicalId());
             assertNotEquals(source.toAbsolutePath().normalize(),
@@ -213,7 +213,7 @@ public class ThemeRepositoryImportTest {
         Path source = Files.writeString(directory.resolve("theme.xml"), "<colorTheme name='Broken'>");
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
 
-        assertFalse(repository.importTheme(source.toFile()).isPresent());
+        assertFalse(repository.importTheme(source.toFile()).successful());
 
         assertFalse("No binding may outlive a failed parse",
                 Files.exists(RepositoryTestSupport.bindingsFile(directory)));
@@ -229,7 +229,7 @@ public class ThemeRepositoryImportTest {
         Path source = Files.writeString(directory.resolve("theme.txt"), INCOMING);
         var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
 
-        assertFalse(repository.importTheme(source.toFile()).isPresent());
+        assertFalse(repository.importTheme(source.toFile()).successful());
 
         assertFalse("Unsupported input never reaches staging", Files.exists(installed.resolve(".staging")));
         assertFalse(Files.exists(RepositoryTestSupport.bindingsFile(directory)));

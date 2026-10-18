@@ -2,7 +2,6 @@ package com.github.eclipsethemes.eclipse.preferences;
 
 import java.io.File;
 import java.util.List;
-import java.util.Optional;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -40,7 +39,9 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import com.github.eclipsethemes.EclipseThemes;
 import com.github.eclipsethemes.core.Constants;
 import com.github.eclipsethemes.core.models.Theme;
+import com.github.eclipsethemes.core.validation.WebsiteUri;
 import com.github.eclipsethemes.eclipse.ThemeManager;
+import com.github.eclipsethemes.eclipse.ThemeOperationOutcome;
 
 public class EclipseThemesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
@@ -412,8 +413,10 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		websiteLink.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (selectedTheme != null && selectedTheme.getWebsite() != null) {
-					Program.launch(selectedTheme.getWebsite());
+				// The same policy that decides the link markup decides the launch.
+				WebsiteUri.Check check = WebsiteUri.check(selectedTheme == null ? null : selectedTheme.getWebsite());
+				if (check.launchable()) {
+					Program.launch(check.value());
 				}
 			}
 		});
@@ -478,15 +481,22 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		themeNameLabel.setText(theme.getName());
 		authorLabel.setText(theme.getAuthor() != null ? theme.getAuthor() : "N/A");
 		themeTypeLabel.setText(theme.getType().nameCapitalized());
-
-		String website = theme.getWebsite();
-		if (website != null && !website.isEmpty()) {
-			websiteLink.setText("<a>" + website + "</a>");
-		} else {
-			websiteLink.setText("N/A");
-		}
+		websiteLink.setText(websiteText(theme.getWebsite()));
 
 		themeNameLabel.getParent().layout();
+	}
+
+	/**
+	 * Link markup is emitted only for a launchable value; everything else stays
+	 * inert literal text so no metadata can reach the platform launcher.
+	 */
+	static String websiteText(String website) {
+		WebsiteUri.Check check = WebsiteUri.check(website);
+		if (check.value().isEmpty()) {
+			return "N/A";
+		}
+		String text = WebsiteUri.displayText(website);
+		return check.launchable() ? "<a>" + text + "</a>" : text;
 	}
 
 	private void updatePreview(Theme theme) {
@@ -570,14 +580,13 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		}
 
 		try {
-			Optional<Theme> importedTheme = EclipseThemes.instance().getManager().importTheme(selectedFile);
-			if (importedTheme.isEmpty()) {
-				showErrorMessage("Import Failed",
-						"The theme could not be validated or stored. The existing catalog was not changed.");
+			ThemeOperationOutcome outcome = EclipseThemes.instance().getManager().importTheme(selectedFile);
+			if (!outcome.successful()) {
+				showErrorMessage("Import Failed", outcome.describeFailure());
 				return;
 			}
 
-			String identity = importedTheme.get().getLogicalId();
+			String identity = outcome.theme().getLogicalId();
 			loadThemes();
 			filterThemes();
 			Theme admitted = selectThemeByIdentity(identity);
@@ -612,10 +621,9 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 		String identity = selectedTheme.getLogicalId();
 		try {
-			Optional<Theme> updated = EclipseThemes.instance().getManager().updateTheme(selectedTheme, selectedFile);
-			if (updated.isEmpty()) {
-				showErrorMessage("Update Failed",
-						"The theme file was not replaced. The installed theme is unchanged.");
+			ThemeOperationOutcome outcome = EclipseThemes.instance().getManager().updateTheme(selectedTheme, selectedFile);
+			if (!outcome.successful()) {
+				showErrorMessage("Update Failed", outcome.describeFailure());
 				return;
 			}
 

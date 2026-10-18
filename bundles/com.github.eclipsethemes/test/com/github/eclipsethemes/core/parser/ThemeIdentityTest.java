@@ -118,7 +118,7 @@ public class ThemeIdentityTest {
             var source = directory.resolve("THEME.XML");
             Files.writeString(source, "<colorTheme name='Uppercase'/>");
             var repository = new ThemeRepository(directory.toFile(), ParserTestSupport.quietLog());
-            Theme imported = repository.importTheme(source.toFile()).orElseThrow();
+            Theme imported = repository.importTheme(source.toFile()).theme();
             assertTrue(imported.getLogicalId().startsWith("local:"));
             assertEquals(installed, imported.getFile().orElseThrow().toPath().getParent());
             assertTrue(imported.getFile().orElseThrow().getName().matches("[0-9a-f-]{36}\\.xml"));
@@ -152,7 +152,7 @@ public class ThemeIdentityTest {
             }
             var source = directory.resolve("external.xml");
             Files.writeString(source, "<colorTheme name='Darcula' ect-id='63d6a50b-371f-4211-9025-9bfea76cc850'/>");
-            Theme imported = repository.importTheme(source.toFile()).orElseThrow();
+            Theme imported = repository.importTheme(source.toFile()).theme();
             assertTrue(imported.getLogicalId().startsWith("local:"));
             assertTrue(repository.getAllThemes().stream().anyMatch(t -> t == imported));
             // Moving the external origin leaves the installed record and its identity untouched.

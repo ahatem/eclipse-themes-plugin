@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.github.eclipsethemes.core.models.*;
+import com.github.eclipsethemes.core.validation.ThemeDiagnostic;
 
 public class XmlThemeMappingTest {
     @org.junit.ClassRule public static final org.junit.rules.ExternalResource LOGGER = ParserTestSupport.loggerRule();
@@ -105,29 +106,36 @@ public class XmlThemeMappingTest {
     @Test public void diagnosticsNameSourcesOccurrencesAndFinalWholeTokenWinner() throws Exception {
         for (String[] alias : ALIASES) {
             for (boolean reverse : List.of(false, true)) {
-                java.util.List<String> warnings = new java.util.ArrayList<>();
+                List<ThemeDiagnostic> findings = new java.util.ArrayList<>();
                 String canonical = property(alias[1], "#123456", false);
                 String legacy = property(alias[0], "#abcdef", true);
-                new XmlThemeParser(warnings::add).parse(ParserTestSupport.xml(
-                        "<colorTheme>" + (reverse ? legacy + canonical : canonical + legacy) + "</colorTheme>"));
+                new XmlThemeParser(findings::add).parse(ParserTestSupport.xml("<colorTheme name='Mapping'>"
+                        + (reverse ? legacy + canonical : canonical + legacy) + "</colorTheme>"));
+                List<String> warnings = messages(findings);
                 assertEquals(1, warnings.size());
                 String warning = warnings.get(0);
                 assertTrue(warning.contains("role " + alias[1]));
                 assertTrue(warning.contains(alias[0] + "#" + (reverse ? 1 : 2)));
                 assertTrue(warning.contains("selected " + alias[1] + "#" + (reverse ? 2 : 1)));
             }
-            java.util.List<String> warnings = new java.util.ArrayList<>();
-            new XmlThemeParser(warnings::add).parse(ParserTestSupport.xml("<colorTheme>"
+            List<ThemeDiagnostic> single = new java.util.ArrayList<>();
+            new XmlThemeParser(single::add).parse(ParserTestSupport.xml("<colorTheme name='Mapping'>"
                     + "<" + alias[1] + " color='#123456'/>" + property(alias[0], "#123456", false) + "</colorTheme>"));
-            assertTrue(warnings.toString(), warnings.isEmpty());
+            assertTrue(single.toString(), single.isEmpty());
         }
-        java.util.List<String> warnings = new java.util.ArrayList<>();
-        new XmlThemeParser(warnings::add).parse(ParserTestSupport.xml("<colorTheme>"
+        List<ThemeDiagnostic> distinct = new java.util.ArrayList<>();
+        new XmlThemeParser(distinct::add).parse(ParserTestSupport.xml("<colorTheme name='Mapping'>"
                 + property("comment", "#abcdef", true) + "<comment color='#123456'/>"
                 + property("xmlComment", "#fedcba", true) + "</colorTheme>"));
+        List<String> warnings = messages(distinct);
         assertEquals(1, warnings.size());
         assertTrue(warnings.get(0).contains("comment#1"));
         assertTrue(warnings.get(0).contains("selected comment#2"));
+    }
+
+    /** Only the human-readable message of each finding is relevant to these assertions. */
+    private static List<String> messages(List<ThemeDiagnostic> findings) {
+        return findings.stream().map(ThemeDiagnostic::message).toList();
     }
 
     @Test public void allBundledPairsRetainExactSourceColorsAndEffectiveStyles() throws Exception {

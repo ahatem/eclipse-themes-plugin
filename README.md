@@ -65,6 +65,18 @@ overwrite or silently replace that theme; same-named sources coexist under
 repository-allocated filenames. The imported bytes are copied to staging and
 validated there before the managed file and identity are committed.
 
+Bundled loading, import and update share one validation boundary. A document whose
+root element is not `colorTheme`, or whose `name` is missing or blank, is refused,
+and the catalog, the identity bindings and the previous installed bytes are left
+untouched; the dialog names the rule that failed. Everything else is reported as a
+warning and the theme is still admitted: unknown or nested elements, tokens without
+a usable color, non-boolean style flags, mapping conflicts, a present but
+unrecognised `type`, and a `website` that is not an absolute `http`/`https` URI.
+Warnings never block an import, and an invalid installed file is skipped on load
+without deleting it or changing its identity. A `website` value becomes a
+clickable link only when it is an `http` or `https` URI; any other value is shown
+as inert text and is never passed to the platform launcher.
+
 Use **Update Selected Theme...** to replace the XML of the selected installed
 theme while keeping its identity, and **Remove** to permanently delete its
 managed file after confirmation. Updating a theme does not reapply its colors

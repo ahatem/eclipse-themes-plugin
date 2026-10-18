@@ -28,10 +28,15 @@ public interface ThemeParser {
 
     /**
      * Convenience method for parsing directly from a file.
+     * <p>
+     * Validation refusals propagate unchanged so callers can report the reason and
+     * the findings that caused it; only I/O and unexpected failures are wrapped.
      */
     default Theme parse(File file) throws ThemeParseException {
         try (InputStream inputStream = new FileInputStream(file)) {
             return parse(inputStream, file);
+        } catch (ThemeParseException e) {
+            throw e;
         } catch (Exception e) {
             throw new ThemeParseException("Failed to read theme file: " + file.getName(), e);
         }

@@ -4,15 +4,17 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import com.github.eclipsethemes.core.validation.ThemeDiagnostic;
+
 public final class ParserFactory {
 	private static final ThemeParser XML_PARSER = new XmlThemeParser();
 
 	private ParserFactory() {
 	}
 
-	/** Internal repository boundary for bounded mapping warnings. */
-	public static Optional<ThemeParser> getParserFor(String fileName, Consumer<String> mappingWarning) {
-		return getParserFor(fileName).map(parser -> new XmlThemeParser(mappingWarning));
+	/** Internal repository boundary for bounded validation findings. */
+	public static Optional<ThemeParser> getParserFor(String fileName, Consumer<ThemeDiagnostic> diagnosticSink) {
+		return getParserFor(fileName).map(parser -> new XmlThemeParser(diagnosticSink));
 	}
 
 	public static Optional<ThemeParser> getParserFor(String fileName) {

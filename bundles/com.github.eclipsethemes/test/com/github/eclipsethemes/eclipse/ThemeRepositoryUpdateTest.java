@@ -31,7 +31,7 @@ public class ThemeRepositoryUpdateTest {
             Seeded seeded = seed(directory, "theme.xml", ORIGINAL);
             Path source = Files.writeString(directory.resolve("replacement.xml"), REPLACEMENT);
 
-            Theme updated = seeded.repository.updateTheme(seeded.record, source.toFile()).orElseThrow();
+            Theme updated = seeded.repository.updateTheme(seeded.record, source.toFile()).theme();
 
             assertEquals("Identity is preserved, not regenerated", seeded.identity, updated.getLogicalId());
             assertEquals(seeded.file.toAbsolutePath().normalize(),
@@ -61,7 +61,7 @@ public class ThemeRepositoryUpdateTest {
             byte[] bindingsBefore = Files.readAllBytes(bindings);
             Path source = Files.writeString(directory.resolve("replacement.xml"), "<colorTheme name='Broken'>");
 
-            assertFalse(seeded.repository.updateTheme(seeded.record, source.toFile()).isPresent());
+            assertFalse(seeded.repository.updateTheme(seeded.record, source.toFile()).successful());
 
             assertEquals(ORIGINAL, Files.readString(seeded.file));
             assertArrayEquals(bindingsBefore, Files.readAllBytes(bindings));
@@ -91,7 +91,7 @@ public class ThemeRepositoryUpdateTest {
             repository.reload();
             Theme record = find(repository, identity);
 
-            assertFalse(repository.updateTheme(record, source.toFile()).isPresent());
+            assertFalse(repository.updateTheme(record, source.toFile()).successful());
 
             assertEquals("No fallback replacement occurred", ORIGINAL, Files.readString(file));
             assertEquals(identity, RepositoryTestSupport.establishedIdentity(directory, "theme.xml"));
@@ -109,7 +109,7 @@ public class ThemeRepositoryUpdateTest {
             Files.delete(seeded.file);
             Path source = Files.writeString(directory.resolve("replacement.xml"), REPLACEMENT);
 
-            assertFalse(seeded.repository.updateTheme(seeded.record, source.toFile()).isPresent());
+            assertFalse(seeded.repository.updateTheme(seeded.record, source.toFile()).successful());
 
             assertFalse("A missing target is never recreated", Files.exists(seeded.file));
             assertEquals("The record remains established while its file is absent", seeded.identity,
@@ -127,7 +127,7 @@ public class ThemeRepositoryUpdateTest {
             Seeded seeded = seed(directory, "theme.xml", ORIGINAL);
             Path source = Files.writeString(directory.resolve("replacement.txt"), REPLACEMENT);
 
-            assertFalse(seeded.repository.updateTheme(seeded.record, source.toFile()).isPresent());
+            assertFalse(seeded.repository.updateTheme(seeded.record, source.toFile()).successful());
 
             assertEquals(ORIGINAL, Files.readString(seeded.file));
             assertEquals(seeded.identity, RepositoryTestSupport.establishedIdentity(directory, "theme.xml"));
@@ -146,7 +146,7 @@ public class ThemeRepositoryUpdateTest {
             Theme bundled = new Theme("curated", "Bundled", null, null, null, null, ThemeType.DARK)
                     .withLogicalId("bundled:curated");
 
-            assertFalse(seeded.repository.updateTheme(bundled, source.toFile()).isPresent());
+            assertFalse(seeded.repository.updateTheme(bundled, source.toFile()).successful());
 
             assertEquals(ORIGINAL, Files.readString(seeded.file));
             assertEquals(seeded.identity, RepositoryTestSupport.establishedIdentity(directory, "theme.xml"));
@@ -165,7 +165,7 @@ public class ThemeRepositoryUpdateTest {
             Theme foreign = new Theme("outside", "Outside", null, null, null, outside.toFile(), ThemeType.DARK)
                     .withLogicalId("local:outside");
 
-            assertFalse(seeded.repository.updateTheme(foreign, source.toFile()).isPresent());
+            assertFalse(seeded.repository.updateTheme(foreign, source.toFile()).successful());
 
             assertEquals(ORIGINAL, Files.readString(outside));
             assertEquals(ORIGINAL, Files.readString(seeded.file));
@@ -183,7 +183,7 @@ public class ThemeRepositoryUpdateTest {
             Files.delete(bindings);
             Path source = Files.writeString(directory.resolve("replacement.xml"), REPLACEMENT);
 
-            assertFalse(seeded.repository.updateTheme(seeded.record, source.toFile()).isPresent());
+            assertFalse(seeded.repository.updateTheme(seeded.record, source.toFile()).successful());
 
             assertEquals(ORIGINAL, Files.readString(seeded.file));
             assertFalse("Refusal never generates a binding", Files.exists(bindings));
@@ -202,7 +202,7 @@ public class ThemeRepositoryUpdateTest {
             Files.writeString(bindings, inconsistent);
             Path source = Files.writeString(directory.resolve("replacement.xml"), REPLACEMENT);
 
-            assertFalse(seeded.repository.updateTheme(seeded.record, source.toFile()).isPresent());
+            assertFalse(seeded.repository.updateTheme(seeded.record, source.toFile()).successful());
 
             assertEquals(ORIGINAL, Files.readString(seeded.file));
             assertEquals(inconsistent, Files.readString(bindings));
@@ -228,7 +228,7 @@ public class ThemeRepositoryUpdateTest {
             Path source = Files.writeString(directory.resolve("replacement.xml"),
                     "<colorTheme name='Second' ect-id='source-second'><background color='#444444'/></colorTheme>");
 
-            Theme updated = repository.updateTheme(first, source.toFile()).orElseThrow();
+            Theme updated = repository.updateTheme(first, source.toFile()).theme();
 
             assertEquals(firstId, updated.getLogicalId());
             assertEquals("Second", updated.getName());
