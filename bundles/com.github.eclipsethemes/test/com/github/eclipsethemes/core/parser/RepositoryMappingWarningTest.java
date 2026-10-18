@@ -30,7 +30,7 @@ public class RepositoryMappingWarningTest {
         bundleField.setAccessible(true);
         try (var logger = ParserTestSupport.installLogger(ParserTestSupport.quietLog())) {
             var repository = new ThemeRepository(directory.toFile(), log);
-            assertTrue(repository.importTheme(source.toFile()).isPresent());
+            assertTrue(repository.importTheme(source.toFile()).successful());
             assertEquals(1, warnings.size());
             var bundle = (Bundle) Proxy.newProxyInstance(Bundle.class.getClassLoader(), new Class<?>[] {Bundle.class},
                     (proxy, method, args) -> {

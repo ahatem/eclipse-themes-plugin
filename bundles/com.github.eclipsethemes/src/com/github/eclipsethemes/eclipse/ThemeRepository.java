@@ -16,6 +16,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.ILog;
@@ -25,6 +26,7 @@ import com.github.eclipsethemes.core.exceptions.ThemeParseException;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.parser.ParserFactory;
 import com.github.eclipsethemes.core.parser.ThemeParser;
+import com.github.eclipsethemes.core.validation.ThemeDiagnostic;
 
 public class ThemeRepository {
 
@@ -68,17 +70,18 @@ public class ThemeRepository {
 	 * Imports one independent new installed record. The source basename, display
 	 * name, source ID, and content never select an existing record or locator.
 	 */
-	public Optional<Theme> importTheme(File source) {
+	public ThemeOperationOutcome importTheme(File source) {
 		Path staged = null;
 		Path locator = null;
 		boolean moved = false;
 		boolean committed = false;
+		List<ThemeDiagnostic> findings = new ArrayList<>();
 
 		try {
 			ensureManagedStorage();
-			Optional<ThemeParser> parser = supportedParser(source);
+			Optional<ThemeParser> parser = supportedParser(source, findings);
 			if (parser.isEmpty()) {
-				return Optional.empty();
+				return ThemeOperationOutcome.refused(findings);
 			}
 
 			staged = stage(source);
@@ -97,11 +100,14 @@ public class ThemeRepository {
 			Theme theme = candidate.withLogicalId(identities.newIdentityFor(locator.getFileName().toString()));
 			themes.put(theme.getLogicalId(), theme);
 			committed = true;
-			return Optional.of(theme);
+			return ThemeOperationOutcome.committed(theme, findings);
 		} catch (ThemeParseException e) {
-			log.error("Failed to parse imported theme: " + source.getName(), e);
+			log.error("Failed to parse imported theme: " + source.getName() + ": " + describe(e), e);
+			findings.addAll(e.diagnostics());
+			return ThemeOperationOutcome.refused(findings);
 		} catch (IOException e) {
 			log.error("Could not import theme: " + source.getName(), e);
+			return ThemeOperationOutcome.refused(findings);
 		} finally {
 			deleteStaged(staged);
 			if (moved && !committed) {
@@ -110,26 +116,25 @@ public class ThemeRepository {
 				deleteQuietly(locator, "incomplete imported theme");
 			}
 		}
-
-		return Optional.empty();
 	}
 
 	/**
 	 * Replaces the bytes of one explicitly selected installed record while
 	 * preserving its logical identity, locator, and binding.
 	 */
-	public Optional<Theme> updateTheme(Theme selected, File source) {
+	public ThemeOperationOutcome updateTheme(Theme selected, File source) {
 		Path staged = null;
+		List<ThemeDiagnostic> findings = new ArrayList<>();
 
 		try {
 			Path target = managedTarget(selected);
 			if (!Files.isRegularFile(target, LinkOption.NOFOLLOW_LINKS)) {
 				log.error("Update refused: managed theme file is missing or not a regular file: " + target);
-				return Optional.empty();
+				return ThemeOperationOutcome.refused(findings);
 			}
-			Optional<ThemeParser> parser = supportedParser(source);
+			Optional<ThemeParser> parser = supportedParser(source, findings);
 			if (parser.isEmpty()) {
-				return Optional.empty();
+				return ThemeOperationOutcome.refused(findings);
 			}
 
 			staged = stage(source);
@@ -148,16 +153,17 @@ public class ThemeRepository {
 
 			Theme updated = candidate.withLogicalId(selected.getLogicalId());
 			themes.put(updated.getLogicalId(), updated);
-			return Optional.of(updated);
+			return ThemeOperationOutcome.committed(updated, findings);
 		} catch (ThemeParseException e) {
-			log.error("Failed to parse replacement theme: " + source.getName(), e);
+			log.error("Failed to parse replacement theme: " + source.getName() + ": " + describe(e), e);
+			findings.addAll(e.diagnostics());
+			return ThemeOperationOutcome.refused(findings);
 		} catch (IOException e) {
 			log.error("Could not update theme: " + source.getName(), e);
+			return ThemeOperationOutcome.refused(findings);
 		} finally {
 			deleteStaged(staged);
 		}
-
-		return Optional.empty();
 	}
 
 
@@ -282,12 +288,25 @@ public class ThemeRepository {
 		}
 	}
 
-	private Optional<ThemeParser> supportedParser(File source) {
-		Optional<ThemeParser> parser = ParserFactory.getParserFor(source.getName(), log::warn);
+	private Optional<ThemeParser> supportedParser(File source, List<ThemeDiagnostic> findings) {
+		Optional<ThemeParser> parser = ParserFactory.getParserFor(source.getName(), admissionSink(findings));
 		if (parser.isEmpty()) {
 			log.error("Unsupported theme file type: " + source.getName());
 		}
 		return parser;
+	}
+
+	/** Admission sink: findings are returned to the caller and logged. */
+	private Consumer<ThemeDiagnostic> admissionSink(List<ThemeDiagnostic> findings) {
+		return finding -> {
+			findings.add(finding);
+			log.warn(finding.message());
+		};
+	}
+
+	/** Reload sink: findings describe admitted or rejected files and are only logged. */
+	private Consumer<ThemeDiagnostic> loggingSink() {
+		return finding -> log.warn(finding.message());
 	}
 
 	/** Chooses a repository-owned locator unused on disk and in identity metadata. */
@@ -332,6 +351,11 @@ public class ThemeRepository {
 		return theme == null ? "no selection" : theme.getName();
 	}
 
+	private static String describe(ThemeParseException failure) {
+		String message = failure.getMessage();
+		return message == null || message.isBlank() ? "theme document is not valid" : message;
+	}
+
 
 	private void loadPackedThemes() {
 		var bundle = EclipseThemes.instance().getBundle();
@@ -343,18 +367,13 @@ public class ThemeRepository {
 			String path = res.getPath();
 
 			try (var in = res.openStream()) {
-				var parserOpt = ParserFactory.getParserFor(path, log::warn);
+				var parserOpt = ParserFactory.getParserFor(path, loggingSink());
 				if (parserOpt.isEmpty()) {
 					log.warn("No parser for: " + path);
 					continue;
 				}
 
 				Theme theme = parserOpt.get().parse(in);
-				if (theme.getName() == null || theme.getName().isBlank()) {
-					log.warn("Theme without name: " + path);
-					continue;
-				}
-
 				if (theme.getId() == null || theme.getId().isBlank()) {
 					log.warn("Bundled theme without curated identity: " + path);
 					continue;
@@ -363,6 +382,8 @@ public class ThemeRepository {
 				if (themes.putIfAbsent(theme.getLogicalId(), theme) != null) {
 					log.warn("Duplicate bundled theme identity: " + path);
 				}
+			} catch (ThemeParseException e) {
+				log.error("Bundled theme resource is not valid: " + path + ": " + describe(e), e);
 			} catch (Exception e) {
 				log.error("Failed to load theme: " + path, e);
 			}
@@ -378,7 +399,7 @@ public class ThemeRepository {
 
 			for (Path themePath : themeFiles) {
 				File themeFile = themePath.toFile();
-				Optional<ThemeParser> parserOpt = ParserFactory.getParserFor(themeFile.getName(), log::warn);
+				Optional<ThemeParser> parserOpt = ParserFactory.getParserFor(themeFile.getName(), loggingSink());
 				if (parserOpt.isEmpty()) {
 					log.info("No parser found for file: " + themeFile.getName());
 					continue;
@@ -388,7 +409,7 @@ public class ThemeRepository {
 					Theme theme = installedIdentity(parserOpt.get().parse(themeFile), themeFile);
 					themes.put(theme.getLogicalId(), theme);
 				} catch (ThemeParseException e) {
-					log.error("Failed to parse imported theme: " + themeFile.getName(), e);
+					log.error("Installed theme file is not valid: " + themeFile.getName() + ": " + describe(e), e);
 				} catch (IOException e) {
 					log.error("Could not establish theme identity: " + themeFile.getName(), e);
 				}

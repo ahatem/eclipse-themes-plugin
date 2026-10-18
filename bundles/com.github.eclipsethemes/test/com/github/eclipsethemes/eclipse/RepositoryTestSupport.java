@@ -25,14 +25,32 @@ final class RepositoryTestSupport {
                 (proxy, method, args) -> null);
     }
 
+    /** Records the message of every logged finding so tests can assert what was reported. */
+    static ILog recordingLog(List<String> messages) {
+        Objects.requireNonNull(messages, "messages");
+        return (ILog) Proxy.newProxyInstance(ILog.class.getClassLoader(), new Class<?>[] { ILog.class },
+                (proxy, method, args) -> {
+                    String name = method.getName();
+                    if (args != null && args.length > 0
+                            && (name.equals("error") || name.equals("warn") || name.equals("info"))) {
+                        messages.add(name + ": " + args[0]);
+                    }
+                    return null;
+                });
+    }
+
     static ActivatorStandIn installActivator() throws Exception {
+        return installActivator(quietLog());
+    }
+
+    static ActivatorStandIn installActivator(ILog log) throws Exception {
         Field singleton = EclipseThemes.class.getDeclaredField("instance");
         singleton.setAccessible(true);
         Field logger = EclipseThemes.class.getDeclaredField("pluginLog");
         logger.setAccessible(true);
         Object previous = singleton.get(null);
         EclipseThemes standIn = new EclipseThemes();
-        logger.set(standIn, quietLog());
+        logger.set(standIn, Objects.requireNonNull(log, "test logger"));
         // Publish last: failed acquisition above cannot change global state.
         ActivatorStandIn fixture = new ActivatorStandIn(singleton, previous);
         singleton.set(null, standIn);

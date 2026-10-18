@@ -14,6 +14,8 @@ R2 identity coverage uses the same JUnit/Surefire setup: `ThemeIdentityTest` exe
 
 Import/update/removal regressions retain byte snapshots of XML and bindings, compare canonical catalog objects and assert no staged residue after success or failure. They cover same-basename and identical-bytes coexistence, staged-byte preservation, binding failure cleanup, missing/bundled/foreign/unbound/inconsistent targets, missing update targets versus already-absent removal, fail-closed unexpected path states, atomic-move refusal without fallback, and restoration of an exact binding after file-deletion failure. Narrow package-private seams inject binding replacement, managed replacement and deletion failures; no SWT harness or production test-only abstraction is added.
 
+Validation and diagnostic coverage stays at these same levels. `XmlThemeValidationTest` asserts the parser contract: refused roots and names, the metadata warnings (including the absent-`type` silence), token/color/style/nested/unknown/mapping findings, the color grammar, the website launch policy, `parse(File)` preserving a refusal's findings, and a gate over all 33 bundled themes. `ThemeRepositoryValidationTest` asserts admission consequences per source: an error leaves no binding, no managed file and no catalog change, an update error preserves prior bytes and identity, warning-only candidates commit with their findings, and bundled and installed routes report the same reason for identical content. `ThemeOperationOutcomeTest` covers the outcome record and `ThemeWebsitePresentationTest` covers the inert/link rendering rule without instantiating SWT widgets.
+
 ## Commands from a clean checkout
 
 Use Maven 3.9.9+ and JDK 21 for Tycho 5.0.0. Set `JAVA_HOME` and put Maven on PATH, or invoke your supplied Maven executable explicitly. These are build prerequisites, separate from JavaSE-17 product bytecode/runtime requirements. No local Eclipse installation is needed for ordinary tests. Initial dependency/target resolution needs network access or a populated Maven/p2 cache.
@@ -34,10 +36,12 @@ mvn test -B -pl releng/com.github.eclipsethemes.target,bundles/com.github.eclips
 mvn test -B -pl releng/com.github.eclipsethemes.target,bundles/com.github.eclipsethemes -am "-Dtest=XmlThemeMappingTest,EditorMappingTest"
 mvn test -B -pl releng/com.github.eclipsethemes.target,bundles/com.github.eclipsethemes -am "-Dtest=PdeAntListenerTest"
 mvn test -B -pl releng/com.github.eclipsethemes.target,bundles/com.github.eclipsethemes -am "-Dtest=XmlThemeParserCompatibilityTest#metadataStylesAliasesAndReferences"
+mvn test -B -pl releng/com.github.eclipsethemes.target,bundles/com.github.eclipsethemes -am "-Dtest=XmlThemeValidationTest,ThemeRepositoryValidationTest"
+mvn test -B -pl releng/com.github.eclipsethemes.target,bundles/com.github.eclipsethemes -am "-Dtest=ThemeOperationOutcomeTest,ThemeWebsitePresentationTest"
 mvn test -B -pl releng/com.github.eclipsethemes.target,bundles/com.github.eclipsethemes -am "-Dtest=ThemeIdentityTest,ThemeIdentityBindingsTest,ThemeSelectionTest"
 ```
 
-Class globs such as `"-Dtest=XmlThemeParser*Test"` work too. Keep both the target-definition and bundle module selection with `-am`; target resolution is part of this reactor. Focused tests still incur Tycho startup/resolution. If helper/source changes produce stale incremental output, repeat with `clean test`.
+Class globs such as `"-Dtest=XmlThemeParser*Test"` work too. Keep both the target-definition and bundle module selection with `-am`; target resolution is part of this reactor. Focused tests still incur Tycho startup/resolution. An incremental (non-`clean`) rerun can report sibling test helpers such as `ParserTestSupport` or `RepositoryTestSupport` as unresolvable even though a clean build compiles them; that is stale Tycho output, not a source defect — repeat with `clean test`.
 
 For production or test/build-infrastructure changes, run the full reactor after focused checks:
 

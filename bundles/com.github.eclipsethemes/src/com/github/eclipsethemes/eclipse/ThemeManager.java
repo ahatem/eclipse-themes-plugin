@@ -2,7 +2,6 @@ package com.github.eclipsethemes.eclipse;
 
 import java.io.File;
 import java.util.List;
-import java.util.Optional;
 
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.ui.IWorkbench;
@@ -38,11 +37,11 @@ public final class ThemeManager {
 		service.applyTheme(workbench, theme);
 	}
 
-	public Optional<Theme> importTheme(File file) {
+	public ThemeOperationOutcome importTheme(File file) {
 		return repository.importTheme(file);
 	}
 
-	public Optional<Theme> updateTheme(Theme selected, File file) {
+	public ThemeOperationOutcome updateTheme(Theme selected, File file) {
 		return repository.updateTheme(selected, file);
 	}
 
