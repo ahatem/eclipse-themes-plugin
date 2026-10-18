@@ -112,3 +112,8 @@ install is in ignored `tmp/eclipse-4.41/`. No probe code, CSS or bundle is commi
 surface lines omitted), `bundle-evidence.txt`, `log-hashes.csv`, `restart-print.png`. The probe stays in
 ignored `tmp/workbench-spike/v4/`; the install is in ignored `tmp/eclipse-4.40/`. `static-matrix-4.33-4.41.md`
 holds the static comparison.
+
+## R8a dynamic-palette micro-spike (§38)
+
+`r8a-dynamic-palette/`: `runtime-evidence.txt` (filtered logs R1–R5 on 4.40, S1–S2 on 4.41),
+`p5.css` and `probe-plugin.xml` (the disposable probe's stylesheet and extension points).

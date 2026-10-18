@@ -869,3 +869,71 @@ is not usable. Static findings that bear on experimental eligibility (e.g. 4.35�
 `setDarkThemePreferred`; CSS engine drift) are in the static matrix. Pre-release items, not yet
 verified: real Windows high contrast, GTK, macOS and Wayland, and any release after 4.41. This is
 a planning decision, not an authorization to implement R8a.
+
+## 38. R8a dynamic-palette micro-spike (Option D feasibility)
+
+Question: can one declaratively contributed workbench CSS theme consume colours that the plugin
+changes at runtime, with no `registerTheme`, `registerStylesheet` or generated CSS? Bounded probe,
+Windows only, Eclipse 4.40 (JRE 21) and 4.41 (Java 25). Raw filtered logs, probe CSS and
+`plugin.xml`: [obs/r8a-dynamic-palette/](obs/r8a-dynamic-palette/). Probe code is disposable and
+ignored. Nothing here authorizes R8a implementation.
+
+### 38.1 Mechanism found (from 4.40 bytecode and the shipped `org.eclipse.ui.themes` CSS)
+
+| Item | Finding |
+| --- | --- |
+| CSS syntax | A quoted `'#<id>'` value, e.g. `background-color: '#spike-p5-surface'`; Eclipse's own light/dark CSS uses it (`swt-tabBackground-color: '#org-eclipse-ui-workbench-…'`). `CSSSWTColorHelper.getRGBA` treats a string starting with `#` that is not a 6-digit hex as a definition reference |
+| Value source | `ColorAndFontProviderImpl.getColor(id)` (ui.workbench) reads `IThemeManager.getCurrentTheme().getColorRegistry().getRGB(id)`; the dots-to-dashes id is normalised back |
+| Definition | Public `org.eclipse.ui.themes` extension `colorDefinition id label value` (a CSS `ColorDefinition#id {…}` rule is the CSS-side alternative) |
+| Resolution time | Each time the CSS rule is applied (theme parse/apply), not when the registry changes |
+| Writing values | Public API: `ColorRegistry.put(id, RGB)` on `IThemeManager.getCurrentTheme().getColorRegistry()` |
+| Persistence | **Observed side effect**: `put` also writes `<id>=r,g,b` to the instance `org.eclipse.ui.workbench` preferences (the Colors-and-Fonts customization store, which also holds the user's font keys). After a restart the persisted values are applied at CSS apply with no plugin code |
+| Status | `colorDefinition`, `ITheme`/`IThemeManager`, `ColorRegistry`: public. The `'#id'` CSS syntax is the Eclipse theme-CSS convention but its resolver lives in `org.eclipse.e4.ui.internal.css.swt` (internal) and is undocumented as a third-party contract: **implementation-specific**. Persistence-on-`put`: **internal behaviour**, observed only |
+
+### 38.2 Results (identical on 4.40 and 4.41)
+
+Palettes A/B/C were deliberately extreme (red/blue/cyan surface). Values defaulted to
+808080/202020/404040 before any `put`.
+
+| Refresh action after `put` | Result |
+| --- | --- |
+| nothing | unchanged (not D1 LIVE) |
+| `engine.applyStyles(shell, true)` | **unchanged** (R1 4.40, S1 4.41) |
+| `setTheme(activeTheme, true)` (same ID) | **unchanged** (R3 4.40, S1 4.41) |
+| switch to another theme and back (`restore=false` intermediate, then `true`) | **repaints**: A, B, C, A produced distinct surface, tab-selection, tree, table and status colours each time; no stale previous colours on those surfaces; active ID returned to the same object; `getThemes()` count unchanged |
+| flip between two own twin themes that share the CSS (`restore=true` each) | **repaints** (B, C on 4.40 and 4.41); the active ID alternates between the twins |
+
+The internal `themeRegistryModified` event path was not run (probe error; internal anyway).
+The earlier live switch-back tab residue (§36.11, §37.1) did not reproduce on these
+reference-based tab colours. Selected-tab values updated on every switch.
+
+Switch cost: 0.23–2.3 s for hop (two restyles), 0.34–2.8 s for one flip (first call slowest).
+
+### 38.3 Classification
+
+**D3 RESELECT.** Not D1/D2: neither `applyStyles` nor same-ID reselection re-reads the values.
+Re-reading needs a real theme change. Restart also works (persisted values apply at boot, 4.41 S2
+and 4.40 R5), so D4 is not needed.
+
+### 38.4 What this does and does not show
+
+- Shown: runtime palette values reach an existing declarative theme without runtime theme or
+  stylesheet registration, are public-API writable, persist across restart, and survive repeated
+  switches, on proof surfaces only, Windows only.
+- Not shown: Appearance-page presentation of twin entries; real high contrast; GTK/macOS;
+  interaction with a user editing the same colours on the Colors-and-Fonts page; whether
+  `colorDefinition isEditable="false"` hides or protects them; native-surface and GTK colour
+  support; releases other than 4.40/4.41; contrast of derived palettes.
+- Extra dependencies beyond the approved `IThemeEngine` boundary: public `IThemeManager`/`ColorRegistry`
+  (no new exception), the `'#id'` CSS convention, and reliance on `put` persistence (internal
+  behaviour; a plugin could instead write its own keys, which is more intrusive). No new
+  x-friends/internal Java type is required.
+- Refresh requires switching themes. Without twins that means a transient switch through another
+  theme (full stock-CSS restyle and its foreign preference side effects, flicker); with twins it
+  means two plugin-owned entries per CSS family in `getThemes()`/Appearance.
+
+### 38.5 Verdict
+
+**OPTION D GO**, bounded: one static CSS per family reading `'#id'` references, palette published
+through `ColorRegistry`, refresh by twin-theme flip, verified on Windows 4.40/4.41 only. See the
+report for the Option A comparison and the decisions this leaves to the maintainer.
