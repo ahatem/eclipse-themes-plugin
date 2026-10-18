@@ -11,7 +11,9 @@ outputs remain in ignored `tmp/workbench-spike/v2/`. Earlier local experiments r
 `runtime-evidence.txt` contains selected **original lines** from W01–W05, W07–W08,
 G03–G05 and W10, in run order. W06 is an interrupted instrumentation attempt, not an
 acceptance run. W09 repeats W08 on a fresh workspace and is hashed, but is omitted from the
-extract to avoid duplicating the same evidence. The extraction retains:
+extract to avoid duplicating the same evidence. W10's persisted Dark comes from W09 (workspace
+`ws-coverage`); W10 is therefore the only extracted run that depends on an omitted one.
+The extraction retains:
 
 - environment, inventory, steps, active/persisted state, postconditions, exceptions and registration;
 - Appearance combo values, restart prompts, accessibility flags and layout instrumentation;
@@ -80,6 +82,9 @@ not a theme design or a stable cross-version CSS API promise.
 W01–W05 used an earlier A stylesheet that explicitly selected Eclipse's internal CTabRendering
 renderer. W07 onward removed that directive; W08/G05 prove the listed surfaces without directly
 naming an internal renderer. The earlier directive is not proposed as a product dependency.
+
+All runs here are Eclipse 4.33. Post-4.33 upstream semantics and ecosystem practice are cited in
+`findings.md` §34–§35 from source review, not from runs in this directory.
 
 No committed probe is required to assess these findings. Recreating executable instrumentation
 for a later independent verification is a separate local activity; this record does not create

@@ -3,11 +3,17 @@
 RESEARCH ONLY · NO PRODUCTION BEHAVIOR CHANGE
 
 GO / NO-GO DECISION GATE: **NO-GO for shipping the requested programmatically coordinated R8a
-under the present supported-public-API-only constraint.** Own declarative themes work on the
+under the R7 contract's supported-public-API-only criterion.** Own declarative themes work on the
 tested Windows and GTK3/X11 platforms. However, the exact target exports the selection API
 package with `x-friends` restrictions. This is a support-contract blocker, not a failure of CSS
 theme contribution. A is the smallest technically viable candidate if that blocker is resolved.
-Full R3 is not a prerequisite for R7.
+The strict criterion is R7's own contract; repository policy is softer (see §6), so the
+maintainer may reasonably consider a bounded compatibility exception (§24, §30). Full R3 is not a
+prerequisite for R7.
+
+Revision note (independent review): the runtime findings are 4.33-specific. Later upstream
+changes alter some of them (§34), and ecosystem practice is recorded in §35 as de facto practice
+only. Sections 12, 14, 15, 20 and 30 carry 4.33 qualifications.
 
 The numbered sections answer the maintainer's requested final-report items. Observations refer
 to run sections in [the runtime record](obs/runtime-evidence.txt). [Provenance](obs/README.md)
@@ -122,6 +128,30 @@ does not erase the historical binary's restriction. Suppressing a warning is not
 support. Whether Eclipse intends this interface as supported external API needs upstream
 clarification or promotion; this spike does not silently settle that contradiction.
 
+**Policy basis.** The strict "supported public API only" criterion used for the gate comes from
+R7's own research contract, not from repository policy. `AGENTS.md` (line 137, Architecture
+rules) says: prefer public Eclipse APIs; if an internal API, implementation preference key or
+renderer detail is unavoidable, isolate it, document provenance and supported versions, and test
+it. That rule permits isolated, documented, version-scoped, tested internal coupling.
+
+**Precedent (PM6).** On 2026-10-17 the maintainer approved a single isolated internal accessor,
+`PDEPlugin.getDefault().getPreferenceStore()`, at the optional PDE integration boundary for the
+declared R4_33 target (see `docs/EDITOR_MAPPING_COMPATIBILITY.md` and archived
+`2026-10-17-correct-editor-preference-mappings`, proposal PM6 Option A and design). A selection
+call through `IThemeEngine` would be a comparable, though not identical, request: that precedent
+was a non-exported internal class, whereas `IThemeEngine` is a published-Javadoc interface in an
+`x-friends` package.
+
+**Formal status of x-friends.** Under Eclipse's Provisional API Guidelines, a package exported
+with `x-friends` is formally not API and carries no binary-compatibility promise, whatever its
+Javadoc looks like. Upstream action is therefore a **promotion request**, not a request to
+"clarify" an existing contract.
+
+**Resolver note.** The default Equinox resolver wires imports of non-friend bundles; friend
+restrictions are chiefly a PDE/compile-time access rule. Strict resolver mode may hide such
+packages from non-friends. Strict mode was **not tested**; the runtime experiments used the
+default resolver only.
+
 The matching extension schema supports `<theme id label basestylesheeturi os ws os_version>`,
 `<stylesheet uri os ws>` with nested `<themeid refid>`, resource locators, and themeAssociation.
 The [documented extension mechanism](https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/extension-points/org_eclipse_e4_ui_css_swt_theme.html)
@@ -232,11 +262,19 @@ W07 observed its Theme Changed dialog and dismissed it without restarting. Windo
 in live Dark and W10 persisted Dark remain a bounded visual-quality uncertainty, not a solved
 restart requirement. No claim is made that restarting fixes them.
 
+W10's persisted Dark comes from **W09** (workspace `ws-coverage`), which repeats W08 on a fresh
+workspace and ends in Dark. W09 is omitted from `runtime-evidence.txt` but its full log is
+hashed in `obs/log-hashes.csv`; W10 therefore has no preceding run in the extract.
+
 ## 12. Postconditions
 
 Every retained explicit setTheme action has a POST line: expected ID, actual ID and equality.
 Known IDs match. `unknown.theme` in W04 returns without throwing, leaves C active and keeps C
 saved: **match=false**. No tested selection produced a null active theme; the API permits null.
+**4.33-specific:** the silent no-op for an unknown ID is 4.33 behaviour. Since a7e91a0fe0
+(PR #3854, 4.40) `setTheme(String unknownId, restore)` falls back to the default Light theme and
+persists it when `restore` is true (§34). The postcondition check is still required, but the
+expected mismatch outcome differs by release.
 W05 demonstrates the additional false-positive boundary: active ID can match with unusable CSS.
 
 Future production must distinguish selection intent, active engine ID, persisted ID and actual
@@ -270,6 +308,12 @@ false can mean active Light/saved Dark (W02), missing runtime registration can m
 saved C (W05). B changes appearance without changing the built-in ID. The selected CSS theme and
 the separate Colors and Fonts theme are different concepts; one does not prove the other.
 
+**4.33-specific:** the "absent means inherit OS" and "persisted ID need not be the effective ID"
+statements describe 4.33. Later upstream changes publish the effective `themeid` into
+`DefaultScope` (9adfbf7713, 4.41, issue #4168), add a user/config-scope default theme
+(a7e91a0fe0, 4.40) and change restore fallback for a missing saved theme (4e127ef1f1, included
+by 4.37). See §34; none of these was tested here.
+
 ## 15. Current dark-mode heuristic
 
 `EclipseThemesPreferencePage.isEclipseDarkMode()` at baseline reads raw themeid; a substring
@@ -287,6 +331,11 @@ static IDs and known built-in IDs, based on verified active selection where avai
 third-party themes remain unknown. Only use OS inheritance when there is no explicit effective
 selection, rather than as a fallback after an explicit Light/custom theme. The selection API
 support issue must be resolved first. No luminance engine or new public theme-author API is needed.
+
+**4.33-specific:** the "classification for known IDs" proposal assumes the 4.33 theme set. The
+Classic and High Contrast themes were later removed (§34), and master (4.42, 547df13d85) adds a
+declarative `isDarkTheme` attribute and `ITheme.isDark()`. On releases that have it, that is a
+better dark signal than ID substring or OS fallback, but it is unavailable in the tested 4.33.
 
 ## 16–18. Surface/platform matrix
 
@@ -344,6 +393,12 @@ mixed contrast. Recommended R8a policy for approval: do not take control in dete
 or when High Contrast is the active selection; leave an explicit accessible explanation. Actual
 Windows HC and relevant GTK accessibility validation remain a prerequisite to claiming support.
 
+**4.33-specific:** the named "High Contrast" CSS theme referenced above no longer exists upstream
+(removed 2025-09, 4.37, issue #3095). From 38d61c0bbe (4.41) the engine keeps OS high-contrast
+colours instead of forcing the default theme, but only on the `String` selection path (§34).
+The recommended "block takeover" policy therefore must be re-derived per supported release
+rather than keyed to a High Contrast theme ID. Not tested on any release after 4.33.
+
 ## 21–22. Stale Claude worktree
 
 Read-only inspection: branch `claude/modest-raman-0643a3`, commit
@@ -392,15 +447,22 @@ Qualitative assessments only; no invented numerical score.
 
 ## 24. GO / NO-GO verdict
 
-**NO-GO / resolve support contract before programmatically coordinated R8a.** Contribution,
-selection, active verification, restart persistence and useful surfaces are demonstrated.
-Unrestricted external selection API support is not: the exact bundle's friend export contradicts
-an unconditional supported-public-API claim. The existing public Java interface's presence is
-not enough to waive that criterion. No cast/reflection/internal reset is recommended as a workaround.
+**NO-GO under the R7 contract's supported-public-API-only criterion; resolve the support contract
+before programmatically coordinated R8a.** Contribution, selection, active verification, restart
+persistence and useful surfaces are demonstrated. Unrestricted external selection API support is
+not: the exact bundle's friend export means the package is formally not API (§6). The existing
+public Java interface's presence is not enough to waive that criterion. No
+cast/reflection/internal reset is recommended as a workaround. This verdict follows R7's own
+strict criterion, not repository policy: `AGENTS.md` line 137 permits an unavoidable internal
+dependency if isolated, provenance- and version-documented, and tested, and the maintainer
+approved exactly such an exception for PM6 on 2026-10-17 (§6). An independent review agreed that
+no unrestricted supported selector exists and recommends putting a bounded compatibility
+exception to the maintainer.
 
-A remains the smallest viable mechanism if upstream clarifies/promotes its external contract or
-the maintainer explicitly revises the compatibility policy to accept bounded provisional coupling.
-That latter choice changes the original gate; it is not a GO under the original rules. A purely
+A remains the smallest viable mechanism if upstream promotes the package (a promotion request, not
+a clarification) or the maintainer explicitly accepts bounded provisional coupling, isolated and
+pinned to verified releases as in PM6. That latter choice relaxes the R7 gate; it is not a GO
+under the original criterion, and it is a maintainer decision, not made here. A purely
 manual Appearance contribution could avoid our own selection call but reduces the coordinated
 product scope. Visual/accessibility/restoration decisions below still need approval and focused
 verification before shipping, even after the API issue is resolved.
@@ -459,13 +521,13 @@ all roadmap work into one architecture change. ROADMAP.md was not edited.
 
 | Decision | Realistic options / consequences | Recommendation |
 | --- | --- | --- |
-| API/support blocker | Seek upstream external contract/promotion (delays implementation); explicitly accept version-pinned provisional coupling (relaxes original criterion); manual Appearance-only scope (loses coordinated selector) | Seek upstream clarification/promotion; keep R8a unapproved meanwhile |
+| API/support blocker | Seek upstream promotion of the x-friends package (a promotion request, since it is formally not API; delays implementation); explicitly accept a bounded, isolated, version-pinned compatibility exception on the PM6 model, consistent with `AGENTS.md` line 137 (relaxes R7's own criterion, not repository policy); manual Appearance-only scope (loses coordinated selector) | Put the bounded compatibility exception to the maintainer; file the promotion request in parallel; keep R8a unapproved until decided. Any exception must be scoped to verified releases (§34 shows 4.33 behaviour is not stable across releases) |
 | Mechanism after gate | A owns selectable identity; B cannot withdraw from built-in; C adds startup/refresh burden | A; no B/C in MVP |
-| Support boundary | Tested 4.33 Windows/GTK3-X11 only; broader versions/platforms require evidence | Start with that explicit verified boundary; no macOS/Wayland/GTK4 claim |
+| Support boundary | Tested 4.33 Windows/GTK3-X11 only; broader versions/platforms require evidence (post-4.33 semantic changes are listed in §34 and untested) | Start with that explicit verified boundary; no macOS/Wayland/GTK4 claim |
 | Palette scope | Two static light/dark families; single fixed palette; per-editor generated matching | Static light/dark families; generation deferred |
 | Original absence / missing previous ID | Preserve absence with bounded key restoration; leave explicit prior ID (changes OS inheritance); ask recovery when previous ID is unavailable | Preserve absence; explicit user choice on unavailable/conflicting state, no invented fallback |
 | External/transient switch | Force product theme back; preserve external selection and relinquish/report conflict; prompt before restoring | Preserve external choice, report truthful disagreement; never auto-force |
-| High contrast | Block takeover; explicit warning/opt-in; override automatically | Block takeover of detected/named high contrast; verify actual OS modes before support claim |
+| High contrast | Block takeover; explicit warning/opt-in; override automatically | Block takeover of detected/named high contrast; verify actual OS modes before support claim. 4.33-specific: the named High Contrast theme was removed upstream in 4.37, so re-derive per supported release (§20, §34) |
 | Restart/visual quality | Promise live completeness; disclose platform restart boundary; require restart for known incomplete cases | Disclose bounded live coverage, investigate Windows glyph observation, require only evidence-based restart behavior |
 | Stale worktree deletion | Preserve; archive/delete later with review of dirty contents | Preserve now; obtain later explicit approval |
 
@@ -498,3 +560,49 @@ decision and does not attempt to fix unrelated platform rendering or implement t
 No production plugin.xml, MANIFEST.MF, source, build or roadmap changes are committed. No probe
 implementation is committed. No R3 or R8a implementation, push, PR, tag, merge or release occurred.
 Only the existing archive/promotion and the research contract/findings/evidence belong to this branch.
+
+## 34. Post-4.33 upstream changes
+
+Source: `eclipse.platform.ui` master, checked 2026-10-18. Commit existence and titles were
+re-confirmed against the GitHub API during this revision; behavioural descriptions are from the
+independent review's reading of the source and were **not** reproduced by an experiment. No
+experiment in this record ran on any release after 4.33. All R7 runtime observations stay
+4.33-specific (§5).
+
+| Change | Commit / reference | Shipped in | Effect on R7 findings |
+| --- | --- | --- | --- |
+| Bundle export unchanged | master `org.eclipse.e4.ui.css.swt.theme` 0.15.300, JavaSE-21 | master | Package is still `x-friends`; `IThemeEngine.java` is byte-identical to 4.33. The §6 blocker is not removed by upstream. |
+| High Contrast CSS theme removed | issue #3095 | 4.37 (2025-09) | The `high-contrast` ID in §5 and the §20 HC-selection experiment do not apply to 4.37+. |
+| Restore fallback for a missing saved theme | `4e127ef1f1` | included by 4.37 | Starting with `4e127ef1f1`, `restore()` distinguishes an unavailable saved theme from having no saved theme. For an unavailable saved ID, it uses whether that ID contains `"dark"` to choose Dark versus the supplied alternate theme. OS-dark inheritance remains the fallback only when no saved theme ID exists. The 4.33 W05 result (Dark fallback for an unregistered saved C on an OS-dark host) is therefore version-specific; this does not mean every missing-theme restore becomes Dark. |
+| Classic theme removed | `dbc4595ef7` | 4.40 | `e4_classic` in §5 is absent. |
+| User/config-scope default theme | `a7e91a0fe0` (PR #3854) | 4.40 | `setTheme(String unknownId, restore)` falls back to the default Light theme and persists it when `restore` is true. It is no longer the silent no-op recorded for `unknown.theme` in W04 (§12). |
+| OS high-contrast colours kept | `38d61c0bbe` | 4.41 | The engine keeps OS high-contrast colours instead of forcing the default theme, but only on the `String` path; the `ITheme` overload is not covered. |
+| Effective themeid published | `9adfbf7713` (issue #4168) | 4.41 | Starting with `9adfbf7713`, ThemeEngine publishes the effective applied theme ID into `DefaultScope`, allowing normal preference-service lookup to expose inherited/applied state even when no explicit persisted choice exists. The engine keeps two concepts separate: instance/config/user scope carries explicit persisted selection semantics, while `DefaultScope` carries effective runtime theme publication. `themeid` is therefore not guaranteed to equal the active theme, and `DefaultScope` is not persisted selection state. Not tested in the 4.33 runs. |
+| Dark attribute | `547df13d85` | master (4.42) | Adds the `isDarkTheme` theme attribute and `ITheme.isDark()`; relevant to the §15 heuristic replacement. |
+
+Consequences for the record:
+
+- The export blocker (§6, §24) is unchanged on master, so waiting for newer Eclipse does not
+  resolve it. Upstream promotion would have to be requested.
+- Sections 12, 14, 15, 20 and 30 are qualified above as 4.33-specific where these changes alter
+  them. Section 5's ID table is the 4.33 inventory only.
+- Any bounded compatibility exception (§30) should name the Eclipse releases it covers and add
+  verification for each; the 4.33 evidence does not transfer to 4.40+ unseen.
+
+## 35. Ecosystem practice (de facto, not a support contract)
+
+The review found the following external usage of the selection API. It is recorded as **de facto
+practice only**: it shows that other plugins depend on the interface despite the `x-friends`
+export, not that Eclipse supports or will keep supporting it. Not re-verified in this revision and
+not part of the R7 experiments.
+
+- `vogellacompany/eclipse-themes`, `ThemeContributionItem`: obtains the engine with
+  `PlatformUI` `getService(IThemeEngine)`, then calls `setTheme(theme, true)`.
+- `jeeeyul/eclipse-themes`: uses `@SuppressWarnings("restriction")` for the access.
+- DBeaver, Archi, Bonita, Modelio and KNIME call `engine.setTheme`.
+- A Platform committer recommended `context.get(IThemeEngine.class)` in eclipse.platform.ui
+  issue #4168. That is a committer's recommendation in an issue thread; it does not promote the
+  package or create a compatibility promise.
+
+Widespread use is relevant to a maintainer's judgement of break risk and to the strength of a
+promotion request. It does not change the formal status in §6 or the R7 gate outcome.
