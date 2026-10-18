@@ -3,55 +3,147 @@ package com.github.eclipsethemes.eclipse;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.lang.reflect.Proxy;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Set;
 
-import org.eclipse.core.runtime.ILog;
+import org.eclipse.jface.preference.PreferenceStore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import com.github.eclipsethemes.core.models.Theme;
+import com.github.eclipsethemes.eclipse.preferences.PreferenceKeys;
+
 public class ThemeRepositoryImportTest {
     @Rule public TemporaryFolder temporary = new TemporaryFolder();
 
-    @Test public void failedExclusiveCopyLeavesNoBindingOrDestinationAndAllowsRetry() throws Exception {
-        Path directory = temporary.newFolder().toPath();
-        Path blockedParent = Files.writeString(directory.resolve("installed_themes"), "not a directory");
-        Path source = Files.writeString(directory.resolve("incoming.xml"), "<colorTheme name='Incoming'/>");
+    private static final String STORED =
+            "<colorTheme name='Stored' ect-id='stored-source'><background color='#112233'/></colorTheme>";
+    private static final String INCOMING =
+            "<colorTheme name='Stored' ect-id='stored-source'><background color='#445566'/></colorTheme>";
 
-        var repository = new ThemeRepository(directory.toFile(), quietLog());
-        assertEquals(List.of(), repository.getAllThemes());
-        assertFalse("The injected copy failure is reported as failure",
-                repository.importTheme(source.toFile()).isPresent());
-        assertFalse("No binding may outlive a failed copy",
-                Files.exists(directory.resolve("theme-identities.properties")));
-        assertFalse("No destination remains after the handled failure",
-                Files.exists(blockedParent.resolve("incoming.xml")));
-        assertTrue("The failed attempt must not admit a catalog record", repository.getAllThemes().isEmpty());
-
-        // The failed attempt left no reservation: once the obstruction is removed, a retry admits normally.
-        Files.delete(blockedParent);
-        Files.createDirectory(blockedParent);
-        var admitted = repository.importTheme(source.toFile());
-        assertTrue(admitted.isPresent());
-        assertTrue(admitted.get().getLogicalId().startsWith("local:"));
-        assertEquals(List.of(admitted.get()), repository.getAllThemes());
-        assertTrue(Files.readString(directory.resolve("theme-identities.properties")).contains("incoming.xml="));
-        assertTrue(Files.exists(blockedParent.resolve("incoming.xml")));
-    }
-
-    @Test public void failedBindingAfterCopyRemovesOnlyNewDestinationAndPreservesPriorState() throws Exception {
+    @Test public void sameBasenameAndBytesCreateAnIndependentNewRecord() throws Exception {
         Path directory = temporary.newFolder().toPath();
         Path installed = Files.createDirectory(directory.resolve("installed_themes"));
-        Path existing = Files.writeString(installed.resolve("existing.xml"), "<colorTheme name='Existing'/>");
-        Path bindingsFile = directory.resolve("theme-identities.properties");
-        var seeded = new ThemeIdentityBindings(bindingsFile);
-        String priorId = seeded.identityFor("existing.xml");
+        Path existing = Files.writeString(installed.resolve("theme.xml"), STORED);
+        var bindings = new ThemeIdentityBindings(RepositoryTestSupport.bindingsFile(directory));
+        String establishedId = bindings.newIdentityFor("theme.xml");
+        Path source = Files.writeString(directory.resolve("theme.xml"), STORED);
+
+        var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
+        Theme imported = repository.importTheme(source.toFile()).orElseThrow();
+
+        assertNotEquals("Equal basename and bytes never reuse identity", establishedId, imported.getLogicalId());
+        Path managed = imported.getFile().orElseThrow().toPath();
+        assertEquals(installed.toAbsolutePath().normalize(), managed.getParent().toAbsolutePath().normalize());
+        assertTrue("Locator is repository-allocated",
+                managed.getFileName().toString().matches("[0-9a-f-]{36}\\.xml"));
+        assertArrayEquals("Committed bytes are the staged bytes", bytes(STORED), Files.readAllBytes(managed));
+        assertEquals("Existing bytes are untouched", STORED, Files.readString(existing));
+        assertEquals(establishedId, bindings.establishedIdentityFor("theme.xml").orElseThrow());
+        assertEquals(imported.getLogicalId(),
+                bindings.establishedIdentityFor(managed.getFileName().toString()).orElseThrow());
+        assertEquals(Set.of(imported), Set.copyOf(repository.getAllThemes()));
+        assertEquals("No staging residue after a successful import", List.of(),
+                RepositoryTestSupport.stagedPieces(installed));
+    }
+
+    @Test public void importedIdentityAndBytesSurviveReloadAndStagingIsNotAdmitted() throws Exception {
+        Path directory = temporary.newFolder().toPath();
+        Path installed = Files.createDirectory(directory.resolve("installed_themes"));
+        Files.writeString(installed.resolve("theme.xml"), STORED);
+        var bindings = new ThemeIdentityBindings(RepositoryTestSupport.bindingsFile(directory));
+        String establishedId = bindings.newIdentityFor("theme.xml");
+        Path source = Files.writeString(directory.resolve("theme.xml"), INCOMING);
+
+        try (var activator = RepositoryTestSupport.installActivator()) {
+            RepositoryTestSupport.installBundled(List.of());
+            var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
+            Theme imported = repository.importTheme(source.toFile()).orElseThrow();
+            Files.writeString(Files.createDirectories(installed.resolve(".staging")).resolve("leftover.part"),
+                    INCOMING);
+
+            repository.reload();
+
+            List<Theme> catalog = repository.getAllThemes();
+            assertEquals(2, catalog.size());
+            Theme established = catalog.stream()
+                    .filter(theme -> establishedId.equals(theme.getLogicalId())).findFirst().orElseThrow();
+            assertEquals("theme.xml", established.getFile().orElseThrow().getName());
+            Theme reloaded = catalog.stream().filter(imported::equals).findFirst().orElseThrow();
+            assertEquals(imported.getLogicalId(), reloaded.getLogicalId());
+            assertArrayEquals(bytes(INCOMING), Files.readAllBytes(reloaded.getFile().orElseThrow().toPath()));
+        }
+    }
+
+    @Test public void importingTheSameSourceTwiceCreatesTwoIndependentRecords() throws Exception {
+        Path directory = temporary.newFolder().toPath();
+        Path source = Files.writeString(directory.resolve("theme.xml"), INCOMING);
+        var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
+
+        Theme first = repository.importTheme(source.toFile()).orElseThrow();
+        Theme second = repository.importTheme(source.toFile()).orElseThrow();
+
+        assertNotEquals(first.getLogicalId(), second.getLogicalId());
+        assertNotEquals(first.getFile().orElseThrow(), second.getFile().orElseThrow());
+        assertEquals(2, repository.getAllThemes().size());
+        assertArrayEquals(bytes(INCOMING), Files.readAllBytes(source));
+    }
+
+    @Test public void uppercaseSourceExtensionIsImportedAsAManagedXmlLocator() throws Exception {
+        Path directory = temporary.newFolder().toPath();
+        Path source = Files.writeString(directory.resolve("THEME.XML"), INCOMING);
+        var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
+
+        Theme imported = repository.importTheme(source.toFile()).orElseThrow();
+
+        assertTrue(imported.getFile().orElseThrow().getName().endsWith(".xml"));
+        assertEquals(INCOMING, Files.readString(source));
+    }
+
+    @Test public void blockedManagedStorageLeavesNoBindingAndAllowsRetry() throws Exception {
+        Path directory = temporary.newFolder().toPath();
+        Path blocked = Files.writeString(directory.resolve("installed_themes"), "not a directory");
+        Path source = Files.writeString(directory.resolve("incoming.xml"), INCOMING);
+
+        var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
+        assertEquals(List.of(), repository.getAllThemes());
+        assertFalse("The storage failure is reported", repository.importTheme(source.toFile()).isPresent());
+        assertFalse("No binding may outlive a failed copy",
+                Files.exists(RepositoryTestSupport.bindingsFile(directory)));
+        assertTrue(repository.getAllThemes().isEmpty());
+
+        // The failed attempt left no reservation: once the obstruction is removed, a retry admits normally.
+        Files.delete(blocked);
+        Files.createDirectory(blocked);
+        Theme admitted = repository.importTheme(source.toFile()).orElseThrow();
+        assertTrue(admitted.getLogicalId().startsWith("local:"));
+        assertEquals(List.of(admitted.getFile().orElseThrow().getName()),
+                RepositoryTestSupport.fileNames(blocked));
+        assertEquals(admitted.getLogicalId(), RepositoryTestSupport.establishedIdentity(directory,
+                admitted.getFile().orElseThrow().getName()));
+        assertEquals(INCOMING, Files.readString(source));
+    }
+
+    @Test public void bindingFailureAfterMoveRemovesOnlyTheAttemptLocator() throws Exception {
+        Path directory = temporary.newFolder().toPath();
+        Path installed = Files.createDirectory(directory.resolve("installed_themes"));
+        Path existing = Files.writeString(installed.resolve("existing.xml"), STORED);
+        Path bindingsFile = RepositoryTestSupport.bindingsFile(directory);
+        String priorId = new ThemeIdentityBindings(bindingsFile).newIdentityFor("existing.xml");
         byte[] bindingsBefore = Files.readAllBytes(bindingsFile);
         byte[] existingBefore = Files.readAllBytes(existing);
-        Path source = Files.writeString(directory.resolve("incoming.xml"), "<colorTheme name='Incoming'/>");
+        Path source = Files.writeString(directory.resolve("incoming.xml"), INCOMING);
+
+        Path intentFile = directory.resolve("selected-intent.properties");
+        var intent = new PreferenceStore(intentFile.toString());
+        intent.setValue(PreferenceKeys.SELECTED_THEME_LOGICAL_ID, priorId);
+        intent.setValue(PreferenceKeys.ACTIVE_THEME_ID, "stored-source");
+        intent.save();
+        byte[] intentBefore = Files.readAllBytes(intentFile);
 
         var failing = new ThemeIdentityBindings(bindingsFile) {
             @Override void replace(Path staged) throws IOException {
@@ -59,22 +151,93 @@ public class ThemeRepositoryImportTest {
                 throw new IOException("injected metadata replacement failure");
             }
         };
-        var repository = new ThemeRepository(directory.toFile(), quietLog(), failing);
+        var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog(), failing);
+
         assertFalse(repository.importTheme(source.toFile()).isPresent());
 
-        assertFalse("Only this attempt's destination is removed", Files.exists(installed.resolve("incoming.xml")));
+        assertEquals("Only this attempt's managed file is absent",
+                List.of("existing.xml"), RepositoryTestSupport.fileNames(installed));
+        assertEquals(List.of(), RepositoryTestSupport.stagedPieces(installed));
         assertArrayEquals("Pre-existing managed XML is unchanged", existingBefore, Files.readAllBytes(existing));
         assertArrayEquals("Prior bindings are unchanged", bindingsBefore, Files.readAllBytes(bindingsFile));
+        assertArrayEquals("Selected intent is unchanged", intentBefore, Files.readAllBytes(intentFile));
         assertTrue("No catalog entry is admitted", repository.getAllThemes().isEmpty());
-        assertEquals(priorId, new ThemeIdentityBindings(bindingsFile).identityFor("existing.xml"));
-        try (var files = Files.list(installed)) {
-            assertEquals("No partial destination remains", List.of("existing.xml"),
-                    files.map(path -> path.getFileName().toString()).sorted().toList());
+        assertEquals(priorId, RepositoryTestSupport.establishedIdentity(directory, "existing.xml"));
+        assertEquals(INCOMING, Files.readString(source));
+    }
+
+    @Test public void unreadableBindingsRefuseImportBeforeAnyManagedWrite() throws Exception {
+        Path directory = temporary.newFolder().toPath();
+        Path installed = Files.createDirectory(directory.resolve("installed_themes"));
+        Path existing = Files.writeString(installed.resolve("stored.xml"), STORED);
+        Path source = Files.writeString(directory.resolve("incoming.xml"), INCOMING);
+        Files.createDirectory(RepositoryTestSupport.bindingsFile(directory));
+
+        var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
+        assertFalse(repository.importTheme(source.toFile()).isPresent());
+
+        assertEquals(List.of("stored.xml"), RepositoryTestSupport.fileNames(installed));
+        assertEquals(List.of(), RepositoryTestSupport.stagedPieces(installed));
+        assertEquals(STORED, Files.readString(existing));
+        assertEquals(INCOMING, Files.readString(source));
+        assertTrue(repository.getAllThemes().isEmpty());
+    }
+
+    @Test public void importingAManagedFileLeavesTheSourceRecordUnchanged() throws Exception {
+        Path directory = temporary.newFolder().toPath();
+        Path installed = Files.createDirectory(directory.resolve("installed_themes"));
+        Path source = Files.writeString(installed.resolve("source.xml"), STORED);
+        String sourceId = new ThemeIdentityBindings(RepositoryTestSupport.bindingsFile(directory))
+                .newIdentityFor("source.xml");
+
+        try (var activator = RepositoryTestSupport.installActivator()) {
+            RepositoryTestSupport.installBundled(List.of());
+            var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
+            repository.reload();
+            assertEquals(sourceId, repository.getAllThemes().get(0).getLogicalId());
+
+            Theme imported = repository.importTheme(source.toFile()).orElseThrow();
+
+            assertNotEquals(sourceId, imported.getLogicalId());
+            assertNotEquals(source.toAbsolutePath().normalize(),
+                    imported.getFile().orElseThrow().toPath().toAbsolutePath().normalize());
+            assertEquals(STORED, Files.readString(source));
+            assertEquals(sourceId, RepositoryTestSupport.establishedIdentity(directory, "source.xml"));
+            assertEquals(2, repository.getAllThemes().size());
         }
     }
 
-    private static ILog quietLog() {
-        return (ILog) Proxy.newProxyInstance(ILog.class.getClassLoader(), new Class<?>[] { ILog.class },
-                (proxy, method, args) -> null);
+    @Test public void invalidThemeCreatesNoBindingNoManagedFileAndKeepsSource() throws Exception {
+        Path directory = temporary.newFolder().toPath();
+        Path installed = Files.createDirectory(directory.resolve("installed_themes"));
+        Path source = Files.writeString(directory.resolve("theme.xml"), "<colorTheme name='Broken'>");
+        var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
+
+        assertFalse(repository.importTheme(source.toFile()).isPresent());
+
+        assertFalse("No binding may outlive a failed parse",
+                Files.exists(RepositoryTestSupport.bindingsFile(directory)));
+        assertEquals(List.of(), RepositoryTestSupport.fileNames(installed));
+        assertEquals(List.of(), RepositoryTestSupport.stagedPieces(installed));
+        assertTrue(repository.getAllThemes().isEmpty());
+        assertEquals("<colorTheme name='Broken'>", Files.readString(source));
+    }
+
+    @Test public void unsupportedExtensionIsRefusedBeforeStaging() throws Exception {
+        Path directory = temporary.newFolder().toPath();
+        Path installed = Files.createDirectory(directory.resolve("installed_themes"));
+        Path source = Files.writeString(directory.resolve("theme.txt"), INCOMING);
+        var repository = new ThemeRepository(directory.toFile(), RepositoryTestSupport.quietLog());
+
+        assertFalse(repository.importTheme(source.toFile()).isPresent());
+
+        assertFalse("Unsupported input never reaches staging", Files.exists(installed.resolve(".staging")));
+        assertFalse(Files.exists(RepositoryTestSupport.bindingsFile(directory)));
+        assertEquals(List.of(), RepositoryTestSupport.fileNames(installed));
+        assertEquals(INCOMING, Files.readString(source));
+    }
+
+    private static byte[] bytes(String value) {
+        return value.getBytes(StandardCharsets.UTF_8);
     }
 }

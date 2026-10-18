@@ -1,19 +1,21 @@
 package com.github.eclipsethemes.eclipse;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.LinkOption;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.TreeMap;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.ILog;
@@ -24,9 +26,12 @@ import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.parser.ParserFactory;
 import com.github.eclipsethemes.core.parser.ThemeParser;
 
-public final class ThemeRepository {
+public class ThemeRepository {
+
+	private static final String MANAGED_EXTENSION = ".xml";
 
 	private final File installedThemesDir;
+	private final Path stagingDir;
 	private final ILog log;
 	private final ThemeIdentityBindings identities;
 	private final TreeMap<String, Theme> themes = new TreeMap<>();
@@ -40,10 +45,11 @@ public final class ThemeRepository {
 	ThemeRepository(File pluginDataDirectory, ILog log, ThemeIdentityBindings identities) {
 		this.log = log;
 		this.installedThemesDir = new File(pluginDataDirectory, "installed_themes");
+		this.stagingDir = new File(installedThemesDir, ".staging").toPath();
 		this.identities = identities;
-		if (!installedThemesDir.exists()) {
-			installedThemesDir.mkdirs();
-		}
+		// Best effort so the first reload can list a fresh workspace; every mutating
+		// operation re-checks storage and reports failure instead of assuming success.
+		installedThemesDir.mkdirs();
 	}
 
 	public void reload() {
@@ -58,63 +64,274 @@ public final class ThemeRepository {
 		return result;
 	}
 
-	public Optional<Theme> importTheme(File file) {
-		File copied = new File(installedThemesDir, file.getName());
-		boolean created = false;
+	/**
+	 * Imports one independent new installed record. The source basename, display
+	 * name, source ID, and content never select an existing record or locator.
+	 */
+	public Optional<Theme> importTheme(File source) {
+		Path staged = null;
+		Path locator = null;
+		boolean moved = false;
+		boolean committed = false;
 
 		try {
-			// PM6-A: a locator must be unused both on disk and in identity metadata.
-			// Unknown filesystem state also fails closed; no destination has been opened.
-			if (!Files.notExists(copied.toPath(), LinkOption.NOFOLLOW_LINKS)) {
-				log.error("Import refused: managed theme locator is occupied or unavailable: " + copied.getName());
-				return Optional.empty();
-			}
-			identities.requireUnused(copied.getName());
-			Optional<ThemeParser> parserOpt = ParserFactory.getParserFor(file.getName(), log::warn);
-			if (parserOpt.isEmpty()) {
-				log.error("No parser found for theme: " + file.getName());
+			ensureManagedStorage();
+			Optional<ThemeParser> parser = supportedParser(source);
+			if (parser.isEmpty()) {
 				return Optional.empty();
 			}
 
+			staged = stage(source);
+			locator = allocateLocator();
+			// The staged bytes are parsed once and become the committed bytes; the
+			// source is never reopened for the commit.
 			Theme candidate;
-			try (var in = new FileInputStream(file)) {
-				candidate = parserOpt.get().parse(in, copied);
+			try (InputStream input = Files.newInputStream(staged)) {
+				candidate = parser.get().parse(input, locator.toFile());
 			}
-			// Establish the new file before its identity. A failure at either step removes only
-			// the destination created by this attempt; no binding or catalog entry exists yet.
-			try (var in = new FileInputStream(file); var out = Files.newOutputStream(copied.toPath(),
-					StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE)) {
-				created = true;
-				in.transferTo(out);
-			}
-			// Imports establish a new identity; only reload may reuse an existing binding.
-			Theme theme = candidate.withLogicalId(identities.newIdentityFor(copied.getName()));
+			// The locator was unused, so this move never replaces an existing file.
+			moveWithoutReplacement(staged, locator);
+			staged = null;
+			moved = true;
+
+			Theme theme = candidate.withLogicalId(identities.newIdentityFor(locator.getFileName().toString()));
 			themes.put(theme.getLogicalId(), theme);
+			committed = true;
 			return Optional.of(theme);
 		} catch (ThemeParseException e) {
-			log.error("Failed to parse imported theme: " + file.getName(), e);
+			log.error("Failed to parse imported theme: " + source.getName(), e);
 		} catch (IOException e) {
-			if (created) {
-				discardNewDestination(copied);
+			log.error("Could not import theme: " + source.getName(), e);
+		} finally {
+			deleteStaged(staged);
+			if (moved && !committed) {
+				// Only the locator created by this attempt is removed; its binding
+				// was never persisted, and no catalog record was admitted.
+				deleteQuietly(locator, "incomplete imported theme");
 			}
-			log.error("Could not admit imported theme or persist identity: " + copied.getName(), e);
 		}
 
 		return Optional.empty();
 	}
 
 	/**
-	 * Best-effort removal of a destination created by the current import attempt. The
-	 * caller only invokes this after exclusive creation succeeded, so a pre-existing file
-	 * is never deleted.
+	 * Replaces the bytes of one explicitly selected installed record while
+	 * preserving its logical identity, locator, and binding.
 	 */
-	private void discardNewDestination(File destination) {
+	public Optional<Theme> updateTheme(Theme selected, File source) {
+		Path staged = null;
+
 		try {
-			Files.deleteIfExists(destination.toPath());
+			Path target = managedTarget(selected);
+			if (!Files.isRegularFile(target, LinkOption.NOFOLLOW_LINKS)) {
+				log.error("Update refused: managed theme file is missing or not a regular file: " + target);
+				return Optional.empty();
+			}
+			Optional<ThemeParser> parser = supportedParser(source);
+			if (parser.isEmpty()) {
+				return Optional.empty();
+			}
+
+			staged = stage(source);
+			// Parse exactly the staged bytes while attributing the record to the
+			// locator it is about to replace.
+			Theme candidate;
+			try (InputStream input = Files.newInputStream(staged)) {
+				candidate = parser.get().parse(input, target.toFile());
+			}
+			// A target that disappeared while staging fails without recreation.
+			if (!Files.isRegularFile(target, LinkOption.NOFOLLOW_LINKS)) {
+				throw new IOException("Update target disappeared before replacement: " + target.getFileName());
+			}
+			replaceManagedFile(staged, target);
+			staged = null;
+
+			Theme updated = candidate.withLogicalId(selected.getLogicalId());
+			themes.put(updated.getLogicalId(), updated);
+			return Optional.of(updated);
+		} catch (ThemeParseException e) {
+			log.error("Failed to parse replacement theme: " + source.getName(), e);
 		} catch (IOException e) {
-			log.error("Could not remove incomplete imported theme: " + destination.getName(), e);
+			log.error("Could not update theme: " + source.getName(), e);
+		} finally {
+			deleteStaged(staged);
+		}
+
+		return Optional.empty();
+	}
+
+
+	/**
+	 * Removes one selected installed record. The binding is removed first; a
+	 * failed file deletion restores that exact binding and reports failure.
+	 */
+	public boolean removeTheme(Theme selected) {
+		Path target;
+		String locator;
+		String identity;
+		try {
+			target = managedTarget(selected);
+			locator = target.getFileName().toString();
+			identity = selected.getLogicalId();
+			identities.remove(locator, identity);
+		} catch (IOException e) {
+			log.error("Removal refused or failed before file deletion: " + describe(selected), e);
+			return false;
+		}
+
+		try {
+			deleteManagedFile(target);
+		} catch (IOException e) {
+			restoreBinding(locator, identity, e);
+			return false;
+		}
+
+		themes.remove(identity);
+		return true;
+	}
+
+	/**
+	 * Deletes exactly the managed file or confirms it is already absent. An
+	 * existing path of an unexpected type/state fails closed and is not deleted.
+	 */
+	void deleteManagedFile(Path target) throws IOException {
+		if (Files.exists(target, LinkOption.NOFOLLOW_LINKS)) {
+			if (!Files.isRegularFile(target, LinkOption.NOFOLLOW_LINKS)) {
+				throw new IOException("Refusing to remove an unexpected managed path type: " + target.getFileName());
+			}
+			Files.delete(target);
+		} else if (!Files.notExists(target, LinkOption.NOFOLLOW_LINKS)) {
+			throw new IOException("Cannot determine whether the managed theme file is absent: " + target.getFileName());
+		}
+		if (!Files.notExists(target, LinkOption.NOFOLLOW_LINKS)) {
+			throw new IOException("Managed theme file is still present after deletion: " + target.getFileName());
 		}
 	}
+
+	private void restoreBinding(String locator, String identity, IOException removalFailure) {
+		try {
+			identities.restore(locator, identity);
+			log.error("Removal failed after binding removal; the prior binding was restored: " + locator,
+					removalFailure);
+		} catch (IOException restoreFailure) {
+			removalFailure.addSuppressed(restoreFailure);
+			log.error("Removal failed and the prior binding could not be restored: " + locator, removalFailure);
+		}
+	}
+
+	/**
+	 * Resolves a selected record to its managed locator after all identity,
+	 * location, and binding preconditions. Bundled, foreign, and unbound records
+	 * are refused before any managed write.
+	 */
+	private Path managedTarget(Theme selected) throws IOException {
+		if (selected == null || selected.getLogicalId() == null
+				|| !selected.getLogicalId().startsWith("local:")) {
+			throw new IOException("Only installed themes with local identities can be changed: " + describe(selected));
+		}
+		Optional<File> file = selected.getFile();
+		if (file.isEmpty()) {
+			throw new IOException("Selected installed theme has no managed file: " + describe(selected));
+		}
+
+		Path target = file.get().toPath().toAbsolutePath().normalize();
+		Path managedDirectory = installedThemesDir.toPath().toAbsolutePath().normalize();
+		if (!managedDirectory.equals(target.getParent())
+				|| target.getFileName() == null
+				|| !target.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(MANAGED_EXTENSION)) {
+			throw new IOException("Selected theme is outside managed theme storage: " + target);
+		}
+
+		String locator = target.getFileName().toString();
+		String established = identities.establishedIdentityFor(locator)
+				.orElseThrow(() -> new IOException("No established identity binding for " + locator));
+		if (!established.equals(selected.getLogicalId())) {
+			throw new IOException("Identity binding for " + locator + " does not match the selected record");
+		}
+		return target;
+	}
+
+	private void ensureManagedStorage() throws IOException {
+		try {
+			Files.createDirectories(installedThemesDir.toPath());
+		} catch (FileAlreadyExistsException e) {
+			throw new IOException("Managed theme storage is not a directory: " + installedThemesDir, e);
+		}
+		if (!Files.isDirectory(installedThemesDir.toPath(), LinkOption.NOFOLLOW_LINKS)) {
+			throw new IOException("Managed theme storage is not a directory: " + installedThemesDir);
+		}
+	}
+
+	/** One copy of the selected bytes into an attempt-owned staging file. */
+	private Path stage(File source) throws IOException {
+		Files.createDirectories(stagingDir);
+		if (!Files.isDirectory(stagingDir, LinkOption.NOFOLLOW_LINKS)) {
+			throw new IOException("Theme staging location is not a directory: " + stagingDir);
+		}
+		Path staged = Files.createTempFile(stagingDir, "theme-", ".part");
+		try {
+			Files.copy(source.toPath(), staged, StandardCopyOption.REPLACE_EXISTING);
+			return staged;
+		} catch (IOException e) {
+			try {
+				Files.deleteIfExists(staged);
+			} catch (IOException cleanupFailure) {
+				e.addSuppressed(cleanupFailure);
+			}
+			throw e;
+		}
+	}
+
+	private Optional<ThemeParser> supportedParser(File source) {
+		Optional<ThemeParser> parser = ParserFactory.getParserFor(source.getName(), log::warn);
+		if (parser.isEmpty()) {
+			log.error("Unsupported theme file type: " + source.getName());
+		}
+		return parser;
+	}
+
+	/** Chooses a repository-owned locator unused on disk and in identity metadata. */
+	private Path allocateLocator() throws IOException {
+		Path directory = installedThemesDir.toPath();
+		for (int attempt = 0; attempt < 10; attempt++) {
+			Path candidate = directory.resolve(UUID.randomUUID() + MANAGED_EXTENSION);
+			if (Files.notExists(candidate, LinkOption.NOFOLLOW_LINKS)
+					&& identities.establishedIdentityFor(candidate.getFileName().toString()).isEmpty()) {
+				return candidate;
+			}
+		}
+		throw new IOException("Could not allocate an unused managed theme locator");
+	}
+
+	private void moveWithoutReplacement(Path staged, Path locator) throws IOException {
+		// Deliberately no REPLACE_EXISTING: an unexpectedly occupied locator fails.
+		Files.move(staged, locator);
+	}
+
+	// Test seam for exercising atomic replacement failure without a fallback.
+	void replaceManagedFile(Path staged, Path target) throws IOException {
+		// No non-atomic fallback: an unsupported atomic move fails truthfully.
+		Files.move(staged, target, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+	}
+
+	private void deleteStaged(Path staged) {
+		if (staged != null) {
+			deleteQuietly(staged, "staged theme data");
+		}
+	}
+
+	private void deleteQuietly(Path path, String description) {
+		try {
+			Files.deleteIfExists(path);
+		} catch (IOException e) {
+			log.error("Could not remove " + description + ": " + path.getFileName(), e);
+		}
+	}
+
+	private static String describe(Theme theme) {
+		return theme == null ? "no selection" : theme.getName();
+	}
+
 
 	private void loadPackedThemes() {
 		var bundle = EclipseThemes.instance().getBundle();
