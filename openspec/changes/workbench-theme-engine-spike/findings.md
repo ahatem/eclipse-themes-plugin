@@ -806,3 +806,50 @@ Decisions still required from the maintainer: the supported Eclipse release rang
 4.34–4.40 get verification or are declared unsupported for the coordinated capability); whether
 the capability uses `restore=true` (explicit persisted choice) with the consequent conflict
 handling; confirmation of the high-contrast refusal policy.
+
+## 37. Eclipse 4.40 measured evidence (floor candidate)
+
+Later, bounded pass: static matrix [obs/static-matrix-4.33-4.41.md](obs/static-matrix-4.33-4.41.md)
+(all of 4.33–4.41, no IDE) and one runtime release, 4.40, chosen because its theme-engine and CSS
+engine code differ from both 4.39 and 4.41. Raw evidence: [obs/eclipse-4.40/](obs/eclipse-4.40/).
+Same disposable probe as §36 (narrow API only, no reflection, `--release 17`), Windows only, OS
+dark mode on, `Display.getHighContrast()` false. Nothing here covers 4.34–4.39.
+
+Environment: EPP Java 2026-06 R (SHA-512 matches the published value), Platform
+`4.40.0.20260604-0652`, JRE 21.0.11, SWT 4973, theme bundle 0.15.100 (jar hash equals the p2
+repository jar), `x-friends` export line identical to 4.41.
+
+### 37.1 Results (all P4 criteria held on 4.40)
+
+1. `getService(IThemeEngine.class)` non-null; `getThemes()` = Dark, Light, ours (Classic absent).
+2. `setTheme(ours, true)`, Dark, Light and back to ours: postcondition active ID equals target and
+   `getActiveTheme()` is the same object, every time.
+3. Missing ID: `CAPABILITY-FAILURE`, no state change.
+4. Restart (fresh process, same configuration): ours active at boot with no probe call; surfaces
+   match the proof CSS (Shell `#f8bbd0`, Tree `#ffcc80`, Table `#b2ebf2`, status `#a5d6a7`,
+   selected tab `#d1c4e9`: identical to 4.33 and 4.41 values).
+5. Real Appearance page (`org.eclipse.ui.preferencePages.Views`): ours listed and selected,
+   choosing Light and **Apply and Close** replaced the active and persisted theme; the Theme
+   Changed dialog (Use as default / Restart / Don't restart) appeared as on 4.41. Light persisted
+   across a restart; re-selecting ours via `setTheme(ours, true)` persisted again.
+6. Live switch back to ours left the selected-tab background at `#ffffff` (as on 4.41); a fresh
+   process shows `#d1c4e9`. The residue is **not 4.41-specific**.
+
+### 37.2 Differences from 4.41 observed
+
+- **No `DefaultScope` publication.** Baseline: active `e4_dark`, instance, config **and default
+  absent**, effective lookup absent. After an explicit selection the effective lookup equals the
+  instance value. So `getActiveTheme()` is the only source of "what is active" before an explicit
+  choice; the P4 boundary must not read `DefaultScope`.
+- Runs on JRE 21 (4.41 needs Java 25).
+- Cold first start of a fresh configuration exceeded five minutes (m2e etc.); the harness timeout
+  killed it once, a warm rerun was normal. Not a theme finding.
+- `setDarkThemePreferred` effect is not publicly observable and was not measured.
+
+### 37.3 Classification
+
+4.40: **RUNTIME VERIFIED** (Windows, P4 narrow API). 4.34–4.39 are not run; see the static matrix
+for their `STATICALLY EQUIVALENT` / `UNVERIFIED` status. With a floor of 4.40 the verified set is
+exactly {4.40, 4.41}, both on Windows only. Still open for the range: restore-time behaviour for an
+unavailable saved theme (4.40 and 4.41 are equal), real Windows high contrast, GTK/macOS/Wayland,
+4.42+.

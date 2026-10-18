@@ -96,7 +96,7 @@ contributed stylesheet loads and styles at least the proof surfaces.
 | 4.37 | STATICALLY EQUIVALENT TO 4.36 (theme, css.core, css.swt jars identical; Appearance theme calls identical; only `ui.themes` drops the HC theme) | STATICALLY EQUIVALENT TO 4.36 | UNVERIFIED until 4.36 runs |
 | 4.38 | same code as 4.35 for the critical methods; Appearance adds `isThemingPossible()` | **UNVERIFIED** (css.core changed) | UNVERIFIED |
 | 4.39 | STATICALLY EQUIVALENT TO 4.38 | STATICALLY EQUIVALENT TO 4.38 | UNVERIFIED until 4.38 runs |
-| 4.40 | **differs** from 4.39 and 4.41 (dark-preferred call, preference lookup, restore, parser) | **UNVERIFIED** | UNVERIFIED, needs runtime |
+| 4.40 | **differs** from 4.39 and 4.41 (dark-preferred call, preference lookup, restore, parser) | **differs** | RUNTIME VERIFIED (findings §37, Windows) |
 | 4.41 | RUNTIME VERIFIED (§36) | RUNTIME VERIFIED | RUNTIME VERIFIED |
 
 No release is classed `UNSUPPORTED` by this pass; that is a maintainer decision (§30).
@@ -122,7 +122,7 @@ applies the contributed stylesheet, is not equal to a runtime-verified release.
 
 | Release | Run? | Why |
 | --- | --- | --- |
-| 4.40 | **Yes** | Engine code differs from 4.39 and 4.41; CSS engine differs from both. |
+| 4.40 | **Done** (§37) | Engine code differs from 4.39 and 4.41; CSS engine differs from both. |
 | 4.38 | **Yes if the floor is ≤4.38** | CSS engine differs from 4.33/4.37 and 4.40. Also covers 4.39. |
 | 4.36 | **Yes if the floor is ≤4.37** | css.swt differs from 4.34/4.35 and 4.38. Also covers 4.37. |
 | 4.35 | **Yes if the floor is ≤4.35** | css.swt differs from 4.34 and 4.36. |

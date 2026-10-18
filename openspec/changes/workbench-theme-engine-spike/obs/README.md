@@ -104,3 +104,11 @@ from the 4.33 record above:
 
 The disposable probe and full outputs remain in ignored `tmp/workbench-spike/v3/`; the official
 install is in ignored `tmp/eclipse-4.41/`. No probe code, CSS or bundle is committed.
+
+## Eclipse 4.40 evidence
+
+`eclipse-4.40/` is the 4.40 counterpart of the 4.41 folder (findings §37): `runtime-evidence.txt`
+(R1 round trip, R2 restart plus Appearance switch, R3 persisted choice and reselect, R4 restart; ToolBar
+surface lines omitted), `bundle-evidence.txt`, `log-hashes.csv`, `restart-print.png`. The probe stays in
+ignored `tmp/workbench-spike/v4/`; the install is in ignored `tmp/eclipse-4.40/`. `static-matrix-4.33-4.41.md`
+holds the static comparison.
