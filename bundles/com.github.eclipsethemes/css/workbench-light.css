@@ -1,0 +1,48 @@
+/*
+ * Eclipse Themes workbench coordination, light family.
+ * Static and declarative. Every color is a symbolic reference to a plugin-owned color id
+ * (com.github.eclipsethemes.workbench.light.<role>, dots written as dashes) whose value the plugin publishes
+ * from the selected theme. Coverage is deliberately bounded to the surfaces below; editor text content,
+ * native menus, dialogs, title bars, Browser content and icons are not styled here.
+ */
+Shell {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+SashForm,
+.MPart,
+.MCompositePart,
+.MPartSashContainer {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+.MPartStack {
+	background-color: '#com-github-eclipsethemes-workbench-light-surface';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+	swt-tab-outline: '#com-github-eclipsethemes-workbench-light-border';
+	swt-outer-keyline-color: '#com-github-eclipsethemes-workbench-light-border';
+	swt-inner-keyline-color: '#com-github-eclipsethemes-workbench-light-surface';
+	swt-selected-tab-highlight: '#com-github-eclipsethemes-workbench-light-selection';
+	swt-selected-tabs-background: '#com-github-eclipsethemes-workbench-light-raised' '#com-github-eclipsethemes-workbench-light-raised' 100%;
+	swt-unselected-tabs-background: '#com-github-eclipsethemes-workbench-light-surface' '#com-github-eclipsethemes-workbench-light-surface' 100%;
+	swt-unselected-tabs-color: '#com-github-eclipsethemes-workbench-light-muted';
+}
+
+.MTrimBar,
+ToolBar {
+	background-color: '#com-github-eclipsethemes-workbench-light-surface';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+#org-eclipse-ui-StatusLine {
+	background-color: '#com-github-eclipsethemes-workbench-light-surface';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+Tree,
+Table {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}

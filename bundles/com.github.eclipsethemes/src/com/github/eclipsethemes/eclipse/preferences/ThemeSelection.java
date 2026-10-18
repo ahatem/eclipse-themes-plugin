@@ -10,10 +10,10 @@ import com.github.eclipsethemes.core.Constants;
 import com.github.eclipsethemes.eclipse.ThemeRecord;
 
 /** Selected intent only, not a record of successful theme application. */
-final class ThemeSelection {
+public final class ThemeSelection {
     private ThemeSelection() {}
 
-    static Optional<ThemeRecord> resolve(IPreferenceStore store, List<ThemeRecord> themes) {
+    public static Optional<ThemeRecord> resolve(IPreferenceStore store, List<ThemeRecord> themes) {
         boolean modern = store.contains(PreferenceKeys.SELECTED_THEME_LOGICAL_ID)
                 && !store.isDefault(PreferenceKeys.SELECTED_THEME_LOGICAL_ID);
         String key = modern ? PreferenceKeys.SELECTED_THEME_LOGICAL_ID : PreferenceKeys.ACTIVE_THEME_ID;
