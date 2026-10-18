@@ -1,0 +1,84 @@
+# R8a production-prep gate (Q1/Q2): filtered probe logs, Windows, Eclipse 4.40 (css.swt.theme 0.15.100).
+# Disposable probes v6 (no colorDefinition) and v7 (colorDefinition isEditable=false); probe code stays ignored under tmp/.
+# Palette A: surface=ff0000 fg=000000 accent=00ff00; B: 0000ff/ffffff/ffff00. Defaults in v7: 808080/202020/404040.
+
+## Q1a: CSS '#id' against keys that have NO colorDefinition (v6, run Q1)
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4973 java=21.0.11+10-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.100.v20260507-0340 platform=4.40.0.v20260601-0713 buildId=4.40.0.20260604-0652 resolverMode=null
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p5.theme=P5 Proof (research), spike.p5.theme2=P5 Proof twin (research)]
+SURFACE default Shell#IDEWindow bg=#000000 fg=#000000
+SURFACE default CTabFolder#topLeft bg=#000000 fg=#000000 tabSelBg=#ffffff
+SURFACE default Tree bg=#000000 fg=#000000
+SURFACE default Table bg=#000000 fg=#000000
+SURFACE default StatusLine#org-eclipse-ui-StatusLine bg=#000000 fg=#000000
+PREFS before 
+STEP palette|A
+PALETTE A registry=RGB {255, 0, 0}RGB {0, 0, 0}RGB {0, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|apply
+REFRESH apply active=spike.p5.theme themeCount=4
+SURFACE A-apply Shell#IDEWindow bg=#000000 fg=#000000
+SURFACE A-apply CTabFolder#topLeft bg=#000000 fg=#000000 tabSelBg=#000000
+SURFACE A-apply Tree bg=#000000 fg=#000000
+SURFACE A-apply Table bg=#000000 fg=#000000
+SURFACE A-apply StatusLine#org-eclipse-ui-StatusLine bg=#000000 fg=#000000
+STEP refresh|select
+REFRESH select active=spike.p5.theme themeCount=4
+SURFACE A-select Shell#IDEWindow bg=#000000 fg=#000000
+SURFACE A-select CTabFolder#topLeft bg=#000000 fg=#000000 tabSelBg=#000000
+SURFACE A-select Tree bg=#000000 fg=#000000
+SURFACE A-select Table bg=#000000 fg=#000000
+SURFACE A-select StatusLine#org-eclipse-ui-StatusLine bg=#000000 fg=#000000
+STEP refresh|flip|spike.p5.theme|spike.p5.theme2
+FLIP ms=134
+REFRESH flip active=spike.p5.theme2 themeCount=4
+SURFACE A-flip Shell#IDEWindow bg=#ff0000 fg=#000000
+SURFACE A-flip CTabFolder#topLeft bg=#ff0000 fg=#000000 tabSelBg=#00ff00
+SURFACE A-flip Tree bg=#ff0000 fg=#000000
+SURFACE A-flip Table bg=#00ff00 fg=#000000
+SURFACE A-flip StatusLine#org-eclipse-ui-StatusLine bg=#00ff00 fg=#000000
+PREFS after 
+STEP palette|B
+PALETTE B registry=RGB {0, 0, 255}RGB {255, 255, 255}RGB {255, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|flip|spike.p5.theme|spike.p5.theme2
+FLIP ms=108
+REFRESH flip active=spike.p5.theme themeCount=4
+SURFACE B-flip Shell#IDEWindow bg=#0000ff fg=#ffffff
+SURFACE B-flip CTabFolder#topLeft bg=#0000ff fg=#000000 tabSelBg=#ffff00
+SURFACE B-flip Tree bg=#0000ff fg=#ffffff
+SURFACE B-flip Table bg=#ffff00 fg=#ffffff
+SURFACE B-flip StatusLine#org-eclipse-ui-StatusLine bg=#ffff00 fg=#000000
+STATE end | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+
+## Q1b: colorDefinition isEditable=false (v7, run T1: publish + one twin flip)
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4973 java=21.0.11+10-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.100.v20260507-0340 platform=4.40.0.v20260601-0713 buildId=4.40.0.20260604-0652 resolverMode=null
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p5.theme=P5 Proof (research), spike.p5.theme2=P5 Proof twin (research)]
+SURFACE default Shell#IDEWindow bg=#808080 fg=#202020
+SURFACE default Tree bg=#808080 fg=#202020
+SURFACE default Table bg=#404040 fg=#202020
+PREFS before 
+PALETTE A registry=RGB {255, 0, 0}RGB {0, 0, 0}RGB {0, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+FLIP ms=541
+REFRESH flip active=spike.p5.theme2 themeCount=4
+SURFACE A-flip Shell#IDEWindow bg=#ff0000 fg=#000000
+SURFACE A-flip Tree bg=#ff0000 fg=#000000
+SURFACE A-flip Table bg=#00ff00 fg=#000000
+PREFS after spike.p5.fg=0,0,0 spike.p5.accent=0,255,0 spike.p5.surface=255,0,0 
+STATE end | active=spike.p5.theme2 | instance=spike.p5.theme2 | config=<absent> | default=<absent> | effective=spike.p5.theme2 | osDark=true | highContrast=false
+
+## Q1c: restart of v7 (T2): stored keys are neither applied nor kept
+STATE boot | active=spike.p5.theme2 | instance=spike.p5.theme2 | config=<absent> | default=<absent> | effective=spike.p5.theme2 | osDark=true | highContrast=false
+SURFACE boot Shell#IDEWindow bg=#808080 fg=#202020
+SURFACE boot Tree bg=#808080 fg=#202020
+SURFACE boot Table bg=#404040 fg=#202020
+PREFS boot 
+STATE end | active=spike.p5.theme2 | instance=spike.p5.theme2 | config=<absent> | default=<absent> | effective=spike.p5.theme2 | osDark=true | highContrast=false
+
+## Static facts (4.40 bytecode, javap of the installed bundles; not runtime)
+- org.eclipse.ui.internal.dialogs.ViewsPreferencePage (Appearance): the theme combo input is IThemeEngine.getThemes() unfiltered
+  (no hidden/visibility check). The extension schema org.eclipse.e4.ui.css.swt.theme `theme` element has only
+  id, label, basestylesheeturi, os, ws, os_version. os/ws/os_version remove an entry from getThemes() entirely, so they cannot hide a
+  selectable twin on the same platform. => no supported way to hide a twin.
+- org.eclipse.ui.internal.themes.ThemeElementHelper.installColor: when ColorDefinition.isEditable() is false the registry receives the
+  definition default, never the stored preference value.
+- ColorsAndFontsPreferencePage$ThemeContentProvider skips ColorDefinition/FontDefinition with isEditable() == false
+  (not listed on the Colors and Fonts page).
+- No themeAssociation element in the 4.40 theme bundle plugin.xml: switching a CSS theme does not change the Colors-and-Fonts theme.

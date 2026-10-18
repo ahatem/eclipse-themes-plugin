@@ -30,3 +30,4 @@ explicitly allowed limitation was recorded, not that every platform/surface is s
 - [x] 3.3 Give the GO/NO-GO verdict, R3-before-R7 answer, conditional minimal pre-R8a slice, proposed R8a/R8b scope and roadmap recommendation.
 - [x] 3.4 Present remaining product decisions with options, consequences and recommendations; implement none of them.
 - [x] 3.5 Validate this change strictly, all specs/changes strictly, diff whitespace and scope; commit only research evidence and report final status.
+- [x] 3.6 Close out R7 with P4 GO and Option D GO (findings §39); archive after the R8a production change is opened.

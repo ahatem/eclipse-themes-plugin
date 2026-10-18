@@ -937,3 +937,22 @@ and 4.40 R5), so D4 is not needed.
 **OPTION D GO**, bounded: one static CSS per family reading `'#id'` references, palette published
 through `ColorRegistry`, refresh by twin-theme flip, verified on Windows 4.40/4.41 only. See the
 report for the Option A comparison and the decisions this leaves to the maintainer.
+
+## 39. Closeout
+
+**Final R7 verdict: P4 GO and OPTION D GO.** Maintainer-approved after the §38 micro-spike.
+
+Measured limits that carry into R8a unchanged:
+
+- Runtime evidence exists for Windows (win32/win32) on Eclipse 4.40 (theme bundle 0.15.100) and 4.41 (0.15.200); GTK3/X11 was
+  measured on 4.33 only for P4 selection (§1–§33), and nothing runtime for macOS.
+- Dynamic colours work through symbolic `'#id'` CSS references resolved against the current Colors-and-Fonts `ColorRegistry`.
+  `ColorRegistry.put(...)` is public API; the `'#id'` resolver is implementation-specific (`org.eclipse.e4.ui.internal.css.swt`).
+- A real theme-ID change is required to re-read changed symbolic colours. Same-ID `setTheme(activeTheme, true)` and
+  `applyStyles(shell, true)` do not refresh.
+- No `registerTheme`, `registerStylesheet` or generated CSS is required.
+- Selection (`setTheme(ITheme, true)`) is the only engine call used; the access is non-API (`x-friends`) and accepted under P4.
+
+The R8a production-prep questions (can private colour keys be used; can a refresh twin be hidden) were answered in the production
+change `dynamic-workbench-theming` (`design.md`, `evidence/gate-q1-q2-runtime.txt`), not here. This change is closed; nothing
+under it is production behaviour.
