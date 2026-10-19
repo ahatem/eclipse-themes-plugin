@@ -20,7 +20,7 @@ public class ThemeRepositoryPackageTest {
 
     private static final String EDITOR = "<editor><background color='#1b1f2a'/><foreground color='#c8d0e0'/></editor>";
     private static final String PACKAGE = "<themePackage schemaVersion='1' id='io.example.nightfall' name='Nightfall'"
-            + " appearance='dark'><fonts family='Mono'/>" + EDITOR + "</themePackage>";
+            + " appearance='dark'><future-extension family='Mono'/>" + EDITOR + "</themePackage>";
     private static final String REVISED = "<themePackage schemaVersion='1' id='io.example.nightfall' name='Nightfall 2'"
             + " appearance='dark'>" + EDITOR + "</themePackage>";
 
