@@ -30,7 +30,7 @@ import java.util.List;
  * <p>
  * Provenance (Eclipse 4.40 and 4.41): every key is one that stock Eclipse Dark sets through an
  * {@code IEclipsePreferences} stylesheet bound to its own theme id (inventory in
- * {@code openspec/changes/plugin-color-coordination/evidence/key-classification.md}), and whose Eclipse default is
+ * {@code openspec/changes/archive/2026-10-19-plugin-color-coordination/evidence/key-classification.md}), and whose Eclipse default is
  * unreadable or clashing on a dark workbench (default colors black, blue, light pastel; checked against the owning
  * plug-in's color definition or preference initializer). These are other plug-ins' preference names, not API, and
  * are re-checked on each supported Eclipse release. Syntax and editor-surface keys are owned by the editor

@@ -102,7 +102,7 @@ theme's foreground stays readable on top. Nothing depends on a theme's name.
 
 Not coordinated, by design: syntax and editor-surface colors (owned by the editor integrations), operating-system colors (for example
 the range indicator, which defaults to the system list-selection color), and colors whose Eclipse default is already readable on a
-dark workbench. `openspec/changes/plugin-color-coordination/evidence/key-classification.md` lists every stock-Dark key with its class.
+dark workbench. `evidence/key-classification.md` in the archived `plugin-color-coordination` change lists every stock-Dark key with its class.
 
 If the plugin is uninstalled while a dark theme is active, its colors stay in place (the plugin has no uninstall hook; stock Dark has
 the same exposure). To remove them, untick **Also theme the Eclipse workbench** and apply before uninstalling, or reset the colors

@@ -49,6 +49,6 @@ Slice 1 (15 keys) was proven first; the remaining groups were then added to the 
 ## 6. Docs and close-out
 
 - [x] 6.1 `docs/WORKBENCH_THEMING_COMPATIBILITY.md`, `docs/target-specs/R8_COORDINATED_THEME_MVP.md`, `docs/ROADMAP.md`.
-- [ ] 6.2 Archive `dynamic-workbench-theming`, then this change.
-- [ ] 6.3 `git diff --check`, `openspec validate --all --strict`, one `mvn clean verify -B`.
-- [ ] 6.4 Proportionality and full-diff review; commit locally.
+- [x] 6.2 Archive `dynamic-workbench-theming`, then this change.
+- [x] 6.3 `git diff --check`, `openspec validate --all --strict`, one `mvn clean verify -B`.
+- [x] 6.4 Proportionality and full-diff review; commit locally.
