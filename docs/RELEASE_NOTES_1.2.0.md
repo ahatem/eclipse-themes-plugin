@@ -8,15 +8,18 @@
   the same hardened XML policy as legacy themes and never contains code, CSS or resources. Legacy `.xml` themes keep working.
 - **Explicit workbench colors.** A package can state its eight workbench roles instead of relying on colors derived from the
   editor. Text roles are still adjusted when needed to stay readable.
-- **User-selectable editor font.** Keep your current font, use the font the theme recommends, or pick any installed font with
-  the standard system font dialog. The result is set in Eclipse's own *Text Font* definition and shows under *Colors and Fonts*.
-- **User-selectable workbench font.** The same three choices for view and editor tabs, trees, tables and dialogs (the *Part
-  title*, *Tree and Table* and *Dialog* font definitions). The two fonts are chosen independently, and your custom fonts are
-  remembered when you switch themes.
-- **Theme-provided font recommendations.** A package can recommend an editor font and a workbench font (family and size). They
-  are used only when you choose *Use theme font*; a theme that names none says so and changes nothing. Applying colors never
-  changes a font on its own, a missing family is reported and skipped, and switching back to *Keep current font* restores the
-  font that was replaced, unless you have changed it yourself since.
+- **Two fonts: Editor font and Interface font.** Each is *Keep current font*, *Use theme font* or *Custom font* (any installed
+  font, chosen with the standard system font dialog), set independently and remembered when you switch themes. The **Editor
+  font** covers editors, consoles and supported code and text views; the **Interface font** covers dialogs, views, trees, tables
+  and supported Eclipse chrome. Each one coordinates a small, documented set of real Eclipse font definitions, so the values
+  show up under *Preferences > General > Appearance > Colors and Fonts* like any font you set yourself.
+- **Theme-provided font recommendations.** A package can recommend an editor font and an interface font
+  (`<fonts><editor/><interface/></fonts>`, family and size). They are used only when you choose *Use theme font*; a theme that
+  names none says so and changes nothing. Applying colors never changes a font on its own and a missing family is reported and
+  skipped.
+- **Fonts you change yourself are respected.** Each font definition the plugin sets is tracked value-exactly. If you change one
+  under *Colors and Fonts*, the plugin leaves it alone; choosing Apply again is an explicit request and takes the group back
+  (the page tells you how many of your changes it replaced). Switching to *Keep current font* restores what was replaced.
 - **Redesigned Theme Manager.** The preference page now has a searchable Theme Library on the left and the selected theme on
   the right: header, a compact preview, Appearance, Fonts and About this theme. The applied theme is shown in bold in the
   library. Choices are staged until Apply or OK, and Cancel discards them. Import, Export, Update and Remove are library actions kept apart from Apply. Status messages appear inline, and the
