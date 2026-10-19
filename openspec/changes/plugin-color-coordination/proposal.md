@@ -1,4 +1,4 @@
-# Proposal: coordinate popup and hyperlink colors with the workbench theme (R8a follow-up, option C)
+# Proposal: coordinate the colors of other plug-ins with the workbench theme (R8 completion)
 
 ## Why
 
@@ -29,8 +29,11 @@ the R8a Decision Gate: the plugin writes a small, declared set of keys itself, a
 - The order is the one R8a established: the workbench switch first, then these writes. Stock Dark's own values are removed by Eclipse
   during the switch, so they are never mistaken for user values.
 - Diagnostics report how many keys are owned and how many were skipped because of user values.
-- Not changed: editor syntax and editor-surface keys (editor integrations), the editor `hyperlinkColor`, EGit/Mylyn decoration colors,
-  light-family popups, and any theme-file schema.
+- The same table and ownership model then cover the other visible stock-Dark preference keys (platform status and form colors,
+  Compare, EGit, search/revision/breakpoint/coverage annotations, JDT/Debug/Ant, Mylyn, Marketplace): 68 keys in all.
+- Plug-in widgets that stock Dark styles by class (EGit, Marketplace, JDT, PDE, Debug, Mylyn, Buildship) are styled by palette role in
+  the existing static sheets; no preference is written for them.
+- Not changed: editor syntax and editor-surface keys (editor integrations), light-family plug-in colors, and any theme-file schema.
 
 ## Capabilities
 
@@ -50,8 +53,8 @@ and ownership state and does not alter its requirements.
 - Code: `eclipse/workbench`, with a new key writer next to `WorkbenchCoordinator` and an extension of the coordinator's
   apply/relinquish/reconcile paths; `core/workbench`, with pure derivation of popup and link colors from `WorkbenchPalette`;
   `PreferenceKeys` for the ownership record; diagnostics and the preference-page text.
-- Preference state: up to 15 instance keys across `org.eclipse.ui.workbench` and `org.eclipse.jdt.ui`, plus one ownership record
-  in the plugin's own store. JDT keys are written only when JDT is installed.
+- Preference state: up to 68 declared instance keys across the nodes of the owning plug-ins, plus one ownership record in the
+  plugin's own store. A key is written only when its owning bundle is installed.
 - Compatibility: the keys are other plug-ins' preference names, not internal classes, but still implementation-level contracts. Each one
   is set by the stock 4.40 Dark sheets (`org.eclipse.ui.themes` `e4-dark_preferencestyle.css`, `org.eclipse.jdt.ui`
   `e4-dark_jdt_syntaxhighlighting.css`). They are kept in one table with provenance and checked again on each supported release.
@@ -90,7 +93,7 @@ already describe them.
 
 The maintainer widened the change from the first popup/hyperlink slice to the whole remaining R8 plug-in coordination scope, in
 stages that each build on the proven ownership model: slice 1 (the 15 keys below), then the stock-Dark preference keys classified in
-`design.md` §7 as visible parity (EGit, compare, search/annotation, JDT/debug/Ant, Mylyn/WikiText/EclEmma/TM4E/Marketplace) in the same
+`evidence/key-classification.md` as visible parity (EGit, compare, search/annotation, JDT/debug/Ant, Mylyn/WikiText/EclEmma/TM4E/Marketplace) in the same
 table and the same ownership model, plus the remaining safe plug-in widget CSS rules. Nothing outside R8 is added.
 
 ### Evidence-dependent (investigated)
@@ -113,5 +116,5 @@ test seams.
 
 ### Deferred
 
-Light-family popups (if decision 1 is A); the editor `hyperlinkColor` (editor integrations); EGit/Mylyn/compare decoration colors and
-the remaining definitions stock Dark re-tunes; theme-authored popup colors (R9 package schema); GTK/macOS evidence.
+Light-family plug-in colors (decision 1); the editor `hyperlinkColor` and other editor-surface keys (editor integrations); native and
+operating-system colors; theme-authored plug-in colors and theme CSS (R9 package schema); GTK/macOS evidence.

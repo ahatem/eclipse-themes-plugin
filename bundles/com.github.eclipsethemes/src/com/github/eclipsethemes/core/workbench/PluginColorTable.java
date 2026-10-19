@@ -52,15 +52,17 @@ public final class PluginColorTable {
 
 	private static final List<PluginColorKey> KEYS = List.of(
 			// 1. Popups: hover, information, content assist (workbench definitions).
+			// Javadoc hover: a JDT definition stored in the workbench node, so only when JDT is installed. It defaults to
+			// the information colors, and the color registry leaves it stale if the information key is removed first, so
+			// it must stay ahead of them: keys are released in this order.
+			key(WORKBENCH, "org.eclipse.jdt.ui.Javadoc.backgroundColor", JDT, RAISED),
+			key(WORKBENCH, "org.eclipse.jdt.ui.Javadoc.foregroundColor", JDT, FOREGROUND),
 			key(WORKBENCH, "org.eclipse.ui.workbench.HOVER_BACKGROUND", null, RAISED),
 			key(WORKBENCH, "org.eclipse.ui.workbench.HOVER_FOREGROUND", null, FOREGROUND),
 			key(WORKBENCH, "org.eclipse.ui.workbench.INFORMATION_BACKGROUND", null, RAISED),
 			key(WORKBENCH, "org.eclipse.ui.workbench.INFORMATION_FOREGROUND", null, FOREGROUND),
 			key(WORKBENCH, "CONTENT_ASSIST_BACKGROUND_COLOR", null, RAISED),
 			key(WORKBENCH, "CONTENT_ASSIST_FOREGROUND_COLOR", null, FOREGROUND),
-			// Javadoc hover: a JDT definition stored in the workbench node, so only when JDT is installed.
-			key(WORKBENCH, "org.eclipse.jdt.ui.Javadoc.backgroundColor", JDT, RAISED),
-			key(WORKBENCH, "org.eclipse.jdt.ui.Javadoc.foregroundColor", JDT, FOREGROUND),
 			// Hyperlinks.
 			key(WORKBENCH, "HYPERLINK_COLOR", null, ACCENT),
 			key(WORKBENCH, "ACTIVE_HYPERLINK_COLOR", null, ACTIVE_ACCENT),

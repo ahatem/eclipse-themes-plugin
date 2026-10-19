@@ -1,8 +1,8 @@
-# Workbench theming (R8a) — compatibility and coverage
+# Workbench theming (R8) — compatibility and coverage
 
-Status: implemented by the `dynamic-workbench-theming` change. The behavioral contract is
-`openspec/specs/workbench-theming/spec.md` once archived; runtime evidence is in
-`openspec/changes/dynamic-workbench-theming/evidence/runtime/`.
+Status: implemented by the `dynamic-workbench-theming` change (workbench coordination) and the `plugin-color-coordination` change
+(colors of other plug-ins). The behavioral contracts are `openspec/specs/workbench-theming/spec.md`, `plugin-color-coordination` and
+`preference-ownership`; runtime evidence is in the `evidence/` folders of the archived changes under `openspec/changes/archive/`.
 
 ## What it does
 
@@ -71,7 +71,8 @@ the workbench-chrome contract) and **THIRD-PARTY** (colors owned by another plug
 | Editor text area | NOT APPLICABLE | follows the editor colors, not the workbench CSS |
 | Forms (sections, form text, read-only form fields, form heading error/warning/info text), Properties view tab list and title, compare and progress panes, Marketplace items | THEMED | same selectors as stock Dark/Light; form heading message colors read the platform `FORM_HEADING_*` definitions |
 | Fonts of part tabs and tree/table views | THEMED (platform fonts) | read the platform *Tab text* and *Tree and Table* font definitions, as stock does, so a font chosen under Colors and Fonts applies; theme files set no fonts |
-| Color definitions of other plug-ins that stock Dark re-tunes (hover, content-assist and Javadoc popups, hyperlinks, EGit/JDT/Mylyn decoration colors such as the Git "ignored resource" label) | THIRD-PARTY / not coordinated | stock Dark changes them only through preference stylesheets bound to its own theme id; under our dark themes they keep their defaults (light popups, `#0066cc` links, system-foreground labels). Doing what stock does would overwrite and later delete the user's own values; see the maintainer decision in the R8a proposal. Each can be changed under Colors and Fonts |
+| Widgets of other plug-ins that the stock sheets style by class (EGit, Marketplace, JDT, PDE, Debug, Mylyn, Buildship, WTP wizard and dialog pages, breadcrumbs) | THEMED | styled in the same sheets by palette role, selector for selector with stock; selectors that would also match an editor's text control are left out |
+| Preference-based colors of other plug-ins that stock Dark re-tunes (popups, hyperlinks, error and form-heading text, Compare, EGit diff and label colors, search/revision/coverage/breakpoint annotations, JDT/Debug/Ant/Mylyn colors) | THEMED in dark coordinated themes, ownership-checked (see below); THIRD-PARTY otherwise | 68 declared keys; written only while a dark coordinated theme is active and only where the user has no value of their own. Light themes and editor-only mode write none |
 
 Selectors are plain type, class and descendant selectors, almost all of them identical to the stock Eclipse Dark/Light sheets, whose
 widget, class and id selectors were compared one by one against ours (the missing ones were added). Those that are not identical (`.MPart`-scoped Text/Combo/List/Canvas, `SashForm`, `ScrolledForm`, `.MCompositePart`, `.MToolBar`) are ordinary
@@ -80,6 +81,35 @@ descendant selectors and each had its effect observed on the widgets. Eclipse is
 turns both into instance preference writes (the owning plug-in's node, or `org.eclipse.ui.workbench` for color definitions), overwriting a user's value on entry and deleting it
 on the next theme change (measured; a test keeps them out). High-contrast mode disables coordination, so accessibility choices are never
 overridden.
+
+## Plug-in colors and the ownership rule
+
+Colors that other plug-ins keep in their own preferences (popups, hyperlinks, diff and status colors, annotation colors, Mylyn and
+Debug colors) cannot be set through the static CSS without overwriting and later deleting the user's own values, which is what stock
+Dark does. The plugin coordinates a fixed, declared table of such keys (`PluginColorTable`, 68 keys, four of them inert on 4.40,
+each with the owning bundle and a palette role) by this rule:
+
+1. Only while a **dark** coordinated theme is active. Light themes, editor-only mode and disabled coordination write none of them.
+2. A key that already has an instance value is the user's and is never written, whatever its origin.
+3. An absent key may be taken; the exact value written is recorded.
+4. On a later Apply the key is updated only if it still holds the recorded value; otherwise it is released and left alone.
+5. Release (light theme, coordination disabled, or another Eclipse theme chosen on the Appearance page) removes a key only if it
+   still holds the recorded value. The plugin never writes a guessed or default value and never clears a preference node.
+
+Status colors are not authored by themes: error, warning, success and information use fixed hues corrected for readability on the
+theme's surfaces, and diff, coverage and search highlights are the theme background pulled toward those hues only as far as the
+theme's foreground stays readable on top. Nothing depends on a theme's name.
+
+Not coordinated, by design: syntax and editor-surface colors (owned by the editor integrations), operating-system colors (for example
+the range indicator, which defaults to the system list-selection color), and colors whose Eclipse default is already readable on a
+dark workbench. `openspec/changes/plugin-color-coordination/evidence/key-classification.md` lists every stock-Dark key with its class.
+
+If the plugin is uninstalled while a dark theme is active, its colors stay in place (the plugin has no uninstall hook; stock Dark has
+the same exposure). To remove them, untick **Also theme the Eclipse workbench** and apply before uninstalling, or reset the colors
+under Colors and Fonts.
+
+The page shows only counts ("N plug-in colors kept your own values"); **Copy diagnostics** adds the key names for owned, kept and
+released colors. Nothing is sent anywhere.
 
 ## Consequences users and contributors will notice
 
@@ -107,4 +137,5 @@ overridden.
 ## Diagnostics
 
 The page's **Copy diagnostics** action copies the combination (os, ws, theme bundle, platform, Java), the capability state and
-reason, the active Eclipse theme and the stored coordination state to the clipboard. Nothing is sent anywhere.
+reason, the active Eclipse theme, the stored coordination state and the plug-in color counts and key names (owned, kept as the
+user's, released) to the clipboard. Nothing is sent anywhere.

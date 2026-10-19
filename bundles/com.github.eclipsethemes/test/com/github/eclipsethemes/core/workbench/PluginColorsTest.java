@@ -153,6 +153,20 @@ public class PluginColorsTest {
 		}
 	}
 
+	/**
+	 * The Javadoc definitions default to the information definitions. Measured on 4.40: removing the information key
+	 * first leaves the Javadoc color stale until restart, removing the Javadoc key first resets both. Keys are released in
+	 * table order.
+	 */
+	@Test
+	public void javadocKeysAreReleasedBeforeTheInformationKeysTheyDefaultTo() {
+		List<String> ids = PluginColorTable.keys().stream().map(PluginColorKey::id).toList();
+		String info = "org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_";
+		String javadoc = "org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.";
+		assertTrue(ids.indexOf(javadoc + "backgroundColor") < ids.indexOf(info + "BACKGROUND"));
+		assertTrue(ids.indexOf(javadoc + "foregroundColor") < ids.indexOf(info + "FOREGROUND"));
+	}
+
 	@Test
 	public void keysOutsideThePlatformNodesNameTheirOwnBundle() {
 		for (PluginColorKey key : PluginColorTable.keys()) {

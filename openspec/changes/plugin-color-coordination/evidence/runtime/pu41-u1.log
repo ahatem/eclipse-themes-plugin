@@ -1,0 +1,348 @@
+ENV os=Windows 11 10.0 ws=win32 java=25.0.4.1+1-LTS cssThemeBundle=0.15.200.v20260806-0515 platform=4.41.0.v20260828-1142 product=1.1.0.202610182337 state=32
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark, org.eclipse.e4.ui.css.theme.e4_default, com.github.eclipsethemes.workbench.dark, com.github.eclipsethemes.workbench.dark.alt, com.github.eclipsethemes.workbench.light, com.github.eclipsethemes.workbench.light.alt, spike.bis.v0.dark, spike.bis.v8.dark, spike.bis.v9.dark, spike.bis.v10.dark, spike.bis.v11.dark, spike.bis.v12.dark, spike.bis.v13.dark, spike.bis.v14.dark, spike.bis.w0.dark, spike.bis.w1.dark, spike.bis.w2.dark, spike.bis.w3.dark, spike.bis.w4.dark, spike.bis.w5.dark, spike.bis.w6.dark, spike.bis.w7.dark, spike.bis.w8.dark, spike.bis.w9.dark, spike.bis.w10.dark]
+STATE boot | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_default | osDark=true | highContrast=false
+OWNPREFS SELECTED_THEME_LOGICAL_ID=local:e354c1bd-b9a3-4bfb-951d-a1b9fc003518 
+STEP state|boot
+STATE boot | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_default | osDark=true | highContrast=false
+OWNPREFS SELECTED_THEME_LOGICAL_ID=local:e354c1bd-b9a3-4bfb-951d-a1b9fc003518 
+STEP stock|org.eclipse.e4.ui.css.theme.e4_default
+STOCK org.eclipse.e4.ui.css.theme.e4_default found=true
+STOCK-SET ms=74 active=org.eclipse.e4.ui.css.theme.e4_default
+DEFENDER dialog cancelled
+STEP wait|2500
+STEP pset|org.eclipse.ui.workbench|HYPERLINK_COLOR|1,2,3
+PSET org.eclipse.ui.workbench|HYPERLINK_COLOR=1,2,3
+STEP pset|org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor|9,9,9
+PSET org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor=9,9,9
+STEP pset|org.eclipse.jdt.ui|content_assist_proposals_background|7,7,7
+PSET org.eclipse.jdt.ui|content_assist_proposals_background=7,7,7
+STEP pcol|before|v
+PCOL before keys=68 present=4 owned=0 ownedAndPresent=0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.backgroundColor inst=<absent> live=255,255,225
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.foregroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND inst=<absent> live=255,255,225
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_FOREGROUND inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_BACKGROUND inst=<absent> live=255,255,225
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_FOREGROUND inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_BACKGROUND_COLOR inst=<absent> live=255,255,255
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_FOREGROUND_COLOR inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|HYPERLINK_COLOR inst=1,2,3 live=1,2,3
+  PCOLKEY org.eclipse.ui.workbench|ACTIVE_HYPERLINK_COLOR inst=<absent> live=0,71,143
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_background inst=7,7,7
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_foreground inst=238,238,238
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_background inst=<absent>
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_foreground inst=<absent>
+  PCOLKEY org.eclipse.jdt.ui|javadocElementsStyling.darkModeDefaultColors inst=<absent>
+  PCOLKEY org.eclipse.ui.workbench|ERROR_COLOR inst=<absent> live=255,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR inst=<absent> live=255,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR inst=<absent> live=128,128,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|INCOMING_COLOR inst=<absent> live=0,0,255
+  PCOLKEY org.eclipse.ui.workbench|OUTGOING_COLOR inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|CONFLICTING_COLOR inst=<absent> live=255,0,0
+  PCOLKEY org.eclipse.ui.workbench|RESOLVED_COLOR inst=<absent> live=0,255,0
+  PCOLKEY org.eclipse.ui.workbench|EDITION_COLOR inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.CommitMessageCommentColor inst=<absent> live=63,127,95
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor inst=9,9,9 live=9,9,9
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveBackgroundColor inst=<absent> live=255,221,221
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkBackgroundColor inst=<absent> live=234,242,245
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkForegroundColor inst=<absent> live=153,153,153
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineBackgroundColor inst=<absent> live=170,170,170
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceBackgroundColor inst=<absent> live=255,255,255
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeBackgroundColor inst=<absent> live=255,255,255
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.search.ui.match.highlight inst=<absent> live=206,204,247
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_NEWEST_COLOR inst=<absent> live=199,134,57
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_OLDEST_COLOR inst=<absent> live=241,225,206
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor.SystemDefault inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|linked.slave.color inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|breakpointIndicationColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|fullcoverage_color inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|partialcoverage_color inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|nocoverage_color inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|org.eclipse.ui.editors.stickyLinesSeparatorColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|inlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|detailedInlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|deletionInlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|detailedDeletionInlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.inherited inst=<absent> live=0,0,128
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight inst=<absent> live=240,216,168
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND inst=<absent>
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.MemoryHistoryKnownColor inst=<absent>
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.changedDebugElement inst=<absent>
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.informationColor inst=<absent>
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.debugColor inst=<absent>
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.errorColor inst=<absent>
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled inst=<absent> live=32,21,223
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled inst=<absent> live=32,21,223
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.task.active inst=<absent> live=36,22,50
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.start inst=<absent> live=240,240,240
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.end inst=<absent> live=220,220,220
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.color.text.quoted inst=<absent> live=38,86,145
+  PCOLKEY org.eclipse.epp.mpc.ui|native-borders inst=<absent>
+STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\atom.xml
+IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:59a1b0da-7dd8-45b2-becf-e8bbb86e8aea, origin=INSTALLED, locator=Optional[b81e8e00-0138-4e88-8e41-428be0a73e35.xml], theme=R8A QA - Atom One Dark], diagnostics=[]]
+STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\dracula.xml
+IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:12bdbfe2-45c6-4276-acba-841920c0f4f7, origin=INSTALLED, locator=Optional[9e9511f5-6124-4781-97a9-badf792c1f35.xml], theme=R8A QA - Dracula], diagnostics=[]]
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP pick|R8A QA - Atom One Dark
+PICK R8A QA - Atom One Dark ok
+STEP check|1
+CHECKBOX label='Also theme the Eclipse workbench' enabled=true before=false
+CHECKBOX after=true
+STEP apply
+APPLY-CLICK found=true ms=362
+STEP wait|4500
+STEP labels|atom-immediately
+CHECKBOX-STATE 'Also theme the Eclipse workbench' enabled=true selected=true
+LABEL Verified on win32/win32 with theme engine 0.15.200.
+LABEL Coordinates core workbench surfaces (window, tabs, toolbars, trees, tables, status line). Native menus, dialogs, title bars, Browser content and icons may not change.
+STEP pcol|atom|v
+PCOL atom keys=68 present=68 owned=64 ownedAndPresent=64
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.backgroundColor inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.foregroundColor inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_FOREGROUND inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_BACKGROUND inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_FOREGROUND inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_BACKGROUND_COLOR inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_FOREGROUND_COLOR inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|HYPERLINK_COLOR inst=1,2,3 live=1,2,3
+  PCOLKEY org.eclipse.ui.workbench|ACTIVE_HYPERLINK_COLOR inst=130,178,229 live=130,178,229 OWNED
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_background inst=7,7,7
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_foreground inst=238,238,238
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_background inst=44,50,60 OWNED
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_foreground inst=171,178,191 OWNED
+  PCOLKEY org.eclipse.jdt.ui|javadocElementsStyling.darkModeDefaultColors inst=true OWNED
+  PCOLKEY org.eclipse.ui.workbench|ERROR_COLOR inst=251,129,122 live=251,129,122 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR inst=251,129,122 live=251,129,122 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR inst=214,162,10 live=214,162,10 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR inst=141,148,159 live=141,148,159 OWNED
+  PCOLKEY org.eclipse.ui.workbench|INCOMING_COLOR inst=51,187,231 live=51,187,231 OWNED
+  PCOLKEY org.eclipse.ui.workbench|OUTGOING_COLOR inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|CONFLICTING_COLOR inst=251,129,122 live=251,129,122 OWNED
+  PCOLKEY org.eclipse.ui.workbench|RESOLVED_COLOR inst=90,197,118 live=90,197,118 OWNED
+  PCOLKEY org.eclipse.ui.workbench|EDITION_COLOR inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.CommitMessageCommentColor inst=141,148,159 live=141,148,159 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor inst=9,9,9 live=9,9,9
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddForegroundColor inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveBackgroundColor inst=105,43,40 live=105,43,40 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveForegroundColor inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkBackgroundColor inst=14,72,91 live=14,72,91 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkForegroundColor inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineBackgroundColor inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineForegroundColor inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceBackgroundColor inst=40,44,52 live=40,44,52 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceForegroundColor inst=141,148,159 live=141,148,159 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeBackgroundColor inst=40,44,52 live=40,44,52 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeForegroundColor inst=103,176,249 live=103,176,249 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.search.ui.match.highlight inst=84,61,1 live=84,61,1 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_NEWEST_COLOR inst=84,61,1 live=84,61,1 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_OLDEST_COLOR inst=73,60,33 live=73,60,33 OWNED
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor inst=103,176,249 OWNED
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor.SystemDefault inst=false OWNED
+  PCOLKEY org.eclipse.ui.editors|linked.slave.color inst=14,72,91 OWNED
+  PCOLKEY org.eclipse.ui.editors|breakpointIndicationColor inst=51,187,231 OWNED
+  PCOLKEY org.eclipse.ui.editors|fullcoverage_color inst=19,78,38 OWNED
+  PCOLKEY org.eclipse.ui.editors|partialcoverage_color inst=84,61,1 OWNED
+  PCOLKEY org.eclipse.ui.editors|nocoverage_color inst=105,43,40 OWNED
+  PCOLKEY org.eclipse.ui.editors|org.eclipse.ui.editors.stickyLinesSeparatorColor inst=75,82,93 OWNED
+  PCOLKEY org.eclipse.ui.editors|inlineDiffColor inst=44,69,49 OWNED
+  PCOLKEY org.eclipse.ui.editors|detailedInlineDiffColor inst=19,78,38 OWNED
+  PCOLKEY org.eclipse.ui.editors|deletionInlineDiffColor inst=83,52,50 OWNED
+  PCOLKEY org.eclipse.ui.editors|detailedDeletionInlineDiffColor inst=105,43,40 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.inherited inst=141,148,159 live=141,148,159 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight inst=84,61,1 live=84,61,1 OWNED
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND inst=84,61,1 OWNED
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.MemoryHistoryKnownColor inst=171,178,191 OWNED
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.changedDebugElement inst=251,129,122 OWNED
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.informationColor inst=51,187,231 OWNED
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.debugColor inst=171,178,191 OWNED
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.errorColor inst=251,129,122 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled inst=51,187,231 live=51,187,231 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled inst=51,187,231 live=51,187,231 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled inst=141,148,159 live=141,148,159 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.task.active inst=103,176,249 live=103,176,249 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.start inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.end inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.color.text.quoted inst=51,187,231 live=51,187,231 OWNED
+  PCOLKEY org.eclipse.epp.mpc.ui|native-borders inst=false OWNED
+STEP pset|org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND|5,5,5
+PSET org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND=5,5,5
+STEP pick|R8A QA - Dracula
+PICK R8A QA - Dracula ok
+STEP apply
+APPLY-CLICK found=true ms=198
+STEP wait|4500
+STEP labels|dracula-immediately
+CHECKBOX-STATE 'Also theme the Eclipse workbench' enabled=true selected=true
+LABEL Verified on win32/win32 with theme engine 0.15.200.
+LABEL Coordinates core workbench surfaces (window, tabs, toolbars, trees, tables, status line). Native menus, dialogs, title bars, Browser content and icons may not change.
+STEP pcol|dracula-changed-owned-key|v
+PCOL dracula-changed-owned-key keys=68 present=68 owned=63 ownedAndPresent=63
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.backgroundColor inst=68,71,90 live=68,71,90 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.foregroundColor inst=248,248,242 live=248,248,242 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND inst=5,5,5 live=5,5,5
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_FOREGROUND inst=248,248,242 live=248,248,242 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_BACKGROUND inst=68,71,90 live=68,71,90 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_FOREGROUND inst=248,248,242 live=248,248,242 OWNED
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_BACKGROUND_COLOR inst=68,71,90 live=68,71,90 OWNED
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_FOREGROUND_COLOR inst=248,248,242 live=248,248,242 OWNED
+  PCOLKEY org.eclipse.ui.workbench|HYPERLINK_COLOR inst=1,2,3 live=1,2,3
+  PCOLKEY org.eclipse.ui.workbench|ACTIVE_HYPERLINK_COLOR inst=170,209,248 live=170,209,248 OWNED
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_background inst=7,7,7
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_foreground inst=238,238,238
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_background inst=68,71,90 OWNED
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_foreground inst=248,248,242 OWNED
+  PCOLKEY org.eclipse.jdt.ui|javadocElementsStyling.darkModeDefaultColors inst=true OWNED
+  PCOLKEY org.eclipse.ui.workbench|ERROR_COLOR inst=248,159,151 live=248,159,151 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR inst=248,159,151 live=248,159,151 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR inst=227,175,40 live=227,175,40 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR inst=168,170,171 live=168,170,171 OWNED
+  PCOLKEY org.eclipse.ui.workbench|INCOMING_COLOR inst=65,197,241 live=65,197,241 OWNED
+  PCOLKEY org.eclipse.ui.workbench|OUTGOING_COLOR inst=248,248,242 live=248,248,242 OWNED
+  PCOLKEY org.eclipse.ui.workbench|CONFLICTING_COLOR inst=248,159,151 live=248,159,151 OWNED
+  PCOLKEY org.eclipse.ui.workbench|RESOLVED_COLOR inst=97,204,124 live=97,204,124 OWNED
+  PCOLKEY org.eclipse.ui.workbench|EDITION_COLOR inst=248,248,242 live=248,248,242 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.CommitMessageCommentColor inst=168,170,171 live=168,170,171 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor inst=9,9,9 live=9,9,9
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddForegroundColor inst=248,248,242 live=248,248,242 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveBackgroundColor inst=121,57,54 live=121,57,54 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveForegroundColor inst=248,248,242 live=248,248,242 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkBackgroundColor inst=13,88,111 live=13,88,111 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkForegroundColor inst=248,248,242 live=248,248,242 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineBackgroundColor inst=68,71,90 live=68,71,90 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineForegroundColor inst=248,248,242 live=248,248,242 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceBackgroundColor inst=40,42,54 live=40,42,54 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceForegroundColor inst=168,170,171 live=168,170,171 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeBackgroundColor inst=40,42,54 live=40,42,54 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeForegroundColor inst=126,187,249 live=126,187,249 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.search.ui.match.highlight inst=98,76,21 live=98,76,21 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_NEWEST_COLOR inst=98,76,21 live=98,76,21 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_OLDEST_COLOR inst=72,59,32 live=72,59,32 OWNED
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor inst=126,187,249 OWNED
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor.SystemDefault inst=false OWNED
+  PCOLKEY org.eclipse.ui.editors|linked.slave.color inst=13,88,111 OWNED
+  PCOLKEY org.eclipse.ui.editors|breakpointIndicationColor inst=65,197,241 OWNED
+  PCOLKEY org.eclipse.ui.editors|fullcoverage_color inst=36,93,52 OWNED
+  PCOLKEY org.eclipse.ui.editors|partialcoverage_color inst=98,76,21 OWNED
+  PCOLKEY org.eclipse.ui.editors|nocoverage_color inst=121,57,54 OWNED
+  PCOLKEY org.eclipse.ui.editors|org.eclipse.ui.editors.stickyLinesSeparatorColor inst=101,104,125 OWNED
+  PCOLKEY org.eclipse.ui.editors|inlineDiffColor inst=43,67,48 OWNED
+  PCOLKEY org.eclipse.ui.editors|detailedInlineDiffColor inst=36,93,52 OWNED
+  PCOLKEY org.eclipse.ui.editors|deletionInlineDiffColor inst=82,51,49 OWNED
+  PCOLKEY org.eclipse.ui.editors|detailedDeletionInlineDiffColor inst=121,57,54 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.inherited inst=168,170,171 live=168,170,171 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight inst=98,76,21 live=98,76,21 OWNED
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND inst=98,76,21 OWNED
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.MemoryHistoryKnownColor inst=248,248,242 OWNED
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.changedDebugElement inst=248,159,151 OWNED
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.informationColor inst=65,197,241 OWNED
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.debugColor inst=248,248,242 OWNED
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.errorColor inst=248,159,151 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled inst=65,197,241 live=65,197,241 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled inst=65,197,241 live=65,197,241 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled inst=168,170,171 live=168,170,171 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.task.active inst=126,187,249 live=126,187,249 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.start inst=68,71,90 live=68,71,90 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.end inst=68,71,90 live=68,71,90 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.color.text.quoted inst=65,197,241 live=65,197,241 OWNED
+  PCOLKEY org.eclipse.epp.mpc.ui|native-borders inst=false OWNED
+STEP check|0
+CHECKBOX label='Also theme the Eclipse workbench' enabled=true before=true
+CHECKBOX after=false
+STEP apply
+APPLY-CLICK found=true ms=229
+STEP wait|4500
+STEP state|disabled
+STATE disabled | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_default | osDark=true | highContrast=false
+OWNPREFS SELECTED_THEME_LOGICAL_ID=local:12bdbfe2-45c6-4276-acba-841920c0f4f7 
+STEP pcol|disabled|v
+PCOL disabled keys=68 present=5 owned=0 ownedAndPresent=0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.backgroundColor inst=<absent> live=255,255,225
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.foregroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND inst=5,5,5 live=5,5,5
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_FOREGROUND inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_BACKGROUND inst=<absent> live=255,255,225
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_FOREGROUND inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_BACKGROUND_COLOR inst=<absent> live=255,255,255
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_FOREGROUND_COLOR inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|HYPERLINK_COLOR inst=1,2,3 live=1,2,3
+  PCOLKEY org.eclipse.ui.workbench|ACTIVE_HYPERLINK_COLOR inst=<absent> live=0,71,143
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_background inst=7,7,7
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_foreground inst=238,238,238
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_background inst=<absent>
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_foreground inst=<absent>
+  PCOLKEY org.eclipse.jdt.ui|javadocElementsStyling.darkModeDefaultColors inst=<absent>
+  PCOLKEY org.eclipse.ui.workbench|ERROR_COLOR inst=<absent> live=255,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR inst=<absent> live=255,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR inst=<absent> live=128,128,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|INCOMING_COLOR inst=<absent> live=0,0,255
+  PCOLKEY org.eclipse.ui.workbench|OUTGOING_COLOR inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|CONFLICTING_COLOR inst=<absent> live=255,0,0
+  PCOLKEY org.eclipse.ui.workbench|RESOLVED_COLOR inst=<absent> live=0,255,0
+  PCOLKEY org.eclipse.ui.workbench|EDITION_COLOR inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.CommitMessageCommentColor inst=<absent> live=63,127,95
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor inst=9,9,9 live=9,9,9
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveBackgroundColor inst=<absent> live=255,221,221
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkBackgroundColor inst=<absent> live=234,242,245
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkForegroundColor inst=<absent> live=153,153,153
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineBackgroundColor inst=<absent> live=170,170,170
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceBackgroundColor inst=<absent> live=255,255,255
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeBackgroundColor inst=<absent> live=255,255,255
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.search.ui.match.highlight inst=<absent> live=206,204,247
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_NEWEST_COLOR inst=<absent> live=199,134,57
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_OLDEST_COLOR inst=<absent> live=241,225,206
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor.SystemDefault inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|linked.slave.color inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|breakpointIndicationColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|fullcoverage_color inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|partialcoverage_color inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|nocoverage_color inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|org.eclipse.ui.editors.stickyLinesSeparatorColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|inlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|detailedInlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|deletionInlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|detailedDeletionInlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.inherited inst=<absent> live=0,0,128
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight inst=<absent> live=240,216,168
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND inst=<absent>
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.MemoryHistoryKnownColor inst=<absent>
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.changedDebugElement inst=<absent>
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.informationColor inst=<absent>
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.debugColor inst=<absent>
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.errorColor inst=<absent>
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled inst=<absent> live=32,21,223
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled inst=<absent> live=32,21,223
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.task.active inst=<absent> live=36,22,50
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.start inst=<absent> live=240,240,240
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.end inst=<absent> live=220,220,220
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.color.text.quoted inst=<absent> live=38,86,145
+  PCOLKEY org.eclipse.epp.mpc.ui|native-borders inst=<absent>
+STEP labels|disabled
+CHECKBOX-STATE 'Also theme the Eclipse workbench' enabled=true selected=false
+LABEL Verified on win32/win32 with theme engine 0.15.200.
+LABEL Coordinates core workbench surfaces (window, tabs, toolbars, trees, tables, status line). Native menus, dialogs, title bars, Browser content and icons may not change.
+STEP pcancel
+CANCEL-CLICK found=true
+STEP state|end
+STATE end | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_default | osDark=true | highContrast=false
+OWNPREFS SELECTED_THEME_LOGICAL_ID=local:12bdbfe2-45c6-4276-acba-841920c0f4f7 
+DONE

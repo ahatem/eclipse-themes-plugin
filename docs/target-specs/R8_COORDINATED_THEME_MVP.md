@@ -40,3 +40,21 @@ The UI SHALL expose which workbench/editor surfaces are supported, skipped, or r
 
 #### Scenario: Unsupported native surface
 - THEN the product does not imply that the active coordinated theme controls it
+
+## Delivery status (R8 closed)
+
+Delivered by the OpenSpec changes `dynamic-workbench-theming` (workbench coordination) and `plugin-color-coordination` (colors of other
+plug-ins). Evidence: the `evidence/` folders of those changes, archived with them. Verified on Windows with Eclipse 4.40 and 4.41.
+
+| Requirement | Status |
+|---|---|
+| Independent opt-in | Delivered. Workbench coordination is a separate checkbox; editor-only mode writes no workbench state and no plug-in colors |
+| Registered mechanisms only | Delivered. Four static CSS themes contributed by the plugin; no imported CSS and no runtime registration |
+| Live switching only where verified | Delivered. VERIFIED / EXPERIMENTAL / UNAVAILABLE by exact os, ws and theme-engine version; restart is never required on the verified matrix |
+| Shared ownership and recovery | Delivered for the workbench theme (prior-theme record, relinquish) and for plug-in colors (value-exact ownership record). The R3 recovery journal is not reused; this is the R9/follow-up item |
+| External changes preserved | Delivered. Choosing another theme on the Appearance page releases owned plug-in colors once and never reasserts; a changed key is never overwritten or removed |
+| Coverage inspectable | Delivered as documentation (`docs/WORKBENCH_THEMING_COMPATIBILITY.md`, `key-classification.md`) and as counts and key names in the page and its copyable diagnostics. A per-surface UI is not built |
+
+Not delivered and not claimed: fonts and icons, native menus, title bars, Browser content, scroll bars, theme-supplied CSS, Linux and
+macOS verification, syntax and editor colors beyond the existing editor integrations.
+
