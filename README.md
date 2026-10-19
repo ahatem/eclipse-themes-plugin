@@ -82,6 +82,10 @@ Selecting a theme, changing the font options and ticking the workbench option on
 choose Apply or Apply and Close, and **Cancel** discards them. **Import**, **Export**, **Update** and **Remove** act on the theme
 library straight away and are separate from Apply.
 
+**Restore Defaults** asks how to reset: apply the default theme (workbench theming off, both fonts back to *Keep current
+font*), or stop Eclipse Themes management entirely. Either way, fonts the plugin replaced are given back unless you changed them
+since.
+
 ### If you change a font yourself
 
 Fonts the plugin has set are tracked one by one. If you later change one of them under *Colors and Fonts*, the plugin leaves your

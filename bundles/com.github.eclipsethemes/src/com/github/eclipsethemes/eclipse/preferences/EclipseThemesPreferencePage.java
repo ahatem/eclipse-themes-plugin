@@ -331,7 +331,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		Group group = new Group(parent, SWT.NONE);
 		group.setText("Preview");
 		group.setLayout(new GridLayout(1, false));
-		group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		previewToggleButton = new Button(group, SWT.CHECK);
 		previewToggleButton.setText("Show preview");
@@ -340,8 +340,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		browserPreview = new Browser(group, SWT.BORDER);
 		GridData browserData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		browserData.widthHint = WRAP_HINT;
-		browserData.heightHint = 190;
-		browserData.minimumHeight = 90;
+		browserData.heightHint = 200;
+		browserData.minimumHeight = 140;
 		browserPreview.setLayoutData(browserData);
 		showDefaultPreview();
 	}
@@ -1364,7 +1364,13 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		super.performDefaults();
 	}
 
+	/**
+	 * The plugin defaults are the default theme with workbench theming off and both fonts on Keep current font, so the
+	 * workbench and any fonts this plugin replaced are handed back first, under the same ownership rules as stopping.
+	 */
 	private void resetToPluginDefault() {
+		relinquishWorkbench();
+		releaseFonts();
 		ThemeRecord defaultTheme = getDefaultThemeForCurrentMode();
 		if (defaultTheme != null) {
 			ThemeSelection.remember(getPreferenceStore(), defaultTheme);
@@ -1478,7 +1484,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			pluginDefaultRadio.setSelection(true);
 
 			Label pluginDesc = new Label(area, SWT.WRAP);
-			pluginDesc.setText("Applies the built-in theme matching your current Eclipse appearance (dark/light).");
+			pluginDesc.setText("Applies the built-in theme matching your current Eclipse appearance (dark/light), turns workbench "
+						+ "theming off and sets both fonts to Keep current font. Fonts it replaced are given back unless you changed them since.");
 			GridData pluginDescData = new GridData(SWT.FILL, SWT.TOP, true, false);
 			pluginDescData.horizontalIndent = 18;
 			pluginDescData.verticalIndent = 0;
