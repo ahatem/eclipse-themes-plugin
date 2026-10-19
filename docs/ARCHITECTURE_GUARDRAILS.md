@@ -8,7 +8,7 @@ Current runtime flow:
 
 `Preference UI → manager/repository/registry/service → parser/models + adapters → Eclipse preference nodes`
 
-The workbench theming surface is bounded to four static, opt-in Eclipse e4 CSS themes that read a seven-color palette (R8a); see [workbench theming compatibility](WORKBENCH_THEMING_COMPATIBILITY.md). No theme or stylesheet is registered at runtime and no imported content reaches CSS.
+The workbench theming surface is bounded to four static, opt-in Eclipse e4 CSS themes that read an eight-role palette converted deterministically from the selected theme (R8a); see [workbench theming compatibility](WORKBENCH_THEMING_COMPATIBILITY.md). No theme or stylesheet is registered at runtime and no imported content reaches CSS.
 
 ## Target logical layers
 

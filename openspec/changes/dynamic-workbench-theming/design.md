@@ -4,7 +4,7 @@
 
 ```text
 selected Theme (editor source of truth)
-   -> WorkbenchPaletteResolver      pure: 7 colors, deterministic, contrast-safe, family fallback
+   -> WorkbenchPaletteResolver      pure: 8 roles, deterministic semantic conversion, contrast-safe, family fallback
    -> WorkbenchCoordinator          ownership, capability, ordering, postconditions, revert
         -> PaletteSink              publish to the Colors-and-Fonts ColorRegistry (public API)
         -> WorkbenchThemeEngine     the only code that touches IThemeEngine (getThemes/getActiveTheme/setTheme(ITheme,true))
@@ -35,9 +35,9 @@ restyles twice.
 
 ## Symbols and static CSS
 
-`WorkbenchColor` (seven constants) x `WorkbenchFamily` (DARK, LIGHT) is the single mapping to ids of the form
+`WorkbenchColor` (eight constants) x `WorkbenchFamily` (DARK, LIGHT) is the single mapping to ids of the form
 `com.github.eclipsethemes.workbench.<family>.<role>` (roles: background, foreground, surface, surfaceRaised, border,
-mutedForeground, selection). The CSS form is the same id with dots as dashes. A consistency test reads `plugin.xml` and both CSS
+mutedForeground, selection, accent). The CSS form is the same id with dots as dashes. A consistency test reads `plugin.xml` and both CSS
 files and fails if the Java mapping, the colorDefinitions (ids, fallback values, `isEditable="false"`) or the CSS references drift.
 Each family has its own id set so an unpublished default is that family's fallback, never a color from the other family.
 
@@ -48,18 +48,34 @@ CSS coverage is bounded to surfaces the R7/spike runs measured: shell, container
 bars, tool bars, status line, trees, tables. Editor/StyledText content is not styled by workbench CSS. Native menus, dialogs, title
 bars, Browser content and arbitrary icons remain system-controlled.
 
-## Palette resolution (fixed, no adaptive logic)
+## Palette resolution (deterministic semantic conversion)
 
-Family follows `ThemeType`. Source colors are `BACKGROUND`, `FOREGROUND` and, if explicit, `SELECTION_BACKGROUND`. No syntax token
-participates and no accent is derived.
+Family follows `ThemeType`. The conversion is pure, has no random or external input and never reads a syntax token (keyword, string,
+number, comment, class, method, ...). Each role is resolved in the same order:
 
-- Fallback palette for the whole family when background or foreground is missing or `contrast(foreground, background) < 3.0`.
-- `surface` = blend(background toward foreground, 5%); `surfaceRaised` = 10%; `border` = 22%. Always toward the foreground, so dark
-  themes lighten and light themes darken.
-- `mutedForeground` = blend(foreground toward background, 35%); if its contrast on `surfaceRaised` is below 3.0 it becomes `foreground`.
-- `selection` = the explicit selection background when `contrast(foreground, selection) >= 3.0` and it differs from the
-  background, otherwise blend(background toward foreground, 25%).
-- Contrast is the WCAG relative-luminance ratio. Blends round per channel. No platform constants.
+1. an **authored candidate** of the same or a related non-syntax role, taken only when it passes that role's suitability test;
+2. a **perceptual derivation** from the theme's own background in OKLCH (Oklab polar form), so lightness moves toward the foreground
+   side while hue and chroma are kept (a cool charcoal stays cool, a warm earth tone stays warm, a cream stays cream);
+3. a **readability correction** that moves only the OKLCH lightness of a text role away from the surfaces it is drawn on, keeping its
+   hue, until the contrast rule holds;
+4. the **family fallback palette** for the whole family, last, only when background or foreground is missing or the final palette
+   fails its coherence check.
+
+| Role | Authored candidates (in order) | Suitability | Derivation |
+|---|---|---|---|
+| background | `background` | always | - |
+| foreground | `foreground` | corrected to 4.5:1 on background, surface and raised | - |
+| surface | `sourceHoverBackground`, `currentLine` | lightness 0.012-0.08 away from background, chroma not more than 0.05 above background's, 3:1 against the foreground | background lightness +/-0.03 toward the foreground |
+| raised | `currentLine`, `sourceHoverBackground` | at least 0.012 further than surface, within 0.13 of background, same chroma and contrast rule | surface +/-0.03 |
+| border | none | - | most prominent chrome color +/-0.12 |
+| muted | `lineNumber` | 4.5:1 on background and surface and distinguishable from the foreground | foreground mixed 35% toward background, then corrected to 4.5:1 |
+| selection | `selectionBackground` | at least 0.04 from background, chroma within 0.12 above it, 3:1 against the foreground | background +/-0.10, adjusted until 3:1 |
+| accent | none | - | fixed hue 250 degrees, chroma 0.13, lightness 0.74 (dark) or 0.48 (light), then corrected to 4.5:1 |
+
+Contrast is the WCAG 2 relative-luminance ratio (text 4.5, selection 3.0). The accent is the only role not derived from the theme's own
+hue: themes carry no authored link or active-indicator color that is not a syntax color, and mapping a syntax color to chrome is
+forbidden, so a neutral, readable blue is used. The role set grew from seven to eight for one demonstrated need: links and the active part-stack indicator need a color that
+is readable as a foreground and distinct from `selection`, which is a background.
 
 ## Capability and compatibility boundary
 
@@ -97,7 +113,11 @@ string the user opted in on), and an ownership record written **only after a ver
 Apply (UI thread): classify, resolve the palette, capture prior state if we do not already own, publish (remembering previous
 values, compensating on partial failure), `select(target)`, check the postcondition (active id equals target and the registry holds
 the palette), persist ownership. Any failure after a selection attempt runs the safe-revert rule. The editor outcome is computed and
-reported independently, so editor theming stays valid when the workbench fails.
+reported independently, so editor theming stays valid when the workbench fails. The editor preferences are written **after** the
+workbench half in every case (including when coordination is off or fails): `ThemeEngine.setTheme` synchronously resets the
+preference defaults the previous stock theme overrode (for example stock Dark's editor colors) and deletes the instance values of the
+same keys, so values written before the switch were lost and a second Apply was needed (runtime-measured on 4.40/4.41; evidence
+`runtime/`). Only plugin-owned editor keys are written; nothing is retried or delayed.
 
 Safe revert: restore previously published values and `select(prior)` only when the prior theme is known, the active theme is still
 the one we attempted, and nothing else changed it. Otherwise yield: do nothing, report the conflict, offer the Appearance page. The

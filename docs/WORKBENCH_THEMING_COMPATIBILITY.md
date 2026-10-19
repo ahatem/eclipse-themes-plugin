@@ -6,11 +6,31 @@ Status: implemented by the `dynamic-workbench-theming` change. The behavioral co
 
 ## What it does
 
-When the user ticks **Also theme the Eclipse workbench** on the Eclipse Themes page and applies a theme, the plugin derives a
-fixed seven-color palette from that theme (background, foreground, surface, raised, border, muted, selection), publishes it to
-the workbench color registry and switches Eclipse to one of its own static CSS themes, which read those colors. The editor colors
-are still applied exactly as before. Importing a legacy XML theme alone never touches the workbench; it is coordinated only when
-the box is ticked and the theme is applied.
+When the user ticks **Also theme the Eclipse workbench** on the Eclipse Themes page and applies a theme, the plugin converts that
+theme into an eight-role palette (background, foreground, surface, raised, border, muted, selection, accent), publishes it to the
+workbench color registry and switches Eclipse to one of its own static CSS themes, which read those colors. The editor colors are
+applied by the same single Apply, after the workbench switch (Eclipse's own theme switch deletes editor preference values that the
+previous stock theme overrode, so the order matters). Importing a legacy XML theme alone never touches the workbench; it is
+coordinated only when the box is ticked and the theme is applied.
+
+## Deterministic semantic conversion
+
+The conversion is pure and deterministic and never reads a syntax token (keyword, string, number, comment, class, method, ...);
+syntax colors never become chrome. Each role is resolved in this order:
+
+1. a suitable authored candidate of the same or a related non-syntax role: `sourceHoverBackground` / `currentLine` for the surface and
+   raised colors, `lineNumber` for secondary text, `selectionBackground` for the selection;
+2. a perceptual derivation from the theme's own background in OKLCH, so hue and chroma character are kept (a cool charcoal stays
+   cool, a warm earth tone stays warm, a cream stays cream);
+3. a readability correction that moves only lightness (keeping hue) until text reaches 4.5:1 on the surfaces it is drawn on and the
+   foreground reaches 3:1 on the selection;
+4. the family fallback palette, last, when background or foreground is missing or the result still fails those rules.
+
+An authored candidate is accepted only when it reads as a chrome color: a small lightness step from the background, no stronger
+chroma than the background plus a small allowance, and readable under the foreground. A neon current-line color therefore never
+turns tab bars neon, and a low-contrast line-number color never becomes secondary text. The accent (links, active-stack indicator) is
+the one role without authored source: it is a fixed neutral blue corrected for readability on each theme. Cost measured on Windows: about
+15 ms for the first conversion in a session and 0.15-0.35 ms afterwards.
 
 ## Support matrix
 
@@ -28,11 +48,35 @@ and macOS are distinct rendering environments and are not claimed equivalent to 
 
 ## Coverage boundary
 
-Coordinated: the window, part stacks and their tabs, sash and part containers, tool bars and trim, the status line, trees and
-tables. Not coordinated: native menus, native dialogs, title bars, native push buttons, Browser/HTML content (for example the
-Eclipse welcome/news tab), editor text areas (those follow the editor colors), arbitrary third-party custom-drawn widgets and icons.
-The runtime screenshots show the Browser content and native buttons staying dark or light independently of the chosen theme.
-Fonts and icons are not touched.
+Classification: **THEMED** (Eclipse CSS styles it from the palette), **SYSTEM/NATIVE** (drawn by the operating system or a native
+widget that Eclipse CSS cannot restyle; the stock Eclipse Dark and Light themes show the same behavior), **NOT APPLICABLE** (outside
+the workbench-chrome contract) and **THIRD-PARTY** (colors owned by another plug-in). Verified on Windows with Eclipse 4.40 and
+4.41; Linux/GTK and macOS are not claimed.
+
+| Surface | Class | Notes |
+|---|---|---|
+| Window, part sash containers, trim, tool bars, status line | THEMED | |
+| Part stacks and tabs: active, inactive, selected, unselected, hot; editor tab row | THEMED | tab text uses foreground (selected) and muted (unselected) |
+| Views: Package Explorer, Outline, Console, Problems, other tree/table/list views | THEMED | background, foreground, header; the selection/hover row color is the platform's |
+| Dialogs and Preferences: shell, composites, labels, groups (background and text), links, filtered trees, forms/sections | THEMED | the dialog stays themed when open during an Apply |
+| Text, Spinner, List, Combo, CCombo, read-only fields, enabled and disabled | THEMED | field background and text; read-only and disabled use the same field colors with dimmed text |
+| Push, check and radio buttons | THEMED (labels, background) / SYSTEM-NATIVE (frame, check mark) | the native frame and focus ring stay light on dark, as in stock Dark |
+| Dialog-level `CTabFolder` | THEMED | selected fill, outline and text |
+| Group frame lines | SYSTEM/NATIVE | not exposed to CSS; light frame on dark as in stock Dark |
+| Native `TabFolder` tab strip, progress bar, scale | SYSTEM/NATIVE | white-ish in stock Dark too |
+| Combo (non-CCombo) drop-down arrow and popup list | SYSTEM/NATIVE | the field itself is themed |
+| Scroll bars | SYSTEM/NATIVE | follow the operating-system theme; after switching to a light theme they stay dark on a dark Windows, identically to stock Dark to Light |
+| Menu bar, menus, title bar, window frame, tooltips | SYSTEM/NATIVE | |
+| Browser/HTML content, icons | SYSTEM/NATIVE / NOT APPLICABLE | |
+| Editor text area | NOT APPLICABLE | follows the editor colors, not the workbench CSS |
+| Fonts | NOT APPLICABLE | not touched |
+| EGit "ignored resource" label color | THIRD-PARTY | EGit defines it from the system list foreground and stock Dark overrides it with an EGit-specific stylesheet bound to its own theme id; in our themes git-ignored resources (for example `bin`, `target`) in the Package Explorer render in the system color. Change it under Colors and Fonts > Git |
+
+Selectors are plain type, class and descendant selectors, almost all of them identical to the stock Eclipse Dark/Light sheets. Those
+that are not (`.MPart`-scoped Text/Combo/List/Canvas, `SashForm`, `ScrolledForm`, `.MCompositePart`, `.MToolBar`) are ordinary
+descendant selectors and each had its effect observed on the widgets. Eclipse is not asked to restyle anything it cannot: no
+`Group`, scroll bar or menu property is attempted. High-contrast mode disables coordination, so accessibility choices are never
+overridden.
 
 ## Consequences users and contributors will notice
 

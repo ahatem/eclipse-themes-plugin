@@ -26,13 +26,15 @@ Preference page
       -> ThemeRecord catalog (logical identity, origin, optional managed locator)
   -> AdapterRegistry.discover()
   -> ThemeService.applyTheme(ThemeRecord.theme())  -> ThemeApplyOutcome (editor part + workbench part)
-      -> available adapter(s)
-      -> target Eclipse/plugin InstanceScope preference nodes
-      -> WorkbenchCoordinator.apply(theme)          (opt-in; no-op unless "Also theme the Eclipse workbench" is on)
-          -> WorkbenchPaletteResolver (pure, core.workbench): 7-color palette
+      1. WorkbenchCoordinator.apply(theme)          (opt-in; no-op unless "Also theme the Eclipse workbench" is on)
+          -> WorkbenchPaletteResolver (pure, core.workbench): deterministic semantic conversion to an 8-role palette (authored non-syntax candidates -> OKLCH derivation -> readability correction -> family fallback)
           -> RegistryPaletteSink: non-editable color definitions in the Colors-and-Fonts registry
           -> EclipseWorkbenchThemeEngine: IThemeEngine.setTheme(ITheme, true) between this plugin's four static CSS themes
+      2. then the available editor adapter(s)
+          -> target Eclipse/plugin InstanceScope preference nodes
 ```
+
+The order is deliberate: Eclipse's own theme switch synchronously resets the preference defaults the previous stock theme overrode and deletes the instance values for the same editor keys, so editor values written before the switch can be lost (observed leaving stock Dark). Writing them after the switch makes one Apply sufficient; only keys this plugin owns are written.
 
 See [workbench theming compatibility](WORKBENCH_THEMING_COMPATIBILITY.md) for the support matrix and coverage boundary.
 
@@ -65,7 +67,7 @@ Current contributions include:
 - `org.eclipse.ui.preferencePages`;
 - `org.eclipse.core.runtime.preferences`;
 - `org.eclipse.e4.ui.css.swt.theme` — four static workbench themes (`...workbench.dark`, `.dark.alt`, `.light`, `.light.alt`) over two stylesheets;
-- `org.eclipse.ui.themes` — fourteen non-editable color definitions (seven roles per family);
+- `org.eclipse.ui.themes` — sixteen non-editable color definitions (eight roles per family);
 - `org.eclipse.ui.startup` — `WorkbenchStartup`, a no-op unless workbench coordination is enabled.
 
 The project does not contribute an e4 model fragment or processor, and registers no theme or stylesheet at runtime.

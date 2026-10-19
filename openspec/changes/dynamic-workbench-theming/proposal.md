@@ -10,12 +10,12 @@ preferences, so "Atom One Dark" gives an Atom editor inside a stock Eclipse chro
 
 ## What Changes
 
-- New opt-in **workbench coordination**: when enabled, Apply/OK also resolves a seven-color semantic palette from the selected
+- New opt-in **workbench coordination**: when enabled, Apply/OK also converts the selected theme into an eight-role semantic palette from the selected
   theme, publishes it, and switches Eclipse to a plugin-contributed static CSS theme (dark or light family).
 - Two static CSS families (dark, light). Each family contributes a primary and an alternate "twin"
-  `org.eclipse.e4.ui.css.swt.theme` entry (only a real theme-ID change refreshes the colors) and seven non-editable
+  `org.eclipse.e4.ui.css.swt.theme` entry (only a real theme-ID change refreshes the colors) and eight non-editable
   `colorDefinition` entries whose defaults are the safe family fallback palette.
-- A deterministic palette resolver (explicit editor fundamentals plus fixed blends; contrast-safe fallback).
+- A deterministic semantic palette conversion (suitable authored non-syntax candidates, then OKLCH derivation, then readability correction, then family fallback; no syntax token ever maps to chrome).
 - One isolated compatibility boundary around `org.eclipse.e4.ui.css.swt.theme.IThemeEngine` (friend-exported, accepted under P4)
   and a capability model: VERIFIED / EXPERIMENTAL / UNAVAILABLE with reason codes.
 - Ownership and truthful results: prior workbench theme captured at first takeover, restored on disable only when still ours,

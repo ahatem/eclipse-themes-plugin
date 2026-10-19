@@ -30,18 +30,46 @@ workbench, and Cancel SHALL leave the stored coordination intent unchanged.
 
 ### Requirement: A small semantic palette is derived deterministically from the selected theme
 
-The system SHALL derive exactly `background`, `foreground`, `surface`, `surfaceRaised`, `border`, `mutedForeground` and `selection` from the selected theme's background, foreground, explicit selection background and light/dark type, deterministically. No syntax token SHALL influence it and no accent SHALL be derived. Missing source colors, or foreground/background contrast below 3.0, SHALL yield the family's fallback palette.
+The system SHALL convert the selected theme into `background`, `foreground`, `surface`, `surfaceRaised`, `border`, `mutedForeground`, `selection` and `accent` deterministically. Each role SHALL use, in order: a suitable authored non-syntax candidate (`sourceHoverBackground`, `currentLine`, `lineNumber`, `selectionBackground`), an OKLCH derivation from the background keeping its hue and chroma character, then a lightness-only readability correction.
 
 #### Scenario: Dark and light themes
 - **WHEN** a dark theme and a light theme are resolved
 - **THEN** the dark surfaces are lighter than the background and the light surfaces are darker than the background
 
+#### Scenario: Suitable authored candidate is used
+- **GIVEN** a theme whose authored current line is a small, low-chroma lightness step from its background
+- **THEN** that color is the palette surface
+
+#### Scenario: Unsuitable authored candidate is rejected
+- **GIVEN** a theme whose authored current line is neon, saturated or far from its background
+- **THEN** it is not used for any chrome role
+
+#### Scenario: Tint is kept
+- **GIVEN** a cool, warm or cream-tinted theme with no authored chrome candidates
+- **THEN** the derived surface, raised and border colors stay within 30 degrees of the background's hue
+
+#### Scenario: Unreadable authored text is corrected
+- **GIVEN** a theme whose foreground (or line-number color) is nearly invisible on its background
+- **THEN** the palette foreground (or muted foreground) has the same hue, a different lightness and the required contrast
+
 #### Scenario: Explicit selection color is kept when usable
-- **GIVEN** a theme with an explicit selection background readable against its foreground
+- **GIVEN** a theme with an explicit selection background visibly different from the background and readable under the foreground
 - **THEN** the palette selection equals that color
 
-#### Scenario: Unsafe or missing source colors
-- **GIVEN** a theme whose foreground and background nearly match, or lacks either
+### Requirement: The converted palette is readable and falls back safely
+
+No syntax token (keyword, string, number, comment, class, method and the like) SHALL influence any role. Text roles SHALL reach a WCAG contrast of 4.5 against the surfaces they are drawn on and the foreground SHALL reach 3.0 against the selection. A theme lacking a background or foreground, or a palette that still fails these rules, SHALL yield the family's fallback palette.
+
+#### Scenario: Contrast rules hold for every converted theme
+- **WHEN** any theme, including an unusual imported one, is converted
+- **THEN** text roles meet 4.5 and the selection meets 3.0 against the foreground, or the family fallback palette is used
+
+#### Scenario: No syntax mapping
+- **WHEN** only syntax token colors of a theme change
+- **THEN** the palette is identical
+
+#### Scenario: Missing source colors
+- **GIVEN** a theme that lacks a background or a foreground
 - **THEN** the family fallback palette is produced
 
 ### Requirement: Workbench colors come from static declarative CSS reading published symbolic colors
