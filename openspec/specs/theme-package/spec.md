@@ -209,19 +209,19 @@ characters) and a `size` of 4 to 96 whole points. A package SHALL NOT embed or r
 - **WHEN** it is parsed
 - **THEN** the package is refused
 
-### Requirement: Fonts are applied only by explicit opt-in and never by applying colors
+### Requirement: Fonts follow the user's per-target choice and never change by applying colors alone
 
-Fonts SHALL be applied only when the user has enabled *Apply theme fonts*. Applying a theme's colors SHALL NOT change a font. A
-theme without fonts SHALL NOT set or reset any font. A requested family that is not installed SHALL be reported and the
-corresponding font SHALL be left unchanged.
+The editor font and the workbench font SHALL each be *Keep current*, *Use theme* or *Custom*, defaulting to Keep. A theme's fonts
+SHALL be used only for *Use theme*; a custom font is a user preference and SHALL NOT be written to a package. A theme without
+fonts SHALL NOT set a font. A requested family that is not installed SHALL be reported and the font left unchanged.
 
-#### Scenario: Toggle off
-- **GIVEN** *Apply theme fonts* is off and the theme has fonts
+#### Scenario: Keep current
+- **GIVEN** a target is set to Keep current and the theme has fonts
 - **WHEN** the theme is applied
-- **THEN** no font preference is written
+- **THEN** no font preference is written for that target
 
 #### Scenario: Missing family
-- **GIVEN** the toggle is on and the editor font family is not installed
+- **GIVEN** the editor font is Use theme and its family is not installed
 - **WHEN** the theme is applied
 - **THEN** the outcome reports the family as not installed and the editor font is unchanged
 

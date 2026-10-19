@@ -34,6 +34,11 @@ public record ThemeFonts(Face editor, Face workbench) {
 		public String toString() {
 			return family + " " + size;
 		}
+
+		/** The presentation form, for example {@code Consolas — 11 pt}. */
+		public String label() {
+			return family + " — " + size + " pt";
+		}
 	}
 
 	/** A family is a non-blank name of printable characters of at most {@value #MAX_FAMILY_LENGTH} characters. */

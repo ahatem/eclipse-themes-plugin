@@ -264,16 +264,16 @@ without a legacy source id, so no package id or package metadata is sent to the 
 - **WHEN** the preview area renders
 - **THEN** no preview request is made and the existing unavailable state is shown
 
-### Requirement: The page offers an opt-in fonts section, a format row and package export
+### Requirement: The page is a Theme Manager with a library, selected-theme details, fonts and package export
 
-The page SHALL show the selected theme's format, a Fonts section with one *Apply theme fonts* checkbox and a status line, and an
-**Export as Package...** action. The status line SHALL name each requested font with its size, say the theme does not specify fonts,
-or say a requested font is not installed. The checkbox intent SHALL be written only on Apply or OK, and *Stop managing* SHALL turn
-fonts off and restore the fonts it changed.
+The page SHALL show a searchable theme library beside the selected theme's header, preview, Appearance, Fonts and details. Fonts
+SHALL offer *Keep current*, *Use theme* or *Custom* per target, with a system font dialog for custom, and SHALL describe the
+resulting font or that it is not installed or not specified. Selection, mode and chooser changes SHALL be written only on Apply or
+OK; Cancel discards them. *Stop managing* SHALL set both to Keep and restore the fonts it changed.
 
 #### Scenario: Legacy theme selected
-- **GIVEN** a legacy theme is selected
-- **THEN** the format reads "Legacy XML theme", the Fonts status reads "Theme does not specify fonts", and export is available as a conversion
+- **GIVEN** a legacy theme is selected with a font set to Use theme
+- **THEN** the format reads "Legacy XML theme", that font reads "Not specified by this theme", and export is available as a conversion
 
 ### Requirement: Accepted warnings and failures are visible
 

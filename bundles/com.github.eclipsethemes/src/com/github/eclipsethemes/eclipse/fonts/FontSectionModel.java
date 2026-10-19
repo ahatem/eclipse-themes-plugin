@@ -1,40 +1,47 @@
 package com.github.eclipsethemes.eclipse.fonts;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.ThemeFonts;
 
-/** What the Fonts section of the preference page says about the selected theme; pure so it needs no widgets. */
+/** What the Fonts section of the preference page says about each target; pure so it needs no widgets. */
 public final class FontSectionModel {
 
-	public static final String CHECKBOX_LABEL = "Apply theme fonts";
-	public static final String HINT = "Optional and separate from colors. Turning it off restores the fonts it replaced. "
-			+ "Some workbench surfaces may update only after restarting Eclipse.";
+	public static final String HINT = "Fonts are separate from colors and only change when you choose Apply. "
+			+ "Keep current leaves a font alone. Some workbench surfaces may update only after restarting Eclipse.";
+
+	public static final String NOT_SPECIFIED = "Not specified by this theme";
 
 	private FontSectionModel() {
 	}
 
-	/** One line per requested font, or one line saying the theme asks for none; missing families are called out. */
-	public static String describe(Theme theme, Predicate<String> installed) {
-		if (theme == null) {
-			return "No theme selected.";
+	/**
+	 * One line describing where the target's font comes from and what it is.
+	 *
+	 * @param theme   the selected theme, or null when none is selected
+	 * @param current the font the target uses right now
+	 */
+	public static String describe(FontTarget target, FontChoice choice, Theme theme, Predicate<String> installed,
+			Optional<ThemeFonts.Face> current) {
+		return switch (choice.mode()) {
+		case KEEP -> current.map(face -> "Using current Eclipse font: " + face.label())
+				.orElse("Using the current Eclipse font");
+		case THEME -> {
+			if (theme == null) {
+				yield "No theme selected";
+			}
+			Optional<ThemeFonts.Face> face = target.themeFace(theme.getFonts());
+			yield face.isEmpty() ? NOT_SPECIFIED : line("Theme: ", face.get(), installed);
 		}
-		ThemeFonts fonts = theme.getFonts();
-		if (fonts.isEmpty()) {
-			return "Theme does not specify fonts";
-		}
-		List<String> lines = new ArrayList<>();
-		fonts.editorFont().ifPresent(face -> lines.add(line("Editor font", face, installed)));
-		fonts.workbenchFont().ifPresent(face -> lines.add(line("Workbench font", face, installed)));
-		return String.join("\n", lines);
+		case CUSTOM -> choice.custom() == null ? "No font chosen yet"
+				: line("Custom: ", choice.custom(), installed);
+		};
 	}
 
-	private static String line(String label, ThemeFonts.Face face, Predicate<String> installed) {
-		return installed.test(face.family()) ? label + ": " + face
-				: "Requested font \"" + face.family() + "\" is not installed (" + label.toLowerCase(Locale.ROOT) + ")";
+	private static String line(String prefix, ThemeFonts.Face face, Predicate<String> installed) {
+		return installed.test(face.family()) ? prefix + face.label()
+				: "Requested font \"" + face.family() + "\" is not installed";
 	}
 }

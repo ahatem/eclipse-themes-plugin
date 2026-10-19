@@ -26,5 +26,8 @@ public interface WorkbenchFonts {
 	/** Removes the stored value so the definition's default applies again. */
 	void remove(String fontId);
 
+	/** The font the definition currently resolves to (stored value or default), for display. */
+	Optional<ThemeFonts.Face> effective(String fontId);
+
 	void flush() throws IOException;
 }

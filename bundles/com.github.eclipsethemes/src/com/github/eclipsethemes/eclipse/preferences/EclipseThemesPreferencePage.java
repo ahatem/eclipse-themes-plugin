@@ -2,16 +2,21 @@ package com.github.eclipsethemes.eclipse.preferences;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -19,12 +24,15 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.program.Program;
@@ -32,8 +40,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
@@ -48,6 +56,7 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import com.github.eclipsethemes.EclipseThemes;
 import com.github.eclipsethemes.core.Constants;
 import com.github.eclipsethemes.core.models.PackageMetadata;
+import com.github.eclipsethemes.core.models.ThemeFonts;
 import com.github.eclipsethemes.core.parser.ParserFactory;
 import com.github.eclipsethemes.core.validation.ThemeDiagnostic;
 import com.github.eclipsethemes.core.validation.WebsiteUri;
@@ -59,42 +68,62 @@ import com.github.eclipsethemes.eclipse.ThemeManager;
 import com.github.eclipsethemes.eclipse.ThemeOperationOutcome;
 import com.github.eclipsethemes.eclipse.ThemeOrigin;
 import com.github.eclipsethemes.eclipse.ThemeRecord;
+import com.github.eclipsethemes.eclipse.fonts.FontChoice;
+import com.github.eclipsethemes.eclipse.fonts.FontMode;
 import com.github.eclipsethemes.eclipse.fonts.FontSectionModel;
+import com.github.eclipsethemes.eclipse.fonts.FontSettings;
+import com.github.eclipsethemes.eclipse.fonts.FontTarget;
+import com.github.eclipsethemes.eclipse.fonts.ThemeFontCoordinator;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchCoordinator;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchOutcome;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchSectionModel;
 
+/**
+ * The Theme Manager: a theme library on the left, and on the right the selected theme with its preview, whether it
+ * also themes the workbench, the fonts it will use and where it comes from.
+ *
+ * <p>
+ * Everything on this page is staged page state (the selected theme, the workbench option and the font choices) until
+ * the user chooses Apply or OK. Import, Export, Update and Remove act on the theme library and take effect at once.
+ */
 public class EclipseThemesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
+
+	private static final String APPEARANCE_PAGE_ID = "org.eclipse.ui.preferencePages.Views";
+	private static final String ALL_THEMES = "All";
+	private static final int WRAP_HINT = 120;
 
 	private IWorkbench workbench;
 
-	// UI Components
+	// Theme library
 	private TableViewer themeViewer;
-	private Browser browserPreview;
 	private Text searchText;
 	private Combo themeTypeCombo;
 	private Label themeCountLabel;
-	private Label themeNameLabel;
-	private Label authorLabel;
-	private Label themeTypeLabel;
-	private Label formatLabel;
-	private Link websiteLink;
-	private Label versionLabel;
-	private Label licenseLabel;
-	private Label copyrightLabel;
-	private Link sourceLink;
-	private final List<Control> packageRows = new ArrayList<>();
 	private Link downloadMoreLink;
 	private Button importButton;
 	private Button updateButton;
 	private Button exportButton;
 	private Button removeButton;
+
+	// Selected theme
+	private ScrolledComposite scroller;
+	private Composite details;
+	private Label themeNameLabel;
+	private Label subtitleLabel;
+	private Label descriptionLabel;
+	private Browser browserPreview;
 	private Button previewToggleButton;
-	private Label statusLabel;
 	private Button workbenchCheckbox;
 	private Label workbenchStatusLabel;
-	private Button fontsCheckbox;
-	private Label fontsStatusLabel;
+	private final Map<FontTarget, FontRow> fontRows = new EnumMap<>(FontTarget.class);
+	private Group aboutGroup;
+	private final Map<Control, Label> aboutCaptions = new HashMap<>();
+	private Label authorLabel;
+	private Link websiteLink;
+	private Label versionLabel;
+	private Label licenseLabel;
+	private Label copyrightLabel;
+	private Link sourceLink;
 
 	// Data
 	private List<ThemeRecord> allThemes;
@@ -102,6 +131,13 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private ThemeRecord selectedTheme;
 	private ThemeRecord currentTheme;
 	private boolean previewVisible = true;
+	private boolean listUpdating;
+	/** The font choices as the user has them on the page; committed only by Apply or OK. */
+	private FontSettings stagedFonts = FontSettings.load(new org.eclipse.jface.preference.PreferenceStore());
+
+	/** The widgets of one font target. */
+	private record FontRow(FontTarget target, Combo mode, Button choose, Label description) {
+	}
 
 	public EclipseThemesPreferencePage() {
 		this(new ScopedPreferenceStore(InstanceScope.INSTANCE, EclipseThemes.PLUGIN_ID));
@@ -109,7 +145,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	EclipseThemesPreferencePage(IPreferenceStore store) {
 		setPreferenceStore(store);
-		setDescription("Select and apply color themes for Eclipse editors and, optionally, the workbench");
+		setDescription("Choose a theme for your editors and, if you like, the workbench and fonts. "
+				+ "Changes take effect when you choose Apply.");
 	}
 
 	@Override
@@ -117,233 +154,224 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		this.workbench = workbench;
 	}
 
+	// ── Layout ────────────────────────────────────────────────────────────────
+
 	@Override
 	protected Control createContents(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
-		container.setLayout(new GridLayout(1, false));
+		GridLayout containerLayout = new GridLayout(1, false);
+		containerLayout.marginWidth = 0;
+		containerLayout.marginHeight = 0;
+		container.setLayout(containerLayout);
 
-		// Search, Filter by type, Toggle Preview
-		createToolbar(container);
-		// Themes List and Theme Details, Preview browser
-		createMainArea(container);
-		// Opt-in coordination of the Eclipse workbench theme
-		createWorkbenchSection(container);
-		// Opt-in theme fonts
-		createFontsSection(container);
-		// Import, Update, Export, Remove
-		createActionButtons(container);
+		stagedFonts = EclipseThemes.instance().getManager().fonts().settings();
 
-		// Load themes and set initial components state (eg. selected theme in list and
-		// current theme)
+		SashForm sash = new SashForm(container, SWT.HORIZONTAL);
+		GridData sashData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		sashData.widthHint = 780;
+		sashData.heightHint = 520;
+		sashData.minimumHeight = 320;
+		sash.setLayoutData(sashData);
+
+		createLibrary(sash);
+		createDetails(sash);
+		sash.setWeights(new int[] { 32, 68 });
+
+		// Load themes and set the initial state, then add listeners to all widgets
 		initializeData();
-		// Add Listeners to all UI widgets
 		addListeners();
 
 		return container;
 	}
 
-	private void createToolbar(Composite parent) {
-		Group toolbarGroup = new Group(parent, SWT.NONE);
-		toolbarGroup.setText("Theme Browser");
-		toolbarGroup.setLayout(new GridLayout(6, false));
-		toolbarGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+	private void createLibrary(Composite parent) {
+		Composite library = new Composite(parent, SWT.NONE);
+		GridLayout layout = new GridLayout(1, false);
+		layout.marginWidth = 0;
+		layout.marginHeight = 0;
+		layout.marginRight = 8;
+		library.setLayout(layout);
 
-		// Search
-		Label searchLabel = new Label(toolbarGroup, SWT.NONE);
-		searchLabel.setText("Search:");
+		Label heading = new Label(library, SWT.NONE);
+		heading.setText("Theme Library");
+		heading.setFont(JFaceResources.getBannerFont());
 
-		searchText = new Text(toolbarGroup, SWT.BORDER | SWT.SEARCH | SWT.ICON_SEARCH | SWT.ICON_CANCEL);
-		searchText.setMessage("Filter themes by name or author...");
-		GridData searchData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		searchData.widthHint = 180;
-		searchText.setLayoutData(searchData);
+		searchText = new Text(library, SWT.BORDER | SWT.SEARCH | SWT.ICON_SEARCH | SWT.ICON_CANCEL);
+		searchText.setMessage("Search by name or author");
+		searchText.setToolTipText("Filter the library by theme name or author");
+		searchText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		// Type filter
-		Label typeLabel = new Label(toolbarGroup, SWT.NONE);
-		typeLabel.setText("Type:");
-
-		themeTypeCombo = new Combo(toolbarGroup, SWT.READ_ONLY);
-		themeTypeCombo.setItems(new String[] { "All", "Dark", "Light" });
+		Composite filterRow = new Composite(library, SWT.NONE);
+		GridLayout filterLayout = new GridLayout(3, false);
+		filterLayout.marginWidth = 0;
+		filterLayout.marginHeight = 0;
+		filterRow.setLayout(filterLayout);
+		filterRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		new Label(filterRow, SWT.NONE).setText("Show:");
+		themeTypeCombo = new Combo(filterRow, SWT.READ_ONLY);
+		themeTypeCombo.setItems(new String[] { ALL_THEMES, "Dark", "Light" });
 		themeTypeCombo.select(0);
-
-		// Theme count
-		themeCountLabel = new Label(toolbarGroup, SWT.NONE);
+		themeCountLabel = new Label(filterRow, SWT.RIGHT);
 		themeCountLabel.setText("0 themes");
-		themeCountLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+		themeCountLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		// Preview toggle
-		previewToggleButton = new Button(toolbarGroup, SWT.TOGGLE);
-		previewToggleButton.setText("Preview");
-		previewToggleButton.setSelection(true);
-	}
-
-	private void createMainArea(Composite parent) {
-		Composite mainArea = new Composite(parent, SWT.NONE);
-		mainArea.setLayout(new GridLayout(2, false));
-		mainArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-		createThemeListPanel(mainArea);
-		createPreviewPanel(mainArea);
-	}
-
-	private void createThemeListPanel(Composite parent) {
-		Composite leftPanel = new Composite(parent, SWT.NONE);
-		leftPanel.setLayout(new GridLayout(1, false));
-		GridData leftData = new GridData(SWT.FILL, SWT.FILL, false, true);
-		leftData.widthHint = 280;
-		leftData.minimumWidth = 250;
-		leftPanel.setLayoutData(leftData);
-
-		// Theme list
-		Group themeListGroup = new Group(leftPanel, SWT.NONE);
-		themeListGroup.setText("Available Themes");
-		themeListGroup.setLayout(new GridLayout(1, false));
-		themeListGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-		themeViewer = new TableViewer(themeListGroup, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE | SWT.FULL_SELECTION);
+		themeViewer = new TableViewer(library, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE | SWT.FULL_SELECTION);
 		GridData tableData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		tableData.widthHint = 200;
 		tableData.heightHint = 200;
-		tableData.minimumHeight = 150;
 		themeViewer.getTable().setLayoutData(tableData);
+		themeViewer.getTable().setToolTipText("Select a theme to see it on the right. Double-click to apply it.");
 		themeViewer.setContentProvider(ArrayContentProvider.getInstance());
 		themeViewer.setLabelProvider(new ThemeLabelProvider());
 
-		// Download link
-		downloadMoreLink = new Link(themeListGroup, SWT.NONE);
-		downloadMoreLink.setText("<a>Download more themes →</a>");
+		Label legend = new Label(library, SWT.WRAP);
+		legend.setText("● applied    * imported by you");
+		legend.setLayoutData(wrapData());
+
+		downloadMoreLink = new Link(library, SWT.NONE);
+		downloadMoreLink.setText("<a>Download more themes</a>");
 		downloadMoreLink.setToolTipText(Constants.MORE_THEMES_URL);
 		downloadMoreLink.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
-		createThemeDetailsPanel(leftPanel);
+		// Library actions: these change the library at once and are not part of Apply / OK.
+		Composite actions = new Composite(library, SWT.NONE);
+		GridLayout actionsLayout = new GridLayout(2, true);
+		actionsLayout.marginWidth = 0;
+		actionsLayout.marginHeight = 0;
+		actions.setLayout(actionsLayout);
+		actions.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false));
+
+		importButton = libraryButton(actions, "Import...",
+				"Add a theme package (.ectheme) or a legacy theme (.xml) to your library");
+		exportButton = libraryButton(actions, "Export...", "Save the selected theme as a new .ectheme theme package. "
+				+ "A legacy theme is converted into the new file; the installed theme is not changed");
+		updateButton = libraryButton(actions, "Update...", "Replace the content of the selected imported theme with a "
+				+ "file of the same format, keeping its place in your library");
+		removeButton = libraryButton(actions, "Remove", "Remove the selected imported theme from your library");
+		exportButton.setEnabled(false);
+		updateButton.setEnabled(false);
+		removeButton.setEnabled(false);
 	}
 
-	private void createThemeDetailsPanel(Composite parent) {
-		Group detailsGroup = new Group(parent, SWT.NONE);
-		detailsGroup.setText("Theme Details");
-		detailsGroup.setLayout(new GridLayout(2, false));
-		detailsGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-
-		// Theme name (prominent)
-		themeNameLabel = new Label(detailsGroup, SWT.WRAP);
-		themeNameLabel.setText("No theme selected");
-		GridData nameData = new GridData(SWT.FILL, SWT.TOP, true, false);
-		nameData.horizontalSpan = 2;
-		themeNameLabel.setLayoutData(nameData);
-		themeNameLabel.setFont(org.eclipse.jface.resource.JFaceResources.getHeaderFont());
-
-		// Author
-		new Label(detailsGroup, SWT.NONE).setText("Author:");
-		authorLabel = new Label(detailsGroup, SWT.WRAP);
-		authorLabel.setText("N/A");
-		authorLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-
-		// Website
-		new Label(detailsGroup, SWT.NONE).setText("Website:");
-		websiteLink = new Link(detailsGroup, SWT.WRAP);
-		websiteLink.setText("N/A");
-		websiteLink.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-
-		// Type
-		new Label(detailsGroup, SWT.NONE).setText("Type:");
-		themeTypeLabel = new Label(detailsGroup, SWT.WRAP);
-		themeTypeLabel.setText("N/A");
-		themeTypeLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-
-		// Format
-		new Label(detailsGroup, SWT.NONE).setText("Format:");
-		formatLabel = new Label(detailsGroup, SWT.WRAP);
-		formatLabel.setText("N/A");
-		formatLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-
-		// Package provenance: shown only for theme packages, never implied by the plugin's own license.
-		versionLabel = packageRow(detailsGroup, "Version:", new Label(detailsGroup, SWT.WRAP));
-		licenseLabel = packageRow(detailsGroup, "License:", new Label(detailsGroup, SWT.WRAP));
-		copyrightLabel = packageRow(detailsGroup, "Copyright:", new Label(detailsGroup, SWT.WRAP));
-		sourceLink = packageRow(detailsGroup, "Source:", new Link(detailsGroup, SWT.WRAP));
-		showPackageRows(false);
+	private Button libraryButton(Composite parent, String text, String tooltip) {
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText(text);
+		button.setToolTipText(tooltip);
+		button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		return button;
 	}
 
-	private <T extends Control> T packageRow(Composite parent, String caption, T value) {
-		Label captionLabel = new Label(parent, SWT.NONE);
-		captionLabel.setText(caption);
-		captionLabel.moveAbove(value);
-		value.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-		captionLabel.setLayoutData(new GridData());
-		packageRows.add(captionLabel);
-		packageRows.add(value);
-		return value;
+	private void createDetails(Composite parent) {
+		scroller = new ScrolledComposite(parent, SWT.V_SCROLL);
+		scroller.setExpandHorizontal(true);
+		scroller.setExpandVertical(true);
+
+		details = new Composite(scroller, SWT.NONE);
+		GridLayout layout = new GridLayout(1, false);
+		layout.marginWidth = 8;
+		layout.marginHeight = 0;
+		layout.verticalSpacing = 8;
+		details.setLayout(layout);
+		scroller.setContent(details);
+
+		createHeader(details);
+		createPreviewSection(details);
+		createAppearanceSection(details);
+		createFontsSection(details);
+		createAboutSection(details);
+
+		scroller.addListener(SWT.Resize, event -> updateScrollSize());
+		updateScrollSize();
 	}
 
-	private void showPackageRows(boolean visible) {
-		for (Control row : packageRows) {
-			row.setVisible(visible);
-			((GridData) row.getLayoutData()).exclude = !visible;
+	/** Recomputes the scrollable height for the current width, since wrapped text changes height with width. */
+	private void updateScrollSize() {
+		if (scroller == null || scroller.isDisposed()) {
+			return;
 		}
+		int width = Math.max(scroller.getClientArea().width, 1);
+		scroller.setMinHeight(details.computeSize(width, SWT.DEFAULT).y);
 	}
 
-	private void createPreviewPanel(Composite parent) {
-		Group previewGroup = new Group(parent, SWT.NONE);
-		previewGroup.setText("Live Preview");
-		previewGroup.setLayout(new GridLayout(1, false));
-		previewGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	private void relayoutDetails() {
+		details.layout(true, true);
+		updateScrollSize();
+	}
 
-		Label instructionLabel = new Label(previewGroup, SWT.WRAP);
-		instructionLabel
-				.setText("Select a theme from the list to see how it looks with Java code syntax highlighting.");
-		instructionLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+	private static GridData wrapData() {
+		GridData data = new GridData(SWT.FILL, SWT.TOP, true, false);
+		data.widthHint = WRAP_HINT;
+		return data;
+	}
 
-		browserPreview = new Browser(previewGroup, SWT.BORDER);
+	private void createHeader(Composite parent) {
+		Composite header = new Composite(parent, SWT.NONE);
+		GridLayout layout = new GridLayout(1, false);
+		layout.marginWidth = 0;
+		layout.marginHeight = 0;
+		layout.verticalSpacing = 2;
+		header.setLayout(layout);
+		header.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+
+		themeNameLabel = new Label(header, SWT.WRAP);
+		themeNameLabel.setText("No theme selected");
+		themeNameLabel.setFont(JFaceResources.getHeaderFont());
+		themeNameLabel.setLayoutData(wrapData());
+
+		subtitleLabel = new Label(header, SWT.WRAP);
+		subtitleLabel.setLayoutData(wrapData());
+
+		descriptionLabel = new Label(header, SWT.WRAP);
+		descriptionLabel.setLayoutData(wrapData());
+	}
+
+	private void createPreviewSection(Composite parent) {
+		Group group = new Group(parent, SWT.NONE);
+		group.setText("Preview");
+		group.setLayout(new GridLayout(1, false));
+		group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+
+		previewToggleButton = new Button(group, SWT.CHECK);
+		previewToggleButton.setText("Show preview");
+		previewToggleButton.setSelection(true);
+
+		browserPreview = new Browser(group, SWT.BORDER);
 		GridData browserData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		browserData.heightHint = 300;
-		browserData.minimumHeight = 200;
+		browserData.widthHint = WRAP_HINT;
+		browserData.heightHint = 220;
+		browserData.minimumHeight = 140;
 		browserPreview.setLayoutData(browserData);
-
 		showDefaultPreview();
 	}
 
-	private static final String APPEARANCE_PAGE_ID = "org.eclipse.ui.preferencePages.Views";
-
-	private WorkbenchCoordinator workbenchCoordinator() {
-		return EclipseThemes.instance().getManager().workbench();
-	}
-
-	private IPreferenceStore pluginStore() {
-		return EclipseThemes.instance().getPreferenceStore();
-	}
-
-	private void createWorkbenchSection(Composite parent) {
+	private void createAppearanceSection(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
-		group.setText("Workbench");
-		group.setLayout(new GridLayout(3, false));
-		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		group.setText("Appearance");
+		group.setLayout(new GridLayout(1, false));
+		group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
 		workbenchCheckbox = new Button(group, SWT.CHECK);
-		GridData checkboxData = new GridData(SWT.LEFT, SWT.CENTER, false, false);
-		checkboxData.horizontalSpan = 3;
-		workbenchCheckbox.setLayoutData(checkboxData);
+		workbenchCheckbox.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 
 		workbenchStatusLabel = new Label(group, SWT.WRAP);
-		GridData statusData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		statusData.horizontalSpan = 3;
-		statusData.widthHint = 600;
-		workbenchStatusLabel.setLayoutData(statusData);
+		workbenchStatusLabel.setLayoutData(wrapData());
 
 		Label coverage = new Label(group, SWT.WRAP);
 		coverage.setText(WorkbenchSectionModel.COVERAGE);
-		GridData coverageData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		coverageData.horizontalSpan = 3;
-		coverageData.widthHint = 600;
-		coverage.setLayoutData(coverageData);
+		coverage.setLayoutData(wrapData());
 
-		Button appearance = new Button(group, SWT.PUSH);
-		appearance.setText("Open Appearance...");
-		appearance.setToolTipText("Choose the Eclipse workbench theme manually on the Appearance preference page");
-		appearance.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> openAppearance()));
-
-		Button diagnostics = new Button(group, SWT.PUSH);
-		diagnostics.setText("Copy diagnostics");
-		diagnostics.setToolTipText("Copy environment and workbench-theming state to the clipboard; nothing is sent");
-		diagnostics.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> copyDiagnostics()));
+		Link links = new Link(group, SWT.WRAP);
+		links.setText("<a href=\"appearance\">Eclipse Appearance preferences</a>    <a href=\"diagnostics\">Copy diagnostics</a>");
+		links.setToolTipText("Appearance: choose the Eclipse workbench theme manually. Diagnostics: copy environment "
+				+ "and workbench-theming state to the clipboard; nothing is sent");
+		links.setLayoutData(wrapData());
+		links.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> {
+			if ("diagnostics".equals(e.text)) {
+				copyDiagnostics();
+			} else {
+				openAppearance();
+			}
+		}));
 
 		refreshWorkbenchSection(true);
 	}
@@ -351,40 +379,101 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private void createFontsSection(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setText("Fonts");
-		group.setLayout(new GridLayout(1, false));
-		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		group.setLayout(new GridLayout(3, false));
+		group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
-		fontsCheckbox = new Button(group, SWT.CHECK);
-		fontsCheckbox.setText(FontSectionModel.CHECKBOX_LABEL);
-		fontsCheckbox.setToolTipText("Use the editor and workbench fonts the selected theme package asks for");
-		fontsCheckbox.setSelection(EclipseThemes.instance().getManager().fonts().isEnabled());
-
-		fontsStatusLabel = new Label(group, SWT.WRAP);
-		GridData statusData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		statusData.widthHint = 600;
-		fontsStatusLabel.setLayoutData(statusData);
+		createFontRow(group, FontTarget.EDITOR, "Editor font:", "The font of the source code and text editors");
+		createFontRow(group, FontTarget.WORKBENCH, "Workbench font:",
+				"The font of view and editor tabs, trees, tables and dialogs");
 
 		Label hint = new Label(group, SWT.WRAP);
 		hint.setText(FontSectionModel.HINT);
-		GridData hintData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		hintData.widthHint = 600;
+		GridData hintData = wrapData();
+		hintData.horizontalSpan = 3;
 		hint.setLayoutData(hintData);
 	}
 
-	private void updateFontsStatus() {
-		if (fontsStatusLabel == null || fontsStatusLabel.isDisposed()) {
-			return;
+	private void createFontRow(Composite group, FontTarget target, String caption, String tooltip) {
+		Label label = new Label(group, SWT.NONE);
+		label.setText(caption);
+
+		Combo mode = new Combo(group, SWT.READ_ONLY | SWT.DROP_DOWN);
+		for (FontMode fontMode : FontMode.values()) {
+			mode.add(fontMode.label());
 		}
-		fontsStatusLabel.setText(FontSectionModel.describe(selectedTheme == null ? null : selectedTheme.theme(),
-				EclipseThemes.instance().getManager().fonts()::installed));
-		fontsStatusLabel.getParent().layout(true);
+		mode.setToolTipText(tooltip);
+		mode.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+		Button choose = new Button(group, SWT.PUSH);
+		choose.setText("Choose...");
+		choose.setToolTipText("Choose an installed font for the " + target.role() + " font");
+
+		Label description = new Label(group, SWT.WRAP);
+		GridData descriptionData = wrapData();
+		descriptionData.horizontalSpan = 3;
+		description.setLayoutData(descriptionData);
+
+		FontRow row = new FontRow(target, mode, choose, description);
+		fontRows.put(target, row);
+		mode.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> fontModeChanged(row)));
+		choose.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> {
+			if (chooseCustomFont(target)) {
+				updateFontRows();
+			}
+		}));
 	}
 
-	/** Writes the committed intent for theme fonts; called only from Apply and OK. */
-	private void commitFontsIntent() {
-		if (fontsCheckbox != null && !fontsCheckbox.isDisposed()) {
-			pluginStore().setValue(PreferenceKeys.THEME_FONTS_ENABLED, fontsCheckbox.getSelection());
+	private void createAboutSection(Composite parent) {
+		aboutGroup = new Group(parent, SWT.NONE);
+		aboutGroup.setText("About this theme");
+		aboutGroup.setLayout(new GridLayout(2, false));
+		aboutGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+
+		authorLabel = aboutRow("Author:", new Label(aboutGroup, SWT.WRAP));
+		websiteLink = aboutRow("Website:", new Link(aboutGroup, SWT.WRAP));
+		versionLabel = aboutRow("Version:", new Label(aboutGroup, SWT.WRAP));
+		licenseLabel = aboutRow("License:", new Label(aboutGroup, SWT.WRAP));
+		copyrightLabel = aboutRow("Copyright:", new Label(aboutGroup, SWT.WRAP));
+		sourceLink = aboutRow("Source:", new Link(aboutGroup, SWT.WRAP));
+		showAboutRows(false);
+	}
+
+	private <T extends Control> T aboutRow(String caption, T value) {
+		Label captionLabel = new Label(aboutGroup, SWT.NONE);
+		captionLabel.setText(caption);
+		captionLabel.moveAbove(value);
+		captionLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+		value.setLayoutData(wrapData());
+		aboutCaptions.put(value, captionLabel);
+		return value;
+	}
+
+	private void showAboutRow(Control value, boolean visible) {
+		Label caption = aboutCaptions.get(value);
+		for (Control control : new Control[] { caption, value }) {
+			control.setVisible(visible);
+			((GridData) control.getLayoutData()).exclude = !visible;
 		}
+	}
+
+	private void showAboutRows(boolean visible) {
+		aboutCaptions.keySet().forEach(row -> showAboutRow(row, visible));
+		aboutGroup.setVisible(visible);
+		((GridData) aboutGroup.getLayoutData()).exclude = !visible;
+	}
+
+	// ── Workbench option ──────────────────────────────────────────────────────
+
+	private WorkbenchCoordinator workbenchCoordinator() {
+		return EclipseThemes.instance().getManager().workbench();
+	}
+
+	private ThemeFontCoordinator fontCoordinator() {
+		return EclipseThemes.instance().getManager().fonts();
+	}
+
+	private IPreferenceStore pluginStore() {
+		return EclipseThemes.instance().getPreferenceStore();
 	}
 
 	/**
@@ -402,13 +491,27 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 				coordinator.activeThemeId().orElse(null));
 		workbenchCheckbox.setText(model.checkboxLabel());
 		workbenchCheckbox.setEnabled(model.checkboxEnabled());
-		workbenchStatusLabel.setText(model.statusText());
+		workbenchStatusLabel.setText(workbenchStatus(capability, model));
 		if (initial) {
 			boolean effective = enabled && (capability.state() == State.VERIFIED
 					|| capability.state() == State.EXPERIMENTAL && coordinator.isOptedIn(capability));
 			workbenchCheckbox.setSelection(effective);
 		}
-		workbenchStatusLabel.getParent().layout(true);
+		if (details != null) {
+			relayoutDetails();
+		}
+	}
+
+	/** The user-facing status: what can be said about this system, without engine versions or internals. */
+	static String workbenchStatus(WorkbenchCapability capability, WorkbenchSectionModel model) {
+		String status = switch (capability.state()) {
+		case VERIFIED -> "Supported on this system.";
+		case EXPERIMENTAL -> "Not yet verified on this system. Turning it on is an experiment, and the plugin "
+				+ "reverts it when it safely can.";
+		default -> model.statusText();
+		};
+		return model.conflict() ? status + " Another Eclipse theme was chosen on the Appearance page, so workbench "
+				+ "theming is not in effect right now." : status;
 	}
 
 	/** Writes the committed intent for the workbench half; called only from Apply and OK. */
@@ -452,75 +555,93 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		} finally {
 			clipboard.dispose();
 		}
+		showStatus("Diagnostics copied to the clipboard.", IMessageProvider.INFORMATION);
 	}
 
-	private void createActionButtons(Composite parent) {
-		Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
-		separator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+	// ── Fonts ─────────────────────────────────────────────────────────────────
 
-		Composite buttonArea = new Composite(parent, SWT.NONE);
-		buttonArea.setLayout(new GridLayout(6, false));
-		buttonArea.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-		// Import button
-		importButton = new Button(buttonArea, SWT.PUSH);
-		importButton.setText("Import Theme...");
-		importButton.setToolTipText("Import a theme package (.ectheme) or a legacy theme (.xml) as a new installed theme");
-		setButtonWidth(importButton, 120);
-
-		// Update button
-		updateButton = new Button(buttonArea, SWT.PUSH);
-		updateButton.setText("Update Selected Theme...");
-		updateButton.setToolTipText("Replace the content of the selected installed theme with a file of the same format, keeping its identity");
-		updateButton.setEnabled(false);
-		setButtonWidth(updateButton, 150);
-
-		// Export button
-		exportButton = new Button(buttonArea, SWT.PUSH);
-		exportButton.setText("Export as Package...");
-		exportButton.setToolTipText("Save the selected theme as a new .ectheme theme package. A legacy theme is "
-				+ "converted into the new file; the installed theme is not changed");
-		exportButton.setEnabled(false);
-		setButtonWidth(exportButton, 150);
-
-		// Remove button
-		removeButton = new Button(buttonArea, SWT.PUSH);
-		removeButton.setText("Remove");
-		removeButton.setToolTipText("Remove the selected installed theme (* marks installed themes)");
-		removeButton.setEnabled(false);
-		setButtonWidth(removeButton, 120);
-
-		// Hint label — fills remaining space
-		Label hintLabel = new Label(buttonArea, SWT.NONE);
-		hintLabel.setText("Double-click a theme, or select one and click Apply / OK");
-		hintLabel.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
-		hintLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-		// Status label — right-aligned, shows feedback after apply
-		statusLabel = new Label(buttonArea, SWT.NONE);
-		statusLabel.setText("");
-		statusLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+	/** Shows the staged font choices; nothing is written to the platform here. */
+	private void updateFontRows() {
+		if (fontRows.isEmpty() || details == null || details.isDisposed()) {
+			return;
+		}
+		ThemeFontCoordinator coordinator = fontCoordinator();
+		for (FontRow row : fontRows.values()) {
+			FontChoice choice = stagedFonts.choice(row.target());
+			row.mode().select(choice.mode().ordinal());
+			row.choose().setEnabled(choice.mode() == FontMode.CUSTOM);
+			row.description().setText(FontSectionModel.describe(row.target(), choice,
+					selectedTheme == null ? null : selectedTheme.theme(), coordinator::installed,
+					coordinator.current(row.target())));
+		}
+		relayoutDetails();
 	}
 
-	private void setButtonWidth(Button button, int width) {
-		GridData data = new GridData(SWT.LEFT, SWT.CENTER, false, false);
-		data.widthHint = width;
-		button.setLayoutData(data);
+	private void fontModeChanged(FontRow row) {
+		FontMode mode = FontMode.values()[Math.max(0, row.mode().getSelectionIndex())];
+		FontChoice previous = stagedFonts.choice(row.target());
+		stagedFonts = stagedFonts.with(row.target(), previous.withMode(mode));
+		// Choosing Custom with no font yet goes straight to the chooser; cancelling leaves the previous source.
+		if (mode == FontMode.CUSTOM && previous.custom() == null && !chooseCustomFont(row.target())) {
+			stagedFonts = stagedFonts.with(row.target(), previous);
+		}
+		updateFontRows();
 	}
+
+	/**
+	 * Lets the user pick an installed font with the standard dialog and stages it. Only family and size are used: the
+	 * supported contract is a regular-weight font, so any style the dialog returns is ignored.
+	 *
+	 * @return true when a font was chosen
+	 */
+	private boolean chooseCustomFont(FontTarget target) {
+		FontChoice choice = stagedFonts.choice(target);
+		Optional<ThemeFonts.Face> start = choice.custom() != null ? Optional.of(choice.custom())
+				: fontCoordinator().current(target);
+		FontDialog dialog = new FontDialog(getShell());
+		dialog.setText("Choose " + target.role() + " font");
+		dialog.setEffectsVisible(false);
+		start.ifPresent(face -> dialog.setFontList(new FontData[] { new FontData(face.family(), face.size(), SWT.NORMAL) }));
+		FontData chosen = dialog.open();
+		if (chosen == null) {
+			return false;
+		}
+		try {
+			ThemeFonts.Face face = new ThemeFonts.Face(chosen.getName(), chosen.getHeight());
+			stagedFonts = stagedFonts.with(target, choice.withCustom(face));
+			return true;
+		} catch (IllegalArgumentException e) {
+			showErrorMessage("Font Not Supported", "That font cannot be used: the size must be between "
+					+ ThemeFonts.MIN_SIZE + " and " + ThemeFonts.MAX_SIZE + " points.");
+			return false;
+		}
+	}
+
+	/** Writes the committed font choices; called only from Apply and OK. Returns false when they could not be saved. */
+	private boolean commitFontsIntent() {
+		try {
+			stagedFonts.save(pluginStore());
+			return true;
+		} catch (IOException e) {
+			EclipseThemes.instance().getLogger().error("Saving font settings failed", e);
+			showErrorMessage("Fonts Not Saved", "Your font choices could not be saved: " + e.getMessage());
+			return false;
+		}
+	}
+
+	// ── Library ───────────────────────────────────────────────────────────────
 
 	private class ThemeLabelProvider extends LabelProvider {
 		@Override
 		public String getText(Object element) {
 			if (element instanceof ThemeRecord theme) {
 				String name = theme.theme().getName();
-
 				if (theme.equals(currentTheme)) {
 					name = "● " + name;
 				}
 				if (theme.origin() == ThemeOrigin.INSTALLED) {
 					name += " *";
 				}
-
 				return name;
 			}
 			return super.getText(element);
@@ -552,15 +673,35 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	private void selectInitialTheme() {
 		if (this.currentTheme != null) {
-			themeViewer.setSelection(new StructuredSelection(currentTheme));
+			setListSelection(currentTheme);
+		}
+	}
+
+	/** Selects in the list without treating it as the user choosing a theme. */
+	private void setListSelection(ThemeRecord theme) {
+		listUpdating = true;
+		try {
+			themeViewer.setSelection(new StructuredSelection(theme), true);
+		} finally {
+			listUpdating = false;
 		}
 	}
 
 	private void refreshThemeList() {
-		themeViewer.setInput(this.filteredThemes);
+		listUpdating = true;
+		try {
+			themeViewer.setInput(this.filteredThemes);
+		} finally {
+			listUpdating = false;
+		}
 		themeCountLabel.setText(this.filteredThemes.size() + " theme" + (this.filteredThemes.size() != 1 ? "s" : ""));
+		themeCountLabel.getParent().layout();
 	}
 
+	/**
+	 * Applies the search and type filter. The selected theme stays the page's selection even when the filter hides
+	 * it, so typing in the search box never changes what Apply will apply.
+	 */
 	private void filterThemes() {
 		String searchTerm = searchText.getText();
 		String selectedType = themeTypeCombo.getText();
@@ -575,132 +716,89 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 		refreshThemeList();
 
-		// Preserve selection
 		if (selectedTheme != null && filteredThemes.contains(selectedTheme)) {
-			themeViewer.setSelection(new StructuredSelection(selectedTheme));
-		} else if (!filteredThemes.isEmpty()) {
-			themeViewer.setSelection(new StructuredSelection(filteredThemes.get(0)));
+			setListSelection(selectedTheme);
+		} else if (selectedTheme == null) {
+			ThemeRecord preferred = currentTheme != null && filteredThemes.contains(currentTheme) ? currentTheme
+					: filteredThemes.isEmpty() ? null : filteredThemes.get(0);
+			if (preferred == null) {
+				clearSelection();
+			} else {
+				themeViewer.setSelection(new StructuredSelection(preferred), true);
+			}
 		}
 	}
 
-	private boolean isEmptyFilter(String searchTerm, String selectedType) {
-		return (searchTerm == null || searchTerm.trim().isEmpty()) && "All".equals(selectedType);
+	private static boolean isEmptyFilter(String searchTerm, String selectedType) {
+		return (searchTerm == null || searchTerm.trim().isEmpty()) && ALL_THEMES.equals(selectedType);
 	}
 
-	private boolean matchesSearchCriteria(ThemeRecord theme, String searchTerm, String selectedType) {
-		// Check search term match
+	private static boolean matchesSearchCriteria(ThemeRecord theme, String searchTerm, String selectedType) {
 		if (searchTerm != null && !searchTerm.trim().isEmpty()) {
-			String lowerSearch = searchTerm.toLowerCase().trim();
-			boolean matchesName = theme.theme().getName().toLowerCase().contains(lowerSearch);
+			String lowerSearch = searchTerm.toLowerCase(Locale.ROOT).trim();
+			boolean matchesName = theme.theme().getName().toLowerCase(Locale.ROOT).contains(lowerSearch);
 			boolean matchesAuthor = theme.theme().getAuthor() != null
-					&& theme.theme().getAuthor().toLowerCase().contains(lowerSearch);
-
-			// If search term doesn't match name or author, return false
+					&& theme.theme().getAuthor().toLowerCase(Locale.ROOT).contains(lowerSearch);
 			if (!matchesName && !matchesAuthor) {
 				return false;
 			}
 		}
-
-		// Check theme type match
-		if (!"All".equals(selectedType)) {
-			String themeType = theme.theme().getType().name();
-			if (!selectedType.equalsIgnoreCase(themeType)) {
-				return false;
-			}
+		if (!ALL_THEMES.equals(selectedType)) {
+			return selectedType.equalsIgnoreCase(theme.theme().getType().name());
 		}
-
 		return true;
 	}
 
 	private void addListeners() {
 		// Theme selection
 		themeViewer.addSelectionChangedListener(event -> {
+			if (listUpdating) {
+				return;
+			}
 			IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-			handleThemeSelectionChanged((ThemeRecord) selection.getFirstElement());
+			ThemeRecord chosen = (ThemeRecord) selection.getFirstElement();
+			if (chosen != null) {
+				handleThemeSelectionChanged(chosen);
+			}
 		});
 
 		themeViewer.addDoubleClickListener(event -> applySelectedTheme());
 
 		// Search and filter
 		searchText.addModifyListener(event -> filterThemes());
-		themeTypeCombo.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				filterThemes();
-			}
-		});
+		themeTypeCombo.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> filterThemes()));
 
 		// Links
-		downloadMoreLink.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				Program.launch(Constants.MORE_THEMES_URL);
-			}
-		});
+		downloadMoreLink.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> Program.launch(Constants.MORE_THEMES_URL)));
 
-		websiteLink.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// The same policy that decides the link markup decides the launch.
-				WebsiteUri.Check check = WebsiteUri.check(selectedTheme == null ? null : selectedTheme.theme().getWebsite());
-				if (check.launchable()) {
-					Program.launch(check.value());
-				}
+		websiteLink.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> {
+			// The same policy that decides the link markup decides the launch.
+			WebsiteUri.Check check = WebsiteUri.check(selectedTheme == null ? null : selectedTheme.theme().getWebsite());
+			if (check.launchable()) {
+				Program.launch(check.value());
 			}
-		});
+		}));
 
-		sourceLink.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// Same policy as the website link: only a launchable value reaches the launcher.
-				WebsiteUri.Check check = WebsiteUri.check(selectedSource());
-				if (check.launchable()) {
-					Program.launch(check.value());
-				}
+		sourceLink.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> {
+			// Same policy as the website link: only a launchable value reaches the launcher.
+			WebsiteUri.Check check = WebsiteUri.check(selectedSource());
+			if (check.launchable()) {
+				Program.launch(check.value());
 			}
-		});
+		}));
 
 		// Buttons
-		previewToggleButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				togglePreviewVisibility();
-			}
-		});
-
-		exportButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				exportSelectedTheme();
-			}
-		});
-
-		importButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				importTheme();
-			}
-		});
-
-		updateButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				updateSelectedTheme();
-			}
-		});
-
-		removeButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				removeSelectedTheme();
-			}
-		});
+		previewToggleButton.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> togglePreviewVisibility()));
+		exportButton.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> exportSelectedTheme()));
+		importButton.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> importTheme()));
+		updateButton.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> updateSelectedTheme()));
+		removeButton.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> removeSelectedTheme()));
 	}
 
+	// ── Selected theme ────────────────────────────────────────────────────────
+
 	private void handleThemeSelectionChanged(ThemeRecord newTheme) {
-		if (statusLabel != null && !statusLabel.isDisposed()) {
-			statusLabel.setText("");
-		}
+		showStatus(null, IMessageProvider.NONE);
 
 		if (newTheme == null) {
 			clearSelection();
@@ -710,40 +808,79 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		this.selectedTheme = newTheme;
 		updateThemeDetails(newTheme);
 		updatePreview(newTheme);
-		updateFontsStatus();
+		updateFontRows();
 		updateButtonStates();
 	}
 
 	private void clearSelection() {
 		this.selectedTheme = null;
 		themeNameLabel.setText("No theme selected");
-		authorLabel.setText("N/A");
-		websiteLink.setText("N/A");
-		themeTypeLabel.setText("N/A");
-		formatLabel.setText("N/A");
-		showPackageRows(false);
-		themeNameLabel.getParent().layout();
+		subtitleLabel.setText("");
+		descriptionLabel.setText("");
+		showAboutRows(false);
 		showDefaultPreview();
-		updateFontsStatus();
+		updateFontRows();
 		updateButtonStates();
+		relayoutDetails();
 	}
 
 	private void updateThemeDetails(ThemeRecord theme) {
 		themeNameLabel.setText(theme.theme().getName());
-		authorLabel.setText(theme.theme().getAuthor() != null ? theme.theme().getAuthor() : "N/A");
-		themeTypeLabel.setText(theme.theme().getType().nameCapitalized());
-		formatLabel.setText(formatText(theme));
-		websiteLink.setText(websiteText(theme.theme().getWebsite()));
+		subtitleLabel.setText(subtitle(theme, theme.equals(currentTheme)));
+		String description = theme.theme().getDescription();
+		descriptionLabel.setText(description == null ? "" : description.strip());
+		setExcluded(descriptionLabel, descriptionLabel.getText().isEmpty());
+
+		String author = theme.theme().getAuthor();
+		boolean hasAuthor = author != null && !author.isBlank();
+		authorLabel.setText(hasAuthor ? author.strip() : "");
+		showAboutRow(authorLabel, hasAuthor);
+
+		String website = theme.theme().getWebsite();
+		boolean hasWebsite = !WebsiteUri.check(website).value().isEmpty();
+		websiteLink.setText(websiteText(website));
+		websiteLink.setToolTipText(hasWebsite ? website : null);
+		showAboutRow(websiteLink, hasWebsite);
+
 		Optional<PackageMetadata> metadata = theme.theme().getPackageMetadata();
+		boolean anyProvenance = metadata.isPresent() && (metadata.get().licenseText().isPresent()
+				|| metadata.get().copyrightText().isPresent() || metadata.get().sourceText().isPresent());
+		showAboutRow(versionLabel, metadata.flatMap(PackageMetadata::versionText).isPresent());
+		showAboutRow(licenseLabel, metadata.isPresent() && (metadata.get().licenseText().isPresent() || !anyProvenance));
+		showAboutRow(copyrightLabel, metadata.flatMap(PackageMetadata::copyrightText).isPresent());
+		showAboutRow(sourceLink, metadata.flatMap(PackageMetadata::sourceText).isPresent());
 		metadata.ifPresent(m -> {
 			versionLabel.setText(stated(m.versionText()));
 			licenseLabel.setText(stated(m.licenseText()));
 			copyrightLabel.setText(stated(m.copyrightText()));
 			sourceLink.setText(linkText(m.source(), NOT_STATED));
+			sourceLink.setToolTipText(m.source());
 		});
-		showPackageRows(metadata.isPresent());
 
-		themeNameLabel.getParent().layout();
+		boolean anyRow = hasAuthor || hasWebsite || metadata.isPresent();
+		aboutGroup.setVisible(anyRow);
+		((GridData) aboutGroup.getLayoutData()).exclude = !anyRow;
+		relayoutDetails();
+	}
+
+	private static void setExcluded(Control control, boolean excluded) {
+		control.setVisible(!excluded);
+		((GridData) control.getLayoutData()).exclude = excluded;
+	}
+
+	/** The one line under the theme name: appearance, format, author and whether it is the applied theme. */
+	static String subtitle(ThemeRecord theme, boolean applied) {
+		List<String> parts = new java.util.ArrayList<>();
+		parts.add(theme.theme().getType().nameCapitalized());
+		parts.add(formatText(theme));
+		String author = theme.theme().getAuthor();
+		if (author != null && !author.isBlank()) {
+			parts.add("by " + author.strip());
+		}
+		if (applied) {
+			parts.add("Currently applied");
+		}
+		return String.join(" • ", parts);
 	}
 
 	/** Packages and legacy themes are different formats with different capabilities; say which one this is. */
@@ -780,6 +917,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		return check.launchable() ? "<a>" + text + "</a>" : text;
 	}
 
+	// ── Preview ───────────────────────────────────────────────────────────────
+
 	private void updatePreview(ThemeRecord theme) {
 		if (!previewVisible) {
 			return;
@@ -806,20 +945,33 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		return id == null || id.isBlank() ? Optional.empty() : Optional.of(Constants.PREVIEW_SERVER_URL + id);
 	}
 
+	// No fixed colors: the empty states follow the browser's light or dark scheme.
+	private static final String PREVIEW_STYLE = "<style>:root{color-scheme:light dark}"
+			+ "body{font-family:sans-serif;padding:16px;margin:0}h3{margin-top:0}</style>";
+
 	private void showDefaultPreview() {
-		// TODO: We might do offline theme preview generation
-		browserPreview.setText("<html><body style='background:#f5f5f5;padding:20px;font-family:Arial;'>"
-				+ "<h3>Theme Preview</h3>" + "<p>Select a theme to see the preview here.</p></body></html>");
+		browserPreview.setText("<html><head>" + PREVIEW_STYLE + "</head><body><h3>Preview</h3>"
+				+ "<p>Select a theme to see how it looks.</p></body></html>");
 	}
 
 	private void showPreviewUnavailable() {
-		browserPreview.setText("<html><body style='background:#f5f5f5;padding:20px;font-family:Arial;'>"
-				+ "<h3>Theme Preview</h3>" + "<p>No preview is available for this theme.</p></body></html>");
+		browserPreview.setText("<html><head>" + PREVIEW_STYLE + "</head><body><h3>No preview for this theme</h3>"
+				+ "<p>Previews are available for themes from the online collection. "
+				+ "Choose Apply to see this theme in your editor.</p></body></html>");
 	}
 
 	private void showPreviewError(String message) {
-		browserPreview.setText("<html><body style='background:#f5f5f5;padding:20px;font-family:Arial;color:#cc0000;'>"
-				+ "<h3>Preview Error</h3>" + "<p>" + message + "</p></body></html>");
+		browserPreview.setText("<html><head>" + PREVIEW_STYLE + "</head><body><h3>Preview error</h3><p>" + message
+				+ "</p></body></html>");
+	}
+
+	private void togglePreviewVisibility() {
+		previewVisible = previewToggleButton.getSelection();
+		if (previewVisible && selectedTheme != null) {
+			updatePreview(selectedTheme);
+		} else if (!previewVisible) {
+			showDefaultPreview();
+		}
 	}
 
 	private void updateButtonStates() {
@@ -834,14 +986,17 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		return theme != null && theme.origin() == ThemeOrigin.INSTALLED;
 	}
 
-	private void togglePreviewVisibility() {
-		previewVisible = previewToggleButton.getSelection();
-		if (previewVisible && selectedTheme != null) {
-			updatePreview(selectedTheme);
-		} else if (!previewVisible) {
-			showDefaultPreview();
+	// ── Status ────────────────────────────────────────────────────────────────
+
+	/** One inline message in the page's own message area; {@code null} restores the page description. */
+	private void showStatus(String message, int type) {
+		if (getControl() == null || getControl().isDisposed()) {
+			return;
 		}
+		setMessage(message, type);
 	}
+
+	// ── Apply ─────────────────────────────────────────────────────────────────
 
 	protected void applySelectedTheme() {
 		if (selectedTheme == null) {
@@ -851,28 +1006,26 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		try {
 			ThemeSelection.remember(getPreferenceStore(), selectedTheme);
 			commitWorkbenchIntent();
-			commitFontsIntent();
+			if (!commitFontsIntent()) {
+				return;
+			}
 			ThemeApplyOutcome outcome = EclipseThemes.instance().getManager().applyTheme(workbench, selectedTheme);
 
 			currentTheme = selectedTheme;
 			updateButtonStates();
-			refreshThemeList(); // to update "●" indicator
+			themeViewer.refresh(); // to update the "●" indicator
+			subtitleLabel.setText(subtitle(selectedTheme, true));
 			refreshWorkbenchSection(false);
+			updateFontRows();
 
-			statusLabel.setText(WorkbenchSectionModel.summary(outcome));
-			statusLabel.getParent().layout();
-			if (outcome.fullySucceeded()) {
-				Display.getCurrent().timerExec(3000, () -> {
-					if (!statusLabel.isDisposed()) {
-						statusLabel.setText("");
-						statusLabel.getParent().layout();
-					}
-				});
-			}
+			showStatus(WorkbenchSectionModel.summary(outcome),
+					outcome.fullySucceeded() ? IMessageProvider.INFORMATION : IMessageProvider.WARNING);
 		} catch (Exception e) {
 			showErrorMessage("Apply Theme Failed", "Failed to apply theme: " + e.getMessage());
 		}
 	}
+
+	// ── Library actions ───────────────────────────────────────────────────────
 
 	private void importTheme() {
 		File selectedFile = chooseThemeFile("Import Theme");
@@ -888,26 +1041,48 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			}
 
 			String identity = outcome.record().logicalId();
-			loadThemes();
-			filterThemes();
-			ThemeRecord admitted = selectThemeByIdentity(identity);
+			ThemeRecord admitted = reloadAndSelect(identity);
 			if (admitted == null) {
 				showErrorMessage("Import Failed", "The imported theme could not be admitted to the catalog.");
 				return;
 			}
-
-			showInfoMessage("Import Successful", "Theme '" + admitted.theme().getName()
-					+ "' has been imported successfully." + warningsText(outcome.diagnostics()));
+			reportAdmitted("Imported", admitted, outcome.diagnostics());
 		} catch (Exception e) {
 			EclipseThemes.instance().getLogger().error("Import Error", e);
 			showErrorMessage("Import Error", "Error importing theme: " + e.getMessage());
 		}
 	}
 
+	/** Reloads the catalog with no filter, so the theme that was just admitted is visible, and selects it. */
+	private ThemeRecord reloadAndSelect(String logicalId) {
+		loadThemes();
+		searchText.setText("");
+		themeTypeCombo.select(0);
+		filterThemes();
+		return selectThemeByIdentity(logicalId);
+	}
+
+	/** An accepted file says so inline; accepted warnings are listed in a dialog so they are not missed. */
+	private void reportAdmitted(String verb, ThemeRecord admitted, List<ThemeDiagnostic> diagnostics) {
+		String name = admitted.theme().getName();
+		int warnings = warningMessages(diagnostics).size();
+		if (warnings == 0) {
+			showStatus(verb + " '" + name + "'.", IMessageProvider.INFORMATION);
+			return;
+		}
+		showStatus(verb + " '" + name + "' with " + warnings + (warnings == 1 ? " warning." : " warnings."),
+				IMessageProvider.WARNING);
+		showInfoMessage(verb + " With Warnings", "Theme '" + name + "' was " + verb.toLowerCase(Locale.ROOT) + "."
+				+ warningsText(diagnostics));
+	}
+
+	private static List<String> warningMessages(List<ThemeDiagnostic> diagnostics) {
+		return diagnostics.stream().filter(finding -> !finding.error()).map(ThemeDiagnostic::message).distinct().toList();
+	}
+
 	/** The first few warnings of an admitted file, so a package that was only partly understood says so. */
 	static String warningsText(List<ThemeDiagnostic> diagnostics) {
-		List<String> warnings = diagnostics.stream().filter(finding -> !finding.error()).map(ThemeDiagnostic::message)
-				.distinct().toList();
+		List<String> warnings = warningMessages(diagnostics);
 		if (warnings.isEmpty()) {
 			return "";
 		}
@@ -944,16 +1119,12 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 				return;
 			}
 
-			loadThemes();
-			filterThemes();
-			ThemeRecord admitted = selectThemeByIdentity(identity);
+			ThemeRecord admitted = reloadAndSelect(identity);
 			if (admitted == null) {
 				showErrorMessage("Update Failed", "The replaced theme could not be reloaded from managed storage.");
 				return;
 			}
-
-			showInfoMessage("Update Successful",
-					"Theme '" + admitted.theme().getName() + "' has been updated." + warningsText(outcome.diagnostics()));
+			reportAdmitted("Updated", admitted, outcome.diagnostics());
 		} catch (Exception e) {
 			EclipseThemes.instance().getLogger().error("Update Error", e);
 			showErrorMessage("Update Error", "Error updating theme: " + e.getMessage());
@@ -975,18 +1146,17 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		if (path == null) {
 			return;
 		}
-		if (!path.toLowerCase(java.util.Locale.ROOT).endsWith(ParserFactory.PACKAGE_EXTENSION)) {
+		if (!path.toLowerCase(Locale.ROOT).endsWith(ParserFactory.PACKAGE_EXTENSION)) {
 			path += ParserFactory.PACKAGE_EXTENSION;
 		}
 		File target = new File(path);
 		String name = selectedTheme.theme().getName();
 		try {
 			EclipseThemes.instance().getManager().exportTheme(selectedTheme, target);
-			showInfoMessage("Export Successful", legacy
-					? "'" + name + "' was converted to a theme package and saved to:\n" + target.getPath()
-							+ "\n\nThe installed theme was not changed. Workbench colors are not written; they are "
-							+ "derived from the editor colors when the package is imported."
-					: "'" + name + "' was exported to:\n" + target.getPath());
+			showStatus(legacy
+					? "Converted '" + name + "' to a theme package: " + target.getPath()
+							+ ". The installed theme was not changed."
+					: "Exported '" + name + "' to " + target.getPath() + ".", IMessageProvider.INFORMATION);
 		} catch (IOException e) {
 			EclipseThemes.instance().getLogger().error("Export Error", e);
 			showErrorMessage("Export Failed", "The theme was not exported: " + e.getMessage());
@@ -1025,7 +1195,9 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 				.findFirst()
 				.orElse(null);
 		if (match != null) {
-			themeViewer.setSelection(new StructuredSelection(match));
+			themeViewer.setSelection(new StructuredSelection(match), true);
+			// A selection the list already had raises no event; make sure the details follow the reloaded record.
+			handleThemeSelectionChanged(match);
 		}
 		return match;
 	}
@@ -1073,17 +1245,15 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 								+ "Reopen the preference page to reload the catalog.");
 				return;
 			}
+			selectedTheme = null;
 			filterThemes();
-			if (filteredThemes.isEmpty()) {
-				clearSelection();
-			}
 
 			if (resetFailed) {
 				showErrorMessage("Theme Removed",
 						"The theme was removed, but resetting the applied theme to the default failed. "
 								+ "Please select and apply a theme again.");
 			} else {
-				showInfoMessage("Theme Removed", "Theme has been removed successfully.");
+				showStatus("Removed '" + removed.theme().getName() + "'.", IMessageProvider.INFORMATION);
 			}
 		} catch (Exception e) {
 			showErrorMessage("Remove Failed", "Failed to remove theme: " + e.getMessage());
@@ -1117,14 +1287,14 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 				return true;
 			}
 
-			boolean systemDarkTheme = Display.isSystemDarkTheme();
+			boolean systemDarkTheme = org.eclipse.swt.widgets.Display.isSystemDarkTheme();
 			boolean disableInherit = "true"
 					.equalsIgnoreCase(System.getProperty("org.eclipse.e4.ui.css.theme.disableOSDarkThemeInherit")); // DISABLE_OS_DARK_THEME_INHERIT
 			return systemDarkTheme && !disableInherit;
 
 		} catch (Exception e) {
 			try {
-				return Display.isSystemDarkTheme();
+				return org.eclipse.swt.widgets.Display.isSystemDarkTheme();
 			} catch (Exception ex) {
 				return false;
 			}
@@ -1147,6 +1317,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private boolean showConfirmDialog(String title, String message) {
 		return MessageDialog.openConfirm(getShell(), title, message);
 	}
+
+	// ── Apply / OK / Defaults ─────────────────────────────────────────────────
 
 	@Override
 	public boolean performOk() {
@@ -1187,7 +1359,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		}
 		refreshThemeList();
 		if (currentTheme != null) {
-			themeViewer.setSelection(new StructuredSelection(currentTheme));
+			setListSelection(currentTheme);
+			handleThemeSelectionChanged(currentTheme);
 		}
 	}
 
@@ -1201,8 +1374,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		if (!result.successful()) {
 			result.failures().forEach(failure -> EclipseThemes.instance().getLogger()
 					.error(failure.description(), failure.cause()));
-			statusLabel.setText("Reset incomplete");
-			statusLabel.getParent().layout();
+			showStatus("Reset incomplete", IMessageProvider.WARNING);
 			showErrorMessage("Reset Incomplete", "Some managed appearance overrides could not be removed or saved. "
 					+ "The reset may be partial; the active theme selection has been retained. You can retry.\n\n"
 					+ result.describeFailures());
@@ -1213,20 +1385,24 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		return true;
 	}
 
-	/** Stop management also turns theme fonts off and gives back the fonts this plugin replaced. */
+	/** Stop management also sets both fonts to Keep current and gives back the fonts this plugin replaced. */
 	private void releaseFonts() {
-		pluginStore().setValue(PreferenceKeys.THEME_FONTS_ENABLED, false);
-		if (fontsCheckbox != null && !fontsCheckbox.isDisposed()) {
-			fontsCheckbox.setSelection(false);
+		for (FontTarget target : FontTarget.values()) {
+			stagedFonts = stagedFonts.with(target, stagedFonts.choice(target).withMode(FontMode.KEEP));
 		}
-		var coordinator = EclipseThemes.instance().getManager().fonts();
+		try {
+			stagedFonts.save(pluginStore());
+		} catch (IOException e) {
+			EclipseThemes.instance().getLogger().error("Saving font settings failed", e);
+		}
+		ThemeFontCoordinator coordinator = fontCoordinator();
 		if (coordinator.ownsFonts()) {
 			var outcome = coordinator.release();
 			if (!outcome.succeeded()) {
-				statusLabel.setText("Fonts: " + outcome.message());
-				statusLabel.getParent().layout();
+				showStatus("Fonts: " + outcome.message(), IMessageProvider.WARNING);
 			}
 		}
+		updateFontRows();
 	}
 
 	/** Stop management also hands the workbench back, under the ownership rules (an external choice wins). */
@@ -1241,8 +1417,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		}
 		refreshWorkbenchSection(false);
 		if (outcome.status() != WorkbenchOutcome.Status.NOT_REQUESTED) {
-			statusLabel.setText("Workbench: " + outcome.message());
-			statusLabel.getParent().layout();
+			showStatus("Workbench: " + outcome.message(), IMessageProvider.INFORMATION);
 		}
 	}
 
@@ -1273,8 +1448,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 			// Question heading
 			Label heading = new Label(area, SWT.WRAP);
-			heading.setText("How would you like to reset editor appearance?");
-			heading.setFont(org.eclipse.jface.resource.JFaceResources.getBannerFont());
+			heading.setText("How would you like to reset your appearance?");
+			heading.setFont(JFaceResources.getBannerFont());
 			GridData headingData = new GridData(SWT.FILL, SWT.TOP, true, false);
 			headingData.widthHint = 420;
 			headingData.verticalIndent = 4;
@@ -1287,7 +1462,6 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 			Label pluginDesc = new Label(area, SWT.WRAP);
 			pluginDesc.setText("Applies the built-in theme matching your current Eclipse appearance (dark/light).");
-			pluginDesc.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 			GridData pluginDescData = new GridData(SWT.FILL, SWT.TOP, true, false);
 			pluginDescData.horizontalIndent = 18;
 			pluginDescData.verticalIndent = 0;
@@ -1298,9 +1472,10 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			stopManagementRadio.setText("Stop Eclipse Themes management");
 
 			Label eclipseDesc = new Label(area, SWT.WRAP);
-			eclipseDesc.setText("Removes only appearance overrides managed by this plugin, leaving unrelated settings unchanged.\n"
+			eclipseDesc.setText("Removes only appearance overrides managed by this plugin, leaving unrelated settings unchanged. "
+					+ "Fonts it replaced are given back unless you changed them since, and both font choices are set to "
+					+ "Keep current font.\n"
 					+ "Eclipse resolves the remaining preference defaults. Previous custom values were not recorded and cannot be recovered.");
-			eclipseDesc.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 			GridData eclipseDescData = new GridData(SWT.FILL, SWT.TOP, true, false);
 			eclipseDescData.horizontalIndent = 18;
 			eclipseDesc.setLayoutData(eclipseDescData);

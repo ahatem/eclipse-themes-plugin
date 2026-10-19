@@ -71,6 +71,21 @@ public final class EclipseWorkbenchFonts implements WorkbenchFonts {
 	}
 
 	@Override
+	public Optional<ThemeFonts.Face> effective(String fontId) {
+		try {
+			FontData[] data = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme().getFontRegistry()
+					.getFontData(fontId);
+			if (data != null && data.length > 0 && ThemeFonts.validFamily(data[0].getName())) {
+				int size = Math.max(ThemeFonts.MIN_SIZE, Math.min(ThemeFonts.MAX_SIZE, data[0].getHeight()));
+				return Optional.of(new ThemeFonts.Face(data[0].getName(), size));
+			}
+		} catch (RuntimeException e) {
+			// Display only: an unknown current font is simply not shown.
+		}
+		return Optional.empty();
+	}
+
+	@Override
 	public void flush() throws IOException {
 		IEclipsePreferences node = InstanceScope.INSTANCE.getNode(NODE);
 		try {

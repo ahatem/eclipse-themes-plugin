@@ -68,7 +68,7 @@ public record WorkbenchSectionModel(boolean checkboxEnabled, String checkboxLabe
 			line = kept == 0 ? line : line + "; " + kept + " plug-in " + (kept == 1 ? "color kept your own value"
 					: "colors kept your own values");
 			return switch (outcome.fonts().status()) {
-			case APPLIED -> line + "; theme fonts applied";
+			case APPLIED -> line + "; fonts applied";
 			case RELEASED -> line + "; previous fonts restored";
 			default -> line;
 			};

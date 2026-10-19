@@ -15,32 +15,24 @@ import com.github.eclipsethemes.core.models.ThemeFonts;
 import com.github.eclipsethemes.eclipse.preferences.PreferenceKeys;
 
 /**
- * Applies and hands back the fonts a theme package asks for, under a conflict-aware ownership model. Call on the UI
- * thread, after the workbench theme switch.
+ * Applies and hands back the fonts of the two targets (editor, workbench) according to the user's
+ * {@link FontSettings}, under a conflict-aware ownership model. Call on the UI thread, after the workbench theme
+ * switch.
  *
  * <ul>
- * <li>Fonts are an independent opt-in ({@link PreferenceKeys#THEME_FONTS_ENABLED}); applying colors never changes a
- * font, and a theme without fonts changes nothing.</li>
- * <li>The editor font is the platform <em>Text Font</em>. The workbench font is the platform <em>Part title</em>
- * ({@code TAB_TEXT_FONT}), <em>Tree and Table</em> and <em>Dialog</em> font definitions, all given the one requested
- * font.</li>
+ * <li>Each target is {@link FontMode#KEEP}, {@link FontMode#THEME} or {@link FontMode#CUSTOM}, independently. Applying
+ * colors alone never changes a font, and a target whose resolved font does not exist (keep, or a theme that names none)
+ * is not managed.</li>
  * <li>A definition not yet owned is taken over: its prior state (a stored value, or none) is recorded with the exact
- * value written. An owned definition is updated only while it still holds the recorded value; a different value is the
- * user's newer choice and is left as found.</li>
- * <li>Turning fonts off restores each owned definition's prior state, again only while it still holds the recorded
- * value.</li>
+ * value written. An owned definition is updated while it still holds the recorded value. When it holds something else
+ * (another page or the user changed it), that newer value is the new prior state and is replaced only when the
+ * request itself changed; an unchanged request leaves it alone.</li>
+ * <li>A target that stops being managed gets its prior state back, again only while the definition still holds the
+ * recorded value; a newer value is left as found.</li>
  * <li>A requested family that is not installed is reported and changes nothing.</li>
  * </ul>
  */
 public final class ThemeFontCoordinator {
-
-	static final String TEXT_FONT = "org.eclipse.jface.textfont";
-	static final String TAB_TEXT_FONT = "org.eclipse.ui.workbench.TAB_TEXT_FONT";
-	static final String TREE_TABLE_FONT = "org.eclipse.ui.workbench.TREE_TABLE_FONT";
-	static final String DIALOG_FONT = "org.eclipse.jface.dialogfont";
-
-	static final List<String> EDITOR_FONTS = List.of(TEXT_FONT);
-	static final List<String> WORKBENCH_FONTS = List.of(TAB_TEXT_FONT, TREE_TABLE_FONT, DIALOG_FONT);
 
 	private static final String ABSENT = "A";
 	private static final String VALUE = "V";
@@ -57,93 +49,140 @@ public final class ThemeFontCoordinator {
 		this.store = store;
 	}
 
-	public boolean isEnabled() {
-		return store.getBoolean(PreferenceKeys.THEME_FONTS_ENABLED);
+	public FontSettings settings() {
+		return FontSettings.load(store);
 	}
 
 	public boolean ownsFonts() {
 		return !read().isEmpty();
 	}
 
-	/** True when the family is installed; used to describe what a theme asks for. */
+	/** True when the family is installed; used to describe what is requested. */
 	public boolean installed(String family) {
 		return fonts.installed(family);
 	}
 
-	/** Applies the committed intent for fonts: applies the theme's fonts, hands fonts back, or does nothing. */
-	public FontOutcome apply(Theme theme) {
-		if (!isEnabled()) {
-			return ownsFonts() ? release() : FontOutcome.NOT_REQUESTED;
-		}
-		ThemeFonts requested = theme.getFonts();
-		if (requested.isEmpty()) {
-			return new FontOutcome(FontOutcome.Status.NOTHING_TO_APPLY, "This theme does not specify fonts.");
-		}
-		Map<String, Owned> record = read();
-		List<String> notes = new ArrayList<>();
-		try {
-			take("editor", requested.editorFont(), EDITOR_FONTS, record, notes);
-			take("workbench", requested.workbenchFont(), WORKBENCH_FONTS, record, notes);
-			fonts.flush();
-			save(record);
-		} catch (IOException | RuntimeException e) {
-			return new FontOutcome(FontOutcome.Status.FAILED, "Theme fonts could not be applied: " + e.getMessage());
-		}
-		return notes.isEmpty() ? new FontOutcome(FontOutcome.Status.APPLIED, "Theme fonts applied.")
-				: new FontOutcome(FontOutcome.Status.INCOMPLETE, String.join(" ", notes));
+	/** The font a target is using right now, for display. */
+	public Optional<ThemeFonts.Face> current(FontTarget target) {
+		return fonts.effective(target.definitionIds().get(0));
 	}
 
-	/** Gives back every definition whose stored value is still the one this plugin wrote. */
+	/** Applies the committed font settings for the theme, handing back any target that is no longer managed. */
+	public FontOutcome apply(Theme theme) {
+		FontSettings settings = settings();
+		Map<String, Owned> record = read();
+		List<String> missing = new ArrayList<>();
+		List<String> kept = new ArrayList<>();
+		boolean applied = false;
+		boolean released = false;
+		boolean themeWithoutFont = false;
+		boolean touched = false;
+		try {
+			for (FontTarget target : FontTarget.values()) {
+				FontChoice choice = settings.choice(target);
+				Optional<ThemeFonts.Face> wanted = choice.resolve(target.themeFace(theme.getFonts()));
+				if (wanted.isEmpty()) {
+					themeWithoutFont |= choice.mode() == FontMode.THEME;
+					released |= giveBack(target.definitionIds(), record);
+					continue;
+				}
+				ThemeFonts.Face face = wanted.get();
+				if (!fonts.installed(face.family())) {
+					missing.add("Requested " + target.role() + " font \"" + face.family() + "\" is not installed; the "
+							+ target.role() + " font was not changed.");
+					continue;
+				}
+				applied |= take(target, fonts.represent(face), record, kept);
+				touched = true;
+			}
+			if (touched || released) {
+				fonts.flush();
+				save(record);
+			}
+		} catch (IOException | RuntimeException e) {
+			return new FontOutcome(FontOutcome.Status.FAILED, "Fonts could not be applied: " + e.getMessage());
+		}
+		if (!missing.isEmpty()) {
+			return new FontOutcome(FontOutcome.Status.INCOMPLETE, String.join(" ", missing));
+		}
+		if (applied) {
+			return new FontOutcome(FontOutcome.Status.APPLIED,
+					kept.isEmpty() ? "Fonts applied." : "Fonts applied. " + String.join(" ", kept));
+		}
+		if (!kept.isEmpty()) {
+			return new FontOutcome(FontOutcome.Status.APPLIED, String.join(" ", kept));
+		}
+		if (released) {
+			return new FontOutcome(FontOutcome.Status.RELEASED, "Previous fonts were restored.");
+		}
+		return themeWithoutFont ? new FontOutcome(FontOutcome.Status.NOTHING_TO_APPLY, "This theme does not specify fonts.")
+				: FontOutcome.NOT_REQUESTED;
+	}
+
+	/** Gives back every definition whose stored value is still the one this plugin wrote, for every target. */
 	public FontOutcome release() {
 		Map<String, Owned> record = read();
 		try {
-			for (Map.Entry<String, Owned> entry : record.entrySet()) {
-				if (fonts.get(entry.getKey()).filter(entry.getValue().written()::equals).isPresent()) {
-					String prior = entry.getValue().prior();
-					if (prior == null) {
-						fonts.remove(entry.getKey());
-					} else {
-						fonts.put(entry.getKey(), prior);
-					}
-				}
+			for (FontTarget target : FontTarget.values()) {
+				giveBack(target.definitionIds(), record);
 			}
 			fonts.flush();
-			save(Map.of());
+			save(record);
 		} catch (IOException | RuntimeException e) {
 			return new FontOutcome(FontOutcome.Status.FAILED, "Previous fonts could not be restored: " + e.getMessage());
 		}
 		return new FontOutcome(FontOutcome.Status.RELEASED, "Previous fonts were restored.");
 	}
 
-	private void take(String role, Optional<ThemeFonts.Face> face, List<String> ids, Map<String, Owned> record,
-			List<String> notes) {
-		if (face.isEmpty()) {
-			return;
-		}
-		ThemeFonts.Face wanted = face.get();
-		if (!fonts.installed(wanted.family())) {
-			notes.add("Requested " + role + " font \"" + wanted.family() + "\" is not installed; the " + role
-					+ " font was not changed.");
-			return;
-		}
-		String stored = fonts.represent(wanted);
-		boolean kept = false;
-		for (String id : ids) {
+	/**
+	 * Writes the font to the target's definitions. Returns true when at least one definition was written; a definition
+	 * the user changed since and that is requested unchanged is left and noted in {@code kept}.
+	 */
+	private boolean take(FontTarget target, String stored, Map<String, Owned> record, List<String> kept) {
+		boolean wrote = false;
+		boolean keptAny = false;
+		for (String id : target.definitionIds()) {
 			Optional<String> current = fonts.get(id);
 			Owned owned = record.get(id);
 			if (owned == null) {
 				record.put(id, new Owned(stored, current.orElse(null)));
 			} else if (current.filter(owned.written()::equals).isPresent()) {
 				record.put(id, new Owned(stored, owned.prior()));
+			} else if (!stored.equals(owned.written())) {
+				// The request changed, so this is an explicit new choice; what the definition holds now is what
+				// would be given back later.
+				record.put(id, new Owned(stored, current.orElse(null)));
 			} else {
-				kept = true;
+				keptAny = true;
 				continue;
 			}
 			fonts.put(id, stored);
+			wrote = true;
 		}
-		if (kept) {
-			notes.add("Your own " + role + " font choice was kept; turn theme fonts off and on again to use the theme's.");
+		if (keptAny) {
+			kept.add("Your own " + target.role() + " font choice was kept; choose the font again to replace it.");
 		}
+		return wrote;
+	}
+
+	/** Restores each owned definition still holding the written value and forgets it; true if any was owned. */
+	private boolean giveBack(List<String> ids, Map<String, Owned> record) {
+		boolean any = false;
+		for (String id : ids) {
+			Owned owned = record.remove(id);
+			if (owned == null) {
+				continue;
+			}
+			any = true;
+			if (fonts.get(id).filter(owned.written()::equals).isPresent()) {
+				if (owned.prior() == null) {
+					fonts.remove(id);
+				} else {
+					fonts.put(id, owned.prior());
+				}
+			}
+		}
+		return any;
 	}
 
 	// ---- ownership record: one line per definition, "id TAB written TAB prior", prior being "A" or "V" + value ----
