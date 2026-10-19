@@ -103,8 +103,8 @@ public final class WorkbenchCoordinator {
 	// ---- external theme change: release only ----
 
 	/**
-	 * Starts, once, watching for another Eclipse theme being chosen. The reaction is to release the plug-in colors
-	 * this plugin still owns; it never reapplies anything.
+	 * Starts, once, watching for another Eclipse theme, or one of the plugin's light themes, being chosen. The
+	 * reaction is to release the plug-in colors this plugin still owns; it never reapplies anything.
 	 */
 	public void startWatching() {
 		if (stopWatching == null) {
@@ -121,7 +121,10 @@ public final class WorkbenchCoordinator {
 	}
 
 	private void onSavedThemeChanged(Optional<String> newId) {
-		if (newId.filter(WorkbenchSlots::isOurs).isEmpty() && pluginColors.hasOwned()) {
+		// Plug-in colors belong to the dark family only, so the plugin's own light themes chosen on the Appearance page
+		// release them too.
+		if (newId.flatMap(WorkbenchSlots::familyOf).filter(WorkbenchFamily.DARK::equals).isEmpty()
+				&& pluginColors.hasOwned()) {
 			pluginColors.release();
 		}
 	}

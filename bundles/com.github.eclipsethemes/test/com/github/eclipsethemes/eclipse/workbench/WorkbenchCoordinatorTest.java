@@ -543,6 +543,19 @@ public class WorkbenchCoordinatorTest {
 	}
 
 	@Test
+	public void choosingThePluginsOwnLightThemeOnTheAppearancePageReleasesTheDarkColors() {
+		enable();
+		coordinator.apply(dark("#282c34", "#abb2bf"));
+		foreign.mutations.clear();
+
+		engine.chooseExternally(WorkbenchFamily.LIGHT.themeId());
+
+		assertEquals(Optional.empty(), foreignValue(WB, HYPERLINK));
+		assertFalse(coordinator.ownsPluginColors());
+		assertTrue(foreign.mutations.stream().noneMatch(m -> m.startsWith("put")));
+	}
+
+	@Test
 	public void theListenerIgnoresThePluginsOwnThemeSwitches() {
 		enable();
 		coordinator.apply(dark("#282c34", "#abb2bf"));

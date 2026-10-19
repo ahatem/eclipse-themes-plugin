@@ -116,5 +116,6 @@ test seams.
 
 ### Deferred
 
-Light-family plug-in colors (decision 1); the editor `hyperlinkColor` and other editor-surface keys (editor integrations); native and
+Light-family plug-in colors (decision 1); editor-surface keys (editor integrations), except the editor `hyperlinkColor`, which the
+widened scope coordinated in the table; native and
 operating-system colors; theme-authored plug-in colors and theme CSS (R9 package schema); GTK/macOS evidence.

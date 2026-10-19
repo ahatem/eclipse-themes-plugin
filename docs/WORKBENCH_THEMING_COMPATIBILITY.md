@@ -87,7 +87,8 @@ overridden.
 Colors that other plug-ins keep in their own preferences (popups, hyperlinks, diff and status colors, annotation colors, Mylyn and
 Debug colors) cannot be set through the static CSS without overwriting and later deleting the user's own values, which is what stock
 Dark does. The plugin coordinates a fixed, declared table of such keys (`PluginColorTable`, 68 keys, four of them inert on 4.40,
-each with the owning bundle and a palette role) by this rule:
+each with the owning bundle and a palette role; the hyperlink keys include the editor's `org.eclipse.ui.editors/hyperlinkColor`) by
+this rule:
 
 1. Only while a **dark** coordinated theme is active. Light themes, editor-only mode and disabled coordination write none of them.
 2. A key that already has an instance value is the user's and is never written, whatever its origin.
@@ -116,7 +117,8 @@ released colors. Nothing is sent anywhere.
 - **Appearance preference page** lists four extra Eclipse themes: `Eclipse Themes Dark`, `Eclipse Themes Dark (alternate)`,
   `Eclipse Themes Light`, `Eclipse Themes Light (alternate)`. Eclipse offers no supported way to hide them. The pair per family
   exists because Eclipse re-reads CSS color references only when the theme *id* changes; the plugin alternates between them when
-  the family stays the same. Choosing either one by hand is harmless.
+  the family stays the same. Choosing one by hand changes nothing the plugin owns, except that choosing a light one releases the
+  plug-in colors like any light theme; at the next start the plugin re-coordinates its own slot to the selected theme's family.
 - **Colors and Fonts** does not list the workbench palette (the definitions are non-editable). Eclipse also writes
   `com.github.eclipsethemes.workbench.<family>.<role>` entries into the instance `org.eclipse.ui.workbench` preferences while a
   palette is published; they are removed again when the plugin hands the workbench back. Eclipse ignores stored values for these
