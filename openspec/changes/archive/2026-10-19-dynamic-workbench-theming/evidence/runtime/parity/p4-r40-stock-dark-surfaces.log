@@ -1,0 +1,41 @@
+R8A ENV os=Windows 11 10.0 ws=win32 java=21.0.11+10-LTS cssThemeBundle=0.15.100.v20260507-0340 platform=4.40.0.v20260601-0713 product=1.1.0.202610182337 state=32
+R8A THEMES [org.eclipse.e4.ui.css.theme.e4_dark, org.eclipse.e4.ui.css.theme.e4_default, com.github.eclipsethemes.workbench.dark, com.github.eclipsethemes.workbench.dark.alt, com.github.eclipsethemes.workbench.light, com.github.eclipsethemes.workbench.light.alt, spike.bis.v0.dark, spike.bis.v8.dark, spike.bis.v9.dark, spike.bis.v10.dark, spike.bis.v11.dark, spike.bis.v12.dark, spike.bis.v13.dark, spike.bis.v14.dark, spike.bis.w0.dark, spike.bis.w1.dark, spike.bis.w2.dark, spike.bis.w3.dark, spike.bis.w4.dark, spike.bis.w5.dark, spike.bis.w6.dark, spike.bis.w7.dark, spike.bis.w8.dark, spike.bis.w9.dark, spike.bis.w10.dark]
+R8A STATE boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=<absent> | osDark=true | highContrast=false
+R8A OWNPREFS 
+R8A STEP persp|org.eclipse.jdt.ui.JavaPerspective
+R8A PERSP org.eclipse.jdt.ui.JavaPerspective true
+R8A STEP view|org.eclipse.jdt.ui.PackageExplorer
+R8A VIEW org.eclipse.jdt.ui.PackageExplorer
+R8A STEP project
+R8A PROJECT opened Demo.java
+R8A STEP view|org.eclipse.jdt.ui.PackageExplorer
+R8A VIEW org.eclipse.jdt.ui.PackageExplorer
+R8A STEP wait|2500
+R8A STEP stock|org.eclipse.e4.ui.css.theme.e4_dark
+R8A STOCK org.eclipse.e4.ui.css.theme.e4_dark found=true
+R8A STOCK-SET ms=761 active=org.eclipse.e4.ui.css.theme.e4_dark
+R8A STEP wait|3000
+R8A STEP surfaces|sdark
+R8A SURFACE sdark Shell#IDEWindow bg=#48484c fg=#eeeeee
+R8A SURFACE sdark CTabFolder#left bg=#48484c fg=#bbbbbb tabSelBg=#48484c
+R8A SURFACE sdark ToolBar bg=#f0f0f0 fg=#000000
+R8A SURFACE sdark ToolBar#org-eclipse-jdt-ui-PackageExplorer bg=#48484c fg=#eeeeee
+R8A SURFACE sdark Tree bg=#2f2f2f fg=#aaaaaa
+R8A SURFACE sdark CTabFolder#org-eclipse-e4-primaryDataStack bg=#48484c fg=#bbbbbb tabSelBg=#48484c
+R8A SURFACE sdark StyledText bg=#1e1f22 fg=#cccccc
+R8A SURFACE sdark CTabFolder#right bg=#48484c fg=#bbbbbb tabSelBg=#48484c
+R8A SURFACE sdark ToolBar#org-eclipse-ui-views-ContentOutline bg=#48484c fg=#eeeeee
+R8A SURFACE sdark CTabFolder#bottom bg=#292929 fg=#dddddd tabSelBg=#292929
+R8A SURFACE sdark ToolBar#org-eclipse-oomph-setup-presentation-NotificationView bg=#f0f0f0 fg=#eeeeee
+R8A SURFACE sdark StatusLine#org-eclipse-ui-StatusLine bg=#48484c fg=#eeeeee
+R8A SURFACE sdark ToolBar#org-eclipse-tips-ide-toolbar-status bg=#48484c fg=#eeeeee
+R8A SURFACE sdark ToolBar#org-eclipse-ui-workbench-file bg=#48484c fg=#eeeeee
+R8A SURFACE sdark ToolBar#org-eclipse-ui-workbench-edit bg=#48484c fg=#eeeeee
+R8A SURFACE sdark ToolBar#org-eclipse-debug-ui-launchActionSet bg=#48484c fg=#eeeeee
+R8A SURFACE sdark ToolBar#org-eclipse-jdt-ui-JavaElementCreationActionSet bg=#48484c fg=#eeeeee
+R8A SURFACE sdark ToolBar#org-eclipse-search-searchActionSet bg=#48484c fg=#eeeeee
+R8A SURFACE sdark ToolBar#org-eclipse-terminal-view-ui-toolbar bg=#48484c fg=#eeeeee
+R8A SURFACE sdark ToolBar#org-eclipse-debug-ui-main-toolbar bg=#48484c fg=#eeeeee
+R8A SURFACE sdark ToolBar#org-eclipse-ui-edit-text-actionSet-presentation bg=#48484c fg=#eeeeee
+R8A SURFACE sdark ToolBar#org-eclipse-ui-workbench-navigate bg=#48484c fg=#eeeeee
+R8A DONE

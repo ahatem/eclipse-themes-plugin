@@ -1,0 +1,210 @@
+# Eclipse 4.41 runtime evidence: selected ORIGINAL lines, in run order (R1,R2,R3strict,R4,R5).
+# Omitted: per-toolbar SURFACE lines (ToolBar#<id>), trailing whitespace trimmed. Full logs hashed in log-hashes.csv.
+
+=== R1 ===
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4974 java=25.0.4.1+1-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.200.v20260806-0515 platform=4.41.0.v20260828-1142 buildId=4.41.0.20260903-0719 resolverMode=null
+SERVICE available=true type=org.eclipse.e4.ui.css.swt.internal.theme.ThemeEngine (diagnostic label only)
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p4.theme=P4 Proof (research)]
+STATE boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_dark | effective=org.eclipse.e4.ui.css.theme.e4_dark | osDark=true | highContrast=false
+STEP wait|3000
+STEP state|baseline
+STATE baseline | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_dark | effective=org.eclipse.e4.ui.css.theme.e4_dark | osDark=true | highContrast=false
+STEP surfaces|baseline
+SURFACE baseline Shell#IDEWindow bg=#48484c fg=#eeeeee
+SURFACE baseline CTabFolder#topLeft bg=#292929 fg=#dddddd tabSelBg=#292929
+SURFACE baseline ToolBar bg=#f0f0f0 fg=#000000
+SURFACE baseline CTabFolder#bottomLeft bg=#48484c fg=#bbbbbb tabSelBg=#48484c
+SURFACE baseline CTabFolder#org-eclipse-e4-primaryDataStack bg=#48484c fg=#bbbbbb tabSelBg=#48484c
+SURFACE baseline StyledText bg=#3f4447 fg=#bbbbbb
+SURFACE baseline CTabFolder#bottomRight bg=#48484c fg=#bbbbbb tabSelBg=#292929
+SURFACE baseline Tree bg=#2f2f2f fg=#aaaaaa
+SURFACE baseline Table bg=#313538 fg=#cccccc
+SURFACE baseline StatusLine#org-eclipse-ui-StatusLine bg=#48484c fg=#eeeeee
+STEP shot|baseline
+SHOT baseline
+STEP set|spike.p4.theme
+POST expected=spike.p4.theme actual=spike.p4.theme match=true sameObject=true
+STATE after-set spike.p4.theme | active=spike.p4.theme | instance=spike.p4.theme | config=<absent> | default=spike.p4.theme | effective=spike.p4.theme | osDark=true | highContrast=false
+DEFENDER dialog cancelled; no exclusion requested
+STEP wait|2500
+STEP surfaces|p4
+SURFACE p4 Shell#IDEWindow bg=#f8bbd0 fg=#111111
+SURFACE p4 CTabFolder#topLeft bg=#f8bbd0 fg=#000000 tabSelBg=#d1c4e9
+SURFACE p4 ToolBar bg=#f8bbd0 fg=#000000
+SURFACE p4 CTabFolder#bottomLeft bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE p4 CTabFolder#org-eclipse-e4-primaryDataStack bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE p4 StyledText bg=#ffffff fg=#000000
+SURFACE p4 CTabFolder#bottomRight bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE p4 StatusLine#org-eclipse-ui-StatusLine bg=#a5d6a7 fg=#000000
+STEP shot|p4
+SHOT p4
+STEP set|org.eclipse.e4.ui.css.theme.e4_dark
+POST expected=org.eclipse.e4.ui.css.theme.e4_dark actual=org.eclipse.e4.ui.css.theme.e4_dark match=true sameObject=true
+STATE after-set org.eclipse.e4.ui.css.theme.e4_dark | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=org.eclipse.e4.ui.css.theme.e4_dark | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_dark | effective=org.eclipse.e4.ui.css.theme.e4_dark | osDark=true | highContrast=false
+STEP wait|2500
+STEP surfaces|builtin-dark
+SURFACE builtin-dark Shell#IDEWindow bg=#48484c fg=#eeeeee
+SURFACE builtin-dark CTabFolder#topLeft bg=#292929 fg=#dddddd tabSelBg=#292929
+SURFACE builtin-dark ToolBar bg=#f0f0f0 fg=#000000
+SURFACE builtin-dark CTabFolder#bottomLeft bg=#48484c fg=#bbbbbb tabSelBg=#48484c
+SURFACE builtin-dark CTabFolder#org-eclipse-e4-primaryDataStack bg=#48484c fg=#bbbbbb tabSelBg=#48484c
+SURFACE builtin-dark StyledText bg=#3f4447 fg=#bbbbbb
+SURFACE builtin-dark CTabFolder#bottomRight bg=#292929 fg=#dddddd tabSelBg=#292929
+SURFACE builtin-dark StatusLine#org-eclipse-ui-StatusLine bg=#48484c fg=#eeeeee
+STEP shot|builtin-dark
+SHOT builtin-dark
+STEP set|org.eclipse.e4.ui.css.theme.e4_default
+POST expected=org.eclipse.e4.ui.css.theme.e4_default actual=org.eclipse.e4.ui.css.theme.e4_default match=true sameObject=true
+STATE after-set org.eclipse.e4.ui.css.theme.e4_default | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_default | effective=org.eclipse.e4.ui.css.theme.e4_default | osDark=true | highContrast=false
+STEP wait|2500
+STEP surfaces|builtin-default
+SURFACE builtin-default Shell#IDEWindow bg=#f0f0f0 fg=#000000
+SURFACE builtin-default CTabFolder#topLeft bg=#f8f8f8 fg=#000000 tabSelBg=#ffffff
+SURFACE builtin-default ToolBar bg=#f0f0f0 fg=#000000
+SURFACE builtin-default CTabFolder#bottomLeft bg=#f8f8f8 fg=#000000 tabSelBg=#ffffff
+SURFACE builtin-default CTabFolder#org-eclipse-e4-primaryDataStack bg=#f8f8f8 fg=#000000 tabSelBg=#ffffff
+SURFACE builtin-default StyledText bg=#ffffff fg=#000000
+SURFACE builtin-default CTabFolder#bottomRight bg=#f8f8f8 fg=#000000 tabSelBg=#ffffff
+SURFACE builtin-default StatusLine#org-eclipse-ui-StatusLine bg=#f8f8f8 fg=#000000
+STEP set|spike.p4.theme
+POST expected=spike.p4.theme actual=spike.p4.theme match=true sameObject=true
+STATE after-set spike.p4.theme | active=spike.p4.theme | instance=spike.p4.theme | config=<absent> | default=spike.p4.theme | effective=spike.p4.theme | osDark=true | highContrast=false
+STEP wait|2500
+STEP surfaces|p4-again
+SURFACE p4-again Shell#IDEWindow bg=#f8bbd0 fg=#111111
+SURFACE p4-again CTabFolder#topLeft bg=#f8bbd0 fg=#000000 tabSelBg=#ffffff
+SURFACE p4-again ToolBar bg=#f8bbd0 fg=#000000
+SURFACE p4-again CTabFolder#bottomLeft bg=#d1c4e9 fg=#000000 tabSelBg=#ffffff
+SURFACE p4-again CTabFolder#org-eclipse-e4-primaryDataStack bg=#d1c4e9 fg=#000000 tabSelBg=#ffffff
+SURFACE p4-again StyledText bg=#ffffff fg=#000000
+SURFACE p4-again CTabFolder#bottomRight bg=#f8bbd0 fg=#000000 tabSelBg=#ffffff
+SURFACE p4-again StatusLine#org-eclipse-ui-StatusLine bg=#a5d6a7 fg=#000000
+STEP state|final-before-exit
+STATE final-before-exit | active=spike.p4.theme | instance=spike.p4.theme | config=<absent> | default=spike.p4.theme | effective=spike.p4.theme | osDark=true | highContrast=false
+DONE
+
+=== R2 ===
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4974 java=25.0.4.1+1-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.200.v20260806-0515 platform=4.41.0.v20260828-1142 buildId=4.41.0.20260903-0719 resolverMode=null
+SERVICE available=true type=org.eclipse.e4.ui.css.swt.internal.theme.ThemeEngine (diagnostic label only)
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p4.theme=P4 Proof (research)]
+STATE boot | active=spike.p4.theme | instance=spike.p4.theme | config=<absent> | default=spike.p4.theme | effective=spike.p4.theme | osDark=true | highContrast=false
+STEP wait|3000
+DEFENDER dialog cancelled; no exclusion requested
+STEP surfaces|restart
+SURFACE restart Shell#IDEWindow bg=#f8bbd0 fg=#111111
+SURFACE restart CTabFolder#topLeft bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE restart ToolBar bg=#d1c4e9 fg=#000000
+SURFACE restart CTabFolder#bottomLeft bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE restart CTabFolder#org-eclipse-e4-primaryDataStack bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE restart StyledText bg=#ffffff fg=#000000
+SURFACE restart CTabFolder#bottomRight bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE restart Tree bg=#ffcc80 fg=#111111
+SURFACE restart Table bg=#b2ebf2 fg=#111111
+SURFACE restart StatusLine#org-eclipse-ui-StatusLine bg=#a5d6a7 fg=#000000
+STEP shot|restart
+SHOT restart
+STEP appearance
+APPEARANCE pageIdValid=true
+APPEARANCE selectedPage=org.eclipse.ui.internal.dialogs.ViewsPreferencePage title=Preferences
+COMBO items=[Dark, Light, P4 Proof (research)] selected=P4 Proof (research)
+COMBO items=[Default (current), Reduced Palette] selected=Default (current)
+STEP wait|1500
+STEP shot|appearance
+SHOT appearance
+STEP choose|Light
+COMBO choose=Light actual=Light
+STEP wait|800
+STEP state|appearance-selected-not-applied
+STATE appearance-selected-not-applied | active=spike.p4.theme | instance=spike.p4.theme | config=<absent> | default=spike.p4.theme | effective=spike.p4.theme | osDark=true | highContrast=false
+STEP ok
+RESTART-DIALOG title=Theme Changed buttons=[&Use as default theme (only applies to workspaces without a configured theme), &Restart, &Don't restart]
+OK-CLICK found=true
+STATE appearance-ok | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_default | effective=org.eclipse.e4.ui.css.theme.e4_default | osDark=true | highContrast=false
+STEP wait|3000
+STEP state|after-appearance-ok
+STATE after-appearance-ok | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_default | effective=org.eclipse.e4.ui.css.theme.e4_default | osDark=true | highContrast=false
+STEP surfaces|after-appearance
+SURFACE after-appearance Shell#IDEWindow bg=#f0f0f0 fg=#000000
+SURFACE after-appearance CTabFolder#topLeft bg=#f8f8f8 fg=#000000 tabSelBg=#ffffff
+SURFACE after-appearance ToolBar bg=#f0f0f0 fg=#000000
+SURFACE after-appearance CTabFolder#bottomLeft bg=#f8f8f8 fg=#000000 tabSelBg=#ffffff
+SURFACE after-appearance CTabFolder#org-eclipse-e4-primaryDataStack bg=#f8f8f8 fg=#000000 tabSelBg=#ffffff
+SURFACE after-appearance StyledText bg=#ffffff fg=#000000
+SURFACE after-appearance CTabFolder#bottomRight bg=#f8f8f8 fg=#000000 tabSelBg=#ffffff
+SURFACE after-appearance StatusLine#org-eclipse-ui-StatusLine bg=#f8f8f8 fg=#000000
+STEP shot|after-appearance
+SHOT after-appearance
+STEP state|end
+STATE end | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_default | effective=org.eclipse.e4.ui.css.theme.e4_default | osDark=true | highContrast=false
+DONE
+
+=== R3strict ===
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4974 java=25.0.4.1+1-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.200.v20260806-0515 platform=4.41.0.v20260828-1142 buildId=4.41.0.20260903-0719 resolverMode=strict
+SERVICE available=true type=org.eclipse.e4.ui.css.swt.internal.theme.ThemeEngine (diagnostic label only)
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p4.theme=P4 Proof (research)]
+STATE boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_dark | effective=org.eclipse.e4.ui.css.theme.e4_dark | osDark=true | highContrast=false
+STEP wait|3000
+STEP state|strict-boot
+STATE strict-boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_dark | effective=org.eclipse.e4.ui.css.theme.e4_dark | osDark=true | highContrast=false
+STEP set|spike.p4.theme.missing
+CAPABILITY-FAILURE theme 'spike.p4.theme.missing' not enumerated; no fallback attempted
+DEFENDER dialog cancelled; no exclusion requested
+STEP set|spike.p4.theme
+POST expected=spike.p4.theme actual=spike.p4.theme match=true sameObject=true
+STATE after-set spike.p4.theme | active=spike.p4.theme | instance=spike.p4.theme | config=<absent> | default=spike.p4.theme | effective=spike.p4.theme | osDark=true | highContrast=false
+STEP wait|2500
+STEP surfaces|strict-p4
+SURFACE strict-p4 Shell#IDEWindow bg=#f8bbd0 fg=#111111
+SURFACE strict-p4 CTabFolder#topLeft bg=#f8bbd0 fg=#000000 tabSelBg=#d1c4e9
+SURFACE strict-p4 ToolBar bg=#f8bbd0 fg=#000000
+SURFACE strict-p4 CTabFolder#bottomLeft bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE strict-p4 CTabFolder#org-eclipse-e4-primaryDataStack bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE strict-p4 StyledText bg=#ffffff fg=#000000
+SURFACE strict-p4 CTabFolder#bottomRight bg=#f8bbd0 fg=#000000 tabSelBg=#d1c4e9
+SURFACE strict-p4 Tree bg=#ffcc80 fg=#111111
+SURFACE strict-p4 Table bg=#b2ebf2 fg=#111111
+SURFACE strict-p4 StatusLine#org-eclipse-ui-StatusLine bg=#a5d6a7 fg=#000000
+STEP state|strict-end
+STATE strict-end | active=spike.p4.theme | instance=spike.p4.theme | config=<absent> | default=spike.p4.theme | effective=spike.p4.theme | osDark=true | highContrast=false
+DONE
+
+=== R4 ===
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4974 java=25.0.4.1+1-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.200.v20260806-0515 platform=4.41.0.v20260828-1142 buildId=4.41.0.20260903-0719 resolverMode=null
+SERVICE available=true type=org.eclipse.e4.ui.css.swt.internal.theme.ThemeEngine (diagnostic label only)
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p4.theme=P4 Proof (research)]
+STATE boot | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_default | effective=org.eclipse.e4.ui.css.theme.e4_default | osDark=true | highContrast=false
+STEP wait|3000
+STEP set|spike.p4.theme
+POST expected=spike.p4.theme actual=spike.p4.theme match=true sameObject=true
+STATE after-set spike.p4.theme | active=spike.p4.theme | instance=spike.p4.theme | config=<absent> | default=spike.p4.theme | effective=spike.p4.theme | osDark=true | highContrast=false
+STEP wait|2500
+DEFENDER dialog cancelled; no exclusion requested
+STEP shot|p4-print
+PRINT true
+SHOT p4-print
+STEP state|r4-end
+STATE r4-end | active=spike.p4.theme | instance=spike.p4.theme | config=<absent> | default=spike.p4.theme | effective=spike.p4.theme | osDark=true | highContrast=false
+DONE
+
+=== R5 ===
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4974 java=25.0.4.1+1-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.200.v20260806-0515 platform=4.41.0.v20260828-1142 buildId=4.41.0.20260903-0719 resolverMode=null
+SERVICE available=true type=org.eclipse.e4.ui.css.swt.internal.theme.ThemeEngine (diagnostic label only)
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p4.theme=P4 Proof (research)]
+STATE boot | active=spike.p4.theme | instance=spike.p4.theme | config=<absent> | default=spike.p4.theme | effective=spike.p4.theme | osDark=true | highContrast=false
+STEP wait|3500
+DEFENDER dialog cancelled; no exclusion requested
+STEP shot|restart-print
+PRINT true
+SHOT restart-print
+STEP surfaces|r5
+SURFACE r5 Shell#IDEWindow bg=#f8bbd0 fg=#111111
+SURFACE r5 CTabFolder#topLeft bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE r5 ToolBar bg=#d1c4e9 fg=#000000
+SURFACE r5 CTabFolder#bottomLeft bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE r5 CTabFolder#org-eclipse-e4-primaryDataStack bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE r5 StyledText bg=#ffffff fg=#000000
+SURFACE r5 CTabFolder#bottomRight bg=#d1c4e9 fg=#000000 tabSelBg=#d1c4e9
+SURFACE r5 Tree bg=#ffcc80 fg=#111111
+SURFACE r5 Table bg=#b2ebf2 fg=#111111
+SURFACE r5 StatusLine#org-eclipse-ui-StatusLine bg=#a5d6a7 fg=#000000
+DONE

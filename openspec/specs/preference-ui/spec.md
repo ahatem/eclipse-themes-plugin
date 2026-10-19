@@ -199,3 +199,41 @@ content-security framework, and a refused launch SHALL be an inert control rathe
 - **GIVEN** a selected theme whose `website` contains characters that carry meaning in display markup
 - **WHEN** the details panel renders
 - **THEN** the value is displayed as literal text rather than as markup
+
+### Requirement: The page operates on catalog records without managed paths
+
+The preference UI SHALL present and manage `ThemeRecord`s: lifecycle actions branch on `record.origin()`, identity display and reselection use `record.logicalId()`, and visual details use `record.theme()` metadata. The UI SHALL NOT infer repository state from theme file presence or logical-ID prefixes, and SHALL NOT receive or construct absolute managed paths. Visible UX is unchanged.
+
+#### Scenario: Installed marker follows record origin
+
+- **GIVEN** bundled and installed records in the catalog
+- **WHEN** the list renders and update/removal availability is decided
+- **THEN** installed-only markers and actions follow `origin == INSTALLED`
+
+### Requirement: The preference page offers one compact Workbench section
+
+The page SHALL add one compact Workbench section with a coordination checkbox, a status line, a truthful coverage line, a diagnostics-copy action and an action that opens Eclipse Appearance preferences through a public preference-dialog route. Its content SHALL follow the capability state and any conflict with an external Appearance choice.
+
+#### Scenario: Verified
+- **GIVEN** the capability is VERIFIED
+- **THEN** the checkbox is enabled, unchecked by default, with a verified note
+
+#### Scenario: Experimental
+- **GIVEN** the capability is EXPERIMENTAL
+- **THEN** the checkbox is labelled as experimental, states the combination, and checking it is the opt-in
+
+#### Scenario: Unavailable
+- **GIVEN** the capability is UNAVAILABLE
+- **THEN** the checkbox is disabled, the reason is shown and the Appearance button is visible
+
+#### Scenario: Apply result is truthful
+- **GIVEN** the editor part succeeded and the workbench part did not
+- **THEN** the status does not read as complete success and the workbench reason is shown with the Appearance route
+
+#### Scenario: Conflict
+- **GIVEN** coordination is enabled and the active Eclipse theme is not ours
+- **THEN** the section says coordination is not the current effective state and offers the Appearance route
+
+#### Scenario: Stop management
+- **WHEN** the user chooses Stop Eclipse Themes management and it completes
+- **THEN** workbench coordination is also relinquished under the ownership rules

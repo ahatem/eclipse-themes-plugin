@@ -1,0 +1,126 @@
+ENV os=Windows 11 10.0 ws=win32 java=25.0.4.1+1-LTS cssThemeBundle=0.15.200.v20260806-0515 platform=4.41.0.v20260828-1142 product=1.1.0.202610182337 state=32
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark, org.eclipse.e4.ui.css.theme.e4_default, com.github.eclipsethemes.workbench.dark, com.github.eclipsethemes.workbench.dark.alt, com.github.eclipsethemes.workbench.light, com.github.eclipsethemes.workbench.light.alt]
+STATE boot | active=com.github.eclipsethemes.workbench.dark.alt | instance=com.github.eclipsethemes.workbench.dark.alt | config=<absent> | default=com.github.eclipsethemes.workbench.dark.alt | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark.alt SELECTED_THEME_LOGICAL_ID=local:910fe592-810d-4304-bb8c-d8ccd34f59ad WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP state|restart-boot
+STATE restart-boot | active=com.github.eclipsethemes.workbench.dark.alt | instance=com.github.eclipsethemes.workbench.dark.alt | config=<absent> | default=com.github.eclipsethemes.workbench.dark.alt | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark.alt SELECTED_THEME_LOGICAL_ID=local:910fe592-810d-4304-bb8c-d8ccd34f59ad WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP wait|5000
+DEFENDER dialog cancelled
+STEP state|restart-after-5s
+STATE restart-after-5s | active=com.github.eclipsethemes.workbench.dark.alt | instance=com.github.eclipsethemes.workbench.dark.alt | config=<absent> | default=com.github.eclipsethemes.workbench.dark.alt | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark.alt SELECTED_THEME_LOGICAL_ID=local:910fe592-810d-4304-bb8c-d8ccd34f59ad WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP regs|restart
+REGS restart d.background=#2b0a3d d.foreground=#ffe066 d.surface=#36153f d.raised=#401f41 d.border=#5a3946 d.muted=#b59558 d.selection=#006666 l.background=#ffffff l.foreground=#1f1f1f l.surface=#f3f3f3 l.raised=#e8e8e8 l.border=#cecece l.muted=#6b6b6b l.selection=#cce4f7 
+STEP surfaces|restart
+SURFACE restart Shell#IDEWindow bg=#2b0a3d fg=#ffe066
+SURFACE restart CTabFolder#topLeft bg=#36153f fg=#ffe066 tabSelBg=#401f41
+SURFACE restart ToolBar bg=#36153f fg=#000000
+SURFACE restart ToolBar#org-eclipse-ui-navigator-ProjectExplorer bg=#36153f fg=#ffe066
+SURFACE restart CTabFolder#bottomLeft bg=#36153f fg=#ffe066 tabSelBg=#401f41
+SURFACE restart ToolBar#org-eclipse-ui-views-ContentOutline bg=#36153f fg=#ffe066
+SURFACE restart CTabFolder#org-eclipse-e4-primaryDataStack bg=#36153f fg=#ffe066 tabSelBg=#401f41
+SURFACE restart StyledText bg=#ffffff fg=#000000
+SURFACE restart CTabFolder#bottomRight bg=#36153f fg=#ffe066 tabSelBg=#401f41
+SURFACE restart ToolBar#spike-p8-view bg=#36153f fg=#ffe066
+SURFACE restart Tree bg=#2b0a3d fg=#ffe066
+SURFACE restart Table bg=#2b0a3d fg=#ffe066
+SURFACE restart ToolBar#org-eclipse-ui-workbench-file bg=#36153f fg=#ffe066
+SURFACE restart ToolBar#org-eclipse-ui-workbench-edit bg=#36153f fg=#ffe066
+SURFACE restart ToolBar#org-eclipse-terminal-view-ui-toolbar bg=#36153f fg=#ffe066
+SURFACE restart ToolBar#org-eclipse-debug-ui-launchActionSet bg=#36153f fg=#ffe066
+SURFACE restart ToolBar#org-eclipse-search-searchActionSet bg=#36153f fg=#ffe066
+SURFACE restart ToolBar#org-eclipse-ui-workbench-navigate bg=#36153f fg=#ffe066
+SURFACE restart StatusLine#org-eclipse-ui-StatusLine bg=#36153f fg=#ffe066
+SURFACE restart ToolBar#org-eclipse-tips-ide-toolbar-status bg=#36153f fg=#ffe066
+STEP shot|r1-restart|main
+PRINT true
+SHOT r1-restart
+STEP appearance
+APPEARANCE pageIdValid=true
+COMBO items=[Dark, Light, Eclipse Themes Dark, Eclipse Themes Dark (alternate), Eclipse Themes Light, Eclipse Themes Light (alternate)] selected=Eclipse Themes Dark (alternate)
+COMBO items=[Default (current), Reduced Palette] selected=Default (current)
+STEP wait|800
+STEP choose|Light
+COMBO choose=Light actual=Light
+STEP aok
+RESTART-DIALOG title=Theme Changed buttons=[&Use as default theme (only applies to workspaces without a configured theme), &Restart, &Don't restart]
+A-OK-CLICK found=true
+STATE after-appearance-ok | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_default | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark.alt SELECTED_THEME_LOGICAL_ID=local:910fe592-810d-4304-bb8c-d8ccd34f59ad WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP wait|3000
+STEP state|external-light
+STATE external-light | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_default | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark.alt SELECTED_THEME_LOGICAL_ID=local:910fe592-810d-4304-bb8c-d8ccd34f59ad WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP regs|external
+REGS external d.background=#2b0a3d d.foreground=#ffe066 d.surface=#36153f d.raised=#401f41 d.border=#5a3946 d.muted=#b59558 d.selection=#006666 l.background=#ffffff l.foreground=#1f1f1f l.surface=#f3f3f3 l.raised=#e8e8e8 l.border=#cecece l.muted=#6b6b6b l.selection=#cce4f7 
+STEP surfaces|external
+SURFACE external Shell#IDEWindow bg=#f0f0f0 fg=#000000
+SURFACE external CTabFolder#topLeft bg=#f8f8f8 fg=#000000 tabSelBg=#ffffff
+SURFACE external ToolBar bg=#f0f0f0 fg=#000000
+SURFACE external ToolBar#org-eclipse-ui-navigator-ProjectExplorer bg=#f8f8f8 fg=#000000
+SURFACE external CTabFolder#bottomLeft bg=#f8f8f8 fg=#000000 tabSelBg=#ffffff
+SURFACE external ToolBar#org-eclipse-ui-views-ContentOutline bg=#f8f8f8 fg=#000000
+SURFACE external CTabFolder#org-eclipse-e4-primaryDataStack bg=#f8f8f8 fg=#000000 tabSelBg=#ffffff
+SURFACE external StyledText bg=#ffffff fg=#000000
+SURFACE external CTabFolder#bottomRight bg=#f8f8f8 fg=#000000 tabSelBg=#ffffff
+SURFACE external ToolBar#org-eclipse-oomph-setup-presentation-NotificationView bg=#f8f8f8 fg=#000000
+SURFACE external ToolBar#org-eclipse-ui-workbench-file bg=#f8f8f8 fg=#000000
+SURFACE external ToolBar#org-eclipse-ui-workbench-edit bg=#f8f8f8 fg=#000000
+SURFACE external ToolBar#org-eclipse-terminal-view-ui-toolbar bg=#f8f8f8 fg=#000000
+SURFACE external ToolBar#org-eclipse-debug-ui-launchActionSet bg=#f8f8f8 fg=#000000
+SURFACE external ToolBar#org-eclipse-search-searchActionSet bg=#f8f8f8 fg=#000000
+SURFACE external ToolBar#org-eclipse-ui-workbench-navigate bg=#f8f8f8 fg=#000000
+SURFACE external StatusLine#org-eclipse-ui-StatusLine bg=#f8f8f8 fg=#000000
+SURFACE external ToolBar#org-eclipse-tips-ide-toolbar-status bg=#f8f8f8 fg=#000000
+STEP shot|r2-external|main
+PRINT true
+SHOT r2-external
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP labels|conflict-view
+CHECKBOX-STATE 'Also theme the Eclipse workbench' enabled=true selected=true
+LABEL Verified on win32/win32 with theme engine 0.15.200. Coordination is not the current effective state: another Eclipse theme was chosen on the Appearance page.
+LABEL Coordinates core workbench surfaces (window, tabs, toolbars, trees, tables, status line). Native menus, dialogs, title bars, Browser content and icons may not change.
+STEP pick|Atom One Light
+PICK Atom One Light ok
+STEP apply
+APPLY-CLICK found=true ms=117
+STEP labels|immediately-after-apply
+CHECKBOX-STATE 'Also theme the Eclipse workbench' enabled=true selected=true
+LABEL Verified on win32/win32 with theme engine 0.15.200.
+LABEL Coordinates core workbench surfaces (window, tabs, toolbars, trees, tables, status line). Native menus, dialogs, title bars, Browser content and icons may not change.
+LABEL ✓ Applied (editors and workbench)
+STEP wait|3000
+STEP state|after-apply-while-external
+STATE after-apply-while-external | active=com.github.eclipsethemes.workbench.light | instance=com.github.eclipsethemes.workbench.light | config=<absent> | default=com.github.eclipsethemes.workbench.light | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ID=org.eclipse.e4.ui.css.theme.e4_default WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.light SELECTED_THEME_LOGICAL_ID=bundled:af964299-b821-4e3f-9b60-d648dfd4c1e3 WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_default 
+STEP regs|after-external-apply
+REGS after-external-apply d.background=#2b0a3d d.foreground=#ffe066 d.surface=#36153f d.raised=#401f41 d.border=#5a3946 d.muted=#b59558 d.selection=#006666 l.background=#fafafa l.foreground=#383a42 l.surface=#f0f0f1 l.raised=#e7e7e8 l.border=#cfd0d2 l.muted=#7c7d82 l.selection=#e5e5e6 
+STEP surfaces|after-external-apply
+SURFACE after-external-apply Shell#IDEWindow bg=#fafafa fg=#383a42
+SURFACE after-external-apply CTabFolder#topLeft bg=#f0f0f1 fg=#383a42 tabSelBg=#e7e7e8
+SURFACE after-external-apply ToolBar bg=#f0f0f1 fg=#000000
+SURFACE after-external-apply ToolBar#org-eclipse-ui-navigator-ProjectExplorer bg=#f0f0f1 fg=#383a42
+SURFACE after-external-apply CTabFolder#bottomLeft bg=#f0f0f1 fg=#383a42 tabSelBg=#e7e7e8
+SURFACE after-external-apply ToolBar#org-eclipse-ui-views-ContentOutline bg=#f0f0f1 fg=#383a42
+SURFACE after-external-apply CTabFolder#org-eclipse-e4-primaryDataStack bg=#f0f0f1 fg=#383a42 tabSelBg=#e7e7e8
+SURFACE after-external-apply StyledText bg=#ffffff fg=#000000
+SURFACE after-external-apply CTabFolder#bottomRight bg=#fafafa fg=#383a42 tabSelBg=#e7e7e8
+SURFACE after-external-apply ToolBar#org-eclipse-oomph-setup-presentation-NotificationView bg=#fafafa fg=#383a42
+SURFACE after-external-apply ToolBar#org-eclipse-ui-workbench-file bg=#f0f0f1 fg=#383a42
+SURFACE after-external-apply ToolBar#org-eclipse-ui-workbench-edit bg=#f0f0f1 fg=#383a42
+SURFACE after-external-apply ToolBar#org-eclipse-terminal-view-ui-toolbar bg=#f0f0f1 fg=#383a42
+SURFACE after-external-apply ToolBar#org-eclipse-debug-ui-launchActionSet bg=#f0f0f1 fg=#383a42
+SURFACE after-external-apply ToolBar#org-eclipse-search-searchActionSet bg=#f0f0f1 fg=#383a42
+SURFACE after-external-apply ToolBar#org-eclipse-ui-workbench-navigate bg=#f0f0f1 fg=#383a42
+SURFACE after-external-apply StatusLine#org-eclipse-ui-StatusLine bg=#f0f0f1 fg=#383a42
+SURFACE after-external-apply ToolBar#org-eclipse-tips-ide-toolbar-status bg=#f0f0f1 fg=#383a42
+STEP pcancel
+CANCEL-CLICK found=true
+STEP state|end
+STATE end | active=com.github.eclipsethemes.workbench.light | instance=com.github.eclipsethemes.workbench.light | config=<absent> | default=com.github.eclipsethemes.workbench.light | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ID=org.eclipse.e4.ui.css.theme.e4_default WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.light SELECTED_THEME_LOGICAL_ID=bundled:af964299-b821-4e3f-9b60-d648dfd4c1e3 WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_default 
+DONE

@@ -1,0 +1,406 @@
+# R8a dynamic-palette micro-spike: filtered probe logs (Windows). R1-R5: Eclipse 4.40; S1-S2: Eclipse 4.41.
+# Palettes: A surface=ff0000 fg=000000 accent=00ff00; B 0000ff/ffffff/ffff00; C 00ffff/800000/ff00ff. Defaults 808080/202020/404040.
+# R2's refresh|event step failed (NoClassDefFoundError) and is not evidence; R2/R3 'select' lines are not valid positives because registry values from earlier runs persisted.
+
+## R1 (4.40)
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4973 java=21.0.11+10-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.100.v20260507-0340 platform=4.40.0.v20260601-0713 buildId=4.40.0.20260604-0652 resolverMode=null
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p5.theme=P5 Proof (research)]
+STATE boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=<absent> | effective=<absent> | osDark=true | highContrast=false
+STEP set|spike.p5.theme
+STATE after-set spike.p5.theme | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP wait|1500
+STEP surfaces|default
+SURFACE default Shell#IDEWindow bg=#808080 fg=#202020
+SURFACE default CTabFolder#topLeft bg=#808080 fg=#000000 tabSelBg=#404040
+SURFACE default Tree bg=#808080 fg=#202020
+SURFACE default Table bg=#404040 fg=#202020
+SURFACE default StatusLine#org-eclipse-ui-StatusLine bg=#404040 fg=#000000
+STEP palette|A
+PALETTE A registry=RGB {255, 0, 0}RGB {0, 0, 0}RGB {0, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP wait|800
+STEP surfaces|A-norefresh
+SURFACE A-norefresh Shell#IDEWindow bg=#808080 fg=#202020
+SURFACE A-norefresh CTabFolder#topLeft bg=#808080 fg=#000000 tabSelBg=#404040
+SURFACE A-norefresh Tree bg=#808080 fg=#202020
+SURFACE A-norefresh Table bg=#404040 fg=#202020
+SURFACE A-norefresh StatusLine#org-eclipse-ui-StatusLine bg=#404040 fg=#000000
+STEP refresh|apply
+REFRESH apply active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|A-apply
+SURFACE A-apply Shell#IDEWindow bg=#808080 fg=#202020
+SURFACE A-apply CTabFolder#topLeft bg=#808080 fg=#000000 tabSelBg=#404040
+SURFACE A-apply Tree bg=#808080 fg=#202020
+SURFACE A-apply Table bg=#404040 fg=#202020
+SURFACE A-apply StatusLine#org-eclipse-ui-StatusLine bg=#404040 fg=#000000
+STEP palette|B
+PALETTE B registry=RGB {0, 0, 255}RGB {255, 255, 255}RGB {255, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|apply
+REFRESH apply active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|B-apply
+SURFACE B-apply Shell#IDEWindow bg=#808080 fg=#202020
+SURFACE B-apply CTabFolder#topLeft bg=#808080 fg=#000000 tabSelBg=#404040
+SURFACE B-apply Tree bg=#808080 fg=#202020
+SURFACE B-apply Table bg=#404040 fg=#202020
+SURFACE B-apply StatusLine#org-eclipse-ui-StatusLine bg=#404040 fg=#000000
+STEP palette|C
+PALETTE C registry=RGB {0, 255, 255}RGB {128, 0, 0}RGB {255, 0, 255} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|apply
+REFRESH apply active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|C-apply
+SURFACE C-apply Shell#IDEWindow bg=#808080 fg=#202020
+SURFACE C-apply CTabFolder#topLeft bg=#808080 fg=#000000 tabSelBg=#404040
+SURFACE C-apply Tree bg=#808080 fg=#202020
+SURFACE C-apply Table bg=#404040 fg=#202020
+SURFACE C-apply StatusLine#org-eclipse-ui-StatusLine bg=#404040 fg=#000000
+STEP palette|A
+PALETTE A registry=RGB {255, 0, 0}RGB {0, 0, 0}RGB {0, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|apply
+REFRESH apply active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|A2-apply
+SURFACE A2-apply Shell#IDEWindow bg=#808080 fg=#202020
+SURFACE A2-apply CTabFolder#topLeft bg=#808080 fg=#000000 tabSelBg=#404040
+SURFACE A2-apply Tree bg=#808080 fg=#202020
+SURFACE A2-apply Table bg=#404040 fg=#202020
+SURFACE A2-apply StatusLine#org-eclipse-ui-StatusLine bg=#404040 fg=#000000
+STEP state|end
+STATE end | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+DONE
+
+## R3 (4.40)
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4973 java=21.0.11+10-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.100.v20260507-0340 platform=4.40.0.v20260601-0713 buildId=4.40.0.20260604-0652 resolverMode=null
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p5.theme=P5 Proof (research)]
+STATE boot | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP set|spike.p5.theme
+STATE after-set spike.p5.theme | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP wait|1500
+STEP surfaces|default
+SURFACE default Shell#IDEWindow bg=#00ffff fg=#800000
+SURFACE default CTabFolder#topLeft bg=#00ffff fg=#000000 tabSelBg=#ff00ff
+SURFACE default Tree bg=#00ffff fg=#800000
+SURFACE default Table bg=#ff00ff fg=#800000
+SURFACE default StatusLine#org-eclipse-ui-StatusLine bg=#ff00ff fg=#000000
+STEP palette|A
+PALETTE A registry=RGB {255, 0, 0}RGB {0, 0, 0}RGB {0, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|select
+REFRESH select active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|A
+SURFACE A Shell#IDEWindow bg=#00ffff fg=#800000
+SURFACE A CTabFolder#topLeft bg=#00ffff fg=#000000 tabSelBg=#ff00ff
+SURFACE A Tree bg=#00ffff fg=#800000
+SURFACE A Table bg=#ff00ff fg=#800000
+SURFACE A StatusLine#org-eclipse-ui-StatusLine bg=#ff00ff fg=#000000
+STEP palette|B
+PALETTE B registry=RGB {0, 0, 255}RGB {255, 255, 255}RGB {255, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|select
+REFRESH select active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|B
+SURFACE B Shell#IDEWindow bg=#00ffff fg=#800000
+SURFACE B CTabFolder#topLeft bg=#00ffff fg=#000000 tabSelBg=#ff00ff
+SURFACE B Tree bg=#00ffff fg=#800000
+SURFACE B Table bg=#ff00ff fg=#800000
+SURFACE B StatusLine#org-eclipse-ui-StatusLine bg=#ff00ff fg=#000000
+STEP palette|C
+PALETTE C registry=RGB {0, 255, 255}RGB {128, 0, 0}RGB {255, 0, 255} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|select
+REFRESH select active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|C
+SURFACE C Shell#IDEWindow bg=#00ffff fg=#800000
+SURFACE C CTabFolder#topLeft bg=#00ffff fg=#000000 tabSelBg=#ff00ff
+SURFACE C Tree bg=#00ffff fg=#800000
+SURFACE C Table bg=#ff00ff fg=#800000
+SURFACE C StatusLine#org-eclipse-ui-StatusLine bg=#ff00ff fg=#000000
+STEP palette|A
+PALETTE A registry=RGB {255, 0, 0}RGB {0, 0, 0}RGB {0, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|select
+REFRESH select active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|A2
+SURFACE A2 Shell#IDEWindow bg=#00ffff fg=#800000
+SURFACE A2 CTabFolder#topLeft bg=#00ffff fg=#000000 tabSelBg=#ff00ff
+SURFACE A2 Tree bg=#00ffff fg=#800000
+SURFACE A2 Table bg=#ff00ff fg=#800000
+SURFACE A2 StatusLine#org-eclipse-ui-StatusLine bg=#ff00ff fg=#000000
+STEP palette|B
+PALETTE B registry=RGB {0, 0, 255}RGB {255, 255, 255}RGB {255, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|selectfalse
+REFRESH selectfalse active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|B-restoreFalse
+SURFACE B-restoreFalse Shell#IDEWindow bg=#00ffff fg=#800000
+SURFACE B-restoreFalse CTabFolder#topLeft bg=#00ffff fg=#000000 tabSelBg=#ff00ff
+SURFACE B-restoreFalse Tree bg=#00ffff fg=#800000
+SURFACE B-restoreFalse Table bg=#ff00ff fg=#800000
+SURFACE B-restoreFalse StatusLine#org-eclipse-ui-StatusLine bg=#ff00ff fg=#000000
+STEP state|end
+STATE end | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+DONE
+
+## R4 (4.40)
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4973 java=21.0.11+10-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.100.v20260507-0340 platform=4.40.0.v20260601-0713 buildId=4.40.0.20260604-0652 resolverMode=null
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p5.theme=P5 Proof (research)]
+STATE boot | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP set|spike.p5.theme
+STATE after-set spike.p5.theme | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP wait|1500
+STEP palette|A
+PALETTE A registry=RGB {255, 0, 0}RGB {0, 0, 0}RGB {0, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|hop|org.eclipse.e4.ui.css.theme.e4_default|false
+HOP via=org.eclipse.e4.ui.css.theme.e4_default intermediateRestore=false ms=1536 backSameObject=true
+REFRESH hop active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|A-hop
+SURFACE A-hop Shell#IDEWindow bg=#ff0000 fg=#000000
+SURFACE A-hop CTabFolder#topLeft bg=#ff0000 fg=#000000 tabSelBg=#00ff00
+SURFACE A-hop Tree bg=#ff0000 fg=#000000
+SURFACE A-hop Table bg=#00ff00 fg=#000000
+SURFACE A-hop StatusLine#org-eclipse-ui-StatusLine bg=#00ff00 fg=#000000
+STEP palette|B
+PALETTE B registry=RGB {0, 0, 255}RGB {255, 255, 255}RGB {255, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|hop|org.eclipse.e4.ui.css.theme.e4_default|false
+HOP via=org.eclipse.e4.ui.css.theme.e4_default intermediateRestore=false ms=1454 backSameObject=true
+REFRESH hop active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|B-hop
+SURFACE B-hop Shell#IDEWindow bg=#0000ff fg=#ffffff
+SURFACE B-hop CTabFolder#topLeft bg=#0000ff fg=#000000 tabSelBg=#ffff00
+SURFACE B-hop Tree bg=#0000ff fg=#ffffff
+SURFACE B-hop Table bg=#ffff00 fg=#ffffff
+SURFACE B-hop StatusLine#org-eclipse-ui-StatusLine bg=#ffff00 fg=#000000
+STEP palette|C
+PALETTE C registry=RGB {0, 255, 255}RGB {128, 0, 0}RGB {255, 0, 255} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|hop|org.eclipse.e4.ui.css.theme.e4_default|false
+HOP via=org.eclipse.e4.ui.css.theme.e4_default intermediateRestore=false ms=474 backSameObject=true
+REFRESH hop active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|C-hop
+SURFACE C-hop Shell#IDEWindow bg=#00ffff fg=#800000
+SURFACE C-hop CTabFolder#topLeft bg=#00ffff fg=#000000 tabSelBg=#ff00ff
+SURFACE C-hop Tree bg=#00ffff fg=#800000
+SURFACE C-hop Table bg=#ff00ff fg=#800000
+SURFACE C-hop StatusLine#org-eclipse-ui-StatusLine bg=#ff00ff fg=#000000
+STEP palette|A
+PALETTE A registry=RGB {255, 0, 0}RGB {0, 0, 0}RGB {0, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|hop|org.eclipse.e4.ui.css.theme.e4_default|false
+HOP via=org.eclipse.e4.ui.css.theme.e4_default intermediateRestore=false ms=229 backSameObject=true
+REFRESH hop active=spike.p5.theme themeCount=3
+STEP wait|800
+STEP surfaces|A2-hop
+SURFACE A2-hop Shell#IDEWindow bg=#ff0000 fg=#000000
+SURFACE A2-hop CTabFolder#topLeft bg=#ff0000 fg=#000000 tabSelBg=#00ff00
+SURFACE A2-hop Tree bg=#ff0000 fg=#000000
+SURFACE A2-hop Table bg=#00ff00 fg=#000000
+SURFACE A2-hop StatusLine#org-eclipse-ui-StatusLine bg=#00ff00 fg=#000000
+STEP palette|B
+PALETTE B registry=RGB {0, 0, 255}RGB {255, 255, 255}RGB {255, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|flip|spike.p5.theme|spike.p5.theme2
+THREW refresh|flip|spike.p5.theme|spike.p5.theme2 org.eclipse.core.runtime.AssertionFailedException: null argument:The theme must not be null
+STATE after-throw | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP wait|800
+STEP surfaces|B-flip
+SURFACE B-flip Shell#IDEWindow bg=#ff0000 fg=#000000
+SURFACE B-flip CTabFolder#topLeft bg=#ff0000 fg=#000000 tabSelBg=#00ff00
+SURFACE B-flip Tree bg=#ff0000 fg=#000000
+SURFACE B-flip Table bg=#00ff00 fg=#000000
+SURFACE B-flip StatusLine#org-eclipse-ui-StatusLine bg=#00ff00 fg=#000000
+STEP palette|C
+PALETTE C registry=RGB {0, 255, 255}RGB {128, 0, 0}RGB {255, 0, 255} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|flip|spike.p5.theme|spike.p5.theme2
+THREW refresh|flip|spike.p5.theme|spike.p5.theme2 org.eclipse.core.runtime.AssertionFailedException: null argument:The theme must not be null
+STATE after-throw | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP wait|800
+STEP surfaces|C-flip
+SURFACE C-flip Shell#IDEWindow bg=#ff0000 fg=#000000
+SURFACE C-flip CTabFolder#topLeft bg=#ff0000 fg=#000000 tabSelBg=#00ff00
+SURFACE C-flip Tree bg=#ff0000 fg=#000000
+SURFACE C-flip Table bg=#00ff00 fg=#000000
+SURFACE C-flip StatusLine#org-eclipse-ui-StatusLine bg=#00ff00 fg=#000000
+STEP state|end
+STATE end | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+DONE
+
+## R5 (4.40)
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4973 java=21.0.11+10-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.100.v20260507-0340 platform=4.40.0.v20260601-0713 buildId=4.40.0.20260604-0652 resolverMode=null
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p5.theme=P5 Proof (research), spike.p5.theme2=P5 Proof twin (research)]
+STATE boot | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP set|spike.p5.theme
+STATE after-set spike.p5.theme | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP wait|1500
+STEP surfaces|boot-persisted
+SURFACE boot-persisted Shell#IDEWindow bg=#00ffff fg=#800000
+SURFACE boot-persisted CTabFolder#topLeft bg=#00ffff fg=#000000 tabSelBg=#ff00ff
+SURFACE boot-persisted Tree bg=#00ffff fg=#800000
+SURFACE boot-persisted Table bg=#ff00ff fg=#800000
+SURFACE boot-persisted StatusLine#org-eclipse-ui-StatusLine bg=#ff00ff fg=#000000
+STEP palette|A
+PALETTE A registry=RGB {255, 0, 0}RGB {0, 0, 0}RGB {0, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|flip|spike.p5.theme|spike.p5.theme2
+FLIP ms=2763
+REFRESH flip active=spike.p5.theme2 themeCount=4
+STEP wait|800
+STEP surfaces|A-flip
+SURFACE A-flip Shell#IDEWindow bg=#ff0000 fg=#000000
+SURFACE A-flip CTabFolder#topLeft bg=#ff0000 fg=#000000 tabSelBg=#00ff00
+SURFACE A-flip Tree bg=#ff0000 fg=#000000
+SURFACE A-flip Table bg=#00ff00 fg=#000000
+SURFACE A-flip StatusLine#org-eclipse-ui-StatusLine bg=#00ff00 fg=#000000
+STEP state|f1
+STATE f1 | active=spike.p5.theme2 | instance=spike.p5.theme2 | config=<absent> | default=<absent> | effective=spike.p5.theme2 | osDark=true | highContrast=false
+STEP palette|B
+PALETTE B registry=RGB {0, 0, 255}RGB {255, 255, 255}RGB {255, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|flip|spike.p5.theme|spike.p5.theme2
+FLIP ms=342
+REFRESH flip active=spike.p5.theme themeCount=4
+STEP wait|800
+STEP surfaces|B-flip
+SURFACE B-flip Shell#IDEWindow bg=#0000ff fg=#ffffff
+SURFACE B-flip CTabFolder#topLeft bg=#0000ff fg=#000000 tabSelBg=#ffff00
+SURFACE B-flip Tree bg=#0000ff fg=#ffffff
+SURFACE B-flip Table bg=#ffff00 fg=#ffffff
+SURFACE B-flip StatusLine#org-eclipse-ui-StatusLine bg=#ffff00 fg=#000000
+STEP state|f2
+STATE f2 | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=<absent> | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP palette|C
+PALETTE C registry=RGB {0, 255, 255}RGB {128, 0, 0}RGB {255, 0, 255} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|flip|spike.p5.theme|spike.p5.theme2
+FLIP ms=564
+REFRESH flip active=spike.p5.theme2 themeCount=4
+STEP wait|800
+STEP surfaces|C-flip
+SURFACE C-flip Shell#IDEWindow bg=#00ffff fg=#800000
+SURFACE C-flip CTabFolder#topLeft bg=#00ffff fg=#000000 tabSelBg=#ff00ff
+SURFACE C-flip Tree bg=#00ffff fg=#800000
+SURFACE C-flip Table bg=#ff00ff fg=#800000
+SURFACE C-flip StatusLine#org-eclipse-ui-StatusLine bg=#ff00ff fg=#000000
+STEP state|f3
+STATE f3 | active=spike.p5.theme2 | instance=spike.p5.theme2 | config=<absent> | default=<absent> | effective=spike.p5.theme2 | osDark=true | highContrast=false
+DONE
+
+## S1 (4.41)
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4974 java=25.0.4.1+1-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.200.v20260806-0515 platform=4.41.0.v20260828-1142 buildId=4.41.0.20260903-0719 resolverMode=null
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p5.theme=P5 Proof (research), spike.p5.theme2=P5 Proof twin (research)]
+STATE boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_dark | effective=org.eclipse.e4.ui.css.theme.e4_dark | osDark=true | highContrast=false
+STEP set|spike.p5.theme
+STATE after-set spike.p5.theme | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=spike.p5.theme | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP wait|1500
+STEP surfaces|default
+SURFACE default Shell#IDEWindow bg=#808080 fg=#202020
+SURFACE default CTabFolder#topLeft bg=#808080 fg=#000000 tabSelBg=#404040
+SURFACE default Tree bg=#808080 fg=#202020
+SURFACE default Table bg=#404040 fg=#202020
+SURFACE default StatusLine#org-eclipse-ui-StatusLine bg=#404040 fg=#000000
+STEP palette|A
+PALETTE A registry=RGB {255, 0, 0}RGB {0, 0, 0}RGB {0, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|select
+REFRESH select active=spike.p5.theme themeCount=4
+STEP wait|800
+STEP surfaces|A-select
+SURFACE A-select Shell#IDEWindow bg=#808080 fg=#202020
+SURFACE A-select CTabFolder#topLeft bg=#808080 fg=#000000 tabSelBg=#404040
+SURFACE A-select Tree bg=#808080 fg=#202020
+SURFACE A-select Table bg=#404040 fg=#202020
+SURFACE A-select StatusLine#org-eclipse-ui-StatusLine bg=#404040 fg=#000000
+STEP refresh|apply
+REFRESH apply active=spike.p5.theme themeCount=4
+STEP wait|800
+STEP surfaces|A-apply
+SURFACE A-apply Shell#IDEWindow bg=#808080 fg=#202020
+SURFACE A-apply CTabFolder#topLeft bg=#808080 fg=#000000 tabSelBg=#404040
+SURFACE A-apply Tree bg=#808080 fg=#202020
+SURFACE A-apply Table bg=#404040 fg=#202020
+SURFACE A-apply StatusLine#org-eclipse-ui-StatusLine bg=#404040 fg=#000000
+STEP refresh|hop|org.eclipse.e4.ui.css.theme.e4_default|false
+HOP via=org.eclipse.e4.ui.css.theme.e4_default intermediateRestore=false ms=2249 backSameObject=true
+REFRESH hop active=spike.p5.theme themeCount=4
+STEP wait|800
+STEP surfaces|A-hop
+SURFACE A-hop Shell#IDEWindow bg=#ff0000 fg=#000000
+SURFACE A-hop CTabFolder#topLeft bg=#ff0000 fg=#000000 tabSelBg=#00ff00
+SURFACE A-hop Tree bg=#ff0000 fg=#000000
+SURFACE A-hop Table bg=#00ff00 fg=#000000
+SURFACE A-hop StatusLine#org-eclipse-ui-StatusLine bg=#00ff00 fg=#000000
+STEP palette|B
+PALETTE B registry=RGB {0, 0, 255}RGB {255, 255, 255}RGB {255, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|hop|org.eclipse.e4.ui.css.theme.e4_default|false
+HOP via=org.eclipse.e4.ui.css.theme.e4_default intermediateRestore=false ms=2001 backSameObject=true
+REFRESH hop active=spike.p5.theme themeCount=4
+STEP wait|800
+STEP surfaces|B-hop
+SURFACE B-hop Shell#IDEWindow bg=#0000ff fg=#ffffff
+SURFACE B-hop CTabFolder#topLeft bg=#0000ff fg=#000000 tabSelBg=#ffff00
+SURFACE B-hop Tree bg=#0000ff fg=#ffffff
+SURFACE B-hop Table bg=#ffff00 fg=#ffffff
+SURFACE B-hop StatusLine#org-eclipse-ui-StatusLine bg=#ffff00 fg=#000000
+STEP palette|C
+PALETTE C registry=RGB {0, 255, 255}RGB {128, 0, 0}RGB {255, 0, 255} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|hop|org.eclipse.e4.ui.css.theme.e4_default|false
+HOP via=org.eclipse.e4.ui.css.theme.e4_default intermediateRestore=false ms=984 backSameObject=true
+REFRESH hop active=spike.p5.theme themeCount=4
+STEP wait|800
+STEP surfaces|C-hop
+SURFACE C-hop Shell#IDEWindow bg=#00ffff fg=#800000
+SURFACE C-hop CTabFolder#topLeft bg=#00ffff fg=#000000 tabSelBg=#ff00ff
+SURFACE C-hop Tree bg=#00ffff fg=#800000
+SURFACE C-hop Table bg=#ff00ff fg=#800000
+SURFACE C-hop StatusLine#org-eclipse-ui-StatusLine bg=#ff00ff fg=#000000
+STEP palette|A
+PALETTE A registry=RGB {255, 0, 0}RGB {0, 0, 0}RGB {0, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|hop|org.eclipse.e4.ui.css.theme.e4_default|false
+HOP via=org.eclipse.e4.ui.css.theme.e4_default intermediateRestore=false ms=752 backSameObject=true
+REFRESH hop active=spike.p5.theme themeCount=4
+STEP wait|800
+STEP surfaces|A2-hop
+SURFACE A2-hop Shell#IDEWindow bg=#ff0000 fg=#000000
+SURFACE A2-hop CTabFolder#topLeft bg=#ff0000 fg=#000000 tabSelBg=#00ff00
+SURFACE A2-hop StatusLine#org-eclipse-ui-StatusLine bg=#00ff00 fg=#000000
+STEP palette|B
+PALETTE B registry=RGB {0, 0, 255}RGB {255, 255, 255}RGB {255, 255, 0} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|flip|spike.p5.theme|spike.p5.theme2
+FLIP ms=402
+REFRESH flip active=spike.p5.theme2 themeCount=4
+STEP wait|800
+STEP surfaces|B-flip
+SURFACE B-flip Shell#IDEWindow bg=#0000ff fg=#ffffff
+SURFACE B-flip CTabFolder#topLeft bg=#0000ff fg=#000000 tabSelBg=#ffff00
+SURFACE B-flip StatusLine#org-eclipse-ui-StatusLine bg=#ffff00 fg=#000000
+STEP state|f1
+STATE f1 | active=spike.p5.theme2 | instance=spike.p5.theme2 | config=<absent> | default=spike.p5.theme2 | effective=spike.p5.theme2 | osDark=true | highContrast=false
+STEP palette|C
+PALETTE C registry=RGB {0, 255, 255}RGB {128, 0, 0}RGB {255, 0, 255} themeMgrCurrent=org.eclipse.ui.defaultTheme
+STEP refresh|flip|spike.p5.theme|spike.p5.theme2
+FLIP ms=411
+REFRESH flip active=spike.p5.theme themeCount=4
+STEP wait|800
+STEP surfaces|C-flip
+SURFACE C-flip Shell#IDEWindow bg=#00ffff fg=#800000
+SURFACE C-flip CTabFolder#topLeft bg=#00ffff fg=#000000 tabSelBg=#ff00ff
+SURFACE C-flip StatusLine#org-eclipse-ui-StatusLine bg=#ff00ff fg=#000000
+STEP state|f2
+STATE f2 | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=spike.p5.theme | effective=spike.p5.theme | osDark=true | highContrast=false
+DONE
+
+## S2 (4.41)
+ENV os=Windows 11 10.0 arch=amd64 ws=win32 swt=4974 java=25.0.4.1+1-LTS vendor=Eclipse Adoptium cssThemeBundle=0.15.200.v20260806-0515 platform=4.41.0.v20260828-1142 buildId=4.41.0.20260903-0719 resolverMode=null
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, spike.p5.theme=P5 Proof (research), spike.p5.theme2=P5 Proof twin (research)]
+STATE boot | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=spike.p5.theme | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP wait|1500
+STEP state|boot-restart
+STATE boot-restart | active=spike.p5.theme | instance=spike.p5.theme | config=<absent> | default=spike.p5.theme | effective=spike.p5.theme | osDark=true | highContrast=false
+STEP surfaces|restart-persisted
+SURFACE restart-persisted Shell#IDEWindow bg=#00ffff fg=#800000
+SURFACE restart-persisted CTabFolder#topLeft bg=#00ffff fg=#000000 tabSelBg=#ff00ff
+SURFACE restart-persisted Tree bg=#00ffff fg=#800000
+SURFACE restart-persisted Table bg=#ff00ff fg=#800000
+SURFACE restart-persisted StatusLine#org-eclipse-ui-StatusLine bg=#ff00ff fg=#000000
+DONE
+
+## persisted keys after run (4.40 ws)
+spike.p5.accent=255,0,255
+spike.p5.fg=128,0,0
+spike.p5.surface=0,255,255

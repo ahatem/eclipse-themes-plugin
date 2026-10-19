@@ -1,0 +1,9 @@
+/* Disposable P5 micro-spike: every colour is a symbolic '#id' reference. */
+Shell { background-color: '#spike-p5-surface'; color: '#spike-p5-fg'; }
+.MPartStack { background-color: '#spike-p5-surface'; swt-selected-tabs-background: '#spike-p5-accent' '#spike-p5-accent' 100%; swt-unselected-tabs-background: '#spike-p5-surface' '#spike-p5-surface' 100%; }
+.MTrimBar { background-color: '#spike-p5-accent'; }
+#org-eclipse-ui-StatusLine { background-color: '#spike-p5-accent'; }
+Tree { background-color: '#spike-p5-surface'; color: '#spike-p5-fg'; }
+Table { background-color: '#spike-p5-accent'; color: '#spike-p5-fg'; }
+ToolBar { background-color: '#spike-p5-accent'; }
+SashForm, .MPart, .MCompositePart { background-color: '#spike-p5-surface'; }

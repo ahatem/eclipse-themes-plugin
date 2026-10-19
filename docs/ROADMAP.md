@@ -131,7 +131,7 @@ Must prove on a bounded matrix:
 
 Exit: documented go/no-go architecture decision with explicit unsupported surfaces. No "theme every pixel" claim.
 
-## R8 — Coordinated Theme MVP
+## R8 — Coordinated Theme MVP (complete)
 
 **Goal:** one safe selector that coordinates supported editor colors with supported workbench themes.
 
@@ -143,6 +143,10 @@ Scope:
 - external changes detected without rewrite loops.
 
 Exit: editor + workbench coordination works on the declared matrix, disable restores owned state conservatively, and coverage is inspectable.
+
+**R8a (delivered, change `dynamic-workbench-theming`):** opt-in coordination of the selected theme with the workbench through a deterministically converted eight-role palette and four static CSS themes; VERIFIED on Windows with Eclipse 4.40 and 4.41, other combinations EXPERIMENTAL and off unless opted in. Not part of R8a: fonts and icons, user overrides, runtime-registered themes, imported CSS, the R3 recovery journal, Linux/macOS verification. See [workbench theming compatibility](WORKBENCH_THEMING_COMPATIBILITY.md).
+
+**R8 closure (delivered, change `plugin-color-coordination`):** the colors of other plug-ins follow a coordinated dark workbench theme through a declared 68-key table with value-exact ownership (written only where the user has no value, updated and released only while unchanged, released when another Eclipse theme is chosen), plus static CSS for plug-in widgets selector-for-selector with stock Dark. Every stock-Dark preference key is classified in the change's `key-classification.md`. Light themes, editor-only mode and disabled coordination write nothing. Verified on Windows with Eclipse 4.40 and 4.41. **Still open (R9 / follow-up):** the R3 recovery journal for workbench state, per-surface coverage UI, theme-authored plug-in colors and CSS, fonts and icons, Linux and macOS verification. See the [R8 target spec](target-specs/R8_COORDINATED_THEME_MVP.md).
 
 ## R9 — Theme Package v1 and contributor ecosystem
 

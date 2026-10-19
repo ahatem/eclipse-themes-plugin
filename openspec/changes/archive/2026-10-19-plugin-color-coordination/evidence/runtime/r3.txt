@@ -1,0 +1,1 @@
+state|restart2-boot;wait|5000;pcol|after-external-dark;prefs;wait|1500;pick|R8A QA - Atom One Dark;apply;wait|4500;state|atom-again;pcol|atom-again|v;okclose;wait|1000;state|end

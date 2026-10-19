@@ -1,0 +1,69 @@
+# Eclipse 4.41 GA install and bundle evidence
+
+package: eclipse-java-2026-09-R-win32-x86_64.zip (https://download.eclipse.org/technology/epp/downloads/release/2026-09/R/)
+size: 377592420 bytes
+sha512 (matches published .sha512): 38c83cc590fb444f86a01924ac323eb312c01aca8a7f58051ae11ce8e1f78e317b69b0e60d815b5eb1c8b4eba6dca0498051225e06136243c17e59b1e0cfea9c
+
+-- .eclipseproduct
+name=Eclipse Platform
+id=org.eclipse.platform
+version=4.41.0
+eclipse.buildId=4.41.0.20260903-0719
+eclipse.product=org.eclipse.epp.package.java.product
+
+-- launcher JRE (eclipse.ini -vm): org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_25.0.4.v20260826-0822 ; probe logged java=25.0.4.1+1-LTS Eclipse Adoptium
+-- SWT: org.eclipse.swt_3.135.0.v20260819-1952 (SWT.getVersion()=4974), win32 fragment 3.135.0.v20260819-1952
+-- OS/WS: Windows 11 10.0 amd64, ws=win32 (no GTK/Wayland run in this pass)
+
+-- SHA-256 of relevant jars
+95d992f4f9c0f08274f3fac6c53b4939e46a04da40eb471bd28cb99f8533b522  org.eclipse.e4.ui.css.swt.theme_0.15.200.v20260806-0515.jar
+f5bafe5a5f3a6da331f053cc47f42ba70746d28f6c948afa82f8102664a63865  org.eclipse.e4.ui.workbench.swt_0.18.200.v20260707-1437.jar
+625165af55eb5f553b28a74455038bb01343e4acf00d0857ff78c31d0b9c75be  org.eclipse.swt.win32.win32.x86_64_3.135.0.v20260819-1952.jar
+e3ed243b8331165a1e43592d9aede7fc34cc3027b321f9bad0d494e630583d77  org.eclipse.ui.workbench_3.140.0.v20260810-1402.jar
+4a770aa4a78df653af871073c8b4ddd56884895f5fc71d10c40b4289ac7c8b9f  org.eclipse.osgi_3.24.300.v20260721-1251.jar
+
+-- org.eclipse.e4.ui.css.swt.theme_0.15.200.v20260806-0515 MANIFEST (continuation lines joined)
+Bundle-SymbolicName: org.eclipse.e4.ui.css.swt.theme;singleton:=true
+Bundle-Version: 0.15.200.v20260806-0515
+Bundle-RequiredExecutionEnvironment: JavaSE-21
+Export-Package: org.eclipse.e4.ui.css.swt.internal.theme;x-internal:=true,org.eclipse.e4.ui.css.swt.theme;x-friends:="org.eclipse.e4.ui.workbench.renderers.swt,org.eclipse.e4.ui.workbench.swt,org.eclipse.ui.workbench"
+Eclipse-SourceReferences: scm:git:https://github.com/eclipse-platform/eclipse.platform.ui.git;path="bundles/org.eclipse.e4.ui.css.swt.theme";tag="I20260806-2300";commitId=f78bd54aad02e7f2c0ba2e6ca669b7babbc2933e
+
+-- javap IThemeEngine / ITheme (public surface; no isDark in 4.41)
+Compiled from "IThemeEngine.java"
+public interface org.eclipse.e4.ui.css.swt.theme.IThemeEngine {
+  public static final java.lang.String DEFAULT_THEME_ID;
+  public abstract org.eclipse.e4.ui.css.swt.theme.ITheme registerTheme(java.lang.String, java.lang.String, java.lang.String) throws java.lang.IllegalArgumentException;
+  public abstract void registerStylesheet(java.lang.String, java.lang.String...);
+  public abstract void registerResourceLocator(org.eclipse.e4.ui.css.core.util.resources.IResourceLocator, java.lang.String...);
+  public abstract java.util.List<org.eclipse.e4.ui.css.swt.theme.ITheme> getThemes();
+  public abstract void setTheme(java.lang.String, boolean);
+  public abstract void setTheme(org.eclipse.e4.ui.css.swt.theme.ITheme, boolean);
+  public abstract void applyStyles(java.lang.Object, boolean);
+  public abstract org.w3c.dom.css.CSSStyleDeclaration getStyle(java.lang.Object);
+  public abstract void restore(java.lang.String);
+  public abstract org.eclipse.e4.ui.css.swt.theme.ITheme getActiveTheme();
+  public abstract void addCSSEngine(org.eclipse.e4.ui.css.core.engine.CSSEngine);
+  public abstract void removeCSSEngine(org.eclipse.e4.ui.css.core.engine.CSSEngine);
+}
+Compiled from "ITheme.java"
+public interface org.eclipse.e4.ui.css.swt.theme.ITheme {
+  public abstract java.lang.String getId();
+  public abstract java.lang.String getLabel();
+}
+
+-- bytecode excerpts, internal ThemeEngine (diagnosis only; not candidate behaviour)
+Display.getHighContrast occurrences in ThemeEngine: 1 (inside setTheme(String,boolean) only; setTheme(ITheme,boolean[,boolean]) has none)
+352:     723: ldc           #33                 // String themeid
+1063:     226: invokevirtual #512                // Method org/eclipse/swt/widgets/Display.getHighContrast:()Z
+1281:     498: ldc           #33                 // String themeid
+1289:     520: ldc           #33                 // String themeid
+1305:     565: ldc_w         #611                // String dark
+1311:     579: invokevirtual #613                // Method org/eclipse/swt/widgets/Display.setDarkThemePreferred:(Z)V
+1468:      14: ldc           #33                 // String themeid
+1474:      25: ldc           #33                 // String themeid
+1504:       7: getstatic     #752                // Field org/eclipse/core/runtime/preferences/DefaultScope.INSTANCE:Lorg/eclipse/core/runtime/preferences/IScopeContext;
+1507:      17: ldc           #33                 // String themeid
+1659:      96: ldc_w         #611                // String dark
+
+-- Equinox org.eclipse.osgi_3.24.300.v20260721-1251 (unzipped): files containing 'resolverMode': 0; .class files containing 'x-internal' or 'x-friends': 0; non-class files containing them: tmp/eclipse-4.41/osgi/META-INF/MANIFEST.MF  (the framework's own export headers). Evidence by absence: no framework code references the directive or the strict resolver property.

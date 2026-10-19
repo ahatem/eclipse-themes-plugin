@@ -1,0 +1,201 @@
+/* REJECTED candidate, not shipped. Measured on Eclipse 4.40 (see ../README.md, "Plug-in color definitions"): the claims in the
+ * header below that no preference is written and that user values win are false. Eclipse mirrors each override into the instance
+ * org.eclipse.ui.workbench preferences, overwrites a user value on entry and deletes it on the next theme change. */
+
+/*
+ * Eclipse Themes workbench coordination, dark family: color definitions.
+ *
+ * Bound only to the two dark theme ids. Stock Eclipse Dark re-tunes these color definitions for dark surfaces
+ * through stylesheets bound to its own theme id (org.eclipse.e4.ui.css.theme.e4_dark), so they never apply to
+ * another theme; without them hover and content-assist popups stay light and several labels (for example Git
+ * ignored resources in the Package Explorer) are drawn in the system list foreground, black on a dark surface.
+ *
+ * Stock Dark sets them as preference overrides, which on every theme change overwrite and later delete the
+ * user's own Colors and Fonts values. These rules instead override the color definition defaults, the mechanism
+ * stock Eclipse uses for its own tab colors: a value the user set in Colors and Fonts still wins, no preference is
+ * written, and the defaults return when another theme becomes active. The platform reads only literal colors
+ * here, so the values are the stock dark values, not derived from the selected theme. Definitions of plugins that
+ * are not installed match nothing. The two Git row background colors are left out on purpose: the stock value is
+ * the stock tree background and would paint visible stripes on any other background.
+ */
+
+/* org.eclipse.egit.ui */
+ColorDefinition#org-eclipse-egit-ui-CommitMessageCommentColor {
+	color: #808080;
+}
+
+ColorDefinition#org-eclipse-egit-ui-DiffAddBackgroundColor {
+	color: #0b795a;
+}
+
+ColorDefinition#org-eclipse-egit-ui-DiffAddForegroundColor {
+	color: #d8fef5;
+}
+
+ColorDefinition#org-eclipse-egit-ui-DiffHeadlineBackgroundColor {
+	color: #474747;
+}
+
+ColorDefinition#org-eclipse-egit-ui-DiffHeadlineForegroundColor {
+	color: #f2f2f2;
+}
+
+ColorDefinition#org-eclipse-egit-ui-DiffHunkBackgroundColor {
+	color: #356171;
+}
+
+ColorDefinition#org-eclipse-egit-ui-DiffHunkForegroundColor {
+	color: #e9f2fe;
+}
+
+ColorDefinition#org-eclipse-egit-ui-DiffRemoveBackgroundColor {
+	color: #750224;
+}
+
+ColorDefinition#org-eclipse-egit-ui-DiffRemoveForegroundColor {
+	color: #ffe8ed;
+}
+
+ColorDefinition#org-eclipse-egit-ui-IgnoredResourceForegroundColor {
+	color: #787878;
+}
+
+ColorDefinition#org-eclipse-egit-ui-UncommittedChangeForegroundColor {
+	color: #729dba;
+}
+
+/* org.eclipse.jdt.ui */
+ColorDefinition#org-eclipse-jdt-ui-ColoredLabels-inherited {
+	color: #8f8fbf;
+}
+
+ColorDefinition#org-eclipse-jdt-ui-Javadoc-backgroundColor {
+	color: #34393d;
+}
+
+ColorDefinition#org-eclipse-jdt-ui-Javadoc-foregroundColor {
+	color: #eeeeee;
+}
+
+ColorDefinition#org-eclipse-jdt-ui-ColoredLabels-writeaccess_highlight {
+	color: #ff8080;
+}
+
+/* org.eclipse.mylyn.tasks.ui */
+ColorDefinition#org-eclipse-mylyn-tasks-ui-colors-foreground-today-scheduled {
+	color: #3465a4;
+}
+
+ColorDefinition#org-eclipse-mylyn-tasks-ui-colors-foreground-past-scheduled {
+	color: #3465a4;
+}
+
+ColorDefinition#org-eclipse-mylyn-tasks-ui-colors-foreground-thisweek-scheduled {
+	color: #555753;
+}
+
+ColorDefinition#org-eclipse-mylyn-tasks-ui-colors-foreground-task-active {
+	color: #75507b;
+}
+
+ColorDefinition#org-eclipse-mylyn-tasks-ui-colors-category-gradient-start {
+	color: #555753;
+}
+
+ColorDefinition#org-eclipse-mylyn-tasks-ui-colors-category-gradient-end {
+	color: #888985;
+}
+
+ColorDefinition#org-eclipse-mylyn-tasks-ui-color-text-quoted {
+	color: #6a85ff;
+}
+
+/* org.eclipse.ui.editors */
+ColorDefinition#org-eclipse-ui-editors-inlineAnnotationColor {
+	color: #9b9b9b;
+}
+
+/* org.eclipse.ui */
+ColorDefinition#ACTIVE_HYPERLINK_COLOR {
+	color: #8ac9f2;
+}
+
+ColorDefinition#CONFLICTING_COLOR {
+	color: #f00f42;
+}
+
+ColorDefinition#CONTENT_ASSIST_BACKGROUND_COLOR {
+	color: #34393d;
+}
+
+ColorDefinition#CONTENT_ASSIST_FOREGROUND_COLOR {
+	color: #eeeeee;
+}
+
+ColorDefinition#org-eclipse-ui-workbench-INFORMATION_BACKGROUND {
+	color: #515658;
+}
+
+ColorDefinition#org-eclipse-ui-workbench-INFORMATION_FOREGROUND {
+	color: #eeeeee;
+}
+
+ColorDefinition#org-eclipse-ui-workbench-HOVER_BACKGROUND {
+	color: #34393d;
+}
+
+ColorDefinition#org-eclipse-ui-workbench-HOVER_FOREGROUND {
+	color: #eeeeee;
+}
+
+ColorDefinition#org-eclipse-ui-workbench-FORM_HEADING_ERROR_COLOR {
+	color: #ff6e6e;
+}
+
+ColorDefinition#org-eclipse-ui-workbench-FORM_HEADING_WARNING_COLOR {
+	color: #ffc800;
+}
+
+ColorDefinition#org-eclipse-ui-workbench-FORM_HEADING_INFO_COLOR {
+	color: #aaaaaa;
+}
+
+ColorDefinition#ERROR_COLOR {
+	color: #f74475;
+}
+
+ColorDefinition#HYPERLINK_COLOR {
+	color: #6fc5ee;
+}
+
+ColorDefinition#INCOMING_COLOR {
+	color: #1fb3eb;
+}
+
+ColorDefinition#OUTGOING_COLOR {
+	color: #eeeeee;
+}
+
+ColorDefinition#RESOLVED_COLOR {
+	color: #6cd211;
+}
+
+ColorDefinition#EDITION_COLOR {
+	color: #eeeeee;
+}
+
+ColorDefinition#org-eclipse-search-ui-match-highlight {
+	color: #ce5c00;
+}
+
+ColorDefinition#org-eclipse-ui-editors-rangeIndicatorColor {
+	color: #1b7699;
+}
+
+ColorDefinition#org-eclipse-jface-REVISION_NEWEST_COLOR {
+	color: #4b2c03;
+}
+
+ColorDefinition#org-eclipse-jface-REVISION_OLDEST_COLOR {
+	color: #9a713d;
+}

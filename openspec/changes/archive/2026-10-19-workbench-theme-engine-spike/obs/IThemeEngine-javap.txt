@@ -1,0 +1,16 @@
+Compiled from "IThemeEngine.java"
+public interface org.eclipse.e4.ui.css.swt.theme.IThemeEngine {
+  public static final java.lang.String DEFAULT_THEME_ID;
+  public abstract org.eclipse.e4.ui.css.swt.theme.ITheme registerTheme(java.lang.String, java.lang.String, java.lang.String) throws java.lang.IllegalArgumentException;
+  public abstract void registerStylesheet(java.lang.String, java.lang.String...);
+  public abstract void registerResourceLocator(org.eclipse.e4.ui.css.core.util.resources.IResourceLocator, java.lang.String...);
+  public abstract java.util.List<org.eclipse.e4.ui.css.swt.theme.ITheme> getThemes();
+  public abstract void setTheme(java.lang.String, boolean);
+  public abstract void setTheme(org.eclipse.e4.ui.css.swt.theme.ITheme, boolean);
+  public abstract void applyStyles(java.lang.Object, boolean);
+  public abstract org.w3c.dom.css.CSSStyleDeclaration getStyle(java.lang.Object);
+  public abstract void restore(java.lang.String);
+  public abstract org.eclipse.e4.ui.css.swt.theme.ITheme getActiveTheme();
+  public abstract void addCSSEngine(org.eclipse.e4.ui.css.core.engine.CSSEngine);
+  public abstract void removeCSSEngine(org.eclipse.e4.ui.css.core.engine.CSSEngine);
+}

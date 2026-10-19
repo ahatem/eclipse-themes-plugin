@@ -16,7 +16,11 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -34,15 +38,24 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.dialogs.PreferencesUtil;
+import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import com.github.eclipsethemes.EclipseThemes;
 import com.github.eclipsethemes.core.Constants;
 import com.github.eclipsethemes.core.validation.WebsiteUri;
+import com.github.eclipsethemes.core.workbench.WorkbenchCapability;
+import com.github.eclipsethemes.core.workbench.WorkbenchCapability.State;
+import com.github.eclipsethemes.core.workbench.WorkbenchDiagnostics;
+import com.github.eclipsethemes.eclipse.ThemeApplyOutcome;
 import com.github.eclipsethemes.eclipse.ThemeManager;
 import com.github.eclipsethemes.eclipse.ThemeOperationOutcome;
 import com.github.eclipsethemes.eclipse.ThemeOrigin;
 import com.github.eclipsethemes.eclipse.ThemeRecord;
+import com.github.eclipsethemes.eclipse.workbench.WorkbenchCoordinator;
+import com.github.eclipsethemes.eclipse.workbench.WorkbenchOutcome;
+import com.github.eclipsethemes.eclipse.workbench.WorkbenchSectionModel;
 
 public class EclipseThemesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
@@ -64,6 +77,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private Button removeButton;
 	private Button previewToggleButton;
 	private Label statusLabel;
+	private Button workbenchCheckbox;
+	private Label workbenchStatusLabel;
 
 	// Data
 	private List<ThemeRecord> allThemes;
@@ -95,6 +110,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		createToolbar(container);
 		// Themes List and Theme Details, Preview browser
 		createMainArea(container);
+		// Opt-in coordination of the Eclipse workbench theme
+		createWorkbenchSection(container);
 		// Import, Update, Remove
 		createActionButtons(container);
 
@@ -233,6 +250,120 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		browserPreview.setLayoutData(browserData);
 
 		showDefaultPreview();
+	}
+
+	private static final String APPEARANCE_PAGE_ID = "org.eclipse.ui.preferencePages.Views";
+
+	private WorkbenchCoordinator workbenchCoordinator() {
+		return EclipseThemes.instance().getManager().workbench();
+	}
+
+	private IPreferenceStore pluginStore() {
+		return EclipseThemes.instance().getPreferenceStore();
+	}
+
+	private void createWorkbenchSection(Composite parent) {
+		Group group = new Group(parent, SWT.NONE);
+		group.setText("Workbench");
+		group.setLayout(new GridLayout(3, false));
+		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+		workbenchCheckbox = new Button(group, SWT.CHECK);
+		GridData checkboxData = new GridData(SWT.LEFT, SWT.CENTER, false, false);
+		checkboxData.horizontalSpan = 3;
+		workbenchCheckbox.setLayoutData(checkboxData);
+
+		workbenchStatusLabel = new Label(group, SWT.WRAP);
+		GridData statusData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		statusData.horizontalSpan = 3;
+		statusData.widthHint = 600;
+		workbenchStatusLabel.setLayoutData(statusData);
+
+		Label coverage = new Label(group, SWT.WRAP);
+		coverage.setText(WorkbenchSectionModel.COVERAGE);
+		GridData coverageData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		coverageData.horizontalSpan = 3;
+		coverageData.widthHint = 600;
+		coverage.setLayoutData(coverageData);
+
+		Button appearance = new Button(group, SWT.PUSH);
+		appearance.setText("Open Appearance...");
+		appearance.setToolTipText("Choose the Eclipse workbench theme manually on the Appearance preference page");
+		appearance.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> openAppearance()));
+
+		Button diagnostics = new Button(group, SWT.PUSH);
+		diagnostics.setText("Copy diagnostics");
+		diagnostics.setToolTipText("Copy environment and workbench-theming state to the clipboard; nothing is sent");
+		diagnostics.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> copyDiagnostics()));
+
+		refreshWorkbenchSection(true);
+	}
+
+	/**
+	 * Shows the capability and stored intent. Only on first display does it set the checkbox from the stored
+	 * intent; afterwards the checkbox is the user's uncommitted choice until Apply or OK.
+	 */
+	private void refreshWorkbenchSection(boolean initial) {
+		if (workbenchCheckbox == null || workbenchCheckbox.isDisposed()) {
+			return;
+		}
+		WorkbenchCoordinator coordinator = workbenchCoordinator();
+		WorkbenchCapability capability = coordinator.capability();
+		boolean enabled = coordinator.isEnabled();
+		WorkbenchSectionModel model = WorkbenchSectionModel.of(capability, enabled,
+				coordinator.activeThemeId().orElse(null));
+		workbenchCheckbox.setText(model.checkboxLabel());
+		workbenchCheckbox.setEnabled(model.checkboxEnabled());
+		workbenchStatusLabel.setText(model.statusText());
+		if (initial) {
+			boolean effective = enabled && (capability.state() == State.VERIFIED
+					|| capability.state() == State.EXPERIMENTAL && coordinator.isOptedIn(capability));
+			workbenchCheckbox.setSelection(effective);
+		}
+		workbenchStatusLabel.getParent().layout(true);
+	}
+
+	/** Writes the committed intent for the workbench half; called only from Apply and OK. */
+	private void commitWorkbenchIntent() {
+		if (workbenchCheckbox == null || !workbenchCheckbox.getEnabled()) {
+			return;
+		}
+		WorkbenchCoordinator coordinator = workbenchCoordinator();
+		WorkbenchCapability capability = coordinator.capability();
+		boolean checked = workbenchCheckbox.getSelection();
+		IPreferenceStore store = pluginStore();
+		store.setValue(PreferenceKeys.WORKBENCH_COORDINATION_ENABLED, checked);
+		if (capability.state() == State.EXPERIMENTAL) {
+			store.setValue(PreferenceKeys.WORKBENCH_EXPERIMENTAL_ACK,
+					checked ? capability.environment().combination() : "");
+		}
+	}
+
+	private void openAppearance() {
+		if (getContainer() instanceof IWorkbenchPreferenceContainer container) {
+			container.openPage(APPEARANCE_PAGE_ID, null);
+			return;
+		}
+		var dialog = PreferencesUtil.createPreferenceDialogOn(getShell(), APPEARANCE_PAGE_ID, null, null);
+		if (dialog != null) {
+			dialog.open();
+		}
+	}
+
+	private void copyDiagnostics() {
+		WorkbenchCoordinator coordinator = workbenchCoordinator();
+		WorkbenchCapability capability = coordinator.capability();
+		ThemeRecord theme = selectedTheme != null ? selectedTheme : currentTheme;
+		String text = WorkbenchDiagnostics.format(capability, coordinator.isEnabled(), coordinator.isOptedIn(capability),
+				theme == null ? null : theme.theme().getName(), coordinator.activeThemeId().orElse(null),
+				coordinator.isOwned(), coordinator.ownedPluginColorKeys(), coordinator.pluginColorSummary().userKeys(),
+				coordinator.pluginColorSummary().releasedKeys());
+		Clipboard clipboard = new Clipboard(getShell().getDisplay());
+		try {
+			clipboard.setContents(new Object[] { text }, new Transfer[] { TextTransfer.getInstance() });
+		} finally {
+			clipboard.dispose();
+		}
 	}
 
 	private void createActionButtons(Composite parent) {
@@ -555,20 +686,24 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 		try {
 			ThemeSelection.remember(getPreferenceStore(), selectedTheme);
-			EclipseThemes.instance().getManager().applyTheme(workbench, selectedTheme);
+			commitWorkbenchIntent();
+			ThemeApplyOutcome outcome = EclipseThemes.instance().getManager().applyTheme(workbench, selectedTheme);
 
 			currentTheme = selectedTheme;
 			updateButtonStates();
 			refreshThemeList(); // to update "●" indicator
+			refreshWorkbenchSection(false);
 
-			statusLabel.setText("✓ Applied");
+			statusLabel.setText(WorkbenchSectionModel.summary(outcome));
 			statusLabel.getParent().layout();
-			Display.getCurrent().timerExec(3000, () -> {
-				if (!statusLabel.isDisposed()) {
-					statusLabel.setText("");
-					statusLabel.getParent().layout();
-				}
-			});
+			if (outcome.fullySucceeded()) {
+				Display.getCurrent().timerExec(3000, () -> {
+					if (!statusLabel.isDisposed()) {
+						statusLabel.setText("");
+						statusLabel.getParent().layout();
+					}
+				});
+			}
 		} catch (Exception e) {
 			showErrorMessage("Apply Theme Failed", "Failed to apply theme: " + e.getMessage());
 		}
@@ -849,8 +984,27 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			showErrorMessage("Reset Incomplete", "Some managed appearance overrides could not be removed or saved. "
 					+ "The reset may be partial; the active theme selection has been retained. You can retry.\n\n"
 					+ result.describeFailures());
+			return false;
 		}
-		return result.successful();
+		relinquishWorkbench();
+		return true;
+	}
+
+	/** Stop management also hands the workbench back, under the ownership rules (an external choice wins). */
+	private void relinquishWorkbench() {
+		IPreferenceStore store = pluginStore();
+		store.setValue(PreferenceKeys.WORKBENCH_COORDINATION_ENABLED, false);
+		store.setValue(PreferenceKeys.WORKBENCH_EXPERIMENTAL_ACK, "");
+		WorkbenchCoordinator coordinator = workbenchCoordinator();
+		WorkbenchOutcome outcome = coordinator.isOwned() ? coordinator.relinquish() : WorkbenchOutcome.notRequested("");
+		if (workbenchCheckbox != null && !workbenchCheckbox.isDisposed()) {
+			workbenchCheckbox.setSelection(false);
+		}
+		refreshWorkbenchSection(false);
+		if (outcome.status() != WorkbenchOutcome.Status.NOT_REQUESTED) {
+			statusLabel.setText("Workbench: " + outcome.message());
+			statusLabel.getParent().layout();
+		}
 	}
 
 	// ── Reset choice dialog ───────────────────────────────────────────────────

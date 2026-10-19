@@ -46,6 +46,15 @@ I then realized the old plugin was also outdated, so I decided to build this one
 3.  Pick a theme from the list to see how it looks.
 4.  Click **Apply and Close** to set your new editor theme.
 
+### Theming the Eclipse workbench (optional)
+
+Tick **Also theme the Eclipse workbench** before applying to also color the window, tabs, tool bars, trees, tables and status line
+from the selected theme. It is off by default, never changes the workbench for a theme you only import, and un-ticking it and
+applying hands the workbench back to the theme you had before. It is verified on Windows with Eclipse 4.40 and 4.41; other
+platforms are experimental and need an explicit opt-in. Native menus, dialogs, title bars and Browser content are not themed.
+See [workbench theming compatibility](docs/WORKBENCH_THEMING_COMPATIBILITY.md) for the support matrix and side effects
+(four extra entries on the Appearance page).
+
 ### Importing XML themes
 
 Theme XML must not contain a `DOCTYPE`, even an empty or internal-only declaration.
