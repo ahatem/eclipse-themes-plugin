@@ -9,8 +9,7 @@ import com.github.eclipsethemes.core.models.ThemeFonts;
 /** What the Fonts section of the preference page says about each target; pure so it needs no widgets. */
 public final class FontSectionModel {
 
-	public static final String HINT = "Fonts are separate from colors and only change when you choose Apply. "
-			+ "Keep current leaves a font alone. Some workbench surfaces may update only after restarting Eclipse.";
+	public static final String HINT = "Fonts change only when you choose Apply. Some workbench surfaces update after a restart.";
 
 	public static final String NOT_SPECIFIED = "Not specified by this theme";
 

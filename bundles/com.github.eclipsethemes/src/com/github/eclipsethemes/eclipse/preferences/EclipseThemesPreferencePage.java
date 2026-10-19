@@ -18,6 +18,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.IFontProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -32,6 +33,7 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -225,7 +227,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		themeViewer.setLabelProvider(new ThemeLabelProvider());
 
 		Label legend = new Label(library, SWT.WRAP);
-		legend.setText("● applied    * imported by you");
+		legend.setText("* imported by you");
 		legend.setLayoutData(wrapData());
 
 		downloadMoreLink = new Link(library, SWT.NONE);
@@ -338,8 +340,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		browserPreview = new Browser(group, SWT.BORDER);
 		GridData browserData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		browserData.widthHint = WRAP_HINT;
-		browserData.heightHint = 220;
-		browserData.minimumHeight = 140;
+		browserData.heightHint = 130;
+		browserData.minimumHeight = 90;
 		browserPreview.setLayoutData(browserData);
 		showDefaultPreview();
 	}
@@ -357,7 +359,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		workbenchStatusLabel.setLayoutData(wrapData());
 
 		Label coverage = new Label(group, SWT.WRAP);
-		coverage.setText(WorkbenchSectionModel.COVERAGE);
+		coverage.setText("Native menus, dialogs and title bars are not themed.");
+		coverage.setToolTipText(WorkbenchSectionModel.COVERAGE);
 		coverage.setLayoutData(wrapData());
 
 		Link links = new Link(group, SWT.WRAP);
@@ -379,7 +382,9 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private void createFontsSection(Composite parent) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setText("Fonts");
-		group.setLayout(new GridLayout(3, false));
+		GridLayout layout = new GridLayout(3, false);
+		layout.verticalSpacing = 2;
+		group.setLayout(layout);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
 		createFontRow(group, FontTarget.EDITOR, "Editor font:", "The font of the source code and text editors");
@@ -390,12 +395,17 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		hint.setText(FontSectionModel.HINT);
 		GridData hintData = wrapData();
 		hintData.horizontalSpan = 3;
+		hintData.verticalIndent = 4;
 		hint.setLayoutData(hintData);
 	}
 
 	private void createFontRow(Composite group, FontTarget target, String caption, String tooltip) {
 		Label label = new Label(group, SWT.NONE);
 		label.setText(caption);
+		// The caption spans the combo row and the status line under it, so each font reads as one block.
+		GridData labelData = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 2);
+		labelData.verticalIndent = 4;
+		label.setLayoutData(labelData);
 
 		Combo mode = new Combo(group, SWT.READ_ONLY | SWT.DROP_DOWN);
 		for (FontMode fontMode : FontMode.values()) {
@@ -410,7 +420,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 		Label description = new Label(group, SWT.WRAP);
 		GridData descriptionData = wrapData();
-		descriptionData.horizontalSpan = 3;
+		descriptionData.horizontalSpan = 2;
+		descriptionData.verticalIndent = 0;
 		description.setLayoutData(descriptionData);
 
 		FontRow row = new FontRow(target, mode, choose, description);
@@ -506,12 +517,10 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	static String workbenchStatus(WorkbenchCapability capability, WorkbenchSectionModel model) {
 		String status = switch (capability.state()) {
 		case VERIFIED -> "Supported on this system.";
-		case EXPERIMENTAL -> "Not yet verified on this system. Turning it on is an experiment, and the plugin "
-				+ "reverts it when it safely can.";
+		case EXPERIMENTAL -> "Not yet verified on this system; turning it on is an experiment.";
 		default -> model.statusText();
 		};
-		return model.conflict() ? status + " Another Eclipse theme was chosen on the Appearance page, so workbench "
-				+ "theming is not in effect right now." : status;
+		return model.conflict() ? status + " Not in effect: another theme is chosen on the Appearance page." : status;
 	}
 
 	/** Writes the committed intent for the workbench half; called only from Apply and OK. */
@@ -631,20 +640,26 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	// ── Library ───────────────────────────────────────────────────────────────
 
-	private class ThemeLabelProvider extends LabelProvider {
+	/** The applied theme is bold, marked and says so, so it does not depend on a legend to be recognized. */
+	private class ThemeLabelProvider extends LabelProvider implements IFontProvider {
 		@Override
 		public String getText(Object element) {
 			if (element instanceof ThemeRecord theme) {
 				String name = theme.theme().getName();
-				if (theme.equals(currentTheme)) {
-					name = "● " + name;
-				}
 				if (theme.origin() == ThemeOrigin.INSTALLED) {
 					name += " *";
 				}
-				return name;
+				return theme.equals(currentTheme) ? "● " + name + "  (applied)" : name;
 			}
 			return super.getText(element);
+		}
+
+		@Override
+		public Font getFont(Object element) {
+			// Borrowed from the JFace registry, which owns and disposes it.
+			return element instanceof ThemeRecord theme && theme.equals(currentTheme)
+					? JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT)
+					: null;
 		}
 	}
 

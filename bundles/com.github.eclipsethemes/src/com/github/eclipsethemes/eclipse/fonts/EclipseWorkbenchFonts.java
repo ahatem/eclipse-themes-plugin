@@ -12,20 +12,21 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.themes.IThemeManager;
 import org.osgi.service.prefs.BackingStoreException;
 
 import com.github.eclipsethemes.core.models.ThemeFonts;
 
 /**
  * {@link WorkbenchFonts} over the mechanism Eclipse's own Colors and Fonts page uses: the stored value lives in the
- * instance preferences of {@code org.eclipse.ui.workbench} under the font definition's id (public preference
- * node, documented key), and the running workbench is updated through the current {@code ITheme}'s public
- * {@link FontRegistry}. No widget is touched directly.
+ * instance preferences of {@code org.eclipse.ui.workbench} under the font definition's key (see {@link #key}), and
+ * the running workbench is updated through the current {@code ITheme}'s public {@link FontRegistry}, the very
+ * registry the Colors and Fonts page shows. No widget is touched directly.
  *
  * <p>
  * Limit: a font definition that the active Eclipse CSS theme itself overrides is stored by Eclipse under a key
- * prefixed with that theme's id; this class only writes the plain key, so such a definition may keep the CSS theme's
- * font. The plugin's own workbench themes do not override fonts.
+ * prefixed with that CSS theme's id; this class does not write that key, so such a definition may keep the CSS
+ * theme's font. The plugin's own workbench themes do not override fonts.
  */
 public final class EclipseWorkbenchFonts implements WorkbenchFonts {
 
@@ -50,21 +51,40 @@ public final class EclipseWorkbenchFonts implements WorkbenchFonts {
 				new FontData[] { new FontData(face.family(), face.size(), SWT.NORMAL) });
 	}
 
+	/**
+	 * The key under which the Colors and Fonts page stores and reads a definition: the plain id for the default
+	 * workbench theme, otherwise the id prefixed with the current workbench theme's id (as
+	 * {@code ThemeElementHelper.createPreferenceKey} does). Writing the same key keeps the page and the value
+	 * restored at the next start in step with what this plugin applies.
+	 */
+	private static String key(String fontId) {
+		try {
+			String themeId = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme().getId();
+			if (themeId != null && !themeId.equals(IThemeManager.DEFAULT_THEME)) {
+				return themeId + '.' + fontId;
+			}
+		} catch (RuntimeException e) {
+			// Fall back to the plain id, which is the default workbench theme's key.
+		}
+		return fontId;
+	}
+
 	@Override
 	public Optional<String> get(String fontId) {
-		return Optional.ofNullable(InstanceScope.INSTANCE.getNode(NODE).get(fontId, null));
+		return Optional.ofNullable(InstanceScope.INSTANCE.getNode(NODE).get(key(fontId), null));
 	}
 
 	@Override
 	public void put(String fontId, String stored) {
-		InstanceScope.INSTANCE.getNode(NODE).put(fontId, stored);
+		InstanceScope.INSTANCE.getNode(NODE).put(key(fontId), stored);
 		publish(fontId, stored);
 	}
 
 	@Override
 	public void remove(String fontId) {
-		InstanceScope.INSTANCE.getNode(NODE).remove(fontId);
-		String fallback = DefaultScope.INSTANCE.getNode(NODE).get(fontId, null);
+		String key = key(fontId);
+		InstanceScope.INSTANCE.getNode(NODE).remove(key);
+		String fallback = DefaultScope.INSTANCE.getNode(NODE).get(key, null);
 		if (fallback != null) {
 			publish(fontId, fallback);
 		}
