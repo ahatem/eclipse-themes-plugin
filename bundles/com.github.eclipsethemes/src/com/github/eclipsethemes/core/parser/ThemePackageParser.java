@@ -27,6 +27,7 @@ import com.github.eclipsethemes.core.exceptions.ThemeParseException;
 import com.github.eclipsethemes.core.models.Color;
 import com.github.eclipsethemes.core.models.PackageMetadata;
 import com.github.eclipsethemes.core.models.Theme;
+import com.github.eclipsethemes.core.models.ThemeFonts;
 import com.github.eclipsethemes.core.models.ThemeType;
 import com.github.eclipsethemes.core.models.Token;
 import com.github.eclipsethemes.core.models.TokenKey;
@@ -48,6 +49,8 @@ public final class ThemePackageParser implements ThemeParser {
 	private static final String PROVENANCE = "provenance";
 	private static final String EDITOR = "editor";
 	private static final String WORKBENCH = "workbench";
+	private static final String FONTS = "fonts";
+	private static final String INTERFACE = "interface";
 	private static final Pattern ID = Pattern.compile("[a-z0-9]+(\\.[a-z0-9][a-z0-9-]*)+");
 	private static final Pattern DECIMAL = Pattern.compile("[0-9]+");
 	private static final Pattern ONE = Pattern.compile("0*1");
@@ -137,6 +140,7 @@ public final class ThemePackageParser implements ThemeParser {
 		Element provenance = single(sections, PROVENANCE, source);
 		Element editor = single(sections, EDITOR, source);
 		Element workbench = single(sections, WORKBENCH, source);
+		Element fonts = single(sections, FONTS, source);
 		if (editor == null) {
 			throw refusal(error(ThemeDiagnostic.MISSING_SECTION, "Theme package requires an <" + EDITOR
 					+ "> section", source, EDITOR, null));
@@ -162,7 +166,8 @@ public final class ThemePackageParser implements ThemeParser {
 				? new PackageMetadata(packageId, version, null, null, null)
 				: provenance(provenance, packageId, version, source);
 		return new Theme(null, name, optional(root, "author"), website, optional(root, "description"),
-				ThemeType.from(appearance), tokens, metadata, authored);
+				ThemeType.from(appearance), tokens, metadata, authored,
+				fonts == null ? ThemeFonts.NONE : fonts(fonts, source));
 	}
 
 	/** Groups known section elements; every other direct child is reported and ignored. */
@@ -170,7 +175,7 @@ public final class ThemePackageParser implements ThemeParser {
 		Map<String, List<Element>> sections = new HashMap<>();
 		for (Element child : children(root)) {
 			String tag = child.getTagName();
-			if (tag.equals(PROVENANCE) || tag.equals(EDITOR) || tag.equals(WORKBENCH)) {
+			if (tag.equals(PROVENANCE) || tag.equals(EDITOR) || tag.equals(WORKBENCH) || tag.equals(FONTS)) {
 				sections.computeIfAbsent(tag, unused -> new ArrayList<>()).add(child);
 			} else {
 				warning(ThemeDiagnostic.UNKNOWN_ELEMENT, "Unknown theme package element '<" + tag
@@ -211,6 +216,62 @@ public final class ThemePackageParser implements ThemeParser {
 			}
 		}
 		return authored;
+	}
+
+	/**
+	 * Reads {@code <fonts>}: an optional {@code <editor>} and an optional {@code <interface>} entry, each with a
+	 * {@code family} and a point {@code size}. An invalid entry is reported and ignored, so it can never request a
+	 * font; a repeated entry refuses the package, like a repeated workbench role.
+	 */
+	private ThemeFonts fonts(Element fonts, String source) throws ThemeParseException {
+		ThemeFonts.Face editor = null;
+		ThemeFonts.Face interfaceFace = null;
+		boolean seenEditor = false;
+		boolean seenInterface = false;
+		for (Element entry : children(fonts)) {
+			String tag = entry.getTagName();
+			boolean isEditor = tag.equals(EDITOR);
+			if (!isEditor && !tag.equals(INTERFACE)) {
+				warning(ThemeDiagnostic.UNKNOWN_ELEMENT, "Unknown font entry '<" + tag + ">'; it was ignored", source,
+						tag, null);
+				continue;
+			}
+			if (isEditor ? seenEditor : seenInterface) {
+				throw refusal(error(ThemeDiagnostic.DUPLICATE_SECTION, "Font entry <" + tag
+						+ "> is declared more than once", source, tag, null));
+			}
+			ThemeFonts.Face face = face(entry, source);
+			if (isEditor) {
+				seenEditor = true;
+				editor = face;
+			} else {
+				seenInterface = true;
+				interfaceFace = face;
+			}
+		}
+		return new ThemeFonts(editor, interfaceFace);
+	}
+
+	/** The entry's font, or {@code null} after a warning when its family or size is not usable. */
+	private ThemeFonts.Face face(Element entry, String source) {
+		String tag = entry.getTagName();
+		String family = entry.getAttribute("family").trim();
+		if (!ThemeFonts.validFamily(family)) {
+			warning(ThemeDiagnostic.FONT, "Font entry '<" + tag + ">' needs a 'family' of printable characters, at most "
+					+ ThemeFonts.MAX_FAMILY_LENGTH + " long; the entry was ignored", source, tag, "family");
+			return null;
+		}
+		String size = entry.getAttribute("size").trim();
+		if (DECIMAL.matcher(size).matches() && size.length() <= 3) {
+			int points = Integer.parseInt(size);
+			if (points >= ThemeFonts.MIN_SIZE && points <= ThemeFonts.MAX_SIZE) {
+				return new ThemeFonts.Face(family, points);
+			}
+		}
+		warning(ThemeDiagnostic.FONT, "Font entry '<" + tag + ">' has a 'size' '" + entry.getAttribute("size")
+				+ "' that is not a whole number of points from " + ThemeFonts.MIN_SIZE + " to " + ThemeFonts.MAX_SIZE
+				+ "; the entry was ignored", source, tag, "size");
+		return null;
 	}
 
 	private PackageMetadata provenance(Element provenance, String packageId, String version, String source) {

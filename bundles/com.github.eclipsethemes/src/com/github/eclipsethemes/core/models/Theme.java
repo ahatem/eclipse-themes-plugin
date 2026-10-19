@@ -23,6 +23,7 @@ public final class Theme {
 
 	private final Optional<PackageMetadata> packageMetadata;
 	private final Map<String, Color> authoredWorkbench;
+	private final ThemeFonts fonts;
 
 	/** The palette role names a package's {@code <workbench>} section may author. */
 	public static final Set<String> WORKBENCH_ROLES = Set.of("background", "foreground", "surface", "surfaceRaised",
@@ -34,9 +35,18 @@ public final class Theme {
 		this(id, name, author, website, description, type, tokens, null, Map.of());
 	}
 
-	/** A package theme; {@code authoredWorkbench} keys must be {@link #WORKBENCH_ROLES}. */
+	/** A package theme without fonts; {@code authoredWorkbench} keys must be {@link #WORKBENCH_ROLES}. */
 	public Theme(String id, String name, String author, String website, String description, ThemeType type,
 			Map<TokenKey, Token> tokens, PackageMetadata packageMetadata, Map<String, Color> authoredWorkbench) {
+		this(id, name, author, website, description, type, tokens, packageMetadata, authoredWorkbench,
+				ThemeFonts.NONE);
+	}
+
+	/** A package theme; {@code authoredWorkbench} keys must be {@link #WORKBENCH_ROLES}. */
+	public Theme(String id, String name, String author, String website, String description, ThemeType type,
+			Map<TokenKey, Token> tokens, PackageMetadata packageMetadata, Map<String, Color> authoredWorkbench,
+			ThemeFonts fonts) {
+		this.fonts = Objects.requireNonNull(fonts, "fonts");
 		this.packageMetadata = Optional.ofNullable(packageMetadata);
 		this.authoredWorkbench = Map.copyOf(Objects.requireNonNull(authoredWorkbench, "authoredWorkbench"));
 		for (String role : this.authoredWorkbench.keySet()) {
@@ -97,6 +107,11 @@ public final class Theme {
 	/** Workbench palette colors a package authored, keyed by role name; empty for legacy themes. */
 	public Map<String, Color> getAuthoredWorkbench() {
 		return this.authoredWorkbench;
+	}
+
+	/** The fonts a package asked for; {@link ThemeFonts#NONE} for legacy themes and packages without fonts. */
+	public ThemeFonts getFonts() {
+		return this.fonts;
 	}
 
 	public boolean has(TokenKey key) {

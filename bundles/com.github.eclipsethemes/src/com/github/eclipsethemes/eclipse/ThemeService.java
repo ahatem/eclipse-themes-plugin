@@ -2,6 +2,7 @@ package com.github.eclipsethemes.eclipse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Platform;
@@ -11,7 +12,8 @@ import org.eclipse.ui.IWorkbench;
 import org.osgi.service.prefs.BackingStoreException;
 
 import com.github.eclipsethemes.core.models.Theme;
-import com.github.eclipsethemes.eclipse.adapters.EclipseThemeAdapter;
+import com.github.eclipsethemes.eclipse.fonts.FontOutcome;
+import com.github.eclipsethemes.eclipse.fonts.ThemeFontCoordinator;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchCoordinator;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchOutcome;
 
@@ -24,20 +26,27 @@ public final class ThemeService {
 
 	private final EditorWriter editor;
 	private final WorkbenchCoordinator workbench;
+	private final Function<Theme, FontOutcome> fonts;
 	private final ILog log;
 
-	public ThemeService(AdapterRegistry registry, WorkbenchCoordinator workbench, ILog log) {
-		this(theme -> writeEditorPreferences(registry, theme, log), workbench, log);
+	public ThemeService(AdapterRegistry registry, WorkbenchCoordinator workbench, ThemeFontCoordinator fonts,
+			ILog log) {
+		this(theme -> writeEditorPreferences(registry, theme, log), workbench, fonts::apply, log);
 	}
 
 	ThemeService(EditorWriter editor, WorkbenchCoordinator workbench, ILog log) {
+		this(editor, workbench, theme -> FontOutcome.NOT_REQUESTED, log);
+	}
+
+	ThemeService(EditorWriter editor, WorkbenchCoordinator workbench, Function<Theme, FontOutcome> fonts, ILog log) {
 		this.editor = editor;
 		this.workbench = workbench;
+		this.fonts = fonts;
 		this.log = log;
 	}
 
 	/**
-	 * Applies the workbench half, then the editor preferences; each part reports for itself.
+	 * Applies the workbench half, then the editor preferences, then the optional fonts; each part reports for itself.
 	 *
 	 * <p>
 	 * The order is deliberate. Switching the Eclipse CSS theme makes the theme engine synchronously reset the
@@ -59,7 +68,18 @@ public final class ThemeService {
 			log.warn("Workbench theming: " + workbenchOutcome.status() + " " + workbenchOutcome.message());
 		}
 		List<String> failedAdapters = editor.write(theme);
-		return new ThemeApplyOutcome(new ThemeApplyOutcome.EditorOutcome(failedAdapters), workbenchOutcome);
+		FontOutcome fontOutcome;
+		try {
+			fontOutcome = fonts.apply(theme);
+		} catch (RuntimeException | LinkageError e) {
+			log.error("Applying theme fonts failed unexpectedly", e);
+			fontOutcome = new FontOutcome(FontOutcome.Status.FAILED, "Theme fonts failed unexpectedly: " + e);
+		}
+		if (!fontOutcome.succeeded()) {
+			log.warn("Theme fonts: " + fontOutcome.status() + " " + fontOutcome.message());
+		}
+		return new ThemeApplyOutcome(new ThemeApplyOutcome.EditorOutcome(failedAdapters), workbenchOutcome,
+				fontOutcome);
 	}
 
 	private static List<String> writeEditorPreferences(AdapterRegistry registry, Theme theme, ILog log) {

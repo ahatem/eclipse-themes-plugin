@@ -263,3 +263,24 @@ without a legacy source id, so no package id or package metadata is sent to the 
 - **GIVEN** a selected package
 - **WHEN** the preview area renders
 - **THEN** no preview request is made and the existing unavailable state is shown
+
+### Requirement: The page is a Theme Manager with a library, selected-theme details, fonts and package export
+
+The page SHALL show a searchable theme library beside the selected theme's header, preview, Appearance, Fonts and details. Fonts
+SHALL offer exactly two fonts, *Editor font* and *Interface font*, each *Keep current*, *Use theme* or *Custom*, and SHALL describe
+the resulting font or why none applies. Selection, mode and chooser changes SHALL be written only on Apply or
+OK; Cancel discards them. *Stop managing* SHALL set both to Keep and restore the fonts it changed.
+
+#### Scenario: Legacy theme selected
+- **GIVEN** a legacy theme is selected with a font set to Use theme
+- **THEN** the format reads "Legacy XML theme", that font reads "Not specified by this theme", and export is available as a conversion
+
+### Requirement: Accepted warnings and failures are visible
+
+Import and update success dialogs SHALL list up to five accepted warnings. A failed export SHALL state the reason and leave no
+partial file. Wording about replacing installed content SHALL be format-neutral.
+
+#### Scenario: Warnings on import
+- **GIVEN** a package with an invalid font size
+- **WHEN** it is imported
+- **THEN** the success dialog lists the font warning

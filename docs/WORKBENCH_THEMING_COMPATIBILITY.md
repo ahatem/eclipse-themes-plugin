@@ -70,7 +70,7 @@ the workbench-chrome contract) and **THIRD-PARTY** (colors owned by another plug
 | Browser/HTML content, icons | SYSTEM/NATIVE / NOT APPLICABLE | |
 | Editor text area | NOT APPLICABLE | follows the editor colors, not the workbench CSS |
 | Forms (sections, form text, read-only form fields, form heading error/warning/info text), Properties view tab list and title, compare and progress panes, Marketplace items | THEMED | same selectors as stock Dark/Light; form heading message colors read the platform `FORM_HEADING_*` definitions |
-| Fonts of part tabs and tree/table views | THEMED (platform fonts) | read the platform *Tab text* and *Tree and Table* font definitions, as stock does, so a font chosen under Colors and Fonts applies; theme files set no fonts |
+| Fonts of part tabs and tree/table views | THEMED (platform fonts) | read the platform *Tab text* and *Tree and Table* font definitions, as stock does, so a font chosen under Colors and Fonts applies; a font is changed only when the user chooses *Use theme font* or *Custom font* for it (see the [package format](THEME_PACKAGE_FORMAT.md)) |
 | Widgets of other plug-ins that the stock sheets style by class (EGit, Marketplace, JDT, PDE, Debug, Mylyn, Buildship, WTP wizard and dialog pages, breadcrumbs) | THEMED | styled in the same sheets by palette role, selector for selector with stock; selectors that would also match an editor's text control are left out |
 | Preference-based colors of other plug-ins that stock Dark re-tunes (popups, hyperlinks, error and form-heading text, Compare, EGit diff and label colors, search/revision/coverage/breakpoint annotations, JDT/Debug/Ant/Mylyn colors) | THEMED in dark coordinated themes, ownership-checked (see below); THIRD-PARTY otherwise | 68 declared keys; written only while a dark coordinated theme is active and only where the user has no value of their own. Light themes and editor-only mode write none |
 
@@ -135,6 +135,36 @@ released colors. Nothing is sent anywhere.
 - **Internal API**: `IThemeEngine` is `x-friends` API of `org.eclipse.e4.ui.css.swt.theme`. It is used only in
   `EclipseWorkbenchThemeEngine`, through the public `getThemes`, `getActiveTheme` and `setTheme(ITheme, true)` calls, with the
   bundle as an optional `Require-Bundle` and `LinkageError` handled.
+
+## Font coordination: why each definition is included
+
+The **Editor font** and the **Interface font** are semantic choices. Each one writes the font to a bounded set of real Eclipse
+font definitions, so the result is visible under *Colors and Fonts*. The set is computed from what the running Eclipse declares,
+never from a font's current family, and never from widget inspection. Definitions that are not listed here are left alone,
+including definitions of unknown purpose and fonts owned by CSS. The reasoning is in `FontTargets`.
+
+| Font | Definition | Why it is included |
+|---|---|---|
+| Editor | `org.eclipse.jface.textfont` (Text Font) | The base: the font of text editors. |
+| Editor | every editable definition that declares `defaultsTo` Text Font, directly or through other definitions | Eclipse itself says these follow Text Font (for example the Java, Properties, Console, compare, commit message and terminal fonts). Which ones exist depends on the installed plug-ins. |
+| Editor | `org.eclipse.ui.workbench.texteditor.blockSelectionModeFont` | Declares no inheritance, but it is the font of text editors in block selection mode; its description asks for a monospace font, so it would otherwise stay Courier New. Used only if present. |
+| Editor | `org.eclipse.jdt.junit.failurePaneFont` | Declares no inheritance; it is the JUnit failure trace, a stack trace shown as text. Used only if present. |
+| Interface | `org.eclipse.jface.dialogfont` (Dialog Font) | The base: the default font of dialogs and views. |
+| Interface | every editable definition that declares `defaultsTo` Dialog Font | Eclipse declares these to follow Dialog Font. |
+| Interface | `org.eclipse.ui.workbench.TAB_TEXT_FONT` (Part title), `org.eclipse.ui.workbench.TREE_TABLE_FONT` (Tree and Table) | The fonts the Eclipse CSS themes apply to view and editor tabs and to trees and tables. |
+| Interface | `org.eclipse.jface.bannerfont`, `org.eclipse.jface.headerfont` | Wizard banners and section headers. Eclipse's own Windows defaults are bold, one and three points above the 9 pt interface font, so they take the chosen family, stay bold and keep that relative size. |
+
+Rules that apply to every definition:
+
+- Family and size come from the chosen font; an intentional bold is kept only for banner and header. There is no weight or
+  monospace detection.
+- On a non-default Eclipse theme the stored key is `<themeId>.<fontId>`, as Eclipse's own Colors and Fonts page writes it, so the
+  value is what that page shows for the active theme. Where the active CSS theme overrides a definition for itself, that override
+  is not changed (documented limitation).
+- Ownership is per definition: the exact value written and the prior state (absent or a value) are recorded. A definition is
+  updated or restored only while it still holds the recorded value. If you change one definition manually the plugin leaves it
+  and stops owning it; only an explicit Apply on the preference page takes the group again.
+- Nothing runs on its own: fonts change only when you choose Apply or Stop managing.
 
 ## Diagnostics
 

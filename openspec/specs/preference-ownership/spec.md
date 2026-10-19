@@ -160,3 +160,25 @@ own, and every changed key, untouched.
 #### Scenario: Ownership record lost
 - **GIVEN** the plugin's ownership record is absent or unreadable
 - **THEN** no coordinated key is removed and every present value is treated as the user's
+
+### Requirement: Theme fonts are owned value-exactly and restored conservatively
+
+For each font definition it changes, the system SHALL record the exact value it wrote and the prior state (no stored value, or a
+value). It SHALL update or restore a definition only while it still holds the recorded value, SHALL leave a definition the user
+changed as found and stop owning it, SHALL take it over again only on an explicit apply, SHALL change no other preference key, and
+SHALL NOT report success before the write has been flushed.
+
+#### Scenario: Restore untouched fonts
+- **GIVEN** the plugin set the editor font over an absent value and nothing changed it
+- **WHEN** the editor font is set back to Keep current and applied
+- **THEN** the stored editor font value is removed
+
+#### Scenario: User changed one definition
+- **GIVEN** the plugin set the editor font on several definitions and the user then changed one of them under Colors and Fonts
+- **WHEN** the editor font is set back to Keep current and applied
+- **THEN** the user's font is left as it is, ownership of that definition is cleared and the others are restored
+
+#### Scenario: Explicit apply takes the group again
+- **GIVEN** the user changed one definition the plugin had set
+- **WHEN** the user applies the editor font on the page
+- **THEN** every definition of the group holds the chosen font, the user's value is the recorded prior state and the outcome says one definition was replaced

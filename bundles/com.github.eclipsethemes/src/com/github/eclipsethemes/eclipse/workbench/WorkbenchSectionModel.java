@@ -65,8 +65,13 @@ public record WorkbenchSectionModel(boolean checkboxEnabled, String checkboxLabe
 			default -> "✓ Applied (editors)";
 			};
 			int kept = outcome.workbench().colors().userKeys().size();
-			return kept == 0 ? line : line + "; " + kept + " plug-in " + (kept == 1 ? "color kept your own value"
+			line = kept == 0 ? line : line + "; " + kept + " plug-in " + (kept == 1 ? "color kept your own value"
 					: "colors kept your own values");
+			return switch (outcome.fonts().status()) {
+			case APPLIED -> line + "; fonts applied";
+			case RELEASED -> line + "; previous fonts restored";
+			default -> line;
+			};
 		}
 		StringBuilder text = new StringBuilder();
 		if (!outcome.editor().succeeded()) {
@@ -76,7 +81,10 @@ public record WorkbenchSectionModel(boolean checkboxEnabled, String checkboxLabe
 			text.append("Editor colors applied. ");
 		}
 		if (!outcome.workbench().succeeded()) {
-			text.append("Workbench: ").append(outcome.workbench().message());
+			text.append("Workbench: ").append(outcome.workbench().message()).append(' ');
+		}
+		if (!outcome.fonts().succeeded()) {
+			text.append("Fonts: ").append(outcome.fonts().message());
 		}
 		return text.toString().trim();
 	}

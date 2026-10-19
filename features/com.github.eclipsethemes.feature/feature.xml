@@ -2,17 +2,19 @@
 <feature
     id="com.github.eclipsethemes.feature"
     label="Eclipse Themes"
-    version="1.1.0.qualifier"
+    version="1.2.0.qualifier"
     provider-name="Ahmed Hatem">
 
     <description>
         Transform your coding experience with a fresh look for your editor.
         This feature provides a curated collection of popular color themes that beautify your syntax
-        highlighting, including favorites like Solarized, Catppuccin, and GitHub Dark.
+        highlighting, including favorites like Solarized, Catppuccin, and GitHub Dark, with support
+        for languages like Java, C++, and XML.
 
-        Enjoy a more comfortable and visually appealing workspace within the Eclipse editor area,
-        with support for multiple languages like Java, C++, and XML.
-        (Note: This plugin styles the code editor, not the entire Eclipse IDE user interface.)
+        Optionally, the selected theme can also color the Eclipse workbench (window, tabs, tool bars,
+        trees and tables) and supply editor and interface fonts. Import and export themes as declarative
+        .ectheme theme packages, or import legacy XML themes.
+        (Note: Native menus, dialogs, title bars and browser content are not themed.)
     </description>
 
     <copyright>
