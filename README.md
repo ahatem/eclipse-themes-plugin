@@ -6,7 +6,7 @@
 ![Eclipse Marketplace Downloads](https://img.shields.io/eclipse-marketplace/dt/eclipse-themes)
 
 
-A simple plugin for finding and applying editor color themes in the Eclipse IDE.
+A plugin for finding and applying color themes in the Eclipse IDE: editor syntax colors, and optionally the workbench (window, tabs, tool bars, trees, tables) and theme-provided fonts.
 
 This project started when the original `eclipsecolorthemes.org` website went offline. To help the community, I built a new, modern, open-source alternative: **[eclipse-color-themes.vercel.app](https://eclipse-color-themes.vercel.app/)**.
 
@@ -17,7 +17,9 @@ I then realized the old plugin was also outdated, so I decided to build this one
 - **Dozens of popular themes** included right out of the box.
 - A link to **[download hundreds more](https://eclipse-color-themes.vercel.app/)** from the community collection.
 - A clean preference page with a **live preview** for your code.
-- **Import support** for your own favorite `.xml` theme files.
+- **Import support** for your own favorite legacy `.xml` themes and for **theme packages** (`.ectheme`), a declarative format with provenance, explicit workbench colors and optional fonts. See the [theme package format](docs/THEME_PACKAGE_FORMAT.md).
+- **Export** any installed theme as a new `.ectheme` package, which also converts a legacy theme into the package format.
+- **Optional workbench theming** and **optional theme fonts**, both off by default and both handed back cleanly when turned off.
 - Syntax highlighting support for Java, C++, XML, and more via an adapter system.
 
 ## 📸 Screenshots
@@ -55,6 +57,20 @@ platforms are experimental and need an explicit opt-in. Native menus, dialogs, t
 See [workbench theming compatibility](docs/WORKBENCH_THEMING_COMPATIBILITY.md) for the support matrix and side effects
 (four extra entries on the Appearance page).
 
+### Theme fonts (optional)
+
+A theme package may ask for an editor font and a workbench font (family and size only; fonts are never embedded or downloaded).
+Tick **Apply theme fonts** before applying to use them. It is separate from colors: applying colors never changes a font, a
+theme that names no fonts changes nothing, and a font family that is not installed is reported and skipped. Un-ticking it
+restores the fonts it replaced, except any font you have since chosen yourself. Some workbench surfaces may update only after
+restarting Eclipse. See the [theme package format](docs/THEME_PACKAGE_FORMAT.md#fonts-optional).
+
+### Theme packages and export
+
+Import accepts `.ectheme` files as well as `.xml` files; the format is chosen by the file extension. **Export as Package...**
+saves the selected theme as a new `.ectheme` file. For a legacy theme this is an explicit conversion into a new file that you
+choose; the installed theme is not changed. An installed theme can only be updated with a file of the same format.
+
 ### Importing XML themes
 
 Theme XML must not contain a `DOCTYPE`, even an empty or internal-only declaration.
@@ -86,7 +102,7 @@ without deleting it or changing its identity. A `website` value becomes a
 clickable link only when it is an `http` or `https` URI; any other value is shown
 as inert text and is never passed to the platform launcher.
 
-Use **Update Selected Theme...** to replace the XML of the selected installed
+Use **Update Selected Theme...** to replace the content of the selected installed
 theme while keeping its identity, and **Remove** to permanently delete its
 managed file after confirmation. Updating a theme does not reapply its colors
 automatically.

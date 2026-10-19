@@ -1,7 +1,8 @@
 # Theme Package Format (`.ectheme`, schema version 1)
 
 A theme package is one XML document with the extension `.ectheme`. It describes an editor color theme and, optionally, the colors
-the Eclipse workbench should use when the user has turned on *Also theme the Eclipse workbench*. A package is purely declarative:
+the Eclipse workbench should use when the user has turned on *Also theme the Eclipse workbench*, and the editor and workbench
+fonts it would like when the user has turned on *Apply theme fonts*. A package is purely declarative:
 nothing in it is executed, and nothing is loaded from outside it.
 
 Legacy `.xml` themes (`<colorTheme>`) keep working unchanged. Write a package when you want provenance metadata, explicit
@@ -33,6 +34,10 @@ workbench colors, or a format that refuses mistakes instead of silently filling 
     <surface color="#222838"/>
     <accent color="#82aaff"/>
   </workbench>
+  <fonts>
+    <editor family="Consolas" size="11"/>
+    <workbench family="Segoe UI" size="9"/>
+  </fonts>
 </themePackage>
 ```
 
@@ -102,6 +107,36 @@ light workbench palette is used instead.
 
 A `<workbench>` section never turns workbench theming on or off. It is used only when the user has enabled it.
 
+### `<fonts>` (optional)
+
+`<fonts>` may contain an `<editor>` and a `<workbench>` entry. Each entry is independently optional and has exactly two
+attributes:
+
+| Attribute | Rule |
+|---|---|
+| `family` | The name of an **installed** font family, matched case-insensitively. Not blank, at most 128 characters, no control characters. |
+| `size` | Whole points, 4 to 96. |
+
+There is no weight, style, file, URL or fallback list: a package never embeds, downloads or references a font file.
+
+What the entries change, and only when the user turns on **Apply theme fonts** on the preference page:
+
+- `<editor>` sets the platform *Text Font* (the font of the Java editor and other text editors).
+- `<workbench>` sets the platform *Part title* (view and editor tabs), *Tree and Table* and *Dialog* fonts, all to the one
+  requested font.
+
+Behavior to design for:
+
+- Applying a theme's colors never changes a font. A package without `<fonts>`, or with fonts turned off, does not set or reset
+  any font.
+- A family that is not installed is reported ("Requested font ... is not installed") and the corresponding font is left as it
+  is.
+- Turning **Apply theme fonts** off, or choosing **Stop managing**, restores each font definition the plugin changed to what it
+  was before, but only while it still holds the value the plugin wrote. A font the user has since chosen themselves under
+  *Colors and Fonts* is never overwritten.
+- Fonts are stored in the platform preferences and applied through the platform font registry. Some workbench surfaces may
+  update only after restarting Eclipse. Where a CSS theme overrides a font definition for itself, that override is not changed.
+
 ## What is refused and what is only reported
 
 Refused (the package is not imported, and an existing installed theme is left untouched):
@@ -117,9 +152,31 @@ Reported as warnings (the package is still imported):
 - unknown elements (they are ignored, but kept byte for byte in the installed file, so a later version can read them);
 - unknown workbench roles, and invalid or missing colors;
 - a blank `license`, a `website` or `source` that is not a launchable URL, or an over-long `version`;
-- workbench text roles that had to be adjusted for readability.
+- workbench text roles that had to be adjusted for readability;
+- an invalid `<fonts>` entry (blank or over-long `family`, a `size` that is not a whole number from 4 to 96, or a missing
+  attribute): that entry is ignored and the rest of the package is used. An unknown child of `<fonts>` is reported like any
+  unknown element, and a repeated `<editor>` or `<workbench>` entry inside `<fonts>` refuses the package.
 
-## Converting a legacy theme
+## Exporting a theme
+
+**Export as Package...** on the preference page saves the selected theme to a new `.ectheme` file that you choose; it never
+changes the installed theme.
+
+- A theme that is already a package is written back with its metadata, editor values, authored workbench colors and fonts. The
+  output is deterministic and readable: `background` and `foreground` first, then the other tokens alphabetically.
+- Nothing internal is written: no installed path, no catalog identity and no preference values. Workbench colors that were only
+  derived at import time are not written, so an export states only what the theme itself says.
+- The file is checked by reading it back with the package parser before it is written, and appears only when it is complete.
+  An existing file of that name is replaced only after you confirm.
+- **Converting a legacy theme.** A legacy `.xml` theme can be exported the same way. Its name, author and description are kept.
+  The package `id` is generated from the name as `legacy.` followed by the name in lower case with each run of characters other
+  than letters and digits replaced by one hyphen (`theme` when nothing is left), for example `Atom One Dark` becomes
+  `legacy.atom-one-dark`. You may edit the `id` in the exported file. The legacy theme has no workbench colors or fonts, so none
+  are written, and no provenance is invented. The installed legacy theme itself is not rewritten.
+
+## Converting a legacy theme by hand
+
+Exporting is the easy way. To do it manually:
 
 1. Rename `<colorTheme>` to `<themePackage>` and add `schemaVersion="1"`, an `id` and `appearance` (previously `type`, which
    defaulted to light).
@@ -133,4 +190,5 @@ Reported as warnings (the package is still imported):
 
 - An installed package can only be updated with another `.ectheme` file, and a legacy theme only with another `.xml` file.
 - Versions of Eclipse Themes released before packages ignore installed `.ectheme` files; they reappear after upgrading again.
+- `<fonts>` is an additive section: the format stays at schema version 1.
 - Schema changes that an older reader must not ignore will raise `schemaVersion`.
