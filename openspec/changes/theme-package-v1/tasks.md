@@ -61,6 +61,6 @@
 
 - [x] 8.1 `openspec validate theme-package-v1 --strict` and `openspec validate --all --strict`.
 - [x] 8.2 `mvn clean verify -B`.
-- [ ] 8.3 Runtime smoke on the verified matrix (Windows, 4.40/4.41): import the example package, apply with coordination off (editor
+- [x] 8.3 Runtime smoke on the verified matrix (Windows, 4.40/4.41): import the example package, apply with coordination off (editor
       only) and on (authored surface/accent visible), restart, remove. Record evidence in `verification.md`.
 - [x] 8.4 Proportionality review and full-diff review for unrelated churn.

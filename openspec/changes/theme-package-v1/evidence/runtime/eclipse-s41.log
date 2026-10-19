@@ -1,0 +1,977 @@
+!SESSION 2026-10-19 14:34:46.306 -----------------------------------------------
+eclipse.buildId=4.41.0.20260903-0719
+java.version=25.0.4.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -clean -consoleLog -data <repo>\tmp\workbench-spike\r9\ws-s41
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:34:55.020
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:34:57.378
+!MESSAGE Logback config file: <repo>\tmp\workbench-spike\r9\ws-s41\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.201.20260831-2044.xml
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:35:26.127
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:35:26.151
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:35:26.573
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:35:26.585
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:35:42.507
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:35:42.513
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:35:58.792
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:35:58.798
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:36:17.335
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:36:17.342
+!MESSAGE Workbench role 'accent' is not readable with the other workbench colors; it will be adjusted when applied
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:36:17.417
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:36:17.439
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:36:17.492
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:36:36.329
+!MESSAGE Workbench role 'accent' is not readable with the other workbench colors; it will be adjusted when applied
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:36:36.466
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:36:36.582
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:36:36.722
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:36:55.076
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:36:55.085
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:36:55.112
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:37:14.248
+!MESSAGE Failed to parse imported theme: qa-e1-schema2.ectheme: Theme package schema version 2 is not supported; it requires a newer Eclipse Themes
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package schema version 2 is not supported; it requires a newer Eclipse Themes
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.read(ThemePackageParser.java:105)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:83)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.importTheme(ThemeRepository.java:94)
+	at com.github.eclipsethemes.eclipse.ThemeManager.importTheme(ThemeManager.java:70)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.importTheme(EclipseThemesPreferencePage.java:803)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage$6.widgetSelected(EclipseThemesPreferencePage.java:611)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:290)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:91)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4363)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1217)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1241)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1226)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:863)
+	at spike.r9.Probe.clickExact(Probe.java:110)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.lambda$run$4(Probe.java:135)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:131)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4136)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:37:32.753
+!MESSAGE Failed to parse imported theme: qa-e2-missing-fg.ectheme: Theme package <editor> requires a valid <foreground> token
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package <editor> requires a valid <foreground> token
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.read(ThemePackageParser.java:157)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:83)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.importTheme(ThemeRepository.java:94)
+	at com.github.eclipsethemes.eclipse.ThemeManager.importTheme(ThemeManager.java:70)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.importTheme(EclipseThemesPreferencePage.java:803)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage$6.widgetSelected(EclipseThemesPreferencePage.java:611)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:290)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:91)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4363)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1217)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1241)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1226)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:863)
+	at spike.r9.Probe.clickExact(Probe.java:110)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.lambda$run$4(Probe.java:135)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:131)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4136)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:37:51.348
+!MESSAGE Failed to parse imported theme: qa-e4-oversize.ectheme: Theme package is larger than 256 KiB
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package is larger than 256 KiB
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:78)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.importTheme(ThemeRepository.java:94)
+	at com.github.eclipsethemes.eclipse.ThemeManager.importTheme(ThemeManager.java:70)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.importTheme(EclipseThemesPreferencePage.java:803)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage$6.widgetSelected(EclipseThemesPreferencePage.java:611)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:290)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:91)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4363)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1217)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1241)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1226)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:863)
+	at spike.r9.Probe.clickExact(Probe.java:110)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.lambda$run$4(Probe.java:135)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:131)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4136)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+!SESSION 2026-10-19 14:39:44.311 -----------------------------------------------
+eclipse.buildId=4.41.0.20260903-0719
+java.version=25.0.4.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -clean -consoleLog -data <repo>\tmp\workbench-spike\r9\ws-s41
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:39:55.063
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:39:57.296
+!MESSAGE Logback config file: <repo>\tmp\workbench-spike\r9\ws-s41\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.201.20260831-2044.xml
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:40:11.332
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:40:11.340
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:40:11.377
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:40:11.410
+!MESSAGE Installed theme file is not valid: planted-oversize.ectheme: Theme package is larger than 256 KiB
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package is larger than 256 KiB
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:78)
+	at com.github.eclipsethemes.core.parser.ThemeParser.parse(ThemeParser.java:37)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.loadInstalledThemes(ThemeRepository.java:434)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.reload(ThemeRepository.java:59)
+	at com.github.eclipsethemes.eclipse.ThemeManager.<init>(ThemeManager.java:33)
+	at com.github.eclipsethemes.EclipseThemes.getManager(EclipseThemes.java:26)
+	at com.github.eclipsethemes.eclipse.workbench.WorkbenchStartup.lambda$0(WorkbenchStartup.java:29)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:131)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4136)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:40:20.062
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:40:20.079
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:40:20.101
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:40:20.123
+!MESSAGE Installed theme file is not valid: planted-oversize.ectheme: Theme package is larger than 256 KiB
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package is larger than 256 KiB
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:78)
+	at com.github.eclipsethemes.core.parser.ThemeParser.parse(ThemeParser.java:37)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.loadInstalledThemes(ThemeRepository.java:434)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.reload(ThemeRepository.java:59)
+	at com.github.eclipsethemes.eclipse.ThemeManager.loadThemes(ThemeManager.java:38)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.loadThemes(EclipseThemesPreferencePage.java:484)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.initializeData(EclipseThemesPreferencePage.java:468)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.createContents(EclipseThemesPreferencePage.java:128)
+	at org.eclipse.jface.preference.PreferencePage.createControl(PreferencePage.java:244)
+	at org.eclipse.jface.preference.PreferenceDialog.createPageControl(PreferenceDialog.java:1429)
+	at org.eclipse.jface.preference.PreferenceDialog$8.run(PreferenceDialog.java:1192)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:169)
+	at org.eclipse.jface.preference.PreferenceDialog.showPage(PreferenceDialog.java:1184)
+	at org.eclipse.ui.internal.dialogs.FilteredPreferenceDialog.showPage(FilteredPreferenceDialog.java:633)
+	at org.eclipse.jface.preference.PreferenceDialog$5.lambda$0(PreferenceDialog.java:660)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:69)
+	at org.eclipse.jface.preference.PreferenceDialog$5.selectionChanged(PreferenceDialog.java:657)
+	at org.eclipse.jface.viewers.StructuredViewer$3.run(StructuredViewer.java:822)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:169)
+	at org.eclipse.jface.viewers.StructuredViewer.firePostSelectionChanged(StructuredViewer.java:819)
+	at org.eclipse.jface.viewers.ColumnViewer.firePostSelectionChanged(ColumnViewer.java:1054)
+	at org.eclipse.jface.viewers.StructuredViewer.setSelection(StructuredViewer.java:1669)
+	at org.eclipse.jface.viewers.TreeViewer.setSelection(TreeViewer.java:1093)
+	at org.eclipse.jface.preference.PreferenceDialog.selectSavedItem(PreferenceDialog.java:986)
+	at org.eclipse.ui.internal.dialogs.FilteredPreferenceDialog.selectSavedItem(FilteredPreferenceDialog.java:685)
+	at org.eclipse.jface.preference.PreferenceDialog.lambda$0(PreferenceDialog.java:348)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:69)
+	at org.eclipse.jface.preference.PreferenceDialog.createContents(PreferenceDialog.java:345)
+	at org.eclipse.jface.window.Window.create(Window.java:426)
+	at org.eclipse.jface.dialogs.Dialog.create(Dialog.java:1090)
+	at org.eclipse.ui.internal.dialogs.WorkbenchPreferenceDialog.createDialogOn(WorkbenchPreferenceDialog.java:88)
+	at org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(PreferencesUtil.java:180)
+	at org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(PreferencesUtil.java:114)
+	at spike.r9.Probe.prefsOpen(Probe.java:328)
+	at spike.r9.Probe.run(Probe.java:219)
+	at spike.r9.Probe.lambda$run$9(Probe.java:241)
+	at org.eclipse.swt.widgets.Display.runTimer(Display.java:4259)
+	at org.eclipse.swt.widgets.Display.messageProc(Display.java:3371)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3747)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+!SESSION 2026-10-19 14:41:48.737 -----------------------------------------------
+eclipse.buildId=4.41.0.20260903-0719
+java.version=25.0.4.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -clean -consoleLog -data <repo>\tmp\workbench-spike\r9\ws-s41
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:41:56.799
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:41:58.917
+!MESSAGE Logback config file: <repo>\tmp\workbench-spike\r9\ws-s41\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.201.20260831-2044.xml
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:42:09.989
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:42:09.994
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:42:10.018
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:42:10.029
+!MESSAGE Installed theme file is not valid: planted-oversize.ectheme: Theme package is larger than 256 KiB
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package is larger than 256 KiB
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:78)
+	at com.github.eclipsethemes.core.parser.ThemeParser.parse(ThemeParser.java:37)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.loadInstalledThemes(ThemeRepository.java:434)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.reload(ThemeRepository.java:59)
+	at com.github.eclipsethemes.eclipse.ThemeManager.<init>(ThemeManager.java:33)
+	at com.github.eclipsethemes.EclipseThemes.getManager(EclipseThemes.java:26)
+	at com.github.eclipsethemes.eclipse.workbench.WorkbenchStartup.lambda$0(WorkbenchStartup.java:29)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:131)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4136)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:42:12.783
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:42:12.798
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:42:12.830
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:42:12.939
+!MESSAGE Installed theme file is not valid: planted-oversize.ectheme: Theme package is larger than 256 KiB
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package is larger than 256 KiB
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:78)
+	at com.github.eclipsethemes.core.parser.ThemeParser.parse(ThemeParser.java:37)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.loadInstalledThemes(ThemeRepository.java:434)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.reload(ThemeRepository.java:59)
+	at com.github.eclipsethemes.eclipse.ThemeManager.loadThemes(ThemeManager.java:38)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.loadThemes(EclipseThemesPreferencePage.java:484)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.initializeData(EclipseThemesPreferencePage.java:468)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.createContents(EclipseThemesPreferencePage.java:128)
+	at org.eclipse.jface.preference.PreferencePage.createControl(PreferencePage.java:244)
+	at org.eclipse.jface.preference.PreferenceDialog.createPageControl(PreferenceDialog.java:1429)
+	at org.eclipse.jface.preference.PreferenceDialog$8.run(PreferenceDialog.java:1192)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:169)
+	at org.eclipse.jface.preference.PreferenceDialog.showPage(PreferenceDialog.java:1184)
+	at org.eclipse.ui.internal.dialogs.FilteredPreferenceDialog.showPage(FilteredPreferenceDialog.java:633)
+	at org.eclipse.jface.preference.PreferenceDialog$5.lambda$0(PreferenceDialog.java:660)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:69)
+	at org.eclipse.jface.preference.PreferenceDialog$5.selectionChanged(PreferenceDialog.java:657)
+	at org.eclipse.jface.viewers.StructuredViewer$3.run(StructuredViewer.java:822)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:169)
+	at org.eclipse.jface.viewers.StructuredViewer.firePostSelectionChanged(StructuredViewer.java:819)
+	at org.eclipse.jface.viewers.ColumnViewer.firePostSelectionChanged(ColumnViewer.java:1054)
+	at org.eclipse.jface.viewers.StructuredViewer.setSelection(StructuredViewer.java:1669)
+	at org.eclipse.jface.viewers.TreeViewer.setSelection(TreeViewer.java:1093)
+	at org.eclipse.jface.preference.PreferenceDialog.selectSavedItem(PreferenceDialog.java:986)
+	at org.eclipse.ui.internal.dialogs.FilteredPreferenceDialog.selectSavedItem(FilteredPreferenceDialog.java:685)
+	at org.eclipse.jface.preference.PreferenceDialog.lambda$0(PreferenceDialog.java:348)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:69)
+	at org.eclipse.jface.preference.PreferenceDialog.createContents(PreferenceDialog.java:345)
+	at org.eclipse.jface.window.Window.create(Window.java:426)
+	at org.eclipse.jface.dialogs.Dialog.create(Dialog.java:1090)
+	at org.eclipse.ui.internal.dialogs.WorkbenchPreferenceDialog.createDialogOn(WorkbenchPreferenceDialog.java:88)
+	at org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(PreferencesUtil.java:180)
+	at org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(PreferencesUtil.java:114)
+	at spike.r9.Probe.prefsOpen(Probe.java:328)
+	at spike.r9.Probe.run(Probe.java:219)
+	at spike.r9.Probe.lambda$run$9(Probe.java:241)
+	at org.eclipse.swt.widgets.Display.runTimer(Display.java:4259)
+	at org.eclipse.swt.widgets.Display.messageProc(Display.java:3371)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3747)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+!SESSION 2026-10-19 14:44:06.875 -----------------------------------------------
+eclipse.buildId=4.41.0.20260903-0719
+java.version=25.0.4.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -clean -consoleLog -data <repo>\tmp\workbench-spike\r9\ws-s41
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:44:14.361
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:44:15.797
+!MESSAGE Logback config file: <repo>\tmp\workbench-spike\r9\ws-s41\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.201.20260831-2044.xml
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:44:23.601
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:44:23.614
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:44:23.636
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:44:23.646
+!MESSAGE Installed theme file is not valid: planted-oversize.ectheme: Theme package is larger than 256 KiB
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package is larger than 256 KiB
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:78)
+	at com.github.eclipsethemes.core.parser.ThemeParser.parse(ThemeParser.java:37)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.loadInstalledThemes(ThemeRepository.java:434)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.reload(ThemeRepository.java:59)
+	at com.github.eclipsethemes.eclipse.ThemeManager.<init>(ThemeManager.java:33)
+	at com.github.eclipsethemes.EclipseThemes.getManager(EclipseThemes.java:26)
+	at com.github.eclipsethemes.eclipse.workbench.WorkbenchStartup.lambda$0(WorkbenchStartup.java:29)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:131)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4136)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:44:25.430
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:44:25.437
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:44:25.456
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:44:25.465
+!MESSAGE Installed theme file is not valid: planted-oversize.ectheme: Theme package is larger than 256 KiB
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package is larger than 256 KiB
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:78)
+	at com.github.eclipsethemes.core.parser.ThemeParser.parse(ThemeParser.java:37)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.loadInstalledThemes(ThemeRepository.java:434)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.reload(ThemeRepository.java:59)
+	at com.github.eclipsethemes.eclipse.ThemeManager.loadThemes(ThemeManager.java:38)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.loadThemes(EclipseThemesPreferencePage.java:484)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.initializeData(EclipseThemesPreferencePage.java:468)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.createContents(EclipseThemesPreferencePage.java:128)
+	at org.eclipse.jface.preference.PreferencePage.createControl(PreferencePage.java:244)
+	at org.eclipse.jface.preference.PreferenceDialog.createPageControl(PreferenceDialog.java:1429)
+	at org.eclipse.jface.preference.PreferenceDialog$8.run(PreferenceDialog.java:1192)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:169)
+	at org.eclipse.jface.preference.PreferenceDialog.showPage(PreferenceDialog.java:1184)
+	at org.eclipse.ui.internal.dialogs.FilteredPreferenceDialog.showPage(FilteredPreferenceDialog.java:633)
+	at org.eclipse.jface.preference.PreferenceDialog$5.lambda$0(PreferenceDialog.java:660)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:69)
+	at org.eclipse.jface.preference.PreferenceDialog$5.selectionChanged(PreferenceDialog.java:657)
+	at org.eclipse.jface.viewers.StructuredViewer$3.run(StructuredViewer.java:822)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:169)
+	at org.eclipse.jface.viewers.StructuredViewer.firePostSelectionChanged(StructuredViewer.java:819)
+	at org.eclipse.jface.viewers.ColumnViewer.firePostSelectionChanged(ColumnViewer.java:1054)
+	at org.eclipse.jface.viewers.StructuredViewer.setSelection(StructuredViewer.java:1669)
+	at org.eclipse.jface.viewers.TreeViewer.setSelection(TreeViewer.java:1093)
+	at org.eclipse.jface.preference.PreferenceDialog.selectSavedItem(PreferenceDialog.java:986)
+	at org.eclipse.ui.internal.dialogs.FilteredPreferenceDialog.selectSavedItem(FilteredPreferenceDialog.java:685)
+	at org.eclipse.jface.preference.PreferenceDialog.lambda$0(PreferenceDialog.java:348)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:69)
+	at org.eclipse.jface.preference.PreferenceDialog.createContents(PreferenceDialog.java:345)
+	at org.eclipse.jface.window.Window.create(Window.java:426)
+	at org.eclipse.jface.dialogs.Dialog.create(Dialog.java:1090)
+	at org.eclipse.ui.internal.dialogs.WorkbenchPreferenceDialog.createDialogOn(WorkbenchPreferenceDialog.java:88)
+	at org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(PreferencesUtil.java:180)
+	at org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(PreferencesUtil.java:114)
+	at spike.r9.Probe.prefsOpen(Probe.java:328)
+	at spike.r9.Probe.run(Probe.java:219)
+	at spike.r9.Probe.lambda$run$9(Probe.java:241)
+	at org.eclipse.swt.widgets.Display.runTimer(Display.java:4259)
+	at org.eclipse.swt.widgets.Display.messageProc(Display.java:3371)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3747)
+	at org.eclipse.jface.window.Window.runEventLoop(Window.java:819)
+	at org.eclipse.jface.window.Window.open(Window.java:799)
+	at org.eclipse.jface.dialogs.MessageDialog.open(MessageDialog.java:608)
+	at org.eclipse.ui.internal.WindowsDefenderConfigurator.lambda$4(WindowsDefenderConfigurator.java:242)
+	at org.eclipse.swt.widgets.Display.lambda$6(Display.java:4932)
+	at org.eclipse.ui.internal.PendingSyncExec.run(PendingSyncExec.java:68)
+	at org.eclipse.ui.internal.UILockListener.doPendingWork(UILockListener.java:166)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:131)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4136)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:44:48.760
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:44:48.770
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:44:48.784
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:44:48.792
+!MESSAGE Installed theme file is not valid: planted-oversize.ectheme: Theme package is larger than 256 KiB
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package is larger than 256 KiB
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:78)
+	at com.github.eclipsethemes.core.parser.ThemeParser.parse(ThemeParser.java:37)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.loadInstalledThemes(ThemeRepository.java:434)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.reload(ThemeRepository.java:59)
+	at com.github.eclipsethemes.eclipse.ThemeManager.loadThemes(ThemeManager.java:38)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.loadThemes(EclipseThemesPreferencePage.java:484)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.updateSelectedTheme(EclipseThemesPreferencePage.java:850)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage$7.widgetSelected(EclipseThemesPreferencePage.java:618)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:290)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:91)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4363)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1217)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1241)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1226)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:863)
+	at spike.r9.Probe.clickExact(Probe.java:110)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.lambda$run$4(Probe.java:135)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:131)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4136)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:45:17.225
+!MESSAGE Update refused: format of qa-legacy-replacement.xml differs from 3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:45:45.715
+!MESSAGE Failed to parse replacement theme: qa-e4-oversize.ectheme: Theme package is larger than 256 KiB
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package is larger than 256 KiB
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:78)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.updateTheme(ThemeRepository.java:159)
+	at com.github.eclipsethemes.eclipse.ThemeManager.updateTheme(ThemeManager.java:74)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.updateSelectedTheme(EclipseThemesPreferencePage.java:844)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage$7.widgetSelected(EclipseThemesPreferencePage.java:618)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:290)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:91)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4363)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1217)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1241)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1226)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:863)
+	at spike.r9.Probe.clickExact(Probe.java:110)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.lambda$run$4(Probe.java:135)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:131)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4136)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+!SESSION 2026-10-19 14:48:55.399 -----------------------------------------------
+eclipse.buildId=4.41.0.20260903-0719
+java.version=25.0.4.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -clean -consoleLog -data <repo>\tmp\workbench-spike\r9\ws-s41
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:49:02.730
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:49:04.171
+!MESSAGE Logback config file: <repo>\tmp\workbench-spike\r9\ws-s41\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.201.20260831-2044.xml
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:49:13.922
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:49:13.944
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:49:13.981
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:49:14.001
+!MESSAGE Installed theme file is not valid: planted-oversize.ectheme: Theme package is larger than 256 KiB
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package is larger than 256 KiB
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:78)
+	at com.github.eclipsethemes.core.parser.ThemeParser.parse(ThemeParser.java:37)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.loadInstalledThemes(ThemeRepository.java:434)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.reload(ThemeRepository.java:59)
+	at com.github.eclipsethemes.eclipse.ThemeManager.<init>(ThemeManager.java:33)
+	at com.github.eclipsethemes.EclipseThemes.getManager(EclipseThemes.java:26)
+	at com.github.eclipsethemes.eclipse.workbench.WorkbenchStartup.lambda$0(WorkbenchStartup.java:29)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:131)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4136)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:49:16.015
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:49:16.024
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:49:16.041
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:49:16.061
+!MESSAGE Installed theme file is not valid: planted-oversize.ectheme: Theme package is larger than 256 KiB
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package is larger than 256 KiB
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:78)
+	at com.github.eclipsethemes.core.parser.ThemeParser.parse(ThemeParser.java:37)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.loadInstalledThemes(ThemeRepository.java:434)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.reload(ThemeRepository.java:59)
+	at com.github.eclipsethemes.eclipse.ThemeManager.loadThemes(ThemeManager.java:38)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.loadThemes(EclipseThemesPreferencePage.java:484)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.initializeData(EclipseThemesPreferencePage.java:468)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.createContents(EclipseThemesPreferencePage.java:128)
+	at org.eclipse.jface.preference.PreferencePage.createControl(PreferencePage.java:244)
+	at org.eclipse.jface.preference.PreferenceDialog.createPageControl(PreferenceDialog.java:1429)
+	at org.eclipse.jface.preference.PreferenceDialog$8.run(PreferenceDialog.java:1192)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:169)
+	at org.eclipse.jface.preference.PreferenceDialog.showPage(PreferenceDialog.java:1184)
+	at org.eclipse.ui.internal.dialogs.FilteredPreferenceDialog.showPage(FilteredPreferenceDialog.java:633)
+	at org.eclipse.jface.preference.PreferenceDialog$5.lambda$0(PreferenceDialog.java:660)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:69)
+	at org.eclipse.jface.preference.PreferenceDialog$5.selectionChanged(PreferenceDialog.java:657)
+	at org.eclipse.jface.viewers.StructuredViewer$3.run(StructuredViewer.java:822)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:169)
+	at org.eclipse.jface.viewers.StructuredViewer.firePostSelectionChanged(StructuredViewer.java:819)
+	at org.eclipse.jface.viewers.ColumnViewer.firePostSelectionChanged(ColumnViewer.java:1054)
+	at org.eclipse.jface.viewers.StructuredViewer.setSelection(StructuredViewer.java:1669)
+	at org.eclipse.jface.viewers.TreeViewer.setSelection(TreeViewer.java:1093)
+	at org.eclipse.jface.preference.PreferenceDialog.selectSavedItem(PreferenceDialog.java:986)
+	at org.eclipse.ui.internal.dialogs.FilteredPreferenceDialog.selectSavedItem(FilteredPreferenceDialog.java:685)
+	at org.eclipse.jface.preference.PreferenceDialog.lambda$0(PreferenceDialog.java:348)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:69)
+	at org.eclipse.jface.preference.PreferenceDialog.createContents(PreferenceDialog.java:345)
+	at org.eclipse.jface.window.Window.create(Window.java:426)
+	at org.eclipse.jface.dialogs.Dialog.create(Dialog.java:1090)
+	at org.eclipse.ui.internal.dialogs.WorkbenchPreferenceDialog.createDialogOn(WorkbenchPreferenceDialog.java:88)
+	at org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(PreferencesUtil.java:180)
+	at org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(PreferencesUtil.java:114)
+	at spike.r9.Probe.prefsOpen(Probe.java:328)
+	at spike.r9.Probe.run(Probe.java:219)
+	at spike.r9.Probe.lambda$run$9(Probe.java:241)
+	at org.eclipse.swt.widgets.Display.runTimer(Display.java:4259)
+	at org.eclipse.swt.widgets.Display.messageProc(Display.java:3371)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3747)
+	at org.eclipse.jface.window.Window.runEventLoop(Window.java:819)
+	at org.eclipse.jface.window.Window.open(Window.java:799)
+	at org.eclipse.jface.dialogs.MessageDialog.open(MessageDialog.java:608)
+	at org.eclipse.ui.internal.WindowsDefenderConfigurator.lambda$4(WindowsDefenderConfigurator.java:242)
+	at org.eclipse.swt.widgets.Display.lambda$6(Display.java:4932)
+	at org.eclipse.ui.internal.PendingSyncExec.run(PendingSyncExec.java:68)
+	at org.eclipse.ui.internal.UILockListener.doPendingWork(UILockListener.java:166)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:131)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4136)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:49:37.099
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:49:37.114
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:49:37.138
+!MESSAGE Attribute 'source' scheme 'file' is not allowed; no source link is available
+
+!ENTRY com.github.eclipsethemes 4 0 2026-10-19 14:49:37.148
+!MESSAGE Installed theme file is not valid: planted-oversize.ectheme: Theme package is larger than 256 KiB
+!STACK 0
+com.github.eclipsethemes.core.exceptions.ThemeParseException: Theme package is larger than 256 KiB
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.refusal(ThemePackageParser.java:269)
+	at com.github.eclipsethemes.core.parser.ThemePackageParser.parse(ThemePackageParser.java:78)
+	at com.github.eclipsethemes.core.parser.ThemeParser.parse(ThemeParser.java:37)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.loadInstalledThemes(ThemeRepository.java:434)
+	at com.github.eclipsethemes.eclipse.ThemeRepository.reload(ThemeRepository.java:59)
+	at com.github.eclipsethemes.eclipse.ThemeManager.loadThemes(ThemeManager.java:38)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.loadThemes(EclipseThemesPreferencePage.java:484)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage.removeSelectedTheme(EclipseThemesPreferencePage.java:932)
+	at com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage$8.widgetSelected(EclipseThemesPreferencePage.java:625)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:290)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:91)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4363)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1217)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1241)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1226)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:863)
+	at spike.r9.Probe.clickExact(Probe.java:110)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.clickExact(Probe.java:111)
+	at spike.r9.Probe.lambda$run$4(Probe.java:135)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:131)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4136)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:680)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:193)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
