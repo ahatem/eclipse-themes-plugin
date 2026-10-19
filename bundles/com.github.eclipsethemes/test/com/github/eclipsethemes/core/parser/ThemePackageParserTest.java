@@ -175,7 +175,7 @@ public class ThemePackageParserTest {
         parse(pkg("schemaVersion='1' id='a.b' name='N' appearance='dark' futureAttribute='x'",
                 "<fonts><editor-font family='Mono'/></fonts>" + EDITOR), findings);
         assertEquals(List.of(ThemeDiagnostic.UNKNOWN_ELEMENT), kinds(findings));
-        assertEquals("fonts", findings.get(0).element());
+        assertEquals("editor-font", findings.get(0).element());
     }
 
     @Test public void overlongVersionIsDropped() throws Exception {
