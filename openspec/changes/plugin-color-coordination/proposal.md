@@ -63,27 +63,35 @@ and ownership state and does not alter its requirements.
 
 ## Decision Gate
 
-The maintainer chose the mechanism (option C: plugin-owned, conflict-aware writes, starting with popups and hyperlinks). The
-decisions below are still open. **Implementation is not authorized until the maintainer resolves decisions 1 to 3.** The spec deltas
-and design are written for the recommended options; a different answer changes them before apply.
+The maintainer resolved the three blocking decisions. Implementation is authorized for the options below; the spec deltas and design
+already describe them.
 
-### Product / Maintainer decisions (blocking)
+### Product / Maintainer decisions (resolved)
 
-1. **Which theme families write the keys.**
-   - *A. Dark only (recommended).* It fixes the demonstrated problem, matches stock (stock Light leaves the defaults readable), and
-     keeps foreign writes to the minimum. Light themes keep the platform's pale-yellow and white popups.
-   - *B. Dark and light.* Light themes (for example Solarized Light) also get popups in their own colors. Every Apply writes foreign
-     keys, and ownership conflicts become more likely.
-2. **When another Eclipse theme is chosen on the Appearance page.**
-   - *A. Release on the platform theme-change event (recommended).* As soon as a non-coordinated theme becomes active, the keys still
-     holding the plugin's values are removed. The plugin never re-applies anything, so the external choice still wins. This adds a
-     bounded listener, which R8a deliberately avoided; the visible cost of not having one is described in option B.
-   - *B. No listener.* The keys are released at the next Apply or restart. Until then a stock Light workbench shows dark popups and
-     light-blue links.
-3. **Editor-only mode (coordination off).**
-   - *A. No writes (recommended).* Popup colors belong to workbench coordination, and editor-only users keep today's behavior.
-   - *B. Also write in editor-only mode, from the editor theme's colors.* Popups then match a dark editor under a light workbench,
-     but popups are workbench chrome and this widens editor-only behavior.
+1. **Which theme families write the keys: A, dark only.** Foreign plug-in popup, hyperlink and related colors are coordinated only
+   while a coordinated dark workbench theme is active. A light coordinated theme writes no foreign key (and releases any it owns);
+   its normal workbench CSS theming is unaffected.
+2. **When another Eclipse theme is chosen on the Appearance page: A, release immediately.** A bounded listener on the engine's saved
+   `themeid` releases every still-owned key and never reapplies. It is registered once, removed on shutdown, and lives next to the
+   Eclipse compatibility boundary.
+3. **Editor-only mode (coordination off): A, no foreign writes.** Editor theming continues; popup and plug-in colors belong to
+   workbench coordination.
+
+### Ownership contract (maintainer-final)
+
+- A key with an instance value before the plugin's first write is user-owned and is never written.
+- If absent, the plugin may acquire it, write it and record the exact written value.
+- On a later Apply, if the stored value still equals the recorded value the plugin may update or remove it; otherwise it releases
+  ownership and leaves the value untouched.
+- On relinquish only values that still exactly equal the plugin's recorded value are removed.
+- Never delete an explicit user customization, never overwrite an external change, never restore a guessed default, never reset a node.
+
+### Scope of this change (R8 completion)
+
+The maintainer widened the change from the first popup/hyperlink slice to the whole remaining R8 plug-in coordination scope, in
+stages that each build on the proven ownership model: slice 1 (the 15 keys below), then the stock-Dark preference keys classified in
+`design.md` §7 as visible parity (EGit, compare, search/annotation, JDT/debug/Ant, Mylyn/WikiText/EclEmma/TM4E/Marketplace) in the same
+table and the same ownership model, plus the remaining safe plug-in widget CSS rules. Nothing outside R8 is added.
 
 ### Evidence-dependent (investigated)
 
