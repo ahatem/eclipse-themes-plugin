@@ -32,18 +32,20 @@ public class PluginColorsTest {
 	public void darkPaletteMapsEachKeyThroughItsSemanticRole() {
 		WorkbenchPalette palette = palette(ThemeType.DARK, "#282c34", "#abb2bf");
 		Map<String, String> values = PluginColors.derive(palette);
-		String raised = palette.get(WorkbenchColor.SURFACE_RAISED).toEclipseFormat();
-		String foreground = palette.get(WorkbenchColor.FOREGROUND).toEclipseFormat();
 		assertEquals(PluginColorTable.keys().size(), values.size());
 		for (PluginColorKey key : PluginColorTable.keys()) {
-			String expected = switch (key.source()) {
-				case POPUP_BACKGROUND -> raised;
-				case FOREGROUND -> foreground;
-				case LINK -> palette.get(WorkbenchColor.ACCENT).toEclipseFormat();
-				case ACTIVE_LINK -> values.get(key.id());
-				case DARK_FLAG -> "true";
-			};
-			assertEquals(key.id(), expected, values.get(key.id()));
+			String actual = values.get(key.id());
+			switch (key.source()) {
+				case BACKGROUND -> assertEquals(key.id(), role(palette, WorkbenchColor.BACKGROUND), actual);
+				case RAISED -> assertEquals(key.id(), role(palette, WorkbenchColor.SURFACE_RAISED), actual);
+				case BORDER -> assertEquals(key.id(), role(palette, WorkbenchColor.BORDER), actual);
+				case FOREGROUND -> assertEquals(key.id(), role(palette, WorkbenchColor.FOREGROUND), actual);
+				case MUTED -> assertEquals(key.id(), role(palette, WorkbenchColor.MUTED_FOREGROUND), actual);
+				case ACCENT -> assertEquals(key.id(), role(palette, WorkbenchColor.ACCENT), actual);
+				case DARK_FLAG -> assertEquals(key.id(), "true", actual);
+				case OFF_FLAG -> assertEquals(key.id(), "false", actual);
+				default -> assertTrue(key.id() + " " + actual, actual.matches("\\d{1,3},\\d{1,3},\\d{1,3}"));
+			}
 		}
 	}
 
@@ -60,23 +62,65 @@ public class PluginColorsTest {
 	}
 
 	@Test
-	public void linksAndPopupTextAreReadableOnEverySurfaceForEveryDarkTheme() {
+	public void textColorsAreReadableOnEverySurfaceForEveryDarkTheme() {
+		Set<PluginColorSource> text = Set.of(PluginColorSource.ACCENT, PluginColorSource.ACTIVE_ACCENT,
+				PluginColorSource.FOREGROUND, PluginColorSource.ERROR, PluginColorSource.WARNING,
+				PluginColorSource.SUCCESS, PluginColorSource.INFO);
 		for (String pair : THEMES) {
 			String[] colors = pair.split(" ");
 			WorkbenchPalette palette = palette(ThemeType.DARK, colors[0], colors[1]);
 			Map<String, String> values = PluginColors.derive(palette);
 			for (PluginColorKey key : PluginColorTable.keys()) {
-				if (key.source() == PluginColorSource.LINK || key.source() == PluginColorSource.ACTIVE_LINK
-						|| key.source() == PluginColorSource.FOREGROUND) {
-					Color color = parse(values.get(key.id()));
-					for (WorkbenchColor surface : List.of(WorkbenchColor.BACKGROUND, WorkbenchColor.SURFACE,
-							WorkbenchColor.SURFACE_RAISED)) {
-						assertTrue(pair + " " + key.key() + " on " + surface,
-								WorkbenchPaletteResolver.contrast(color, palette.get(surface)) >= 4.5);
-					}
+				boolean muted = key.source() == PluginColorSource.MUTED;
+				if (!text.contains(key.source()) && !muted) {
+					continue;
+				}
+				Color color = parse(values.get(key.id()));
+				// The palette guarantees muted text on the background and surface, not on the raised color.
+				List<WorkbenchColor> surfaces = muted ? List.of(WorkbenchColor.BACKGROUND, WorkbenchColor.SURFACE)
+						: List.of(WorkbenchColor.BACKGROUND, WorkbenchColor.SURFACE, WorkbenchColor.SURFACE_RAISED);
+				for (WorkbenchColor surface : surfaces) {
+					assertTrue(pair + " " + key.key() + " on " + surface,
+							WorkbenchPaletteResolver.contrast(color, palette.get(surface)) >= 4.5);
 				}
 			}
 		}
+	}
+
+	@Test
+	public void tintsKeepTheForegroundReadableAndStayDistinctFromTheBackground() {
+		Set<PluginColorSource> tints = Set.of(PluginColorSource.ERROR_TINT, PluginColorSource.WARNING_TINT,
+				PluginColorSource.SUCCESS_TINT, PluginColorSource.INFO_TINT, PluginColorSource.WARNING_TINT_SOFT);
+		for (String pair : THEMES) {
+			String[] colors = pair.split(" ");
+			WorkbenchPalette palette = palette(ThemeType.DARK, colors[0], colors[1]);
+			Map<String, String> values = PluginColors.derive(palette);
+			Color background = palette.get(WorkbenchColor.BACKGROUND);
+			Color foreground = palette.get(WorkbenchColor.FOREGROUND);
+			for (PluginColorKey key : PluginColorTable.keys()) {
+				if (!tints.contains(key.source())) {
+					continue;
+				}
+				Color tint = parse(values.get(key.id()));
+				assertTrue(pair + " " + key.key(), WorkbenchPaletteResolver.contrast(foreground, tint) >= 4.5);
+				assertNotEquals(pair + " " + key.key(), background, tint);
+			}
+			Color strong = parse(values.get("org.eclipse.ui.workbench|org.eclipse.jface.REVISION_NEWEST_COLOR"));
+			Color soft = parse(values.get("org.eclipse.ui.workbench|org.eclipse.jface.REVISION_OLDEST_COLOR"));
+			assertTrue(pair, distance(soft, background) <= distance(strong, background) + 1e-9);
+		}
+	}
+
+	@Test
+	public void statusHuesAreDistinctFromEachOther() {
+		WorkbenchPalette palette = palette(ThemeType.DARK, "#282c34", "#abb2bf");
+		Map<String, String> values = PluginColors.derive(palette);
+		Set<String> status = new HashSet<>();
+		status.add(values.get("org.eclipse.ui.workbench|ERROR_COLOR"));
+		status.add(values.get("org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR"));
+		status.add(values.get("org.eclipse.ui.workbench|INCOMING_COLOR"));
+		status.add(values.get("org.eclipse.ui.workbench|HYPERLINK_COLOR"));
+		assertEquals(4, status.size());
 	}
 
 	@Test
@@ -110,7 +154,16 @@ public class PluginColorsTest {
 	}
 
 	@Test
-	public void sliceOneKeysAreExactlyTheMaintainerApprovedFifteen() {
+	public void keysOutsideThePlatformNodesNameTheirOwnBundle() {
+		for (PluginColorKey key : PluginColorTable.keys()) {
+			if (!key.node().equals(PluginColorTable.WORKBENCH) && !key.node().equals(PluginColorTable.EDITORS)) {
+				assertEquals(key.id(), key.node(), key.requiredBundle());
+			}
+		}
+	}
+
+	@Test
+	public void theApprovedPopupAndHyperlinkKeysAreStillCoordinated() {
 		Set<String> ids = new HashSet<>();
 		PluginColorTable.keys().forEach(key -> ids.add(key.id()));
 		assertTrue(ids.containsAll(List.of("org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND",
@@ -150,6 +203,19 @@ public class PluginColorsTest {
 	}
 
 	// ---- helpers ---------------------------------------------------------------------------------------------
+
+	/** Euclidean distance in Oklab, a rough measure of how different two colors look. */
+	private static double distance(Color a, Color b) {
+		PerceptualColor pa = PerceptualColor.of(a);
+		PerceptualColor pb = PerceptualColor.of(b);
+		double da = pa.c * Math.cos(pa.h) - pb.c * Math.cos(pb.h);
+		double db = pa.c * Math.sin(pa.h) - pb.c * Math.sin(pb.h);
+		return Math.sqrt((pa.l - pb.l) * (pa.l - pb.l) + da * da + db * db);
+	}
+
+	private static String role(WorkbenchPalette palette, WorkbenchColor color) {
+		return palette.get(color).toEclipseFormat();
+	}
 
 	private static Color parse(String eclipseFormat) {
 		String[] rgb = eclipseFormat.split(",");

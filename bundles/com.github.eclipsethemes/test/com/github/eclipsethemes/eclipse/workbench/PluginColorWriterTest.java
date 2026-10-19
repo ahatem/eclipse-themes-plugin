@@ -180,7 +180,23 @@ public class PluginColorWriterTest {
 		assertEquals(Optional.empty(), foreign.get(WB, "org.eclipse.jdt.ui.Javadoc.foregroundColor"));
 		assertEquals(Optional.of(atom.get(HYPERLINK_ID)), foreign.get(WB, "HYPERLINK_COLOR"));
 		assertFalse(summary.ownedKeys().contains(JAVADOC_BG_ID));
-		assertEquals(10 - 2, summary.ownedKeys().size());
+		assertEquals(PluginColorTable.keys().stream().filter(key -> !JDT.equals(key.requiredBundle())).count(),
+				summary.ownedKeys().size());
+	}
+
+	@Test
+	public void onlyKeysOfInstalledBundlesAreWritten() {
+		PluginColorTable.keys().forEach(key -> {
+			if (key.requiredBundle() != null) {
+				foreign.missingBundles.add(key.requiredBundle());
+			}
+		});
+		PluginColorSummary summary = writer.sync(atom);
+		long platformKeys = PluginColorTable.keys().stream().filter(key -> key.requiredBundle() == null).count();
+		assertEquals(platformKeys, summary.ownedKeys().size());
+		for (PluginColorKey key : PluginColorTable.keys()) {
+			assertEquals(key.id(), key.requiredBundle() == null, foreign.get(key.node(), key.key()).isPresent());
+		}
 	}
 
 	@Test

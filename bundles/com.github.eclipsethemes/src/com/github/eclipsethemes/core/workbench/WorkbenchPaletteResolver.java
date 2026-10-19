@@ -165,7 +165,7 @@ public final class WorkbenchPaletteResolver {
 	 * Moves the color's lightness (keeping hue and chroma) away from the surfaces until it reaches the contrast on
 	 * every one of them. Falls back to black or white only if no lightness works.
 	 */
-	private static Color readable(Color color, double minimum, double direction, Color... surfaces) {
+	static Color readable(Color color, double minimum, double direction, Color... surfaces) {
 		if (worstContrast(color, surfaces) >= minimum) {
 			return color;
 		}
@@ -198,7 +198,7 @@ public final class WorkbenchPaletteResolver {
 						palette.get(WorkbenchColor.SELECTION)) >= SELECTION_CONTRAST;
 	}
 
-	private static double worstContrast(Color color, Color... surfaces) {
+	static double worstContrast(Color color, Color... surfaces) {
 		double worst = Double.MAX_VALUE;
 		for (Color surface : surfaces) {
 			worst = Math.min(worst, contrast(color, surface));
