@@ -191,8 +191,7 @@ Removal SHALL report success only after the target binding is removed and the ta
 - **AND** all other record identities and files remain unchanged
 
 ### Requirement: Supported extension acceptance is locale-independent
-
-Import and update SHALL accept a source only when its final extension is `.xml`, compared case-insensitively without the default locale. Catalog discovery and theme-type classification used by admission SHALL use the same locale-independent case mapping. Unsupported extensions SHALL be refused before staging, binding, or catalog mutation.
+Import and update SHALL accept final extensions `.xml` and `.ectheme`, matched case-insensitively with locale-independent mapping; the extension selects legacy XML or package format. Discovery and admission SHALL classify extensions identically. Unsupported extensions SHALL be refused before staging, binding or catalog mutation. New imports SHALL use repository-allocated locators with the format's extension.
 
 #### Scenario: Uppercase extension
 - **GIVEN** a valid theme filename ending in `.XML`
@@ -200,13 +199,19 @@ Import and update SHALL accept a source only when its final extension is `.xml`,
 - **THEN** it is treated as a supported theme file
 - **AND** the parser is selected consistently
 
+#### Scenario: Package import
+- **GIVEN** a valid package file `Nightfall.ectheme`
+- **WHEN** the user imports it
+- **THEN** a new independent installed record is admitted under a new local logical identity
+- **AND** its managed locator is a repository-allocated name ending in `.ectheme` containing the exact parsed bytes
+
 #### Scenario: Locale with different case mapping
 - **GIVEN** the process default locale maps `I` differently from the root locale
 - **WHEN** an `.xml` filename is classified
 - **THEN** extension acceptance is unchanged
 
 #### Scenario: Unsupported extension
-- **GIVEN** a selected file whose extension is not `.xml`
+- **GIVEN** a selected file whose extension is neither `.xml` nor `.ectheme`
 - **WHEN** import is requested
 - **THEN** it is refused with a diagnostic before any staged or managed file is created
 
@@ -280,3 +285,21 @@ A successful import or update SHALL return the committed `ThemeRecord`, not the 
 - **GIVEN** a valid supported source file
 - **WHEN** import commits
 - **THEN** the outcome carries the admitted record with its new logical identity, installed origin, and managed locator
+
+### Requirement: Update preserves the record's format
+
+An update SHALL be refused, before staging and with a diagnostic, when the replacement's format differs from the selected record's
+format. The selected record's file, binding, identity, catalog entry and selected intent SHALL remain unchanged. Converting a legacy
+record into a package is an import of the package followed by an explicit removal of the legacy record.
+
+#### Scenario: Legacy record updated with a package
+- **GIVEN** a selected installed legacy theme
+- **WHEN** the user updates it from a `.ectheme` file
+- **THEN** update is refused with a diagnostic naming the format mismatch
+- **AND** no managed file, binding or catalog record changes
+
+#### Scenario: Package updated with a newer package
+- **GIVEN** a selected installed package
+- **WHEN** the user updates it from a valid `.ectheme` file claiming a different package id
+- **THEN** the record keeps its logical identity and locator and holds the new bytes
+- **AND** the package id claim does not affect the target
