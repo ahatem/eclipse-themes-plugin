@@ -38,7 +38,10 @@ public class WorkbenchContributionConsistencyTest {
 	private static final Path BUNDLE = Paths.get(".");
 	private static final Set<String> PLATFORM_REFERENCES = Set.of("org-eclipse-ui-workbench-TAB_TEXT_FONT",
 			"org-eclipse-ui-workbench-TREE_TABLE_FONT", "org-eclipse-ui-workbench-FORM_HEADING_ERROR_COLOR",
-			"org-eclipse-ui-workbench-FORM_HEADING_WARNING_COLOR", "org-eclipse-ui-workbench-FORM_HEADING_INFO_COLOR");
+			"org-eclipse-ui-workbench-FORM_HEADING_WARNING_COLOR", "org-eclipse-ui-workbench-FORM_HEADING_INFO_COLOR",
+			"org-eclipse-debug-ui-VariableTextFont");
+	/** The splash-screen rules copied from the stock themes; every other color is a palette role. */
+	private static final Set<String> SPLASH_LITERALS = Set.of("#9c9696", "#e1e1e1");
 
 	@Test
 	public void pluginXmlDeclaresTheFourThemesWithTheirFamilyStylesheet() throws Exception {
@@ -109,6 +112,21 @@ public class WorkbenchContributionConsistencyTest {
 			// user values on the next theme change (evidence/runtime/rejected-definitions-sheet), so neither may appear.
 			assertFalse(family.key(), withoutComments(css).contains("IEclipsePreferences"));
 			assertFalse(family.key(), withoutComments(css).contains("ColorDefinition"));
+		}
+	}
+
+	@Test
+	public void noColorIsHardCodedOutsideTheSplashRules() throws Exception {
+		for (WorkbenchFamily family : WorkbenchFamily.values()) {
+			String css = withoutComments(
+					Files.readString(BUNDLE.resolve("css/workbench-" + family.key() + ".css"), StandardCharsets.UTF_8));
+			Set<String> literals = new HashSet<>();
+			Matcher matcher = Pattern.compile("(?<![\\w'#-])(#[0-9a-fA-F]{3,8})(?![\\w-])").matcher(css);
+			while (matcher.find()) {
+				literals.add(matcher.group(1).toLowerCase());
+			}
+			assertEquals(family.key() + " " + literals, SPLASH_LITERALS, literals);
+			assertFalse(family.key(), css.matches("(?s).*(rgb|hsl)a?\\(.*"));
 		}
 	}
 

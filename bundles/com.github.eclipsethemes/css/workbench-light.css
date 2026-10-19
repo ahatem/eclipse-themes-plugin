@@ -386,3 +386,203 @@ CTabFolder.MArea CTabItem CLabel {
 .ModifiedDragFeedback {
 	background-color: '#com-github-eclipsethemes-workbench-light-selection';
 }
+
+/* ---------- Plug-in widgets (selector parity with the stock Dark/Light sheets) ----------
+ * Type selectors match the exact widget class name only, so every class the stock sheets name is named here too.
+ * Roles replace the stock literals. Selectors that would also match an editor's StyledText (Composite > StyledText,
+ * Group > StyledText, SashForm > StyledText, the compatibility editor's Canvas > *) are left out: editor text belongs
+ * to the editor integration. */
+
+/* Wizard and dialog pages of JDT, PDE, Buildship, Debug, WTP, Mylyn and Marketplace. */
+BrowseCatalogItem,
+ChangeParametersControl,
+CompareContentViewerSwitchingPane,
+CompareStructureViewerSwitchingPane,
+DependenciesComposite,
+DocCommentOwnerComposite,
+LaunchConfigurationFilteredTree,
+ListEditorComposite,
+NewManualServerComposite,
+NewServerComposite,
+NonProxyHostsComposite,
+ProxyEntriesComposite,
+QualifiedNameComponent,
+RefactoringLocationControl,
+RefactoringStatusViewer,
+ServerTypeComposite,
+ScheduleDatePicker,
+GradleProjectSettingsComposite,
+GradleDistributionGroup,
+AdvancedOptionsGroup {
+	background-color: '#com-github-eclipsethemes-workbench-light-surface';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+FormatterPreferenceSectionComposite {
+	background-color: '#com-github-eclipsethemes-workbench-light-surface';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+	swt-titlebar-color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+RegistryFilteredTree {
+	background-color: inherit;
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+ScheduleDatePicker > Text {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+PageSiteComposite > PropertyTable:disabled {
+	background-color: '#com-github-eclipsethemes-workbench-light-surface';
+	color: '#com-github-eclipsethemes-workbench-light-muted';
+}
+
+BulletListBlock > StyledText,
+DatePickerPanel,
+Shell[style~='SWT.DROP_DOWN'] > StyledText {
+	background-color: '#com-github-eclipsethemes-workbench-light-raised';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+/* The same controls inside views and editors sit on the content background. */
+.MPart DependenciesComposite,
+.MPart DependenciesComposite > SashForm > Section > *,
+.MPart ListEditorComposite,
+.MPart FigureCanvas,
+.MPart PageSiteComposite,
+.MPart RegistryFilteredTree,
+.MPart Form,
+.MPart ScrolledForm,
+.MPart Section,
+.MPart FormText,
+.MPart DatePicker,
+.MPart DatePicker > Text,
+.MPart ScheduleDatePicker,
+.MPart ScheduleDatePicker > Text,
+.MPart Form MasterDetailsBlock-MDSashForm,
+#org-eclipse-e4-ui-compatibility-editor LayoutCanvas,
+#org-eclipse-jdt-ui-SourceView StyledText,
+#org-eclipse-ui-console-ConsoleView .MPart > Composite,
+#org-eclipse-ui-console-ConsoleView .MPart PageBook Label,
+#org-eclipse-ui-console-ConsoleView .MPart StyledText {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+/* Breadcrumbs of the Java editor and the Debug view. */
+#BreadcrumbComposite > Composite,
+#BreadcrumbItemComposite,
+#BreadcrumbItemDetailComposite,
+#BreadcrumbItemDetailTextComposite,
+#BreadcrumbItemDetailImageComposite,
+#BreadcrumbItemDetailTextLabel,
+#BreadcrumbItemDetailImageLabel,
+#BreadcrumbItemDropDownToolBar,
+#DebugBreadcrumbComposite,
+#DebugBreadcrumbComposite > Composite,
+#DebugBreadcrumbItemComposite,
+#DebugBreadcrumbItemDetailComposite,
+#DebugBreadcrumbItemDetailTextComposite,
+#DebugBreadcrumbItemDetailImageComposite,
+#DebugBreadcrumbItemDetailTextLabel,
+#DebugBreadcrumbItemDetailImageLabel,
+#DebugBreadcrumbItemDropDownToolBar {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+#VariablesViewer {
+	font-family: '#org-eclipse-debug-ui-VariableTextFont';
+}
+
+/* EGit: its own sheet (no theme id) paints these white; the rules below carry more specificity, as in stock Dark. */
+.MPart ScrolledComposite Composite StyledText.org-eclipse-egit-ui-CommitAndDiffComponent {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+#org-eclipse-egit-ui-StagingView Composite Section Composite,
+#org-eclipse-egit-ui-StagingView Composite Composite Section Composite Tree {
+	background-color: inherit;
+}
+
+#org-eclipse-egit-ui-StagingView.active Composite Section Composite Tree {
+	background-color: '#com-github-eclipsethemes-workbench-light-raised';
+}
+
+/* Marketplace. */
+.MarketplaceViewer,
+.MarketplaceViewer > *,
+.MarketplaceItem,
+.MarketplaceItem *,
+.TagsToolTip,
+.TagsToolTip * {
+	background-color: '#com-github-eclipsethemes-workbench-light-raised';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+.MarketplaceItem Link,
+.MarketplaceItem .disabled {
+	color: '#com-github-eclipsethemes-workbench-light-muted';
+}
+
+.NotificationItem,
+.NotificationItem * {
+	background-color: '#com-github-eclipsethemes-workbench-light-selection';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+.CatalogSwitcher > ScrolledComposite,
+.CatalogSwitcher > ScrolledComposite > *,
+CatalogSwitcher > ScrolledComposite > Composite > Composite,
+.Catalog,
+.Catalog > * {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+.Catalog:checked,
+.Catalog:checked > * {
+	background-color: '#com-github-eclipsethemes-workbench-light-selection';
+}
+
+#MarketplacePage CTabItem:selected,
+#MarketplaceContent,
+.MarketplaceSearchHeader,
+.MarketplaceSearchHeader > Label,
+#MarketplacePage CategoryItem,
+#MarketplacePage CategoryItem > GradientCanvas,
+#MarketplacePage CategoryItem > GradientCanvas > Label {
+	/* GradientCanvas ignores a plain background-color (stock SWT workaround): all three forms are set. */
+	background: '#com-github-eclipsethemes-workbench-light-raised';
+	background-image: '#com-github-eclipsethemes-workbench-light-raised';
+	background-color: '#com-github-eclipsethemes-workbench-light-raised';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+/* ---------- Tabs: parity details ---------- */
+#org-eclipse-ui-editorss {
+	swt-tab-height: 8px;
+}
+
+CTabFolder.active {
+	swt-selected-tab-highlight: '#com-github-eclipsethemes-workbench-light-accent';
+	swt-selected-highlight-top: false;
+}
+
+/* Inner bottom tabs (stock Bug 430051 and 465711). */
+.MPartStack CTabFolder[style~='SWT.DOWN'][style~='SWT.BOTTOM'] {
+	swt-tab-renderer: url('bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.CTabRendering');
+	swt-unselected-hot-tab-color-background: '#com-github-eclipsethemes-workbench-light-selection';
+	swt-selected-tab-highlight: '#com-github-eclipsethemes-workbench-light-muted';
+	swt-selected-highlight-top: true;
+}
+
+.MPartStack.active CTabFolder[style~='SWT.DOWN'][style~='SWT.BOTTOM'] {
+	swt-tab-renderer: url('bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.CTabRendering');
+	swt-unselected-hot-tab-color-background: '#com-github-eclipsethemes-workbench-light-selection';
+	swt-selected-tab-highlight: '#com-github-eclipsethemes-workbench-light-accent';
+	swt-selected-highlight-top: true;
+}
