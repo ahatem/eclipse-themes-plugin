@@ -97,3 +97,34 @@ white until the `CTabFolder` rule gained `swt-selected-tab-fill`, outline and ke
 `q5-teal-reopened-dlg.png`, `q6-gruvbox-reopened-dlg.png` (dark) and `q6-solarized-reopened-dlg.png` (light): the dialog applied while
 open and the dialog reopened afterwards both use the new palette (text, fields, lists, group captions, buttons). The main-shell
 `PrintWindow` captures (`q5-teal.png`) are reliable only for dark steps; the resolved-color audits in the logs are the authority.
+
+## Stock selector parity and plug-in color definitions (4.40)
+
+Sources: `parity/` (log extracts), `harness/parity/` (probe and step files). Every run starts with `-clean`: without it the cached
+extension registry kept an earlier `plugin.xml`, so a stylesheet contribution seemed to have no effect.
+
+### Selector parity and fonts
+
+The family sheets gained the stock selectors they lacked (forms, Properties view tab list and title, compare/progress panes,
+Marketplace items, splash labels) and the stock font rules. `p3-r40-without-sheet.log`: after the Tree and Table font is set to
+Consolas 13 in the registry, the Package Explorer tree uses it from the next restyle under Solarized Light, Dracula and stock Light.
+No CSS warning appears in the log or on stderr. The audits list two toolbars at `#f0f0f0` (an unnamed one and the Oomph notification
+view's); `p4-r40-stock-dark-surfaces.log` shows the same two under stock Dark.
+
+### Plug-in color definitions
+
+Stock Dark re-tunes 46 color definitions of the platform, JDT, EGit, Mylyn and the text editors through preference stylesheets bound
+to `e4_dark`. A candidate sheet of 44 `ColorDefinition` rules with the stock dark values, bound to our dark ids
+(`rejected-definitions-sheet/`), was measured:
+
+- `p1-r40-definitions-sheet.log`: Solarized Light to Dracula gives the stock values (hyperlink `#6fc5ee`, hover `#34393d`, EGit ignored
+  label `#787878`, Package Explorer label painted `#787878`). Stock Dark to Atom One Dark does not: the platform's removal of the
+  stock preference values arrives after the override and resets the registry to the defaults.
+- `p2-r40-definitions-sheet-trace.log` (stack traces of the preference events): every registry change is mirrored by
+  `Theme.registryColorChangeEvent` into the instance `org.eclipse.ui.workbench` preferences. A `HYPERLINK_COLOR` value set by hand
+  (`1,2,3`) was removed by `resetThemeRegistries` on the next theme change, and the Javadoc colors, which default to a system color,
+  were stored as Eclipse's `0,1,2` placeholder after leaving the theme.
+
+The candidate was therefore not shipped (open maintainer decision in `proposal.md`). With it removed, `p3-r40-without-sheet.log` shows
+the hand-set `HYPERLINK_COLOR=1,2,3` intact through Atom One Dark, Solarized Light, Dracula and stock Light. The only changes to
+color keys in `org.eclipse.ui.workbench` other than the palette ids are the 26 removals Eclipse makes when stock Dark is left.

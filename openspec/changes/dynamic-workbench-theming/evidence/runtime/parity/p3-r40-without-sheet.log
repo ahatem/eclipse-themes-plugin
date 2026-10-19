@@ -1,0 +1,137 @@
+R8A ENV os=Windows 11 10.0 ws=win32 java=21.0.11+10-LTS cssThemeBundle=0.15.100.v20260507-0340 platform=4.40.0.v20260601-0713 product=1.1.0.202610182337 state=32
+R8A THEMES [org.eclipse.e4.ui.css.theme.e4_dark, org.eclipse.e4.ui.css.theme.e4_default, com.github.eclipsethemes.workbench.dark, com.github.eclipsethemes.workbench.dark.alt, com.github.eclipsethemes.workbench.light, com.github.eclipsethemes.workbench.light.alt, spike.bis.v0.dark, spike.bis.v8.dark, spike.bis.v9.dark, spike.bis.v10.dark, spike.bis.v11.dark, spike.bis.v12.dark, spike.bis.v13.dark, spike.bis.v14.dark, spike.bis.w0.dark, spike.bis.w1.dark, spike.bis.w2.dark, spike.bis.w3.dark, spike.bis.w4.dark, spike.bis.w5.dark, spike.bis.w6.dark, spike.bis.w7.dark, spike.bis.w8.dark, spike.bis.w9.dark, spike.bis.w10.dark]
+R8A STATE boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=<absent> | osDark=true | highContrast=false
+R8A OWNPREFS 
+R8A STEP persp|org.eclipse.jdt.ui.JavaPerspective
+R8A PERSP org.eclipse.jdt.ui.JavaPerspective true
+R8A STEP view|org.eclipse.jdt.ui.PackageExplorer
+R8A VIEW org.eclipse.jdt.ui.PackageExplorer
+R8A STEP project
+R8A PROJECT opened Demo.java
+R8A STEP view|org.eclipse.jdt.ui.PackageExplorer
+R8A VIEW org.eclipse.jdt.ui.PackageExplorer
+R8A STEP wait|2500
+R8A STEP pwatch
+R8A WATCH on
+R8A STEP wbpref|HYPERLINK_COLOR|1,2,3
+R8A PREFTRACE org.eclipse.ui.workbench/HYPERLINK_COLOR 111,197,238 -> 1,2,3 :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.put < Probe.run < Probe.lambda$run$5 < Display.runTimer < Display.messageProc < OS.DispatchMessage < Display.readAndDispatch < PartRenderingEngine$5.run < Realm.runWithDefault < PartRenderingEngine.run < E4Workbench.createAndRunUI < Workbench.lambda$3 < Realm.runWithDefault < Workbench.createAndRunWorkbench < PlatformUI.createAndRunWorkbench < IDEApplication.start < EclipseAppHandle.run < EclipseAppLauncher.runApplication < EclipseAppLauncher.start < EclipseStarter.run < EclipseStarter.run < DirectMethodHandleAccessor.invoke < Method.invoke < Main.invokeF
+R8A WBPREF set HYPERLINK_COLOR=1,2,3
+R8A STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\atom.xml
+R8A IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:d9e1fd71-c8d6-435d-96ee-80fea7e42053, origin=INSTALLED, locator=Optional[02d6f537-a98d-41c4-a066-993a13b70bbb.xml], theme=R8A QA - Atom One Dark], diagnostics=[]]
+R8A STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\solarized.xml
+R8A IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:03320d03-0135-44ea-b38b-01659767b602, origin=INSTALLED, locator=Optional[557f58e7-9c4e-4211-9ac5-9b21ff729abe.xml], theme=R8A QA - Solarized Light], diagnostics=[]]
+R8A STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\dracula.xml
+R8A IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:dd3e9c92-046e-4913-87a0-0c6c8bf74af7, origin=INSTALLED, locator=Optional[41a2a510-2058-4c7a-9546-d7cc6d68c8e7.xml], theme=R8A QA - Dracula], diagnostics=[]]
+R8A STEP prefs
+R8A PREFS pageIdValid=true
+R8A PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+R8A STEP wait|1500
+R8A STEP pick|R8A QA - Atom One Dark
+R8A PICK R8A QA - Atom One Dark ok
+R8A STEP check|1
+R8A CHECKBOX label='Also theme the Eclipse workbench' enabled=true before=false
+R8A CHECKBOX after=true
+R8A STEP apply
+R8A PREFTRACE org.eclipse.ui.workbench/HYPERLINK_COLOR,defaultValueBeforeOverriddenFromCSS 0,102,204 -> null :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.remove < EclipsePreferencesHelper.resetOverriddenDefaults < PartRenderingEngine$StylingPreferencesHandler.resetOverriddenPreferences < PartRenderingEngine$StylingPreferencesHandler.resetOverriddenPreferences < PartRenderingEngine$StylingPreferencesHandler.handleEvent < PartRenderingEngine.subscribeCssThemeChanged < DirectMethodHandleAccessor.invoke < Method.invoke < MethodRequestor.execute < EventObjectSupplier$DIEventHandler.handleEvent < EventHandlerWrapper.handleEvent < EventHandlerTracker.dispatchEvent < EventHandlerTr
+R8A PREFTRACE org.eclipse.ui.workbench/ACTIVE_HYPERLINK_COLOR,defaultValueBeforeOverriddenFromCSS 0,71,143 -> null :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.remove < EclipsePreferencesHelper.resetOverriddenDefaults < PartRenderingEngine$StylingPreferencesHandler.resetOverriddenPreferences < PartRenderingEngine$StylingPreferencesHandler.resetOverriddenPreferences < PartRenderingEngine$StylingPreferencesHandler.handleEvent < PartRenderingEngine.subscribeCssThemeChanged < DirectMethodHandleAccessor.invoke < Method.invoke < MethodRequestor.execute < EventObjectSupplier$DIEventHandler.handleEvent < EventHandlerWrapper.handleEvent < EventHandlerTracker.dispatchEvent < EventHan
+R8A PREFTRACE org.eclipse.ui.workbench/ACTIVE_HYPERLINK_COLOR 138,201,242 -> null :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.remove < PartRenderingEngine$StylingPreferencesHandler.resetOverriddenPreferences < PartRenderingEngine$StylingPreferencesHandler.resetOverriddenPreferences < PartRenderingEngine$StylingPreferencesHandler.handleEvent < PartRenderingEngine.subscribeCssThemeChanged < DirectMethodHandleAccessor.invoke < Method.invoke < MethodRequestor.execute < EventObjectSupplier$DIEventHandler.handleEvent < EventHandlerWrapper.handleEvent < EventHandlerTracker.dispatchEvent < EventHandlerTracker.dispatchEvent < EventManager.dispatchEvent < ListenerQueue.dispatchEvent
+R8A APPLY-CLICK found=true ms=1554
+R8A STEP wait|4000
+R8A STEP okclose
+R8A OKCLOSE-CLICK found=true ms=132
+R8A STEP wait|1500
+R8A STEP fontset|org.eclipse.ui.workbench.TREE_TABLE_FONT|Consolas|13
+R8A FONTSET org.eclipse.ui.workbench.TREE_TABLE_FONT=Consolas 13
+R8A STEP wait|1500
+R8A STEP font|atom-set
+R8A FONT atom-set tree=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|0|0|0|0|1|0|0|0|0|Segoe UI TREE_TABLE_FONT=1|Consolas|13.0|0|WINDOWS|1|0|0|0|0|0|0|0|0|1|0|0|0|0|Consolas TAB_TEXT_FONT=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI
+R8A STEP surfaces|atom
+R8A SURFACE atom Shell#IDEWindow bg=#252830 fg=#abb2bf
+R8A SURFACE atom CTabFolder#left bg=#282c34 fg=#abb2bf tabSelBg=#2c323c
+R8A SURFACE atom ToolBar bg=#f0f0f0 fg=#000000
+R8A SURFACE atom ToolBar#org-eclipse-jdt-ui-PackageExplorer bg=#282c34 fg=#abb2bf
+R8A SURFACE atom Tree bg=#282c34 fg=#abb2bf
+R8A SURFACE atom CTabFolder#org-eclipse-e4-primaryDataStack bg=#252830 fg=#8d949f tabSelBg=#282c34
+R8A SURFACE atom StyledText bg=#282c34 fg=#abb2bf
+R8A SURFACE atom CTabFolder#right bg=#252830 fg=#8d949f tabSelBg=#2c323c
+R8A SURFACE atom ToolBar#org-eclipse-ui-views-ContentOutline bg=#252830 fg=#abb2bf
+R8A SURFACE atom CTabFolder#bottom bg=#282c34 fg=#abb2bf tabSelBg=#2c323c
+R8A SURFACE atom ToolBar#org-eclipse-oomph-setup-presentation-NotificationView bg=#f0f0f0 fg=#abb2bf
+R8A SURFACE atom StatusLine#org-eclipse-ui-StatusLine bg=#252830 fg=#abb2bf
+R8A SURFACE atom ToolBar#org-eclipse-tips-ide-toolbar-status bg=#252830 fg=#abb2bf
+R8A SURFACE atom ToolBar#org-eclipse-ui-workbench-file bg=#252830 fg=#abb2bf
+R8A SURFACE atom ToolBar#org-eclipse-ui-workbench-edit bg=#252830 fg=#abb2bf
+R8A SURFACE atom ToolBar#org-eclipse-debug-ui-launchActionSet bg=#252830 fg=#abb2bf
+R8A SURFACE atom ToolBar#org-eclipse-jdt-ui-JavaElementCreationActionSet bg=#252830 fg=#abb2bf
+R8A SURFACE atom ToolBar#org-eclipse-search-searchActionSet bg=#252830 fg=#abb2bf
+R8A SURFACE atom ToolBar#org-eclipse-terminal-view-ui-toolbar bg=#252830 fg=#abb2bf
+R8A SURFACE atom ToolBar#org-eclipse-debug-ui-main-toolbar bg=#252830 fg=#abb2bf
+R8A SURFACE atom ToolBar#org-eclipse-ui-edit-text-actionSet-presentation bg=#252830 fg=#abb2bf
+R8A SURFACE atom ToolBar#org-eclipse-ui-workbench-navigate bg=#252830 fg=#abb2bf
+R8A STEP jfc|atom
+R8A JFC atom HYPERLINK_COLOR=#010203 ACTIVE_HYPERLINK_COLOR=#00478f ERROR_COLOR=#ff0000 DECORATIONS_COLOR=#957d47 QUALIFIER_COLOR=#808080 COUNTER_COLOR=#007fae CONTENT_ASSIST_BACKGROUND_COLOR=#ffffff CONTENT_ASSIST_FOREGROUND_COLOR=#000000 HOVER_BACKGROUND=#ffffe1 HOVER_FOREGROUND=#000000 INFORMATION_BACKGROUND=#ffffe1 egit.IgnoredResourceForegroundColor=#000000 egit.UncommittedChangeForegroundColor=#000000
+R8A STEP wbget|HYPERLINK_COLOR
+R8A STEP prefs
+R8A PREFS pageIdValid=true
+R8A PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+R8A STEP wait|1500
+R8A STEP pick|R8A QA - Solarized Light
+R8A PICK R8A QA - Solarized Light ok
+R8A STEP apply
+R8A APPLY-CLICK found=true ms=328
+R8A STEP wait|4000
+R8A STEP okclose
+R8A OKCLOSE-CLICK found=true ms=107
+R8A STEP wait|1500
+R8A STEP font|sol
+R8A FONT sol tree=1|Consolas|13.0|0|WINDOWS|1|-17|0|0|0|0|0|0|0|1|0|0|0|0|Consolas TREE_TABLE_FONT=1|Consolas|13.0|0|WINDOWS|1|0|0|0|0|0|0|0|0|1|0|0|0|0|Consolas TAB_TEXT_FONT=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI
+R8A STEP surfaces|sol
+R8A SURFACE sol Shell#IDEWindow bg=#eee8d5 fg=#50656d
+R8A SURFACE sol CTabFolder#left bg=#fdf6e3 fg=#50656d tabSelBg=#e4decb
+R8A SURFACE sol ToolBar bg=#f0f0f0 fg=#000000
+R8A SURFACE sol ToolBar#org-eclipse-jdt-ui-PackageExplorer bg=#fdf6e3 fg=#50656d
+R8A SURFACE sol Tree bg=#fdf6e3 fg=#50656d
+R8A SURFACE sol CTabFolder#org-eclipse-e4-primaryDataStack bg=#eee8d5 fg=#5f6a6a tabSelBg=#fdf6e3
+R8A SURFACE sol StyledText bg=#fdf6e3 fg=#657b83
+R8A SURFACE sol CTabFolder#right bg=#eee8d5 fg=#5f6a6a tabSelBg=#e4decb
+R8A SURFACE sol ToolBar#org-eclipse-ui-views-ContentOutline bg=#eee8d5 fg=#50656d
+R8A SURFACE sol CTabFolder#bottom bg=#fdf6e3 fg=#50656d tabSelBg=#e4decb
+R8A SURFACE sol ToolBar#org-eclipse-oomph-setup-presentation-NotificationView bg=#f0f0f0 fg=#50656d
+R8A SURFACE sol StatusLine#org-eclipse-ui-StatusLine bg=#eee8d5 fg=#50656d
+R8A SURFACE sol ToolBar#org-eclipse-tips-ide-toolbar-status bg=#eee8d5 fg=#50656d
+R8A SURFACE sol ToolBar#org-eclipse-ui-workbench-file bg=#eee8d5 fg=#50656d
+R8A SURFACE sol ToolBar#org-eclipse-ui-workbench-edit bg=#eee8d5 fg=#50656d
+R8A SURFACE sol ToolBar#org-eclipse-debug-ui-launchActionSet bg=#eee8d5 fg=#50656d
+R8A SURFACE sol ToolBar#org-eclipse-jdt-ui-JavaElementCreationActionSet bg=#eee8d5 fg=#50656d
+R8A SURFACE sol ToolBar#org-eclipse-search-searchActionSet bg=#eee8d5 fg=#50656d
+R8A SURFACE sol ToolBar#org-eclipse-terminal-view-ui-toolbar bg=#eee8d5 fg=#50656d
+R8A SURFACE sol ToolBar#org-eclipse-debug-ui-main-toolbar bg=#eee8d5 fg=#50656d
+R8A SURFACE sol ToolBar#org-eclipse-ui-edit-text-actionSet-presentation bg=#eee8d5 fg=#50656d
+R8A SURFACE sol ToolBar#org-eclipse-ui-workbench-navigate bg=#eee8d5 fg=#50656d
+R8A STEP wbget|HYPERLINK_COLOR
+R8A STEP prefs
+R8A PREFS pageIdValid=true
+R8A PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+R8A STEP wait|1500
+R8A STEP pick|R8A QA - Dracula
+R8A PICK R8A QA - Dracula ok
+R8A STEP apply
+R8A APPLY-CLICK found=true ms=308
+R8A STEP wait|4000
+R8A STEP okclose
+R8A OKCLOSE-CLICK found=true ms=86
+R8A STEP wait|1500
+R8A STEP font|dracula
+R8A FONT dracula tree=1|Consolas|13.0|0|WINDOWS|1|-17|0|0|0|0|0|0|0|1|0|0|0|0|Consolas TREE_TABLE_FONT=1|Consolas|13.0|0|WINDOWS|1|0|0|0|0|0|0|0|0|1|0|0|0|0|Consolas TAB_TEXT_FONT=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI
+R8A STEP wbget|HYPERLINK_COLOR
+R8A STEP stock|org.eclipse.e4.ui.css.theme.e4_default
+R8A STOCK org.eclipse.e4.ui.css.theme.e4_default found=true
+R8A STOCK-SET ms=115 active=org.eclipse.e4.ui.css.theme.e4_default
+R8A STEP wait|3000
+R8A STEP font|stocklight
+R8A FONT stocklight tree=1|Consolas|13.0|0|WINDOWS|1|-17|0|0|0|0|0|0|0|1|0|0|0|0|Consolas TREE_TABLE_FONT=1|Consolas|13.0|0|WINDOWS|1|0|0|0|0|0|0|0|0|1|0|0|0|0|Consolas TAB_TEXT_FONT=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI
+R8A STEP wbget|HYPERLINK_COLOR
+R8A STEP state|end
+R8A STATE end | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=<absent> | osDark=true | highContrast=false
+R8A OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true SELECTED_THEME_LOGICAL_ID=local:dd3e9c92-046e-4913-87a0-0c6c8bf74af7 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+R8A DONE

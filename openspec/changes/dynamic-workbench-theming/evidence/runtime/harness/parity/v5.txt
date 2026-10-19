@@ -1,0 +1,1 @@
+persp|org.eclipse.jdt.ui.JavaPerspective;view|org.eclipse.jdt.ui.PackageExplorer;project;view|org.eclipse.jdt.ui.PackageExplorer;wait|2500;stock|org.eclipse.e4.ui.css.theme.e4_dark;wait|3000;surfaces|sdark;

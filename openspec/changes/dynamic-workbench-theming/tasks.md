@@ -46,3 +46,5 @@
 - [x] 7.2 Semantic conversion with `PerceptualColor` (OKLCH), `accent` role, readability correction; `WorkbenchPaletteResolverTest` rewritten.
 - [x] 7.3 CSS coverage per the stock Eclipse Dark/Light structure: global shell layer, inputs, tabs, trim, forms; coverage matrix in the compatibility document.
 - [x] 7.4 Transition test: every role of the target family is published before the selection, every transition.
+- [x] 7.5 Stock selector parity: forms, Properties view tab list and title, compare/progress panes, Marketplace items, splash labels, platform tab and tree/table fonts; runtime-checked on 4.40 (fonts follow Colors and Fonts; stock Dark shows the same unstyled toolbars).
+- [x] 7.6 Plug-in color definitions re-tuned only by stock Dark: a `ColorDefinition` sheet was built and measured, and rejected because Eclipse mirrors it into preferences and deletes user values; consistency test guards against preference and color-definition rules; gap recorded as an open maintainer decision in the proposal.

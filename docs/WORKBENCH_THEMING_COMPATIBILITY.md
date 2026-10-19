@@ -69,13 +69,16 @@ the workbench-chrome contract) and **THIRD-PARTY** (colors owned by another plug
 | Menu bar, menus, title bar, window frame, tooltips | SYSTEM/NATIVE | |
 | Browser/HTML content, icons | SYSTEM/NATIVE / NOT APPLICABLE | |
 | Editor text area | NOT APPLICABLE | follows the editor colors, not the workbench CSS |
-| Fonts | NOT APPLICABLE | not touched |
-| EGit "ignored resource" label color | THIRD-PARTY | EGit defines it from the system list foreground and stock Dark overrides it with an EGit-specific stylesheet bound to its own theme id; in our themes git-ignored resources (for example `bin`, `target`) in the Package Explorer render in the system color. Change it under Colors and Fonts > Git |
+| Forms (sections, form text, read-only form fields, form heading error/warning/info text), Properties view tab list and title, compare and progress panes, Marketplace items | THEMED | same selectors as stock Dark/Light; form heading message colors read the platform `FORM_HEADING_*` definitions |
+| Fonts of part tabs and tree/table views | THEMED (platform fonts) | read the platform *Tab text* and *Tree and Table* font definitions, as stock does, so a font chosen under Colors and Fonts applies; theme files set no fonts |
+| Color definitions of other plug-ins that stock Dark re-tunes (hover, content-assist and Javadoc popups, hyperlinks, EGit/JDT/Mylyn decoration colors such as the Git "ignored resource" label) | THIRD-PARTY / not coordinated | stock Dark changes them only through preference stylesheets bound to its own theme id; under our dark themes they keep their defaults (light popups, `#0066cc` links, system-foreground labels). Doing what stock does would overwrite and later delete the user's own values; see the maintainer decision in the R8a proposal. Each can be changed under Colors and Fonts |
 
-Selectors are plain type, class and descendant selectors, almost all of them identical to the stock Eclipse Dark/Light sheets. Those
-that are not (`.MPart`-scoped Text/Combo/List/Canvas, `SashForm`, `ScrolledForm`, `.MCompositePart`, `.MToolBar`) are ordinary
+Selectors are plain type, class and descendant selectors, almost all of them identical to the stock Eclipse Dark/Light sheets, whose
+widget, class and id selectors were compared one by one against ours (the missing ones were added). Those that are not identical (`.MPart`-scoped Text/Combo/List/Canvas, `SashForm`, `ScrolledForm`, `.MCompositePart`, `.MToolBar`) are ordinary
 descendant selectors and each had its effect observed on the widgets. Eclipse is not asked to restyle anything it cannot: no
-`Group`, scroll bar or menu property is attempted. High-contrast mode disables coordination, so accessibility choices are never
+`Group`, scroll bar or menu property is attempted. The sheets contain no `IEclipsePreferences` or `ColorDefinition` rules: Eclipse
+turns both into instance preference writes (the owning plug-in's node, or `org.eclipse.ui.workbench` for color definitions), overwriting a user's value on entry and deleting it
+on the next theme change (measured; a test keeps them out). High-contrast mode disables coordination, so accessibility choices are never
 overridden.
 
 ## Consequences users and contributors will notice

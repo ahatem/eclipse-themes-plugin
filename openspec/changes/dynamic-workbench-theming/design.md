@@ -48,6 +48,19 @@ CSS coverage is bounded to surfaces the R7/spike runs measured: shell, container
 bars, tool bars, status line, trees, tables. Editor/StyledText content is not styled by workbench CSS. Native menus, dialogs, title
 bars, Browser content and arbitrary icons remain system-controlled.
 
+Coverage follows the stock Dark/Light sheets selector by selector (compared against the 4.40 sheets; the missing ones such as forms,
+the Properties view tab list, compare/progress panes, Marketplace items and the splash labels were added). Besides the palette ids
+the sheets read only five platform definitions, as stock does: the tab text and tree/table fonts and the three form-heading message
+colors. The splash label colors are literal stock values (the splash is drawn before any palette exists).
+
+No `IEclipsePreferences` or `ColorDefinition` rule is allowed in a coordinated sheet. Measured on 4.40 with a candidate sheet of 44
+`ColorDefinition` rules carrying the stock dark values (kept in `evidence/runtime/rejected-definitions-sheet/`): the override reaches the
+JFace registry, and `Theme.registryColorChangeEvent` mirrors every registry change into the instance `org.eclipse.ui.workbench`
+preferences. A user's value for such a key was overwritten on entry and removed on the next theme change, and definitions that
+default to a system color kept Eclipse's `0,1,2` placeholder after leaving. Preference rules behave the same way
+(`EclipsePreferencesHandler` writes when the key is absent or the theme changed, then deletes it on the next change). The consistency
+test fails on either rule and on any extra stylesheet bound to our ids. The resulting gap is the open decision in the proposal.
+
 ## Palette resolution (deterministic semantic conversion)
 
 Family follows `ThemeType`. The conversion is pure, has no random or external input and never reads a syntax token (keyword, string,
@@ -167,5 +180,5 @@ restart. R8a does not add a listener or a suppression mechanism for this; it is 
 
 ## Deliberately not built
 
-Runtime registration, generated CSS, imported CSS, the R9 schema, fonts, icons, user overrides, a transaction, journal or
+Runtime registration, generated CSS, imported CSS, the R9 schema, theme-authored fonts, icons, user overrides, a transaction, journal or
 change-plan framework, telemetry, a theme-change listener, and any reflection or Appearance internals.

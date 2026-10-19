@@ -97,6 +97,14 @@ The system SHALL style the workbench through two declaratively contributed CSS f
 - **GIVEN** publishing a palette value fails
 - **THEN** previously held values are restored, no switch is attempted and the workbench outcome is FAILED
 
+#### Scenario: Stylesheets change no other plug-in's colors
+- **WHEN** a coordinated theme is selected or left
+- **THEN** the coordinated stylesheets contain no preference or color-definition rules, so a value the user set for another plug-in's color in Colors and Fonts is neither overwritten nor removed
+
+#### Scenario: Platform fonts are honored
+- **WHEN** a coordinated theme is active
+- **THEN** part tabs and tree and table views use the platform's tab text and tree-and-table font definitions, as the stock Dark and Light themes do
+
 ### Requirement: Capability is classified, and confidence is measured per combination
 
 The system SHALL classify workbench theming as VERIFIED, EXPERIMENTAL or UNAVAILABLE. VERIFIED SHALL require an exact match of OS, windowing system and the theme bundle's normalized major.minor.micro version in a measured table; a passing but unmeasured combination is EXPERIMENTAL. The table is not an execution allow-list.
