@@ -1,0 +1,1 @@
+state|boot;regs|after-restart;catalog|after-restart;files|after-restart;prefs;wait|2500;pick|R9 QA Authored;wait|800;details|B-restart;apply;wait|4000;regs|reapply;okclose;wait|1500;state|end

@@ -7,15 +7,11 @@ import com.github.eclipsethemes.core.models.ThemeType;
 import com.github.eclipsethemes.core.models.TokenBuilder;
 import com.github.eclipsethemes.core.models.TokenKey;
 import com.github.eclipsethemes.core.models.Token;
-import com.github.eclipsethemes.core.models.TokenOptions;
-import com.github.eclipsethemes.core.parser.mapper.LegacyEclipsePropertyMapper;
 import com.github.eclipsethemes.core.validation.ThemeDiagnostic;
 import com.github.eclipsethemes.core.validation.WebsiteUri;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,7 +20,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.function.Supplier;
 import java.util.function.Consumer;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,11 +47,6 @@ public class XmlThemeParser implements ThemeParser {
 	private XmlThemeParser(Supplier<DocumentBuilderFactory> factorySupplier, Consumer<ThemeDiagnostic> diagnosticSink) {
 		this.factorySupplier = factorySupplier;
 		this.diagnosticSink = java.util.Objects.requireNonNull(diagnosticSink);
-	}
-
-	private record Candidate(String source, int occurrence, Token token) {
-		boolean canonical() { return source.equals(token.getTokenName()); }
-		String location() { return source + "#" + occurrence; }
 	}
 
 	/**
@@ -102,85 +92,7 @@ public class XmlThemeParser implements ThemeParser {
 			tokens.put(TokenKey.FOREGROUND,
 					new TokenBuilder().setKey(TokenKey.FOREGROUND).setColor(Color.ofRgb(212, 212, 212)).build());
 
-			NodeList colorNodes = root.getChildNodes();
-			Map<TokenKey, List<Candidate>> candidates = new LinkedHashMap<>();
-			int occurrence = 0;
-			for (int i = 0; i < colorNodes.getLength(); i++) {
-				Node node = colorNodes.item(i);
-				if (node.getNodeType() != Node.ELEMENT_NODE) continue;
-				Element element = (Element) node;
-				occurrence++;
-
-				if (element.getElementsByTagName("*").getLength() > 0) {
-					warning(ThemeDiagnostic.NESTED_ELEMENTS, "Theme element '<" + element.getTagName()
-							+ ">' contains nested elements; only its own attributes were interpreted",
-							source, element.getTagName(), null);
-				}
-
-				String newTagName = LegacyEclipsePropertyMapper.mapProperty(element.getTagName());
-				TokenKey key = TokenKey.byId(newTagName);
-
-				if (key == null) {
-					warning(ThemeDiagnostic.UNKNOWN_ELEMENT, "Unknown theme element '<" + element.getTagName()
-							+ ">'; it was ignored", source, element.getTagName(), null);
-					continue;
-				}
-
-				TokenBuilder tokenBuilder = new TokenBuilder().setKey(key);
-				String colorAttr = element.getAttribute("color");
-				if (colorAttr.isBlank()) {
-					warning(ThemeDiagnostic.MISSING_COLOR, "Theme element '<" + element.getTagName()
-							+ ">' has no usable 'color' attribute; the token was ignored",
-							source, element.getTagName(), "color");
-					continue;
-				}
-
-				try {
-					tokenBuilder.setColor(Color.ofHex(colorAttr));
-				} catch (IllegalArgumentException e) {
-					warning(ThemeDiagnostic.INVALID_COLOR, "Theme element '<" + element.getTagName()
-							+ ">' has an unaccepted 'color' value '" + colorAttr + "'; the token was ignored",
-							source, element.getTagName(), "color");
-					continue;
-				}
-
-				if (element.hasAttribute("bold")) {
-					tokenBuilder.setBold(styleFlag(element, "bold", source));
-				}
-
-				if (element.hasAttribute("italic")) {
-					tokenBuilder.setItalic(styleFlag(element, "italic", source));
-				}
-
-				if (element.hasAttribute("underline")) {
-					tokenBuilder.setUnderline(styleFlag(element, "underline", source));
-				}
-
-				if (element.hasAttribute("strikethrough")) {
-					tokenBuilder.setStrikethrough(styleFlag(element, "strikethrough", source));
-				}
-
-				candidates.computeIfAbsent(key, unused -> new ArrayList<>())
-						.add(new Candidate(element.getTagName(), occurrence, tokenBuilder.build()));
-			}
-			for (var entry : candidates.entrySet()) {
-				List<Candidate> accepted = entry.getValue();
-				Candidate winner = accepted.get(0);
-				for (Candidate candidate : accepted) {
-					if (candidate.canonical() || !winner.canonical()) winner = candidate;
-				}
-				tokens.put(entry.getKey(), winner.token());
-				for (Candidate candidate : accepted) {
-					if (!candidate.token().getColor().equals(winner.token().getColor())
-						|| !candidate.token().getOptions().orElse(TokenOptions.EMPTY)
-							.equals(winner.token().getOptions().orElse(TokenOptions.EMPTY))) {
-						warning(ThemeDiagnostic.MAPPING_CONFLICT, "Theme mapping conflict for role "
-								+ entry.getKey().getName() + ": " + candidate.location() + " versus "
-								+ winner.location() + "; selected " + winner.location(),
-								source, null, null);
-					}
-				}
-			}
+			new LegacyTokenInterpreter(source, diagnosticSink).interpret(root, tokens);
 			return new Theme(id, name, author, website, description, ThemeType.from(type), tokens);
 		} catch (ThemeParseException e) {
 			throw e;
@@ -201,9 +113,17 @@ public class XmlThemeParser implements ThemeParser {
 	}
 
 	private void validateWebsite(String website, String source) {
-		WebsiteUri.Check check = WebsiteUri.check(website);
+		ThemeDiagnostic finding = linkFinding(website, source, COLOR_THEME, "website", ThemeDiagnostic.WEBSITE);
+		if (finding != null) {
+			diagnosticSink.accept(finding);
+		}
+	}
+
+	/** The warning for a link attribute that is not launchable, or {@code null} when it is. */
+	static ThemeDiagnostic linkFinding(String value, String source, String element, String attribute, String kind) {
+		WebsiteUri.Check check = WebsiteUri.check(value);
 		if (check.launchable()) {
-			return;
+			return null;
 		}
 		String detail;
 		switch (check.status()) {
@@ -226,22 +146,8 @@ public class XmlThemeParser implements ThemeParser {
 				detail = "value '" + check.value() + "' is not usable";
 				break;
 		}
-		warning(ThemeDiagnostic.WEBSITE, "Attribute 'website' " + detail
-				+ "; no website link is available", source, COLOR_THEME, "website");
-	}
-
-	private boolean styleFlag(Element element, String attribute, String source) {
-		String raw = element.getAttribute(attribute);
-		if (raw.equalsIgnoreCase("true")) {
-			return true;
-		}
-		if (raw.equalsIgnoreCase("false")) {
-			return false;
-		}
-		warning(ThemeDiagnostic.STYLE_FLAG, "Theme element '<" + element.getTagName()
-				+ ">' has a non-boolean '" + attribute + "' value '" + raw
-				+ "'; it was treated as false", source, element.getTagName(), attribute);
-		return false;
+		return new ThemeDiagnostic(ThemeDiagnostic.Severity.WARNING, kind, "Attribute '" + attribute + "' " + detail
+				+ "; no " + attribute + " link is available", source, element, attribute);
 	}
 
 	private void warning(String kind, String message, String source, String element, String attribute) {

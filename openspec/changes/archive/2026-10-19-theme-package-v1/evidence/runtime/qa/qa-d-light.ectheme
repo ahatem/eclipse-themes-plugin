@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<themePackage schemaVersion='1' id='qa.r9.light' name='R9 QA Light' appearance='light'>
+<editor><background color='#fbf7ee'/><foreground color='#2d2a24'/><keyword color='#8a2be2'/></editor><workbench><surface color='#efe6d2'/><accent color='#b03a00'/></workbench>
+</themePackage>

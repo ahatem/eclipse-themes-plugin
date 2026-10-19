@@ -1,0 +1,394 @@
+ENV os=Windows 11 10.0 ws=win32 java=25.0.4.1+1-LTS cssThemeBundle=0.15.200.v20260806-0515 platform=4.41.0.v20260828-1142 product=1.1.0.202610191106 state=32
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark, org.eclipse.e4.ui.css.theme.e4_default, com.github.eclipsethemes.workbench.dark, com.github.eclipsethemes.workbench.dark.alt, com.github.eclipsethemes.workbench.light, com.github.eclipsethemes.workbench.light.alt]
+STATE boot | active=com.github.eclipsethemes.workbench.dark | instance=com.github.eclipsethemes.workbench.dark | config=<absent> | default=com.github.eclipsethemes.workbench.dark | osDark=true | highContrast=false
+OWNPREFS PLUGIN_COLORS_OWNED=org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.backgroundColor|75,42,94
+org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.foregroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_BACKGROUND|75,42,94
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_FOREGROUND|232,224,255
+org.eclipse.ui.workbench|CONTENT_ASSIST_BACKGROUND_COLOR|75,42,94
+org.eclipse.ui.workbench|CONTENT_ASSIST_FOREGROUND_COLOR|232,224,255
+org.eclipse.ui.workbench|HYPERLINK_COLOR|255,204,0
+org.eclipse.ui.workbench|ACTIVE_HYPERLINK_COLOR|247,213,137
+org.eclipse.ui.workbench|ERROR_COLOR|251,129,122
+org.eclipse.ui.workbench|INCOMING_COLOR|51,187,231
+org.eclipse.ui.workbench|OUTGOING_COLOR|232,224,255
+org.eclipse.ui.workbench|CONFLICTING_COLOR|251,129,122
+org.eclipse.ui.workbench|RESOLVED_COLOR|90,197,118
+org.eclipse.ui.workbench|EDITION_COLOR|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.CommitMessageCommentColor|184,196,168
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor|21,79,39
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveBackgroundColor|106,44,41
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkBackgroundColor|15,73,92
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineBackgroundColor|75,42,94
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceBackgroundColor|27,31,42
+org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceForegroundColor|184,196,168
+org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeBackgroundColor|27,31,42
+org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeForegroundColor|255,204,0
+org.eclipse.ui.workbench|org.eclipse.search.ui.match.highlight|85,63,2
+org.eclipse.ui.workbench|org.eclipse.jface.REVISION_NEWEST_COLOR|85,63,2
+org.eclipse.ui.workbench|org.eclipse.jface.REVISION_OLDEST_COLOR|59,47,20
+org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.inherited|184,196,168
+org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight|85,63,2
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled|51,187,231
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled|51,187,231
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled|184,196,168
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.task.active|255,204,0
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.start|75,42,94
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.end|75,42,94
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.color.text.quoted|51,187,231
+org.eclipse.jdt.ui|content_assist_parameters_background|75,42,94
+org.eclipse.jdt.ui|content_assist_parameters_foreground|232,224,255
+org.eclipse.jdt.ui|javadocElementsStyling.darkModeDefaultColors|true
+org.eclipse.ui.editors|hyperlinkColor|255,204,0
+org.eclipse.ui.editors|hyperlinkColor.SystemDefault|false
+org.eclipse.ui.editors|linked.slave.color|15,73,92
+org.eclipse.ui.editors|breakpointIndicationColor|51,187,231
+org.eclipse.ui.editors|fullcoverage_color|21,79,39
+org.eclipse.ui.editors|partialcoverage_color|85,63,2
+org.eclipse.ui.editors|nocoverage_color|106,44,41
+org.eclipse.ui.editors|org.eclipse.ui.editors.stickyLinesSeparatorColor|255,136,0
+org.eclipse.ui.editors|inlineDiffColor|31,55,36
+org.eclipse.ui.editors|detailedInlineDiffColor|21,79,39
+org.eclipse.ui.editors|deletionInlineDiffColor|69,39,37
+org.eclipse.ui.editors|detailedDeletionInlineDiffColor|106,44,41
+org.eclipse.debug.ui|org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND|85,63,2
+org.eclipse.debug.ui|org.eclipse.debug.ui.MemoryHistoryKnownColor|232,224,255
+org.eclipse.debug.ui|org.eclipse.debug.ui.changedDebugElement|251,129,122
+org.eclipse.ant.ui|org.eclipse.ant.ui.informationColor|51,187,231
+org.eclipse.ant.ui|org.eclipse.ant.ui.debugColor|232,224,255
+org.eclipse.ant.ui|org.eclipse.ant.ui.errorColor|251,129,122
+org.eclipse.epp.mpc.ui|native-borders|false
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND|75,42,94
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_FOREGROUND|232,224,255
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR|251,129,122
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR|214,162,10
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR|184,196,168
+ WORKBENCH_PRIOR_SAVED_ABSENT=true WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark SELECTED_THEME_LOGICAL_ID=local:7fc6899c-c7bf-4fe4-a36f-f9e96718dbb3 WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP state|boot
+STATE boot | active=com.github.eclipsethemes.workbench.dark | instance=com.github.eclipsethemes.workbench.dark | config=<absent> | default=com.github.eclipsethemes.workbench.dark | osDark=true | highContrast=false
+OWNPREFS PLUGIN_COLORS_OWNED=org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.backgroundColor|75,42,94
+org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.foregroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_BACKGROUND|75,42,94
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_FOREGROUND|232,224,255
+org.eclipse.ui.workbench|CONTENT_ASSIST_BACKGROUND_COLOR|75,42,94
+org.eclipse.ui.workbench|CONTENT_ASSIST_FOREGROUND_COLOR|232,224,255
+org.eclipse.ui.workbench|HYPERLINK_COLOR|255,204,0
+org.eclipse.ui.workbench|ACTIVE_HYPERLINK_COLOR|247,213,137
+org.eclipse.ui.workbench|ERROR_COLOR|251,129,122
+org.eclipse.ui.workbench|INCOMING_COLOR|51,187,231
+org.eclipse.ui.workbench|OUTGOING_COLOR|232,224,255
+org.eclipse.ui.workbench|CONFLICTING_COLOR|251,129,122
+org.eclipse.ui.workbench|RESOLVED_COLOR|90,197,118
+org.eclipse.ui.workbench|EDITION_COLOR|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.CommitMessageCommentColor|184,196,168
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor|21,79,39
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveBackgroundColor|106,44,41
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkBackgroundColor|15,73,92
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineBackgroundColor|75,42,94
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceBackgroundColor|27,31,42
+org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceForegroundColor|184,196,168
+org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeBackgroundColor|27,31,42
+org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeForegroundColor|255,204,0
+org.eclipse.ui.workbench|org.eclipse.search.ui.match.highlight|85,63,2
+org.eclipse.ui.workbench|org.eclipse.jface.REVISION_NEWEST_COLOR|85,63,2
+org.eclipse.ui.workbench|org.eclipse.jface.REVISION_OLDEST_COLOR|59,47,20
+org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.inherited|184,196,168
+org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight|85,63,2
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled|51,187,231
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled|51,187,231
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled|184,196,168
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.task.active|255,204,0
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.start|75,42,94
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.end|75,42,94
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.color.text.quoted|51,187,231
+org.eclipse.jdt.ui|content_assist_parameters_background|75,42,94
+org.eclipse.jdt.ui|content_assist_parameters_foreground|232,224,255
+org.eclipse.jdt.ui|javadocElementsStyling.darkModeDefaultColors|true
+org.eclipse.ui.editors|hyperlinkColor|255,204,0
+org.eclipse.ui.editors|hyperlinkColor.SystemDefault|false
+org.eclipse.ui.editors|linked.slave.color|15,73,92
+org.eclipse.ui.editors|breakpointIndicationColor|51,187,231
+org.eclipse.ui.editors|fullcoverage_color|21,79,39
+org.eclipse.ui.editors|partialcoverage_color|85,63,2
+org.eclipse.ui.editors|nocoverage_color|106,44,41
+org.eclipse.ui.editors|org.eclipse.ui.editors.stickyLinesSeparatorColor|255,136,0
+org.eclipse.ui.editors|inlineDiffColor|31,55,36
+org.eclipse.ui.editors|detailedInlineDiffColor|21,79,39
+org.eclipse.ui.editors|deletionInlineDiffColor|69,39,37
+org.eclipse.ui.editors|detailedDeletionInlineDiffColor|106,44,41
+org.eclipse.debug.ui|org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND|85,63,2
+org.eclipse.debug.ui|org.eclipse.debug.ui.MemoryHistoryKnownColor|232,224,255
+org.eclipse.debug.ui|org.eclipse.debug.ui.changedDebugElement|251,129,122
+org.eclipse.ant.ui|org.eclipse.ant.ui.informationColor|51,187,231
+org.eclipse.ant.ui|org.eclipse.ant.ui.debugColor|232,224,255
+org.eclipse.ant.ui|org.eclipse.ant.ui.errorColor|251,129,122
+org.eclipse.epp.mpc.ui|native-borders|false
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND|75,42,94
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_FOREGROUND|232,224,255
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR|251,129,122
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR|214,162,10
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR|184,196,168
+ WORKBENCH_PRIOR_SAVED_ABSENT=true WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark SELECTED_THEME_LOGICAL_ID=local:7fc6899c-c7bf-4fe4-a36f-f9e96718dbb3 WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+DEFENDER dialog cancelled
+STEP regs|after-restart
+REGS after-restart d.background=#1b1f2a d.foreground=#e8e0ff d.surface=#3a1d4a d.raised=#4b2a5e d.border=#ff8800 d.muted=#b8c4a8 d.selection=#005f5f d.accent=#ffcc00 l.background=#ffffff l.foreground=#1f1f1f l.surface=#f3f3f3 l.raised=#e8e8e8 l.border=#cecece l.muted=#6b6b6b l.selection=#cce4f7 l.accent=#0b61c4 
+STEP catalog|after-restart
+CATALOG after-restart id=local:7fc6899c-c7bf-4fe4-a36f-f9e96718dbb3 locator=Optional[3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme] name=R9 QA Authored sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.authored, version=3.2, license=MIT, copyright=R9 QA Holder, source=https://example.org/r9-qa]] authored={accent=#ffcc00, mutedForeground=#b8c4a8, surface=#3a1d4a, border=#ff8800, selection=#005f5f, foreground=#e8e0ff, surfaceRaised=#4b2a5e}
+CATALOG after-restart id=local:7fb7ca06-62fc-45f7-b03a-d13c2288c34d locator=Optional[e4af7c60-e614-44c6-a5f0-ae2795a0ceb6.xml] name=R9 QA Legacy sourceId=r9-qa-legacy metadata=Optional.empty authored={}
+CATALOG after-restart id=local:1165cb8d-b36d-4f33-b707-b370725fb90f locator=Optional[64616134-e725-40b3-b35e-63f014ad2f91.ectheme] name=R9 QA Light sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.light, version=null, license=null, copyright=null, source=null]] authored={accent=#b03a00, surface=#efe6d2}
+CATALOG after-restart id=local:68d1b72a-5838-4eea-8069-cfdcc9e72ec7 locator=Optional[b98b56ce-85d3-45f7-bc96-6fa4ffa29b6d.ectheme] name=R9 QA Minimal sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.minimal, version=null, license=null, copyright=null, source=null]] authored={}
+CATALOG after-restart id=local:dd3c5823-2e6f-4f5a-a1c3-490e5d213409 locator=Optional[46409bef-d326-48a9-a4a4-d893367ff274.ectheme] name=R9 QA Readability sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.readability, version=null, license=CC0-1.0, copyright=null, source=file:///C:/Windows/win.ini]] authored={accent=#3a4a7a, selection=#005f5f, surface=#262c3b}
+STEP files|after-restart
+FILES after-restart installed=[.staging, 3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme, 46409bef-d326-48a9-a4a4-d893367ff274.ectheme, 64616134-e725-40b3-b35e-63f014ad2f91.ectheme, b98b56ce-85d3-45f7-bc96-6fa4ffa29b6d.ectheme, e4af7c60-e614-44c6-a5f0-ae2795a0ceb6.xml, planted-oversize.ectheme]
+FILES after-restart bindings=[3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme=local\:7fc6899c-c7bf-4fe4-a36f-f9e96718dbb3, 46409bef-d326-48a9-a4a4-d893367ff274.ectheme=local\:dd3c5823-2e6f-4f5a-a1c3-490e5d213409, 64616134-e725-40b3-b35e-63f014ad2f91.ectheme=local\:1165cb8d-b36d-4f33-b707-b370725fb90f, b98b56ce-85d3-45f7-bc96-6fa4ffa29b6d.ectheme=local\:68d1b72a-5838-4eea-8069-cfdcc9e72ec7, e4af7c60-e614-44c6-a5f0-ae2795a0ceb6.xml=local\:7fb7ca06-62fc-45f7-b03a-d13c2288c34d]
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|2500
+STEP lsnr
+LSNR attached browser=edge
+STEP pick|R9 QA Authored
+PICK R9 QA Authored ok
+PREVIEW-NAV changing location=about:blank top=true
+PREVIEW-NAV changed location=about:blank
+STEP wait|800
+STEP details|B-restart
+DETAILS B-restart group=Rectangle {5, 291, 270, 244}
+DETAILS B-restart [0] Label visible=true text='R9 QA Authored' bounds=Rectangle {8, 26, 254, 28} pref=Point {254, 28}
+DETAILS B-restart [1] Label visible=true text='Author:' bounds=Rectangle {8, 59, 42, 21} pref=Point {42, 21}
+DETAILS B-restart [2] Label visible=true text='R9 QA' bounds=Rectangle {74, 59, 188, 21} pref=Point {188, 21}
+DETAILS B-restart [3] Label visible=true text='Website:' bounds=Rectangle {8, 85, 51, 21} pref=Point {51, 21}
+DETAILS B-restart [4] Link visible=true text='<a>https://example.org/r9</a>' bounds=Rectangle {74, 85, 188, 21} pref=Point {188, 21}
+DETAILS B-restart [5] Label visible=true text='Type:' bounds=Rectangle {8, 111, 31, 21} pref=Point {31, 21}
+DETAILS B-restart [6] Label visible=true text='Dark' bounds=Rectangle {74, 111, 188, 21} pref=Point {188, 21}
+DETAILS B-restart [7] Label visible=true text='Version:' bounds=Rectangle {8, 137, 46, 21} pref=Point {46, 21}
+DETAILS B-restart [8] Label visible=true text='3.2' bounds=Rectangle {74, 137, 188, 21} pref=Point {188, 21}
+DETAILS B-restart [9] Label visible=true text='License:' bounds=Rectangle {8, 163, 46, 21} pref=Point {46, 21}
+DETAILS B-restart [10] Label visible=true text='MIT' bounds=Rectangle {74, 163, 188, 21} pref=Point {188, 21}
+DETAILS B-restart [11] Label visible=true text='Copyright:' bounds=Rectangle {8, 189, 61, 21} pref=Point {61, 21}
+DETAILS B-restart [12] Label visible=true text='R9 QA Holder' bounds=Rectangle {74, 189, 188, 21} pref=Point {188, 21}
+DETAILS B-restart [13] Label visible=true text='Source:' bounds=Rectangle {8, 215, 42, 21} pref=Point {42, 21}
+DETAILS B-restart [14] Link visible=true text='<a>https://example.org/r9-qa</a>' bounds=Rectangle {74, 215, 188, 21} pref=Point {188, 21}
+STEP apply
+APPLY-CLICK found=true ms=16
+STEP wait|4000
+STEP state|reapply
+STATE reapply | active=com.github.eclipsethemes.workbench.dark | instance=com.github.eclipsethemes.workbench.dark | config=<absent> | default=com.github.eclipsethemes.workbench.dark | osDark=true | highContrast=false
+OWNPREFS PLUGIN_COLORS_OWNED=org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.backgroundColor|75,42,94
+org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.foregroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_BACKGROUND|75,42,94
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_FOREGROUND|232,224,255
+org.eclipse.ui.workbench|CONTENT_ASSIST_BACKGROUND_COLOR|75,42,94
+org.eclipse.ui.workbench|CONTENT_ASSIST_FOREGROUND_COLOR|232,224,255
+org.eclipse.ui.workbench|HYPERLINK_COLOR|255,204,0
+org.eclipse.ui.workbench|ACTIVE_HYPERLINK_COLOR|247,213,137
+org.eclipse.ui.workbench|ERROR_COLOR|251,129,122
+org.eclipse.ui.workbench|INCOMING_COLOR|51,187,231
+org.eclipse.ui.workbench|OUTGOING_COLOR|232,224,255
+org.eclipse.ui.workbench|CONFLICTING_COLOR|251,129,122
+org.eclipse.ui.workbench|RESOLVED_COLOR|90,197,118
+org.eclipse.ui.workbench|EDITION_COLOR|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.CommitMessageCommentColor|184,196,168
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor|21,79,39
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveBackgroundColor|106,44,41
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkBackgroundColor|15,73,92
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineBackgroundColor|75,42,94
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceBackgroundColor|27,31,42
+org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceForegroundColor|184,196,168
+org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeBackgroundColor|27,31,42
+org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeForegroundColor|255,204,0
+org.eclipse.ui.workbench|org.eclipse.search.ui.match.highlight|85,63,2
+org.eclipse.ui.workbench|org.eclipse.jface.REVISION_NEWEST_COLOR|85,63,2
+org.eclipse.ui.workbench|org.eclipse.jface.REVISION_OLDEST_COLOR|59,47,20
+org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.inherited|184,196,168
+org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight|85,63,2
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled|51,187,231
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled|51,187,231
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled|184,196,168
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.task.active|255,204,0
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.start|75,42,94
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.end|75,42,94
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.color.text.quoted|51,187,231
+org.eclipse.jdt.ui|content_assist_parameters_background|75,42,94
+org.eclipse.jdt.ui|content_assist_parameters_foreground|232,224,255
+org.eclipse.jdt.ui|javadocElementsStyling.darkModeDefaultColors|true
+org.eclipse.ui.editors|hyperlinkColor|255,204,0
+org.eclipse.ui.editors|hyperlinkColor.SystemDefault|false
+org.eclipse.ui.editors|linked.slave.color|15,73,92
+org.eclipse.ui.editors|breakpointIndicationColor|51,187,231
+org.eclipse.ui.editors|fullcoverage_color|21,79,39
+org.eclipse.ui.editors|partialcoverage_color|85,63,2
+org.eclipse.ui.editors|nocoverage_color|106,44,41
+org.eclipse.ui.editors|org.eclipse.ui.editors.stickyLinesSeparatorColor|255,136,0
+org.eclipse.ui.editors|inlineDiffColor|31,55,36
+org.eclipse.ui.editors|detailedInlineDiffColor|21,79,39
+org.eclipse.ui.editors|deletionInlineDiffColor|69,39,37
+org.eclipse.ui.editors|detailedDeletionInlineDiffColor|106,44,41
+org.eclipse.debug.ui|org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND|85,63,2
+org.eclipse.debug.ui|org.eclipse.debug.ui.MemoryHistoryKnownColor|232,224,255
+org.eclipse.debug.ui|org.eclipse.debug.ui.changedDebugElement|251,129,122
+org.eclipse.ant.ui|org.eclipse.ant.ui.informationColor|51,187,231
+org.eclipse.ant.ui|org.eclipse.ant.ui.debugColor|232,224,255
+org.eclipse.ant.ui|org.eclipse.ant.ui.errorColor|251,129,122
+org.eclipse.epp.mpc.ui|native-borders|false
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND|75,42,94
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_FOREGROUND|232,224,255
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR|251,129,122
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR|214,162,10
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR|184,196,168
+ WORKBENCH_PRIOR_SAVED_ABSENT=true WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark SELECTED_THEME_LOGICAL_ID=local:7fc6899c-c7bf-4fe4-a36f-f9e96718dbb3 WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP regs|reapply
+REGS reapply d.background=#1b1f2a d.foreground=#e8e0ff d.surface=#3a1d4a d.raised=#4b2a5e d.border=#ff8800 d.muted=#b8c4a8 d.selection=#005f5f d.accent=#ffcc00 l.background=#ffffff l.foreground=#1f1f1f l.surface=#f3f3f3 l.raised=#e8e8e8 l.border=#cecece l.muted=#6b6b6b l.selection=#cce4f7 l.accent=#0b61c4 
+STEP pick|R9 QA Authored
+PICK R9 QA Authored ok
+PREVIEW-NAV changing location=about:blank top=true
+PREVIEW-NAV changed location=about:blank
+STEP wait|800
+STEP uia|Update Selected Theme|<repo>\tmp\workbench-spike\r9\qa\qa-b2-authored-dark.ectheme
+UIA launched Update Selected Theme <repo>\tmp\workbench-spike\r9\qa\qa-b2-authored-dark.ectheme
+STEP bclick|Update Selected Theme...|9000
+RESTART-DIALOG title=Update Theme buttons=[OK, Cancel]
+STEP msg|Yes|4000
+MSG none
+BCLICK-RETURNED Update Selected Theme... found=true
+STEP msg|OK
+MSG none
+STEP wait|1500
+STEP catalog|upd-same
+CATALOG upd-same id=local:7fc6899c-c7bf-4fe4-a36f-f9e96718dbb3 locator=Optional[3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme] name=R9 QA Authored sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.authored, version=3.2, license=MIT, copyright=R9 QA Holder, source=https://example.org/r9-qa]] authored={accent=#ffcc00, mutedForeground=#b8c4a8, surface=#3a1d4a, border=#ff8800, selection=#005f5f, foreground=#e8e0ff, surfaceRaised=#4b2a5e}
+CATALOG upd-same id=local:7fb7ca06-62fc-45f7-b03a-d13c2288c34d locator=Optional[e4af7c60-e614-44c6-a5f0-ae2795a0ceb6.xml] name=R9 QA Legacy sourceId=r9-qa-legacy metadata=Optional.empty authored={}
+CATALOG upd-same id=local:1165cb8d-b36d-4f33-b707-b370725fb90f locator=Optional[64616134-e725-40b3-b35e-63f014ad2f91.ectheme] name=R9 QA Light sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.light, version=null, license=null, copyright=null, source=null]] authored={accent=#b03a00, surface=#efe6d2}
+CATALOG upd-same id=local:68d1b72a-5838-4eea-8069-cfdcc9e72ec7 locator=Optional[b98b56ce-85d3-45f7-bc96-6fa4ffa29b6d.ectheme] name=R9 QA Minimal sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.minimal, version=null, license=null, copyright=null, source=null]] authored={}
+CATALOG upd-same id=local:dd3c5823-2e6f-4f5a-a1c3-490e5d213409 locator=Optional[46409bef-d326-48a9-a4a4-d893367ff274.ectheme] name=R9 QA Readability sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.readability, version=null, license=CC0-1.0, copyright=null, source=file:///C:/Windows/win.ini]] authored={accent=#3a4a7a, selection=#005f5f, surface=#262c3b}
+STEP files|upd-same
+FILES upd-same installed=[.staging, 3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme, 46409bef-d326-48a9-a4a4-d893367ff274.ectheme, 64616134-e725-40b3-b35e-63f014ad2f91.ectheme, b98b56ce-85d3-45f7-bc96-6fa4ffa29b6d.ectheme, e4af7c60-e614-44c6-a5f0-ae2795a0ceb6.xml, planted-oversize.ectheme]
+FILES upd-same bindings=[3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme=local\:7fc6899c-c7bf-4fe4-a36f-f9e96718dbb3, 46409bef-d326-48a9-a4a4-d893367ff274.ectheme=local\:dd3c5823-2e6f-4f5a-a1c3-490e5d213409, 64616134-e725-40b3-b35e-63f014ad2f91.ectheme=local\:1165cb8d-b36d-4f33-b707-b370725fb90f, b98b56ce-85d3-45f7-bc96-6fa4ffa29b6d.ectheme=local\:68d1b72a-5838-4eea-8069-cfdcc9e72ec7, e4af7c60-e614-44c6-a5f0-ae2795a0ceb6.xml=local\:7fb7ca06-62fc-45f7-b03a-d13c2288c34d]
+STEP pick|R9 QA Authored v2
+STEP wait|800
+STEP uia|Update Selected Theme|<repo>\tmp\workbench-spike\r9\qa\qa-legacy-replacement.xml
+UIA launched Update Selected Theme <repo>\tmp\workbench-spike\r9\qa\qa-legacy-replacement.xml
+STEP bclick|Update Selected Theme...|9000
+RESTART-DIALOG title=Update Theme buttons=[OK, Cancel]
+STEP msg|Yes|4000
+MSG none
+BCLICK-RETURNED Update Selected Theme... found=true
+STEP msg|OK
+MSG none
+STEP wait|1500
+STEP catalog|upd-cross
+CATALOG upd-cross id=local:7fc6899c-c7bf-4fe4-a36f-f9e96718dbb3 locator=Optional[3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme] name=R9 QA Authored sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.authored, version=3.2, license=MIT, copyright=R9 QA Holder, source=https://example.org/r9-qa]] authored={accent=#ffcc00, mutedForeground=#b8c4a8, surface=#3a1d4a, border=#ff8800, selection=#005f5f, foreground=#e8e0ff, surfaceRaised=#4b2a5e}
+CATALOG upd-cross id=local:7fb7ca06-62fc-45f7-b03a-d13c2288c34d locator=Optional[e4af7c60-e614-44c6-a5f0-ae2795a0ceb6.xml] name=R9 QA Legacy sourceId=r9-qa-legacy metadata=Optional.empty authored={}
+CATALOG upd-cross id=local:1165cb8d-b36d-4f33-b707-b370725fb90f locator=Optional[64616134-e725-40b3-b35e-63f014ad2f91.ectheme] name=R9 QA Light sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.light, version=null, license=null, copyright=null, source=null]] authored={accent=#b03a00, surface=#efe6d2}
+CATALOG upd-cross id=local:68d1b72a-5838-4eea-8069-cfdcc9e72ec7 locator=Optional[b98b56ce-85d3-45f7-bc96-6fa4ffa29b6d.ectheme] name=R9 QA Minimal sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.minimal, version=null, license=null, copyright=null, source=null]] authored={}
+CATALOG upd-cross id=local:dd3c5823-2e6f-4f5a-a1c3-490e5d213409 locator=Optional[46409bef-d326-48a9-a4a4-d893367ff274.ectheme] name=R9 QA Readability sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.readability, version=null, license=CC0-1.0, copyright=null, source=file:///C:/Windows/win.ini]] authored={accent=#3a4a7a, selection=#005f5f, surface=#262c3b}
+STEP files|upd-cross
+FILES upd-cross installed=[.staging, 3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme, 46409bef-d326-48a9-a4a4-d893367ff274.ectheme, 64616134-e725-40b3-b35e-63f014ad2f91.ectheme, b98b56ce-85d3-45f7-bc96-6fa4ffa29b6d.ectheme, e4af7c60-e614-44c6-a5f0-ae2795a0ceb6.xml, planted-oversize.ectheme]
+FILES upd-cross bindings=[3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme=local\:7fc6899c-c7bf-4fe4-a36f-f9e96718dbb3, 46409bef-d326-48a9-a4a4-d893367ff274.ectheme=local\:dd3c5823-2e6f-4f5a-a1c3-490e5d213409, 64616134-e725-40b3-b35e-63f014ad2f91.ectheme=local\:1165cb8d-b36d-4f33-b707-b370725fb90f, b98b56ce-85d3-45f7-bc96-6fa4ffa29b6d.ectheme=local\:68d1b72a-5838-4eea-8069-cfdcc9e72ec7, e4af7c60-e614-44c6-a5f0-ae2795a0ceb6.xml=local\:7fb7ca06-62fc-45f7-b03a-d13c2288c34d]
+STEP pick|R9 QA Authored v2
+STEP wait|800
+STEP uia|Update Selected Theme|<repo>\tmp\workbench-spike\r9\qa\qa-e4-oversize.ectheme
+UIA launched Update Selected Theme <repo>\tmp\workbench-spike\r9\qa\qa-e4-oversize.ectheme
+STEP bclick|Update Selected Theme...|9000
+RESTART-DIALOG title=Update Theme buttons=[OK, Cancel]
+STEP msg|Yes|4000
+MSG none
+BCLICK-RETURNED Update Selected Theme... found=true
+STEP msg|OK
+MSG none
+STEP wait|1500
+STEP catalog|upd-oversize
+CATALOG upd-oversize id=local:7fc6899c-c7bf-4fe4-a36f-f9e96718dbb3 locator=Optional[3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme] name=R9 QA Authored sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.authored, version=3.2, license=MIT, copyright=R9 QA Holder, source=https://example.org/r9-qa]] authored={accent=#ffcc00, mutedForeground=#b8c4a8, surface=#3a1d4a, border=#ff8800, selection=#005f5f, foreground=#e8e0ff, surfaceRaised=#4b2a5e}
+CATALOG upd-oversize id=local:7fb7ca06-62fc-45f7-b03a-d13c2288c34d locator=Optional[e4af7c60-e614-44c6-a5f0-ae2795a0ceb6.xml] name=R9 QA Legacy sourceId=r9-qa-legacy metadata=Optional.empty authored={}
+CATALOG upd-oversize id=local:1165cb8d-b36d-4f33-b707-b370725fb90f locator=Optional[64616134-e725-40b3-b35e-63f014ad2f91.ectheme] name=R9 QA Light sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.light, version=null, license=null, copyright=null, source=null]] authored={accent=#b03a00, surface=#efe6d2}
+CATALOG upd-oversize id=local:68d1b72a-5838-4eea-8069-cfdcc9e72ec7 locator=Optional[b98b56ce-85d3-45f7-bc96-6fa4ffa29b6d.ectheme] name=R9 QA Minimal sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.minimal, version=null, license=null, copyright=null, source=null]] authored={}
+CATALOG upd-oversize id=local:dd3c5823-2e6f-4f5a-a1c3-490e5d213409 locator=Optional[46409bef-d326-48a9-a4a4-d893367ff274.ectheme] name=R9 QA Readability sourceId=null metadata=Optional[PackageMetadata[packageId=qa.r9.readability, version=null, license=CC0-1.0, copyright=null, source=file:///C:/Windows/win.ini]] authored={accent=#3a4a7a, selection=#005f5f, surface=#262c3b}
+STEP files|upd-oversize
+FILES upd-oversize installed=[.staging, 3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme, 46409bef-d326-48a9-a4a4-d893367ff274.ectheme, 64616134-e725-40b3-b35e-63f014ad2f91.ectheme, b98b56ce-85d3-45f7-bc96-6fa4ffa29b6d.ectheme, e4af7c60-e614-44c6-a5f0-ae2795a0ceb6.xml, planted-oversize.ectheme]
+FILES upd-oversize bindings=[3236f7db-51c1-4fb1-b9b8-ab2078d5ed9f.ectheme=local\:7fc6899c-c7bf-4fe4-a36f-f9e96718dbb3, 46409bef-d326-48a9-a4a4-d893367ff274.ectheme=local\:dd3c5823-2e6f-4f5a-a1c3-490e5d213409, 64616134-e725-40b3-b35e-63f014ad2f91.ectheme=local\:1165cb8d-b36d-4f33-b707-b370725fb90f, b98b56ce-85d3-45f7-bc96-6fa4ffa29b6d.ectheme=local\:68d1b72a-5838-4eea-8069-cfdcc9e72ec7, e4af7c60-e614-44c6-a5f0-ae2795a0ceb6.xml=local\:7fb7ca06-62fc-45f7-b03a-d13c2288c34d]
+STEP navcount|end
+PREVIEW-NAV-COUNT end total=2
+STEP okclose
+OKCLOSE-CLICK found=true ms=115
+STEP wait|2000
+STEP state|end
+STATE end | active=com.github.eclipsethemes.workbench.dark | instance=com.github.eclipsethemes.workbench.dark | config=<absent> | default=com.github.eclipsethemes.workbench.dark | osDark=true | highContrast=false
+OWNPREFS PLUGIN_COLORS_OWNED=org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.backgroundColor|75,42,94
+org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.foregroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_BACKGROUND|75,42,94
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_FOREGROUND|232,224,255
+org.eclipse.ui.workbench|CONTENT_ASSIST_BACKGROUND_COLOR|75,42,94
+org.eclipse.ui.workbench|CONTENT_ASSIST_FOREGROUND_COLOR|232,224,255
+org.eclipse.ui.workbench|HYPERLINK_COLOR|255,204,0
+org.eclipse.ui.workbench|ACTIVE_HYPERLINK_COLOR|247,213,137
+org.eclipse.ui.workbench|ERROR_COLOR|251,129,122
+org.eclipse.ui.workbench|INCOMING_COLOR|51,187,231
+org.eclipse.ui.workbench|OUTGOING_COLOR|232,224,255
+org.eclipse.ui.workbench|CONFLICTING_COLOR|251,129,122
+org.eclipse.ui.workbench|RESOLVED_COLOR|90,197,118
+org.eclipse.ui.workbench|EDITION_COLOR|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.CommitMessageCommentColor|184,196,168
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor|21,79,39
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveBackgroundColor|106,44,41
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkBackgroundColor|15,73,92
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineBackgroundColor|75,42,94
+org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineForegroundColor|232,224,255
+org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceBackgroundColor|27,31,42
+org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceForegroundColor|184,196,168
+org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeBackgroundColor|27,31,42
+org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeForegroundColor|255,204,0
+org.eclipse.ui.workbench|org.eclipse.search.ui.match.highlight|85,63,2
+org.eclipse.ui.workbench|org.eclipse.jface.REVISION_NEWEST_COLOR|85,63,2
+org.eclipse.ui.workbench|org.eclipse.jface.REVISION_OLDEST_COLOR|59,47,20
+org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.inherited|184,196,168
+org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight|85,63,2
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled|51,187,231
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled|51,187,231
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled|184,196,168
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.task.active|255,204,0
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.start|75,42,94
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.end|75,42,94
+org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.color.text.quoted|51,187,231
+org.eclipse.jdt.ui|content_assist_parameters_background|75,42,94
+org.eclipse.jdt.ui|content_assist_parameters_foreground|232,224,255
+org.eclipse.jdt.ui|javadocElementsStyling.darkModeDefaultColors|true
+org.eclipse.ui.editors|hyperlinkColor|255,204,0
+org.eclipse.ui.editors|hyperlinkColor.SystemDefault|false
+org.eclipse.ui.editors|linked.slave.color|15,73,92
+org.eclipse.ui.editors|breakpointIndicationColor|51,187,231
+org.eclipse.ui.editors|fullcoverage_color|21,79,39
+org.eclipse.ui.editors|partialcoverage_color|85,63,2
+org.eclipse.ui.editors|nocoverage_color|106,44,41
+org.eclipse.ui.editors|org.eclipse.ui.editors.stickyLinesSeparatorColor|255,136,0
+org.eclipse.ui.editors|inlineDiffColor|31,55,36
+org.eclipse.ui.editors|detailedInlineDiffColor|21,79,39
+org.eclipse.ui.editors|deletionInlineDiffColor|69,39,37
+org.eclipse.ui.editors|detailedDeletionInlineDiffColor|106,44,41
+org.eclipse.debug.ui|org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND|85,63,2
+org.eclipse.debug.ui|org.eclipse.debug.ui.MemoryHistoryKnownColor|232,224,255
+org.eclipse.debug.ui|org.eclipse.debug.ui.changedDebugElement|251,129,122
+org.eclipse.ant.ui|org.eclipse.ant.ui.informationColor|51,187,231
+org.eclipse.ant.ui|org.eclipse.ant.ui.debugColor|232,224,255
+org.eclipse.ant.ui|org.eclipse.ant.ui.errorColor|251,129,122
+org.eclipse.epp.mpc.ui|native-borders|false
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND|75,42,94
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_FOREGROUND|232,224,255
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR|251,129,122
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR|214,162,10
+org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR|184,196,168
+ WORKBENCH_PRIOR_SAVED_ABSENT=true WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark SELECTED_THEME_LOGICAL_ID=local:7fc6899c-c7bf-4fe4-a36f-f9e96718dbb3 WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+DONE

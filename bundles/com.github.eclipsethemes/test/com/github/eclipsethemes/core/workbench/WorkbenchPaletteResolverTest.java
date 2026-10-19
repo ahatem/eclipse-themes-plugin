@@ -4,19 +4,28 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.MessageDigest;
+import java.util.Comparator;
+import java.util.HexFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Test;
 
 import com.github.eclipsethemes.core.models.Color;
+import com.github.eclipsethemes.core.models.PackageMetadata;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.ThemeType;
 import com.github.eclipsethemes.core.models.Token;
 import com.github.eclipsethemes.core.models.TokenBuilder;
 import com.github.eclipsethemes.core.models.TokenKey;
+import com.github.eclipsethemes.core.parser.XmlThemeParser;
 
-/** The deterministic semantic conversion of a legacy theme into the workbench palette. */
+/** The deterministic semantic conversion of a theme into the workbench palette. */
 public class WorkbenchPaletteResolverTest {
 
 	private static final double TEXT = WorkbenchPaletteResolver.TEXT_CONTRAST;
@@ -225,6 +234,81 @@ public class WorkbenchPaletteResolverTest {
 		}
 	}
 
+	// ---- package-authored roles --------------------------------------------------------------------------------
+
+	@Test
+	public void everyBundledLegacyThemeResolvesToTheSamePaletteAsBefore() throws Exception {
+		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		Path local = Path.of("themes");
+		Path themes = Files.isDirectory(local) ? local : Path.of("bundles/com.github.eclipsethemes/themes");
+		try (var paths = Files.list(themes)) {
+			for (Path file : paths.filter(p -> p.toString().endsWith(".xml"))
+					.sorted(Comparator.comparing(p -> p.getFileName().toString())).toList()) {
+				WorkbenchPalette palette = WorkbenchPaletteResolver.resolve(new XmlThemeParser().parse(file.toFile()));
+				StringBuilder line = new StringBuilder(file.getFileName().toString()).append(palette.family());
+				for (WorkbenchColor role : WorkbenchColor.values()) {
+					line.append(' ').append(palette.get(role));
+				}
+				digest.update(line.append('\n').toString().getBytes(StandardCharsets.UTF_8));
+			}
+		}
+		// Captured with the resolver before package-authored roles existed.
+		assertEquals("494c15e58e379f8367d99fa4633ed0ac1155421cf4edfdca882bc054cdf9d773", HexFormat.of().formatHex(digest.digest()));
+	}
+
+	@Test
+	public void authoredSurfaceAndAccentAreVerbatimAndDependentsDeriveFromThem() {
+		Theme legacy = theme(ThemeType.DARK, "#1b1f2a", "#c8d0e0", Map.of());
+		Theme authored = packaged(ThemeType.DARK, "#1b1f2a", "#c8d0e0", Map.of("surface", "#262c3b", "accent", "#82aaff"));
+		WorkbenchPalette before = WorkbenchPaletteResolver.resolve(legacy);
+		WorkbenchPalette palette = WorkbenchPaletteResolver.resolve(authored);
+		assertEquals(Color.ofHex("#262c3b"), palette.get(WorkbenchColor.SURFACE));
+		assertEquals(Color.ofHex("#82aaff"), palette.get(WorkbenchColor.ACCENT));
+		assertNotEquals(before.get(WorkbenchColor.SURFACE_RAISED), palette.get(WorkbenchColor.SURFACE_RAISED));
+		assertTrue(lightness(palette, WorkbenchColor.SURFACE_RAISED) > lightness(palette, WorkbenchColor.SURFACE));
+		assertEquals(before.get(WorkbenchColor.FOREGROUND), palette.get(WorkbenchColor.FOREGROUND));
+		assertEquals(Set.of(), WorkbenchPaletteResolver.unreadableAuthoredRoles(authored));
+	}
+
+	@Test
+	public void authoredBaseColorsReplaceTheEditorBaseForChromeOnly() {
+		Theme authored = packaged(ThemeType.DARK, "#1b1f2a", "#c8d0e0",
+				Map.of("background", "#101318", "foreground", "#e6e6e6"));
+		WorkbenchPalette palette = WorkbenchPaletteResolver.resolve(authored);
+		assertEquals(Color.ofHex("#101318"), palette.get(WorkbenchColor.BACKGROUND));
+		assertEquals(Color.ofHex("#e6e6e6"), palette.get(WorkbenchColor.FOREGROUND));
+		assertEquals(Color.ofHex("#1b1f2a"), authored.get(TokenKey.BACKGROUND).getColor());
+	}
+
+	@Test
+	public void unreadableAuthoredAccentIsCorrectedByLightnessKeepingItsHue() {
+		String accent = "#3a4a7a";
+		Theme authored = packaged(ThemeType.DARK, "#1b1f2a", "#c8d0e0", Map.of("surface", "#262c3b", "accent", accent));
+		assertTrue(WorkbenchPaletteResolver.contrast(Color.ofHex(accent), Color.ofHex("#1b1f2a")) < 2.5);
+		WorkbenchPalette palette = WorkbenchPaletteResolver.resolve(authored);
+		assertEquals("authored surface kept", Color.ofHex("#262c3b"), palette.get(WorkbenchColor.SURFACE));
+		Color corrected = palette.get(WorkbenchColor.ACCENT);
+		assertTrue(worst(corrected, palette, WorkbenchColor.BACKGROUND, WorkbenchColor.SURFACE,
+				WorkbenchColor.SURFACE_RAISED) >= TEXT);
+		assertTrue(PerceptualColor.hueDistanceDegrees(PerceptualColor.of(Color.ofHex(accent)),
+				PerceptualColor.of(corrected)) < 10.0);
+		assertEquals(Set.of(WorkbenchColor.ACCENT), WorkbenchPaletteResolver.unreadableAuthoredRoles(authored));
+	}
+
+	@Test
+	public void incoherentAuthoredPaletteFallsBackToTheFamily() {
+		// A selection the foreground cannot be read on is not a text role, so nothing can correct it.
+		Theme authored = packaged(ThemeType.DARK, "#1b1f2a", "#c8d0e0", Map.of("selection", "#c8d0e0"));
+		assertEquals(WorkbenchFamily.DARK.fallbackPalette(), WorkbenchPaletteResolver.resolve(authored));
+		assertEquals(Set.of(WorkbenchColor.SELECTION), WorkbenchPaletteResolver.unreadableAuthoredRoles(authored));
+	}
+
+	@Test
+	public void legacyThemesReportNoAuthoredCorrections() {
+		assertEquals(Set.of(), WorkbenchPaletteResolver.unreadableAuthoredRoles(
+				theme(ThemeType.DARK, "#1b1f2a", "#1c202b", Map.of())));
+	}
+
 	// ---- helpers -----------------------------------------------------------------------------------------------
 
 	private static void assertChromeKeepsHue(WorkbenchPalette palette, String background) {
@@ -270,6 +354,13 @@ public class WorkbenchPaletteResolverTest {
 
 	private static Theme theme(ThemeType type, String background, String foreground, Map<TokenKey, String> extra) {
 		return new Theme("id", "name", "", "", "", type, tokens(background, foreground, extra));
+	}
+
+	private static Theme packaged(ThemeType type, String background, String foreground, Map<String, String> roles) {
+		Map<String, Color> authored = new LinkedHashMap<>();
+		roles.forEach((role, hex) -> authored.put(role, Color.ofHex(hex)));
+		return new Theme(null, "name", "", "", "", type, tokens(background, foreground, Map.of()),
+				new PackageMetadata("io.example.theme", null, null, null, null), authored);
 	}
 
 	private static Map<TokenKey, Token> tokens(String background, String foreground, Map<TokenKey, String> extra) {

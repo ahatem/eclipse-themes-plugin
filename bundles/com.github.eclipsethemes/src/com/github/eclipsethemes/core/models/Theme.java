@@ -2,6 +2,8 @@ package com.github.eclipsethemes.core.models;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * One immutable, validated visual theme definition. Catalog identity, origin,
@@ -19,8 +21,29 @@ public final class Theme {
 
 	private final Map<TokenKey, Token> tokens;
 
+	private final Optional<PackageMetadata> packageMetadata;
+	private final Map<String, Color> authoredWorkbench;
+
+	/** The palette role names a package's {@code <workbench>} section may author. */
+	public static final Set<String> WORKBENCH_ROLES = Set.of("background", "foreground", "surface", "surfaceRaised",
+			"border", "mutedForeground", "selection", "accent");
+
+	/** A legacy theme: no package metadata and no authored workbench colors. */
 	public Theme(String id, String name, String author, String website, String description, ThemeType type,
 			Map<TokenKey, Token> tokens) {
+		this(id, name, author, website, description, type, tokens, null, Map.of());
+	}
+
+	/** A package theme; {@code authoredWorkbench} keys must be {@link #WORKBENCH_ROLES}. */
+	public Theme(String id, String name, String author, String website, String description, ThemeType type,
+			Map<TokenKey, Token> tokens, PackageMetadata packageMetadata, Map<String, Color> authoredWorkbench) {
+		this.packageMetadata = Optional.ofNullable(packageMetadata);
+		this.authoredWorkbench = Map.copyOf(Objects.requireNonNull(authoredWorkbench, "authoredWorkbench"));
+		for (String role : this.authoredWorkbench.keySet()) {
+			if (!WORKBENCH_ROLES.contains(role)) {
+				throw new IllegalArgumentException("Unknown workbench role: " + role);
+			}
+		}
 		this.id = id;
 		this.name = name;
 		this.author = author;
@@ -36,7 +59,7 @@ public final class Theme {
 		}
 	}
 
-	/** Raw XML ect-id, retained for legacy lookup and preview, not logical identity. */
+	/** Raw XML ect-id, retained for legacy lookup and preview, not logical identity; absent for packages. */
 	public String getId() {
 		return this.id;
 	}
@@ -64,6 +87,16 @@ public final class Theme {
 	/** The immutable token snapshot; callers cannot add, replace, or remove tokens. */
 	public Map<TokenKey, Token> getTokens() {
 		return this.tokens;
+	}
+
+	/** Present only for a theme read from a package. */
+	public Optional<PackageMetadata> getPackageMetadata() {
+		return this.packageMetadata;
+	}
+
+	/** Workbench palette colors a package authored, keyed by role name; empty for legacy themes. */
+	public Map<String, Color> getAuthoredWorkbench() {
+		return this.authoredWorkbench;
 	}
 
 	public boolean has(TokenKey key) {

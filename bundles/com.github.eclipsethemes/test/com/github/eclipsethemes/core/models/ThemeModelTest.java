@@ -4,10 +4,14 @@ import static org.junit.Assert.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Test;
+
+import com.github.eclipsethemes.core.workbench.WorkbenchColor;
 
 /** The validated theme is one immutable snapshot with a closed role vocabulary. */
 public class ThemeModelTest {
@@ -76,6 +80,40 @@ public class ThemeModelTest {
 		assertNotSame(first, second);
 		assertNotEquals("Equal visual content is not catalog identity", first, second);
 		assertEquals(first, first);
+	}
+
+	@Test public void legacyThemesCarryNoPackageData() {
+		Theme legacy = theme(Map.of());
+		assertTrue(legacy.getPackageMetadata().isEmpty());
+		assertEquals(Map.of(), legacy.getAuthoredWorkbench());
+	}
+
+	@Test public void authoredWorkbenchIsAnImmutableSnapshot() {
+		Map<String, Color> roles = new LinkedHashMap<>();
+		roles.put("accent", Color.ofHex("#82aaff"));
+		PackageMetadata metadata = new PackageMetadata("io.example.theme", "1.0", "MIT", null, null);
+		Theme theme = new Theme(null, "Name", "", "", "", ThemeType.DARK, Map.of(), metadata, roles);
+		roles.put("surface", Color.ofHex("#000000"));
+
+		assertEquals(Map.of("accent", Color.ofHex("#82aaff")), theme.getAuthoredWorkbench());
+		assertThrows(UnsupportedOperationException.class,
+				() -> theme.getAuthoredWorkbench().put("border", Color.ofHex("#ffffff")));
+		assertEquals(metadata, theme.getPackageMetadata().orElseThrow());
+		assertEquals("MIT", metadata.licenseText().orElseThrow());
+		assertTrue(metadata.copyrightText().isEmpty());
+	}
+
+	@Test public void unknownWorkbenchRolesAreRejectedAtConstruction() {
+		assertThrows(IllegalArgumentException.class, () -> new Theme(null, "Name", "", "", "", ThemeType.DARK, Map.of(),
+				null, Map.of("titleBar", Color.ofHex("#000000"))));
+	}
+
+	@Test public void workbenchSchemaNamesAreExactlyTheModelRoles() {
+		Set<String> names = new HashSet<>();
+		for (WorkbenchColor role : WorkbenchColor.values()) {
+			names.add(role.schemaName());
+		}
+		assertEquals(Theme.WORKBENCH_ROLES, names);
 	}
 
 	private static Theme theme(Map<TokenKey, Token> tokens) {

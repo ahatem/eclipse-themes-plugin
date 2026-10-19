@@ -112,8 +112,8 @@ public class ThemeSelectionTest {
 
     @Test public void previewUsesSourceMetadataAndDefaultsUseCuratedLogicalIdentity() {
         ThemeRecord imported = theme("local:generated", "website-source", "GitHub Light Default", "#112233");
-        assertEquals(Constants.PREVIEW_SERVER_URL + "website-source", EclipseThemesPreferencePage.previewUrl(imported));
-        assertFalse(EclipseThemesPreferencePage.previewUrl(imported).contains("local:generated"));
+        assertEquals(Constants.PREVIEW_SERVER_URL + "website-source", EclipseThemesPreferencePage.previewUrl(imported).orElseThrow());
+        assertFalse(EclipseThemesPreferencePage.previewUrl(imported).orElseThrow().contains("local:generated"));
         ThemeRecord curated = curated(Constants.DEFAULT_LIGHT_THEME_ID, "curated-source", "Renamed", "#445566");
         assertSame(curated, ThemeSelection.defaultTheme(List.of(imported, curated), false));
         assertNotEquals("Duplicate source claims do not imply the current record", imported,

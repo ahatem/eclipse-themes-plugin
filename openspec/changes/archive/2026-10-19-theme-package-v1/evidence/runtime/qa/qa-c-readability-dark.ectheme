@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<themePackage schemaVersion='1' id='qa.r9.readability' name='R9 QA Readability' appearance='dark'>
+<provenance license='CC0-1.0' source='file:///C:/Windows/win.ini'/><editor><background color='#1b1f2a'/><foreground color='#c8d0e0'/><keyword color='#c792ea' bold='true'/><string color='#c3e88d'/><singleLineComment color='#697098' italic='true'/></editor><workbench><surface color='#262c3b'/><selection color='#005f5f'/><accent color='#3a4a7a'/></workbench>
+</themePackage>

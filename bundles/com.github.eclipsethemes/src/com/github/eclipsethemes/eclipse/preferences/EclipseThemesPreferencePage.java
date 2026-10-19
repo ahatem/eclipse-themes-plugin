@@ -1,7 +1,9 @@
 package com.github.eclipsethemes.eclipse.preferences;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -44,6 +46,7 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import com.github.eclipsethemes.EclipseThemes;
 import com.github.eclipsethemes.core.Constants;
+import com.github.eclipsethemes.core.models.PackageMetadata;
 import com.github.eclipsethemes.core.validation.WebsiteUri;
 import com.github.eclipsethemes.core.workbench.WorkbenchCapability;
 import com.github.eclipsethemes.core.workbench.WorkbenchCapability.State;
@@ -71,6 +74,11 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private Label authorLabel;
 	private Label themeTypeLabel;
 	private Link websiteLink;
+	private Label versionLabel;
+	private Label licenseLabel;
+	private Label copyrightLabel;
+	private Link sourceLink;
+	private final List<Control> packageRows = new ArrayList<>();
 	private Link downloadMoreLink;
 	private Button importButton;
 	private Button updateButton;
@@ -230,6 +238,31 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		themeTypeLabel = new Label(detailsGroup, SWT.WRAP);
 		themeTypeLabel.setText("N/A");
 		themeTypeLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+
+		// Package provenance: shown only for theme packages, never implied by the plugin's own license.
+		versionLabel = packageRow(detailsGroup, "Version:", new Label(detailsGroup, SWT.WRAP));
+		licenseLabel = packageRow(detailsGroup, "License:", new Label(detailsGroup, SWT.WRAP));
+		copyrightLabel = packageRow(detailsGroup, "Copyright:", new Label(detailsGroup, SWT.WRAP));
+		sourceLink = packageRow(detailsGroup, "Source:", new Link(detailsGroup, SWT.WRAP));
+		showPackageRows(false);
+	}
+
+	private <T extends Control> T packageRow(Composite parent, String caption, T value) {
+		Label captionLabel = new Label(parent, SWT.NONE);
+		captionLabel.setText(caption);
+		captionLabel.moveAbove(value);
+		value.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+		captionLabel.setLayoutData(new GridData());
+		packageRows.add(captionLabel);
+		packageRows.add(value);
+		return value;
+	}
+
+	private void showPackageRows(boolean visible) {
+		for (Control row : packageRows) {
+			row.setVisible(visible);
+			((GridData) row.getLayoutData()).exclude = !visible;
+		}
 	}
 
 	private void createPreviewPanel(Composite parent) {
@@ -553,6 +586,17 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			}
 		});
 
+		sourceLink.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// Same policy as the website link: only a launchable value reaches the launcher.
+				WebsiteUri.Check check = WebsiteUri.check(selectedSource());
+				if (check.launchable()) {
+					Program.launch(check.value());
+				}
+			}
+		});
+
 		// Buttons
 		previewToggleButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -605,6 +649,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		authorLabel.setText("N/A");
 		websiteLink.setText("N/A");
 		themeTypeLabel.setText("N/A");
+		showPackageRows(false);
+		themeNameLabel.getParent().layout();
 		showDefaultPreview();
 		updateButtonStates();
 	}
@@ -614,8 +660,28 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		authorLabel.setText(theme.theme().getAuthor() != null ? theme.theme().getAuthor() : "N/A");
 		themeTypeLabel.setText(theme.theme().getType().nameCapitalized());
 		websiteLink.setText(websiteText(theme.theme().getWebsite()));
+		Optional<PackageMetadata> metadata = theme.theme().getPackageMetadata();
+		metadata.ifPresent(m -> {
+			versionLabel.setText(stated(m.versionText()));
+			licenseLabel.setText(stated(m.licenseText()));
+			copyrightLabel.setText(stated(m.copyrightText()));
+			sourceLink.setText(linkText(m.source(), NOT_STATED));
+		});
+		showPackageRows(metadata.isPresent());
 
 		themeNameLabel.getParent().layout();
+	}
+
+	private String selectedSource() {
+		return selectedTheme == null ? null
+				: selectedTheme.theme().getPackageMetadata().map(PackageMetadata::source).orElse(null);
+	}
+
+	static final String NOT_STATED = "Not stated";
+
+	/** An absent provenance value is shown as not stated; nothing is assumed in its place. */
+	static String stated(Optional<String> value) {
+		return value.orElse(NOT_STATED);
 	}
 
 	/**
@@ -623,11 +689,15 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	 * inert literal text so no metadata can reach the platform launcher.
 	 */
 	static String websiteText(String website) {
-		WebsiteUri.Check check = WebsiteUri.check(website);
+		return linkText(website, "N/A");
+	}
+
+	static String linkText(String value, String placeholder) {
+		WebsiteUri.Check check = WebsiteUri.check(value);
 		if (check.value().isEmpty()) {
-			return "N/A";
+			return placeholder;
 		}
-		String text = WebsiteUri.displayText(website);
+		String text = WebsiteUri.displayText(value);
 		return check.launchable() ? "<a>" + text + "</a>" : text;
 	}
 
@@ -636,22 +706,36 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			return;
 		}
 
+		Optional<String> url = previewUrl(theme);
+		if (url.isEmpty()) {
+			showPreviewUnavailable();
+			return;
+		}
 		try {
-			String url = previewUrl(theme);
-			browserPreview.setUrl(url);
+			browserPreview.setUrl(url.get());
 		} catch (Exception e) {
 			showPreviewError("Could not load preview for this theme.");
 		}
 	}
 
-	static String previewUrl(ThemeRecord theme) {
-		return Constants.PREVIEW_SERVER_URL + theme.theme().getId();
+	/**
+	 * The remote preview exists only for themes with a legacy source id. Packages have none, so neither their package
+	 * id nor any of their metadata is ever sent to the preview server.
+	 */
+	static Optional<String> previewUrl(ThemeRecord theme) {
+		String id = theme.theme().getId();
+		return id == null || id.isBlank() ? Optional.empty() : Optional.of(Constants.PREVIEW_SERVER_URL + id);
 	}
 
 	private void showDefaultPreview() {
 		// TODO: We might do offline theme preview generation
 		browserPreview.setText("<html><body style='background:#f5f5f5;padding:20px;font-family:Arial;'>"
 				+ "<h3>Theme Preview</h3>" + "<p>Select a theme to see the preview here.</p></body></html>");
+	}
+
+	private void showPreviewUnavailable() {
+		browserPreview.setText("<html><body style='background:#f5f5f5;padding:20px;font-family:Arial;'>"
+				+ "<h3>Theme Preview</h3>" + "<p>No preview is available for this theme.</p></body></html>");
 	}
 
 	private void showPreviewError(String message) {
@@ -781,8 +865,9 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private File chooseThemeFile(String dialogTitle) {
 		FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
 		dialog.setText(dialogTitle);
-		dialog.setFilterExtensions(new String[] { "*.xml", "*.XML" });
-		dialog.setFilterNames(new String[] { "Eclipse Theme Files (*.xml)", "Eclipse Theme Files (*.XML)" });
+		dialog.setFilterExtensions(new String[] { "*.ectheme;*.xml;*.ECTHEME;*.XML", "*.ectheme;*.ECTHEME", "*.xml;*.XML" });
+		dialog.setFilterNames(new String[] { "Eclipse Themes (*.ectheme, *.xml)", "Theme Packages (*.ectheme)",
+				"Legacy Theme Files (*.xml)" });
 
 		String selectedFilePath = dialog.open();
 		if (selectedFilePath == null) {

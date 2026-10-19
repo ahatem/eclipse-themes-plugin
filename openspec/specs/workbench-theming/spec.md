@@ -28,8 +28,7 @@ workbench, and Cancel SHALL leave the stored coordination intent unchanged.
 - **THEN** the stored intent and the active workbench theme are unchanged
 
 ### Requirement: A small semantic palette is derived deterministically from the selected theme
-
-The system SHALL convert the selected theme into `background`, `foreground`, `surface`, `surfaceRaised`, `border`, `mutedForeground`, `selection` and `accent` deterministically. Each role SHALL use, in order: a suitable authored non-syntax candidate (`sourceHoverBackground`, `currentLine`, `lineNumber`, `selectionBackground`), an OKLCH derivation from the background keeping its hue and chroma character, then a lightness-only readability correction.
+The system SHALL derive eight roles deterministically: background, foreground, surface, surfaceRaised, border, mutedForeground, selection and accent. Use authored package roles verbatim. Resolve others by suitable non-syntax candidates (sourceHoverBackground, currentLine, lineNumber, selectionBackground), then OKLCH derivation from background preserving hue and chroma, then lightness-only correction. Dependencies use final values. Without authored roles, results match prior behavior.
 
 #### Scenario: Dark and light themes
 - **WHEN** a dark theme and a light theme are resolved
@@ -54,6 +53,17 @@ The system SHALL convert the selected theme into `background`, `foreground`, `su
 #### Scenario: Explicit selection color is kept when usable
 - **GIVEN** a theme with an explicit selection background visibly different from the background and readable under the foreground
 - **THEN** the palette selection equals that color
+
+#### Scenario: Package-authored surface and accent
+- **GIVEN** a package authoring `surface` and `accent` that satisfy the contrast rules
+- **WHEN** it is resolved
+- **THEN** the palette surface and accent equal the authored colors
+- **AND** `surfaceRaised` and `border` are derived from the authored surface
+
+#### Scenario: Legacy theme unchanged
+- **GIVEN** any bundled legacy theme
+- **WHEN** it is resolved after this change
+- **THEN** the palette equals the palette produced before this change
 
 ### Requirement: The converted palette is readable and falls back safely
 
@@ -190,3 +200,21 @@ The system SHALL state that editor coloring is supported and core workbench surf
 #### Scenario: Copy diagnostics
 - **WHEN** the user requests diagnostics
 - **THEN** a text block with the listed fields is available to copy and nothing is sent
+
+### Requirement: Authored workbench colors keep the readability floor
+
+When a palette containing authored roles fails the coherence rules, the system SHALL correct only the failing text roles
+(`foreground`, `mutedForeground`, `accent`) by lightness, keeping authored surfaces, and SHALL fall back to the family palette only if
+the corrected palette still fails. Each corrected authored role SHALL be reported as a warning when the package is admitted. A package
+SHALL NOT enable, disable or otherwise change workbench coordination intent.
+
+#### Scenario: Unreadable authored accent
+- **GIVEN** a dark package authoring an accent with 2:1 contrast on its surfaces
+- **WHEN** it is imported and later resolved
+- **THEN** admission reports a warning naming `accent`
+- **AND** the resolved accent keeps its hue and reaches 4.5:1
+
+#### Scenario: Package with workbench section, coordination off
+- **GIVEN** workbench coordination is disabled
+- **WHEN** a package with a workbench section is imported and applied
+- **THEN** only the editor outcome exists and no workbench state is written
