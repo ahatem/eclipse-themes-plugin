@@ -1,7 +1,12 @@
 # Eclipse Color Theme
 
 [![Build Status](https://github.com/ahatem/eclipse-themes-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/ahatem/eclipse-themes-plugin/actions)
-[![License: EPL-2.0](https://img.shields.io/badge/license-EPL--2.0-brightgreen)](LICENSE)
+[![Eclipse Marketplace Version](https://img.shields.io/eclipse-marketplace/v/eclipse-themes?label=marketplace)](https://marketplace.eclipse.org/content/eclipse-themes)
+[![Eclipse Marketplace Downloads](https://img.shields.io/eclipse-marketplace/dt/eclipse-themes)](https://marketplace.eclipse.org/content/eclipse-themes)
+[![Latest release](https://img.shields.io/github/v/release/ahatem/eclipse-themes-plugin?include_prereleases&sort=semver)](https://github.com/ahatem/eclipse-themes-plugin/releases)
+![Eclipse 4.40 | 4.41 verified](https://img.shields.io/badge/Eclipse-4.40%20%7C%204.41-2C2255?logo=eclipseide&logoColor=white)
+![Java 17+](https://img.shields.io/badge/Java-17%2B-orange?logo=openjdk&logoColor=white)
+[![License: EPL-2.0](https://img.shields.io/eclipse-marketplace/l/eclipse-themes?color=brightgreen&label=license)](LICENSE)
 
 **One theme. One coherent Eclipse.**
 
@@ -65,6 +70,14 @@ font), never every font in the IDE. See [font coordination](docs/WORKBENCH_THEMI
 ## Installation
 
 Eclipse Color Theme runs on Java 17 and later.
+
+### From the Eclipse Marketplace (recommended)
+
+1. Go to `Help -> Eclipse Marketplace...`.
+2. Search for `Eclipse Themes`.
+3. Click **Install**.
+
+### From the update site
 
 1. Go to `Help -> Install New Software...`.
 2. Click **Add...** and enter the URL: `https://ahatem.github.io/eclipse-themes-plugin/`
