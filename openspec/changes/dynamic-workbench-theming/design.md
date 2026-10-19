@@ -136,9 +136,14 @@ the registry does not already hold the derived palette.
 
 ## Colors and Fonts interaction
 
-The 28 definitions are `isEditable="false"`, so the page does not list them and stored overrides are ignored. No manual per-color
+The 14 definitions are `isEditable="false"`, so the page does not list them and stored overrides are ignored. No manual per-color
 override exists in R8a. While coordination is enabled, the selected theme is the only source of these colors. The fallback palette
 values live in Java (`WorkbenchFamily`) and in `plugin.xml`; a test keeps them equal.
+
+Measured side effect: `ColorRegistry.put` writes the entry into the instance `org.eclipse.ui.workbench` preferences, and Eclipse removes it again when the
+plugin resets the ids to the fallback. A preference recorder that replays recorded keys (observed with Oomph's preference task in an EPP install, which
+replayed another run's palette a few hundred milliseconds after an Apply) can therefore overwrite a published palette until the next Apply or
+restart. R8a does not add a listener or a suppression mechanism for this; it is documented in the compatibility doc.
 
 ## Deliberately not built
 

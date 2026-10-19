@@ -8,34 +8,34 @@
 
 ## 2. Pure logic (no SWT/JFace in `core`)
 
-- [ ] 2.1 `WorkbenchFamily`, `WorkbenchColor`, `WorkbenchPalette`, `WorkbenchPaletteResolver` with the fixed blends and contrast rule.
-- [ ] 2.2 Capability model: environment, probe, classifier, VERIFIED table, diagnostics text.
-- [ ] 2.3 `WorkbenchSlots` target rule.
+- [x] 2.1 `WorkbenchFamily`, `WorkbenchColor`, `WorkbenchPalette`, `WorkbenchPaletteResolver` with the fixed blends and contrast rule.
+- [x] 2.2 Capability model: environment, probe, classifier, VERIFIED table, diagnostics text.
+- [x] 2.3 `WorkbenchSlots` target rule.
 
 ## 3. Eclipse integration
 
-- [ ] 3.1 `WorkbenchThemeEngine` interface and `EclipseWorkbenchThemeEngine` (sole `IThemeEngine` user), `PaletteSink` over the current theme registry.
-- [ ] 3.2 `WorkbenchCoordinator`: apply, relinquish, reconcile, safe revert, ownership record, session failure flag.
-- [ ] 3.3 `plugin.xml` (4 themes, 14 non-editable color definitions, startup), two CSS files, optional `Require-Bundle`, `WorkbenchStartup`.
-- [ ] 3.4 `ThemeApplyOutcome`; `ThemeService` and `ThemeManager` return and thread it; `PreferenceKeys`.
-- [ ] 3.5 Preference page: Workbench section driven by `WorkbenchSectionModel`; apply/OK/Cancel, stop management, Appearance route, diagnostics copy.
+- [x] 3.1 `WorkbenchThemeEngine` interface and `EclipseWorkbenchThemeEngine` (sole `IThemeEngine` user), `PaletteSink` over the current theme registry.
+- [x] 3.2 `WorkbenchCoordinator`: apply, relinquish, reconcile, safe revert, ownership record, session failure flag.
+- [x] 3.3 `plugin.xml` (4 themes, 14 non-editable color definitions, startup), two CSS files, optional `Require-Bundle`, `WorkbenchStartup`.
+- [x] 3.4 `ThemeApplyOutcome`; `ThemeService` and `ThemeManager` return and thread it; `PreferenceKeys`.
+- [x] 3.5 Preference page: Workbench section driven by `WorkbenchSectionModel`; apply/OK/Cancel, stop management, Appearance route, diagnostics copy.
 
 ## 4. Tests (focused)
 
-- [ ] 4.1 Palette derivation: dark, light, determinism, missing value, contrast fallback, no syntax-token dependence.
-- [ ] 4.2 Capability classification including VERIFIED exact match, future micro, other platforms, each UNAVAILABLE reason.
-- [ ] 4.3 Slots: family choice, A/B alternation, same-family change is a real transition.
-- [ ] 4.4 Coordinator: ownership capture and restore (including absent saved id), external change wins, failed switch revert rule, publish compensation, unchanged palette no-op, experimental opt-in.
-- [ ] 4.5 Aggregate outcome and section model; static consistency test (Java mapping vs `plugin.xml` vs both CSS files).
+- [x] 4.1 Palette derivation: dark, light, determinism, missing value, contrast fallback, no syntax-token dependence.
+- [x] 4.2 Capability classification including VERIFIED exact match, future micro, other platforms, each UNAVAILABLE reason.
+- [x] 4.3 Slots: family choice, A/B alternation, same-family change is a real transition.
+- [x] 4.4 Coordinator: ownership capture and restore (including absent saved id), external change wins, failed switch revert rule, publish compensation, unchanged palette no-op, experimental opt-in.
+- [x] 4.5 Aggregate outcome and section model; static consistency test (Java mapping vs `plugin.xml` vs both CSS files).
 
 ## 5. Runtime verification (Windows, 4.40 and 4.41)
 
-- [ ] 5.1 Bundled dark to bundled dark, dark to light, light to light.
-- [ ] 5.2 Imported legacy theme, disable, external Appearance override, restart, apply timing.
-- [ ] 5.3 Experimental flow by controlled version metadata only if a clean seam exists.
+- [x] 5.1 Bundled dark to bundled dark, dark to light, light to light.
+- [x] 5.2 Imported legacy theme, disable, external Appearance override, restart, apply timing.
+- [x] 5.3 Experimental flow by controlled version metadata only if a clean seam exists. No clean seam exists on Windows (both installs are VERIFIED); covered by unit tests only and recorded as not runtime-verified.
 
 ## 6. Docs and validation
 
-- [ ] 6.1 Update compatibility/current-architecture/R8 docs that became stale; ROADMAP only after verification.
-- [ ] 6.2 `git diff --check`, `openspec validate --all --strict`, one full `mvn clean verify`.
-- [ ] 6.3 Proportionality review and final report.
+- [x] 6.1 Update compatibility/current-architecture/R8 docs that became stale; ROADMAP only after verification.
+- [x] 6.2 `git diff --check`, `openspec validate --all --strict`, one full `mvn clean verify`.
+- [x] 6.3 Proportionality review and final report.

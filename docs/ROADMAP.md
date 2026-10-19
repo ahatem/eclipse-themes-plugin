@@ -144,6 +144,8 @@ Scope:
 
 Exit: editor + workbench coordination works on the declared matrix, disable restores owned state conservatively, and coverage is inspectable.
 
+**R8a (delivered, change `dynamic-workbench-theming`):** opt-in coordination of the selected theme with the workbench through a derived seven-color palette and four static CSS themes; VERIFIED on Windows with Eclipse 4.40 and 4.41, other combinations EXPERIMENTAL and off unless opted in. Not part of R8a: fonts and icons, user overrides, runtime-registered themes, imported CSS, the R3 recovery journal, Linux/macOS verification. See [workbench theming compatibility](WORKBENCH_THEMING_COMPATIBILITY.md).
+
 ## R9 — Theme Package v1 and contributor ecosystem
 
 **Goal:** portable, declarative coordinated themes and stable contributor contracts.

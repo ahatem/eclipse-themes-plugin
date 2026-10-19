@@ -25,10 +25,16 @@ Preference page
       -> ParserFactory -> XmlThemeParser -> immutable Theme/Token model
       -> ThemeRecord catalog (logical identity, origin, optional managed locator)
   -> AdapterRegistry.discover()
-  -> ThemeService.applyTheme(ThemeRecord.theme())
+  -> ThemeService.applyTheme(ThemeRecord.theme())  -> ThemeApplyOutcome (editor part + workbench part)
       -> available adapter(s)
       -> target Eclipse/plugin InstanceScope preference nodes
+      -> WorkbenchCoordinator.apply(theme)          (opt-in; no-op unless "Also theme the Eclipse workbench" is on)
+          -> WorkbenchPaletteResolver (pure, core.workbench): 7-color palette
+          -> RegistryPaletteSink: non-editable color definitions in the Colors-and-Fonts registry
+          -> EclipseWorkbenchThemeEngine: IThemeEngine.setTheme(ITheme, true) between this plugin's four static CSS themes
 ```
+
+See [workbench theming compatibility](WORKBENCH_THEMING_COMPATIBILITY.md) for the support matrix and coverage boundary.
 
 The preference page may trigger an additional repository reload, so first opening can parse the collection more than once.
 
@@ -57,9 +63,12 @@ Current contributions include:
 
 - custom `com.github.eclipsethemes.theme.adapters` extension point;
 - `org.eclipse.ui.preferencePages`;
-- `org.eclipse.core.runtime.preferences`.
+- `org.eclipse.core.runtime.preferences`;
+- `org.eclipse.e4.ui.css.swt.theme` — four static workbench themes (`...workbench.dark`, `.dark.alt`, `.light`, `.light.alt`) over two stylesheets;
+- `org.eclipse.ui.themes` — fourteen non-editable color definitions (seven roles per family);
+- `org.eclipse.ui.startup` — `WorkbenchStartup`, a no-op unless workbench coordination is enabled.
 
-The project currently does not contribute a workbench CSS theme, `org.eclipse.ui.themes` theme, e4 model fragment, or processor.
+The project does not contribute an e4 model fragment or processor, and registers no theme or stylesheet at runtime.
 
 ## Layering concern
 
@@ -67,7 +76,7 @@ The audit identified a parser -> activator -> manager -> repository -> parser ba
 
 ## Fragile integration surface
 
-There are no direct Java imports from Eclipse `internal` packages in the audited code, but there are version-fragile string-key dependencies and implementation assumptions, including editor semantic-highlighting layouts, CDT internal preference identifiers, PDE/Ant/LSP4E-style keys, and dark-mode inference from theme IDs/preferences. These must be isolated, documented, and integration-tested rather than treated as stable APIs.
+There are no direct Java imports from Eclipse `internal` packages in the audited code, but there are version-fragile string-key dependencies and implementation assumptions, including editor semantic-highlighting layouts, CDT internal preference identifiers, PDE/Ant/LSP4E-style keys, and dark-mode inference from theme IDs/preferences, and `IThemeEngine` (`x-friends` API of `org.eclipse.e4.ui.css.swt.theme`), which is confined to `EclipseWorkbenchThemeEngine`. Eclipse derives its dark preference from `id.contains("dark")` on 4.40+, so this plugin's dark workbench theme ids contain `dark` and its light ids do not. These must be isolated, documented, and integration-tested rather than treated as stable APIs.
 
 ## Persistence/state
 
@@ -76,6 +85,7 @@ Current state is distributed:
 - imported theme files: plugin workspace state directory;
 - selected theme intent: plugin `InstanceScope` preferences;
 - applied editor colors/styles: preference nodes owned by Eclipse/other plugins;
+- workbench coordination: intent, ownership (owned theme id, prior active theme id, prior saved theme-id state including absence) and the experimental opt-in in plugin `InstanceScope` preferences, written only after the switch postcondition holds; the published palette is ephemeral and re-derived from the selected theme at startup;
 - theme collection: in memory;
 - page selection/filter/preview state: UI fields;
 - e4 context/application model: no durable theme state currently stored there.

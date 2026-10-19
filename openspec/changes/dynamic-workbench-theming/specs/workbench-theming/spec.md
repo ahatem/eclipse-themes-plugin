@@ -119,6 +119,12 @@ nodes, and SHALL NOT run a listener that reasserts its theme.
 - **AND** disabling coordination later does not select the old snapshot
 - **AND** the page reports that coordination is no longer the effective state
 
+#### Scenario: Explicit Apply after an external choice coordinates again
+- **GIVEN** coordination is enabled and another Eclipse theme is active because of an Appearance choice
+- **WHEN** the user clicks Apply or OK with the checkbox ticked
+- **THEN** that explicit request coordinates again and captures the then-active theme as the new prior state
+- **AND** no automatic path (startup, listener, timer) ever does so
+
 #### Scenario: Prior theme unknown or gone
 - **WHEN** the plugin is asked to relinquish and cannot restore a prior theme
 - **THEN** it forces no theme, reports YIELDED and offers the Appearance route

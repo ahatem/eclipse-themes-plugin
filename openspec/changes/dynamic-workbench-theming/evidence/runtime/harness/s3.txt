@@ -1,0 +1,1 @@
+state|restart2-boot;wait|4000;state|restart2;regs|restart2;prefs;wait|1500;labels|open;check|0;apply;labels|immediately-after-disable;wait|3000;state|after-disable-saved-id-present;regs|after-disable;surfaces|after-disable;shot|d1-disabled|main;labels|late;pcancel;state|end
