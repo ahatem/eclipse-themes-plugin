@@ -32,7 +32,8 @@ Gathered on `develop` @ `4a4d0b829a84b43826260f8a90647f5965ce58c7`, clean workin
 Element names used by the 33 bundled themes that are *not* canonical `TokenKey` names (resolved by `LegacyEclipsePropertyMapper`):
 `writeOccurrenceIndication, typeParameter, typeArgument, singleLineComment, searchResultIndication, parameterVariable,
 occurrenceIndication, javadocTag, javadocKeyword, javadoc, filteredSearchResultIndication, deprecatedMember, deletionIndication,
-commentTaskTag, javadocLink, warning` (plus the `colorTheme` root). A package editor section that accepted only canonical names would
+commentTaskTag, javadocLink` (plus the `colorTheme` root). One further element, `warning`, is neither canonical nor an alias: the
+legacy parser reports it as an unknown element and ignores it (corrected during implementation). A package editor section that accepted only canonical names would
 make copy-paste conversion lossy and silently different.
 
 ## 4. Size

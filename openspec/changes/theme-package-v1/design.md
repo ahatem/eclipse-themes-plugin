@@ -122,7 +122,8 @@ resolver, so `core.parser` gains no dependency on `core.workbench`). `PluginColo
 - Supported extensions: `{".xml", ".ectheme"}`, `Locale.ROOT`. Discovery, import, update and file dialog share one definition.
 - Import allocates `<uuid>` + *source extension*; binding format unchanged.
 - Update: refuse before staging when the replacement's extension differs from the locator's (PM6-A), with a diagnostic.
-- Size bound (EN5): after staging, before parsing, `.ectheme` larger than 256 KiB → refusal with ERROR `file-too-large`. Legacy XML is
+- Size bound (EN5): `ThemePackageParser` reads at most 256 KiB + 1 byte of the staged copy and refuses a larger package with ERROR
+  `file-too-large` before any XML parsing, so the bound holds for every caller (import, update, reload). Legacy XML is
   not bounded by this change (would be a behaviour change for the existing corpus; deferred).
 - Bundled loading stays `themes/*.xml` only (D4).
 

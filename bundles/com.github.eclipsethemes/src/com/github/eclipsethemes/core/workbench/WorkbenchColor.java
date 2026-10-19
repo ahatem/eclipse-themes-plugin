@@ -7,21 +7,28 @@ package com.github.eclipsethemes.core.workbench;
  * that {@code plugin.xml} declares and the static CSS references.
  */
 public enum WorkbenchColor {
-	BACKGROUND("background"),
-	FOREGROUND("foreground"),
-	SURFACE("surface"),
-	SURFACE_RAISED("raised"),
-	BORDER("border"),
-	MUTED_FOREGROUND("muted"),
-	SELECTION("selection"),
-	ACCENT("accent");
+	BACKGROUND("background", "background"),
+	FOREGROUND("foreground", "foreground"),
+	SURFACE("surface", "surface"),
+	SURFACE_RAISED("raised", "surfaceRaised"),
+	BORDER("border", "border"),
+	MUTED_FOREGROUND("muted", "mutedForeground"),
+	SELECTION("selection", "selection"),
+	ACCENT("accent", "accent");
 
 	static final String ID_PREFIX = "com.github.eclipsethemes.workbench.";
 
 	private final String idRole;
+	private final String schemaName;
 
-	WorkbenchColor(String idRole) {
+	WorkbenchColor(String idRole, String schemaName) {
 		this.idRole = idRole;
+		this.schemaName = schemaName;
+	}
+
+	/** The role's element name in a package {@code <workbench>} section (see {@code Theme.WORKBENCH_ROLES}). */
+	public String schemaName() {
+		return schemaName;
 	}
 
 	/** The Colors-and-Fonts id, for example {@code com.github.eclipsethemes.workbench.dark.surface}. */

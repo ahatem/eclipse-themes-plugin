@@ -33,6 +33,23 @@ public record ThemeDiagnostic(Severity severity, String kind, String message, St
 	public static final String NESTED_ELEMENTS = "nested-elements";
 	public static final String MAPPING_CONFLICT = "mapping-conflict";
 
+	// Theme package findings.
+	public static final String FILE_TOO_LARGE = "file-too-large";
+	public static final String SCHEMA_VERSION = "schema-version";
+	public static final String UNSUPPORTED_SCHEMA_VERSION = "unsupported-schema-version";
+	public static final String PACKAGE_ID = "package-id";
+	public static final String APPEARANCE = "appearance";
+	public static final String VERSION = "version";
+	public static final String MISSING_SECTION = "missing-section";
+	public static final String DUPLICATE_SECTION = "duplicate-section";
+	public static final String REQUIRED_EDITOR_TOKEN = "required-editor-token";
+	public static final String UNKNOWN_WORKBENCH_ROLE = "unknown-workbench-role";
+	public static final String DUPLICATE_WORKBENCH_ROLE = "duplicate-workbench-role";
+	public static final String LICENSE = "license";
+	public static final String SOURCE = "source";
+	public static final String WORKBENCH_READABILITY = "workbench-readability";
+	public static final String FORMAT_MISMATCH = "format-mismatch";
+
 	public ThemeDiagnostic {
 		Objects.requireNonNull(severity, "severity");
 		Objects.requireNonNull(kind, "kind");

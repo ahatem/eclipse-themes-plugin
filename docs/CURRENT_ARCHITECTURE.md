@@ -20,14 +20,16 @@ The repository is not currently a multi-runtime-bundle architecture. Future logi
 Preference page
   -> EclipseThemes activator / ThemeManager
   -> ThemeRepository.reload()
-      -> bundled XML themes
-      -> workspace-installed XML themes
-      -> ParserFactory -> XmlThemeParser -> immutable Theme/Token model
+      -> bundled XML themes (themes/*.xml only)
+      -> workspace-installed themes (*.xml and *.ectheme)
+      -> ParserFactory (by final extension, never by content)
+           *.xml     -> XmlThemeParser      -> immutable Theme/Token model
+           *.ectheme -> ThemePackageParser  -> the same model + PackageMetadata + authored workbench roles
       -> ThemeRecord catalog (logical identity, origin, optional managed locator)
   -> AdapterRegistry.discover()
   -> ThemeService.applyTheme(ThemeRecord.theme())  -> ThemeApplyOutcome (editor part + workbench part)
       1. WorkbenchCoordinator.apply(theme)          (opt-in; no-op unless "Also theme the Eclipse workbench" is on)
-          -> WorkbenchPaletteResolver (pure, core.workbench): deterministic semantic conversion to an 8-role palette (authored non-syntax candidates -> OKLCH derivation -> readability correction -> family fallback)
+          -> WorkbenchPaletteResolver (pure, core.workbench): deterministic semantic conversion to an 8-role palette (package-authored roles verbatim -> authored non-syntax candidates -> OKLCH derivation -> readability correction -> family fallback)
           -> RegistryPaletteSink: non-editable color definitions in the Colors-and-Fonts registry
           -> EclipseWorkbenchThemeEngine: IThemeEngine.setTheme(ITheme, true) between this plugin's four static CSS themes
       2. then the available editor adapter(s)
@@ -84,7 +86,7 @@ There are no direct Java imports from Eclipse `internal` packages in the audited
 
 Current state is distributed:
 
-- imported theme files: plugin workspace state directory;
+- imported theme files: plugin workspace state directory, as `<uuid>.xml` or `<uuid>.ectheme` (the locator keeps the source format, and an update may not change it);
 - selected theme intent: plugin `InstanceScope` preferences;
 - applied editor colors/styles: preference nodes owned by Eclipse/other plugins;
 - workbench coordination: intent, ownership (owned theme id, prior active theme id, prior saved theme-id state including absence) and the experimental opt-in in plugin `InstanceScope` preferences, written only after the switch postcondition holds; the published palette is ephemeral and re-derived from the selected theme at startup;
@@ -104,7 +106,7 @@ Installed identity bindings live in `theme-identities.properties` in the existin
 
 New selected intent uses `SELECTED_THEME_LOGICAL_ID`. With no modern explicit reference, a nonblank explicit legacy `ACTIVE_THEME_ID` resolves only when exactly one loaded candidate claims it. Ambiguous/missing/blank intent remains unresolved. Opening/restoring selection does not rewrite old intent, apply colors or select a guessed fallback. An explicit application writes modern intent and dispatches current content, including when its identity is unchanged. Unchanged explicit Apply/OK can therefore reapply. Default actions use the curated bundled identities. This remains selected intent, not successful-applied-state tracking; R3 owns application truth and recovery.
 
-No revision ID, production digest, history or content-comparison mechanism is present. Downgrades can read unchanged XML but may require reselection. New imports use fresh repository-allocated locators; removed locators are not silently reassigned to a different identity. Staging files under `installed_themes/.staging` are never catalogued, and parse/copy/binding failures clean only attempt-created artifacts while preserving prior records, bindings and selected intent. Update requires one atomic replacement and fails without a non-atomic fallback. Removal may succeed when the exact managed file is already absent, but fails closed for an unexpected path type; a crash between binding removal and file deletion can leave an unbound file that is later re-admitted under a new identity. Offline preview, R3 applied-state truth and the conflict/diagnostic UI remain later work.
+No revision ID, production digest, history or content-comparison mechanism is present. Downgrades can read unchanged XML but may require reselection. Versions before theme packages list only `*.xml`, so an installed `.ectheme` is ignored there (its file and binding are kept) and reappears after upgrading again. New imports use fresh repository-allocated locators; removed locators are not silently reassigned to a different identity. Staging files under `installed_themes/.staging` are never catalogued, and parse/copy/binding failures clean only attempt-created artifacts while preserving prior records, bindings and selected intent. Update requires one atomic replacement and fails without a non-atomic fallback. Removal may succeed when the exact managed file is already absent, but fails closed for an unexpected path type; a crash between binding removal and file deletion can leave an unbound file that is later re-admitted under a new identity. Offline preview, R3 applied-state truth and the conflict/diagnostic UI remain later work.
 
 ## Validation and diagnostics
 

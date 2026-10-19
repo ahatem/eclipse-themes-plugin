@@ -12,7 +12,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -27,10 +26,10 @@ import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.parser.ParserFactory;
 import com.github.eclipsethemes.core.parser.ThemeParser;
 import com.github.eclipsethemes.core.validation.ThemeDiagnostic;
+import com.github.eclipsethemes.core.workbench.WorkbenchColor;
+import com.github.eclipsethemes.core.workbench.WorkbenchPaletteResolver;
 
 public class ThemeRepository {
-
-	private static final String MANAGED_EXTENSION = ".xml";
 
 	private final File installedThemesDir;
 	private final Path stagingDir;
@@ -86,13 +85,15 @@ public class ThemeRepository {
 			}
 
 			staged = stage(source);
-			locator = allocateLocator();
+			// The locator keeps the source format's extension so reload selects the same parser.
+			locator = allocateLocator(ParserFactory.extensionOf(source.getName()).orElseThrow());
 			// The staged bytes are parsed once and become the committed bytes; the
 			// source is never reopened for the commit.
 			Theme candidate;
 			try (InputStream input = Files.newInputStream(staged)) {
 				candidate = parser.get().parse(input, locator.toFile());
 			}
+			reportUnreadableAuthoredRoles(candidate, locator, findings);
 			// The locator was unused, so this move never replaces an existing file.
 			moveWithoutReplacement(staged, locator);
 			staged = null;
@@ -139,6 +140,16 @@ public class ThemeRepository {
 			if (parser.isEmpty()) {
 				return ThemeOperationOutcome.refused(findings);
 			}
+			// An update keeps the record's format: the locator's extension selects its parser on every reload.
+			Optional<String> format = ParserFactory.extensionOf(target.getFileName().toString());
+			if (!format.equals(ParserFactory.extensionOf(source.getName()))) {
+				findings.add(new ThemeDiagnostic(ThemeDiagnostic.Severity.ERROR, ThemeDiagnostic.FORMAT_MISMATCH,
+						"Replacement '" + source.getName() + "' is not a " + format.orElse("?")
+								+ " theme; an installed theme can only be updated with a file of the same format",
+						source.getPath(), null, null));
+				log.error("Update refused: format of " + source.getName() + " differs from " + target.getFileName());
+				return ThemeOperationOutcome.refused(findings);
+			}
 
 			staged = stage(source);
 			// Parse exactly the staged bytes while attributing the record to the
@@ -147,6 +158,7 @@ public class ThemeRepository {
 			try (InputStream input = Files.newInputStream(staged)) {
 				candidate = parser.get().parse(input, target.toFile());
 			}
+			reportUnreadableAuthoredRoles(candidate, target, findings);
 			// A target that disappeared while staging fails without recreation.
 			if (!Files.isRegularFile(target, LinkOption.NOFOLLOW_LINKS)) {
 				throw new IOException("Update target disappeared before replacement: " + target.getFileName());
@@ -245,7 +257,7 @@ public class ThemeRepository {
 		if (!managedDirectory.equals(target.getParent())
 				|| target.getFileName() == null
 				|| !target.getFileName().toString().equals(locator)
-				|| !target.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(MANAGED_EXTENSION)) {
+				|| ParserFactory.extensionOf(target.getFileName().toString()).isEmpty()) {
 			throw new IOException("Selected theme is outside managed theme storage: " + target);
 		}
 
@@ -296,6 +308,19 @@ public class ThemeRepository {
 		return parser;
 	}
 
+	/**
+	 * Admission-time report of authored workbench roles that coordination would not show verbatim. The palette is only
+	 * computed here, never applied: importing a package does not change workbench coordination.
+	 */
+	private void reportUnreadableAuthoredRoles(Theme candidate, Path locator, List<ThemeDiagnostic> findings) {
+		for (WorkbenchColor role : WorkbenchPaletteResolver.unreadableAuthoredRoles(candidate)) {
+			admissionSink(findings).accept(new ThemeDiagnostic(ThemeDiagnostic.Severity.WARNING,
+					ThemeDiagnostic.WORKBENCH_READABILITY, "Workbench role '" + role.schemaName()
+							+ "' is not readable with the other workbench colors; it will be adjusted when applied",
+					locator.toString(), role.schemaName(), "color"));
+		}
+	}
+
 	/** Admission sink: findings are returned to the caller and logged. */
 	private Consumer<ThemeDiagnostic> admissionSink(List<ThemeDiagnostic> findings) {
 		return finding -> {
@@ -310,10 +335,10 @@ public class ThemeRepository {
 	}
 
 	/** Chooses a repository-owned locator unused on disk and in identity metadata. */
-	private Path allocateLocator() throws IOException {
+	private Path allocateLocator(String extension) throws IOException {
 		Path directory = installedThemesDir.toPath();
 		for (int attempt = 0; attempt < 10; attempt++) {
-			Path candidate = directory.resolve(UUID.randomUUID() + MANAGED_EXTENSION);
+			Path candidate = directory.resolve(UUID.randomUUID() + extension);
 			if (Files.notExists(candidate, LinkOption.NOFOLLOW_LINKS)
 					&& identities.establishedIdentityFor(candidate.getFileName().toString()).isEmpty()) {
 				return candidate;
@@ -394,7 +419,7 @@ public class ThemeRepository {
 		try (var filesStream = Files.list(installedThemesDir.toPath())) {
 			List<Path> themeFiles = filesStream
 					.filter(p -> !Files.isDirectory(p))
-					.filter(p -> p.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(".xml"))
+					.filter(p -> ParserFactory.extensionOf(p.getFileName().toString()).isPresent())
 					.collect(Collectors.toList());
 
 			for (Path themePath : themeFiles) {

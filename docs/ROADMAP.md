@@ -162,6 +162,8 @@ Scope:
 
 Executable code is not allowed inside imported theme archives.
 
+**First slice (delivered, change `theme-package-v1`):** a declarative single-document `.ectheme` format (schema version 1) with a source-claimed package id, optional provenance and license metadata, an `<editor>` section using the legacy token rules and an optional `<workbench>` section of the eight palette roles. Identity stays repository-owned (`local:<uuid>`); no revision or digest was added. Legacy XML themes are unchanged, and importing a package never changes workbench coordination. See the [author guide](THEME_PACKAGE_FORMAT.md). **Still open:** archives and resources, theme-authored plug-in colors and CSS, fonts, the contributor change-plan API, WTP/TM4E integrations.
+
 ## R10 — Expansion / research
 
 Possible work only after evidence:

@@ -1,14 +1,18 @@
 package com.github.eclipsethemes.core.workbench;
 
 import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Supplier;
 
 import com.github.eclipsethemes.core.models.Color;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.TokenKey;
 
 /**
- * Deterministic semantic conversion of a legacy theme into the workbench palette.
+ * Deterministic semantic conversion of a theme into the workbench palette. Roles authored by a theme package are taken
+ * verbatim; every other role is resolved as described below.
  *
  * <p>
  * Each role is resolved in this order: a suitable authored value, a suitable authored value of a related non-syntax
@@ -50,20 +54,31 @@ public final class WorkbenchPaletteResolver {
 		if (!theme.has(TokenKey.BACKGROUND) || !theme.has(TokenKey.FOREGROUND)) {
 			return family.fallbackPalette();
 		}
-		Color background = theme.get(TokenKey.BACKGROUND).getColor();
-		Color authoredForeground = theme.get(TokenKey.FOREGROUND).getColor();
+		Map<String, Color> authored = theme.getAuthoredWorkbench();
+		// Authored background and foreground replace the editor base for chrome only.
+		Color background = authored.getOrDefault(WorkbenchColor.BACKGROUND.schemaName(),
+				theme.get(TokenKey.BACKGROUND).getColor());
+		Color authoredForeground = authored.getOrDefault(WorkbenchColor.FOREGROUND.schemaName(),
+				theme.get(TokenKey.FOREGROUND).getColor());
 		PerceptualColor bg = PerceptualColor.of(background);
 		// Chrome moves toward the foreground side of the lightness range: lighter on dark themes, darker on light.
 		double direction = bg.l < 0.5 ? 1.0 : -1.0;
 
-		Color surface = surface(theme, background, authoredForeground, bg, direction);
-		Color raised = raised(theme, background, surface, authoredForeground, bg, direction);
-		Color foreground = readable(authoredForeground, TEXT_CONTRAST, direction, background, surface, raised);
-		Color border = border(background, surface, raised, direction);
-		Color selection = selection(theme, background, foreground, bg, direction);
-		Color muted = muted(theme, foreground, direction, background, surface);
-		Color accent = readable(PerceptualColor.of(direction > 0 ? 0.74 : 0.48, ACCENT_CHROMA, ACCENT_HUE).toColor(),
-				TEXT_CONTRAST, direction, background, surface, raised);
+		// Each authored role is taken verbatim; derivations that depend on a role use its final value.
+		Color surface = authored(authored, WorkbenchColor.SURFACE,
+				() -> surface(theme, background, authoredForeground, bg, direction));
+		Color raised = authored(authored, WorkbenchColor.SURFACE_RAISED,
+				() -> raised(theme, background, surface, authoredForeground, bg, direction));
+		Color foreground = authored(authored, WorkbenchColor.FOREGROUND,
+				() -> readable(authoredForeground, TEXT_CONTRAST, direction, background, surface, raised));
+		Color border = authored(authored, WorkbenchColor.BORDER, () -> border(background, surface, raised, direction));
+		Color selection = authored(authored, WorkbenchColor.SELECTION,
+				() -> selection(theme, background, foreground, bg, direction));
+		Color muted = authored(authored, WorkbenchColor.MUTED_FOREGROUND,
+				() -> muted(theme, foreground, direction, background, surface));
+		Color accent = authored(authored, WorkbenchColor.ACCENT,
+				() -> readable(PerceptualColor.of(direction > 0 ? 0.74 : 0.48, ACCENT_CHROMA, ACCENT_HUE).toColor(),
+						TEXT_CONTRAST, direction, background, surface, raised));
 
 		Map<WorkbenchColor, Color> colors = new EnumMap<>(WorkbenchColor.class);
 		colors.put(WorkbenchColor.BACKGROUND, background);
@@ -75,7 +90,43 @@ public final class WorkbenchPaletteResolver {
 		colors.put(WorkbenchColor.SELECTION, selection);
 		colors.put(WorkbenchColor.ACCENT, accent);
 		WorkbenchPalette palette = new WorkbenchPalette(family, colors);
-		return isCoherent(palette) ? palette : family.fallbackPalette();
+		if (isCoherent(palette)) {
+			return palette;
+		}
+		if (authored.isEmpty()) {
+			return family.fallbackPalette();
+		}
+		// Authored palettes keep their surfaces: only the text roles are corrected, by lightness, before falling back.
+		colors.put(WorkbenchColor.FOREGROUND, readable(foreground, TEXT_CONTRAST, direction, background, surface, raised));
+		colors.put(WorkbenchColor.MUTED_FOREGROUND, readable(muted, TEXT_CONTRAST, direction, background, surface));
+		colors.put(WorkbenchColor.ACCENT, readable(accent, TEXT_CONTRAST, direction, background, surface, raised));
+		WorkbenchPalette corrected = new WorkbenchPalette(family, colors);
+		return isCoherent(corrected) ? corrected : family.fallbackPalette();
+	}
+
+	/**
+	 * The authored roles the resolved palette does not show verbatim, because they were corrected for readability or the
+	 * palette fell back to the family palette. Empty for themes without authored roles.
+	 */
+	public static Set<WorkbenchColor> unreadableAuthoredRoles(Theme theme) {
+		Map<String, Color> authored = theme.getAuthoredWorkbench();
+		if (authored.isEmpty()) {
+			return Set.of();
+		}
+		WorkbenchPalette palette = resolve(theme);
+		Set<WorkbenchColor> changed = EnumSet.noneOf(WorkbenchColor.class);
+		for (WorkbenchColor role : WorkbenchColor.values()) {
+			Color value = authored.get(role.schemaName());
+			if (value != null && !value.equals(palette.get(role))) {
+				changed.add(role);
+			}
+		}
+		return changed;
+	}
+
+	private static Color authored(Map<String, Color> authored, WorkbenchColor role, Supplier<Color> derived) {
+		Color value = authored.get(role.schemaName());
+		return value != null ? value : derived.get();
 	}
 
 	/** The chrome base: the authored secondary surface when it reads as one, otherwise the background nudged. */
