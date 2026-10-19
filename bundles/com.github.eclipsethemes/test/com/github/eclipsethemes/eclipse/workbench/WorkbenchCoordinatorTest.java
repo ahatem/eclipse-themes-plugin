@@ -122,6 +122,29 @@ public class WorkbenchCoordinatorTest {
 	}
 
 	@Test
+	public void everyTransitionPublishesEveryRoleOfTheTargetFamilyBeforeTheSwitch() {
+		enable();
+		Theme[] sequence = { dark("#282c34", "#abb2bf"), dark("#282a36", "#f8f8f2"), light("#fdf6e3", "#657b83"),
+				light("#ffffff", "#24292f"), dark("#1e1e2e", "#cdd6f4"), light("#fdf6e3", "#657b83") };
+		String previousSlot = null;
+		for (Theme theme : sequence) {
+			events.clear();
+			WorkbenchOutcome outcome = coordinator.apply(theme);
+			assertEquals(Status.APPLIED, outcome.status());
+			WorkbenchFamily family = WorkbenchFamily.of(theme.getType());
+			var expected = WorkbenchPaletteResolver.resolve(theme);
+			for (WorkbenchColor role : WorkbenchColor.values()) {
+				assertEquals(family + " " + role, expected.get(role), sink.values.get(role.colorId(family)));
+			}
+			// all values are published before the theme is selected, and a changed palette always changes slot
+			int select = events.indexOf("select " + engine.active);
+			assertTrue(select > events.lastIndexOf("put"));
+			assertTrue(!engine.active.equals(previousSlot));
+			previousSlot = engine.active;
+		}
+	}
+
+	@Test
 	public void reapplyingTheSamePaletteSwitchesNothing() {
 		enable();
 		Theme theme = dark("#282c34", "#abb2bf");

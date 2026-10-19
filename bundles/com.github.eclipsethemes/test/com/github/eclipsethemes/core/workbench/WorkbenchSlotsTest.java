@@ -70,6 +70,6 @@ public class WorkbenchSlotsTest {
 				assertEquals(role.colorId(family).toLowerCase(), role.colorId(family));
 			}
 		}
-		assertEquals(14, ids.size());
+		assertEquals(WorkbenchFamily.values().length * WorkbenchColor.values().length, ids.size());
 	}
 }

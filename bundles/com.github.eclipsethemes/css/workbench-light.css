@@ -1,48 +1,261 @@
 /*
  * Eclipse Themes workbench coordination, light family.
  * Static and declarative. Every color is a symbolic reference to a plugin-owned color id
- * (com.github.eclipsethemes.workbench.light.<role>, dots written as dashes) whose value the plugin publishes
- * from the selected theme. Coverage is deliberately bounded to the surfaces below; editor text content,
- * native menus, dialogs, title bars, Browser content and icons are not styled here.
+ * (com.github.eclipsethemes.workbench.light.<role>, dots written as dashes) whose value the plugin
+ * publishes from the selected theme. Both family files are identical apart from the family name, and a test
+ * keeps them that way. Roles: background (content: trees, tables, inputs, view bodies), surface (chrome:
+ * dialogs, tab strips, tool bars, status line), raised (selected tab, headers), border, foreground, muted
+ * (secondary and unselected text), selection (hot tab, inactive stack indicator), accent (links, active
+ * stack indicator).
+ *
+ * Coverage is bounded to what Eclipse CSS can style. Editor text content follows the editor colors; native
+ * menus, title bars, scroll bars, Browser content and icons are not styled here.
+ *
+ * Structure follows the stock Eclipse dark and light themes (org.eclipse.ui.themes): a global layer that
+ * styles every shell, including dialogs, then inputs, then the part and tab layers.
  */
-Shell {
-	background-color: '#com-github-eclipsethemes-workbench-light-background';
-	color: '#com-github-eclipsethemes-workbench-light-foreground';
-}
 
-SashForm,
-.MPart,
-.MCompositePart,
-.MPartSashContainer {
-	background-color: '#com-github-eclipsethemes-workbench-light-background';
-	color: '#com-github-eclipsethemes-workbench-light-foreground';
-}
-
-.MPartStack {
+/* ---------- Global layer: every shell and dialog ---------- */
+Shell,
+Composite, ScrolledComposite, ExpandableComposite, Canvas, TabFolder, CLabel, Label, CoolBar, Sash, Group,
+Link, FilteredTree, DelayedFilterCheckboxTree, ViewForm, Splitter, ScrolledPageContent, ProgressMonitorPart,
+MessageLine, ContainerSelectionGroup, EncodingSettings, FigureCanvas, WrappedPageBook, PageSiteComposite,
+Button,
+Composite > *,
+Composite > * > * {
 	background-color: '#com-github-eclipsethemes-workbench-light-surface';
 	color: '#com-github-eclipsethemes-workbench-light-foreground';
-	swt-tab-outline: '#com-github-eclipsethemes-workbench-light-border';
-	swt-outer-keyline-color: '#com-github-eclipsethemes-workbench-light-border';
-	swt-inner-keyline-color: '#com-github-eclipsethemes-workbench-light-surface';
-	swt-selected-tab-highlight: '#com-github-eclipsethemes-workbench-light-selection';
-	swt-selected-tabs-background: '#com-github-eclipsethemes-workbench-light-raised' '#com-github-eclipsethemes-workbench-light-raised' 100%;
-	swt-unselected-tabs-background: '#com-github-eclipsethemes-workbench-light-surface' '#com-github-eclipsethemes-workbench-light-surface' 100%;
-	swt-unselected-tabs-color: '#com-github-eclipsethemes-workbench-light-muted';
+}
+
+Button.disabled {
+	color: '#com-github-eclipsethemes-workbench-light-muted';
+}
+
+/* Tool bars take their container's color so item hover and drawing stay consistent. */
+ToolBar {
+	background-color: inherit;
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+Link {
+	swt-link-foreground-color: '#com-github-eclipsethemes-workbench-light-accent';
+}
+
+Hyperlink,
+ImageHyperlink {
+	background-color: inherit;
+	color: '#com-github-eclipsethemes-workbench-light-accent';
+}
+
+/* ---------- Inputs and content controls ---------- */
+Combo, List, Text, Spinner, CCombo, Table, Tree, DatePicker, DatePicker > Text,
+Text[style~='SWT.READ_ONLY'],
+FormText, ScrolledFormText, Shell Tree, Shell Table, Shell List {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+Table,
+Tree {
+	swt-header-color: '#com-github-eclipsethemes-workbench-light-foreground';
+	swt-header-background-color: '#com-github-eclipsethemes-workbench-light-raised';
+}
+
+/* ---------- Forms (editors and wizards built on Eclipse Forms) ---------- */
+Form, ScrolledForm {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+	text-background-color: '#com-github-eclipsethemes-workbench-light-background';
+	tb-toggle-color: '#com-github-eclipsethemes-workbench-light-foreground';
+	tb-toggle-hover-color: '#com-github-eclipsethemes-workbench-light-accent';
+	h-hover-full-color: '#com-github-eclipsethemes-workbench-light-raised';
+	h-hover-light-color: '#com-github-eclipsethemes-workbench-light-raised';
+	h-bottom-keyline-1-color: '#com-github-eclipsethemes-workbench-light-border';
+	h-bottom-keyline-2-color: '#com-github-eclipsethemes-workbench-light-border';
+}
+
+FormHeading {
+	background-color: '#com-github-eclipsethemes-workbench-light-raised';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+Section,
+ExpandableComposite {
+	background-color: '#com-github-eclipsethemes-workbench-light-surface';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+	background-color-titlebar: '#com-github-eclipsethemes-workbench-light-raised';
+	background-color-gradient-titlebar: '#com-github-eclipsethemes-workbench-light-raised';
+	border-color-titlebar: '#com-github-eclipsethemes-workbench-light-border';
+	swt-titlebar-color: '#com-github-eclipsethemes-workbench-light-foreground';
+	tb-toggle-color: '#com-github-eclipsethemes-workbench-light-foreground';
+	tb-toggle-hover-color: '#com-github-eclipsethemes-workbench-light-accent';
+}
+
+Twistie {
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+/* ---------- Window frame, sashes, trim ---------- */
+.MTrimmedWindow.topLevel {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.MPartSashContainer,
+.MPartSashContainer SashForm,
+SashForm {
+	background-color: '#com-github-eclipsethemes-workbench-light-surface';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
 }
 
 .MTrimBar,
-ToolBar {
+.MToolBar,
+#org-eclipse-ui-StatusLine,
+#org-eclipse-ui-StatusLine CLabel,
+#org-eclipse-ui-ProgressBar,
+#org-eclipse-ui-ProgressBar Canvas,
+StatusLine,
+ImageBasedFrame,
+HeapStatus {
 	background-color: '#com-github-eclipsethemes-workbench-light-surface';
 	color: '#com-github-eclipsethemes-workbench-light-foreground';
 }
 
-#org-eclipse-ui-StatusLine {
-	background-color: '#com-github-eclipsethemes-workbench-light-surface';
-	color: '#com-github-eclipsethemes-workbench-light-foreground';
+ProgressIndicator {
+	background-color: '#com-github-eclipsethemes-workbench-light-raised';
+	color: '#com-github-eclipsethemes-workbench-light-accent';
 }
 
-Tree,
-Table {
+/* ---------- Parts (views and editors) ---------- */
+.MPart,
+.MCompositePart,
+.MPart Composite,
+.MPart Composite > *,
+.MPart Composite > * > *,
+.MPart Label,
+.MPart CLabel,
+.MPart Link,
+.MPart Group,
+.MPart Sash,
+.MPart SashForm,
+.MPart Button,
+.MPart ScrolledComposite,
+.MPart ViewForm,
+.MPart ViewForm > CLabel,
+.MPart PageBook > Label,
+.MPart PageBook > SashForm,
+.MPart FilteredTree,
+.MPart Canvas {
 	background-color: '#com-github-eclipsethemes-workbench-light-background';
 	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+.MPart Table,
+.MPart Tree,
+.MPart Text,
+.MPart Combo,
+.MPart CCombo,
+.MPart Spinner,
+.MPart List {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+.MPart.busy {
+	font-style: italic;
+}
+
+.MPart.highlighted {
+	font-weight: bold;
+}
+
+/* ---------- Tab stacks and tabs ---------- */
+.MPartStack {
+	swt-tab-renderer: url('bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.CTabRendering');
+	background-color: '#com-github-eclipsethemes-workbench-light-surface';
+	color: '#com-github-eclipsethemes-workbench-light-muted';
+	swt-simple: false;
+	swt-draw-custom-tab-content-background: true;
+	swt-tab-outline: '#com-github-eclipsethemes-workbench-light-border';
+	swt-outer-keyline-color: '#com-github-eclipsethemes-workbench-light-border';
+	swt-inner-keyline-color: '#com-github-eclipsethemes-workbench-light-border';
+	swt-selected-tab-fill: '#com-github-eclipsethemes-workbench-light-raised';
+	swt-unselected-tabs-color: '#com-github-eclipsethemes-workbench-light-surface' '#com-github-eclipsethemes-workbench-light-surface' 100% 100%;
+	swt-unselected-hot-tab-color-background: '#com-github-eclipsethemes-workbench-light-selection';
+	swt-selected-tab-highlight: '#com-github-eclipsethemes-workbench-light-selection';
+	swt-selected-highlight-top: false;
+}
+
+.MPartStack.active {
+	swt-selected-tab-highlight: '#com-github-eclipsethemes-workbench-light-accent';
+}
+
+CTabFolder {
+	swt-tab-renderer: url('bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.CTabRendering');
+	background-color: '#com-github-eclipsethemes-workbench-light-surface';
+	color: '#com-github-eclipsethemes-workbench-light-muted';
+	swt-selected-tab-fill: '#com-github-eclipsethemes-workbench-light-raised';
+	swt-tab-outline: '#com-github-eclipsethemes-workbench-light-border';
+	swt-outer-keyline-color: '#com-github-eclipsethemes-workbench-light-border';
+	swt-inner-keyline-color: '#com-github-eclipsethemes-workbench-light-border';
+	swt-unselected-tabs-color: '#com-github-eclipsethemes-workbench-light-surface' '#com-github-eclipsethemes-workbench-light-surface' 100% 100%;
+}
+
+CTabFolder Canvas,
+CTabFolder Scale {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+CTabItem,
+CTabItem CLabel {
+	background-color: '#com-github-eclipsethemes-workbench-light-surface';
+	color: '#com-github-eclipsethemes-workbench-light-muted';
+}
+
+CTabItem:selected,
+CTabItem:selected CLabel {
+	background-color: '#com-github-eclipsethemes-workbench-light-raised';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+CTabItem.busy {
+	color: '#com-github-eclipsethemes-workbench-light-muted';
+}
+
+CTabFolder > Composite#ToolbarComposite {
+	background-color: '#com-github-eclipsethemes-workbench-light-raised';
+}
+
+/* The editor area keeps the editor-like base so the tab row and the text meet without a seam. */
+CTabFolder.MArea,
+CTabFolder.MArea CTabItem,
+CTabFolder.MArea CTabItem CLabel {
+	background-color: '#com-github-eclipsethemes-workbench-light-surface';
+}
+
+#org-eclipse-ui-editorss CTabFolder {
+	swt-selected-tab-fill: '#com-github-eclipsethemes-workbench-light-background';
+	swt-selected-highlight-top: true;
+}
+
+#org-eclipse-ui-editorss CTabItem:selected,
+#org-eclipse-ui-editorss CTabItem:selected CLabel {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
+	color: '#com-github-eclipsethemes-workbench-light-foreground';
+}
+
+#org-eclipse-ui-editorss CTabFolder.active {
+	swt-selected-tab-highlight: '#com-github-eclipsethemes-workbench-light-accent';
+}
+
+/* Drag feedback */
+.DragFeedback {
+	background-color: '#com-github-eclipsethemes-workbench-light-border';
+}
+
+.ModifiedDragFeedback {
+	background-color: '#com-github-eclipsethemes-workbench-light-selection';
 }

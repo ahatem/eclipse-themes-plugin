@@ -99,6 +99,13 @@ public class WorkbenchContributionConsistencyTest {
 	}
 
 	@Test
+	public void theTwoFamilySheetsAreIdenticalApartFromTheFamilyName() throws Exception {
+		String dark = Files.readString(BUNDLE.resolve("css/workbench-dark.css"), StandardCharsets.UTF_8);
+		String light = Files.readString(BUNDLE.resolve("css/workbench-light.css"), StandardCharsets.UTF_8);
+		assertEquals(withoutComments(dark), withoutComments(light.replace("-workbench-light-", "-workbench-dark-")));
+	}
+
+	@Test
 	public void startupExtensionAndCssAreIncludedInTheBuild() throws Exception {
 		boolean startup = false;
 		for (Element ext : extensions(pluginXml(), "org.eclipse.ui.startup")) {
@@ -112,6 +119,10 @@ public class WorkbenchContributionConsistencyTest {
 		assertTrue(build.stream().anyMatch(line -> line.trim().startsWith("css/")));
 		assertTrue(Files.readString(BUNDLE.resolve("META-INF/MANIFEST.MF"))
 				.contains("org.eclipse.e4.ui.css.swt.theme;resolution:=optional"));
+	}
+
+	private static String withoutComments(String css) {
+		return css.replaceAll("(?s)/[*].*?[*]/", "");
 	}
 
 	private static Document pluginXml() throws Exception {

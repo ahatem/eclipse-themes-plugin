@@ -49,6 +49,7 @@
 		<colorDefinition id="com.github.eclipsethemes.workbench.dark.border" isEditable="false" label="Eclipse Themes workbench dark border" value="60,60,60"></colorDefinition>
 		<colorDefinition id="com.github.eclipsethemes.workbench.dark.muted" isEditable="false" label="Eclipse Themes workbench dark muted" value="157,157,157"></colorDefinition>
 		<colorDefinition id="com.github.eclipsethemes.workbench.dark.selection" isEditable="false" label="Eclipse Themes workbench dark selection" value="38,79,120"></colorDefinition>
+		<colorDefinition id="com.github.eclipsethemes.workbench.dark.accent" isEditable="false" label="Eclipse Themes workbench dark accent" value="90,162,232"></colorDefinition>
 		<colorDefinition id="com.github.eclipsethemes.workbench.light.background" isEditable="false" label="Eclipse Themes workbench light background" value="255,255,255"></colorDefinition>
 		<colorDefinition id="com.github.eclipsethemes.workbench.light.foreground" isEditable="false" label="Eclipse Themes workbench light foreground" value="31,31,31"></colorDefinition>
 		<colorDefinition id="com.github.eclipsethemes.workbench.light.surface" isEditable="false" label="Eclipse Themes workbench light surface" value="243,243,243"></colorDefinition>
@@ -56,6 +57,7 @@
 		<colorDefinition id="com.github.eclipsethemes.workbench.light.border" isEditable="false" label="Eclipse Themes workbench light border" value="206,206,206"></colorDefinition>
 		<colorDefinition id="com.github.eclipsethemes.workbench.light.muted" isEditable="false" label="Eclipse Themes workbench light muted" value="107,107,107"></colorDefinition>
 		<colorDefinition id="com.github.eclipsethemes.workbench.light.selection" isEditable="false" label="Eclipse Themes workbench light selection" value="204,228,247"></colorDefinition>
+		<colorDefinition id="com.github.eclipsethemes.workbench.light.accent" isEditable="false" label="Eclipse Themes workbench light accent" value="11,97,196"></colorDefinition>
 	</extension>
 	<extension
          point="org.eclipse.ui.startup">

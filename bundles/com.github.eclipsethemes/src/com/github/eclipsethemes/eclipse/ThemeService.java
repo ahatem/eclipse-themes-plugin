@@ -17,18 +17,52 @@ import com.github.eclipsethemes.eclipse.workbench.WorkbenchOutcome;
 
 public final class ThemeService {
 
-	private final AdapterRegistry registry;
+	/** Writes the editor-side preferences for a theme and returns the names of the adapters that failed. */
+	interface EditorWriter {
+		List<String> write(Theme theme);
+	}
+
+	private final EditorWriter editor;
 	private final WorkbenchCoordinator workbench;
 	private final ILog log;
 
 	public ThemeService(AdapterRegistry registry, WorkbenchCoordinator workbench, ILog log) {
-		this.registry = registry;
+		this(theme -> writeEditorPreferences(registry, theme, log), workbench, log);
+	}
+
+	ThemeService(EditorWriter editor, WorkbenchCoordinator workbench, ILog log) {
+		this.editor = editor;
 		this.workbench = workbench;
 		this.log = log;
 	}
 
-	/** Applies the editor preferences, then the workbench half; each part reports for itself. */
+	/**
+	 * Applies the workbench half, then the editor preferences; each part reports for itself.
+	 *
+	 * <p>
+	 * The order is deliberate. Switching the Eclipse CSS theme makes the theme engine synchronously reset the
+	 * preference defaults the previous theme overrode, and that reset also deletes instance values for the same
+	 * keys (for example {@code AbstractTextEditor.Color.Background.SystemDefault} after leaving the stock dark
+	 * theme). Writing the editor preferences first therefore lost them and left the editor light after one Apply.
+	 * Writing them after the switch makes the plugin's own values the last word, and only the keys the plugin owns
+	 * are written.
+	 */
 	public ThemeApplyOutcome applyTheme(IWorkbench workbenchHandle, Theme theme) {
+		WorkbenchOutcome workbenchOutcome;
+		try {
+			workbenchOutcome = workbench.apply(theme);
+		} catch (RuntimeException | LinkageError e) {
+			log.error("Workbench theming failed unexpectedly", e);
+			workbenchOutcome = WorkbenchOutcome.failed(null, "Workbench theming failed unexpectedly: " + e);
+		}
+		if (!workbenchOutcome.succeeded()) {
+			log.warn("Workbench theming: " + workbenchOutcome.status() + " " + workbenchOutcome.message());
+		}
+		List<String> failedAdapters = editor.write(theme);
+		return new ThemeApplyOutcome(new ThemeApplyOutcome.EditorOutcome(failedAdapters), workbenchOutcome);
+	}
+
+	private static List<String> writeEditorPreferences(AdapterRegistry registry, Theme theme, ILog log) {
 		List<String> failedAdapters = new ArrayList<>();
 		registry.getAdapters().forEach((adapter, plugin) -> {
 			// If a required plugin is declared, skip when it is not installed
@@ -45,17 +79,6 @@ public final class ThemeService {
 				log.error("Could not apply theme via adapter " + adapter.getClass().getSimpleName(), e);
 			}
 		});
-
-		WorkbenchOutcome workbenchOutcome;
-		try {
-			workbenchOutcome = workbench.apply(theme);
-		} catch (RuntimeException | LinkageError e) {
-			log.error("Workbench theming failed unexpectedly", e);
-			workbenchOutcome = WorkbenchOutcome.failed(null, "Workbench theming failed unexpectedly: " + e);
-		}
-		if (!workbenchOutcome.succeeded()) {
-			log.warn("Workbench theming: " + workbenchOutcome.status() + " " + workbenchOutcome.message());
-		}
-		return new ThemeApplyOutcome(new ThemeApplyOutcome.EditorOutcome(failedAdapters), workbenchOutcome);
+		return failedAdapters;
 	}
 }

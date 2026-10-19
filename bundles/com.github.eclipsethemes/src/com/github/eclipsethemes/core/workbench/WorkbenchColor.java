@@ -1,7 +1,8 @@
 package com.github.eclipsethemes.core.workbench;
 
 /**
- * The seven semantic roles of the workbench palette. This enum and
+ * The semantic roles of the workbench palette: five surfaces and borders, three text and accent colors. Each role
+ * exists because a concrete workbench surface needs it (see the CSS). This enum and
  * {@link WorkbenchFamily} are the single mapping to the plugin-owned color ids
  * that {@code plugin.xml} declares and the static CSS references.
  */
@@ -12,7 +13,8 @@ public enum WorkbenchColor {
 	SURFACE_RAISED("raised"),
 	BORDER("border"),
 	MUTED_FOREGROUND("muted"),
-	SELECTION("selection");
+	SELECTION("selection"),
+	ACCENT("accent");
 
 	static final String ID_PREFIX = "com.github.eclipsethemes.workbench.";
 

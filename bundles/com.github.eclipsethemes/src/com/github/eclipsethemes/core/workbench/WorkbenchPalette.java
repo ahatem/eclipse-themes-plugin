@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.github.eclipsethemes.core.models.Color;
 
-/** An immutable set of exactly the seven palette colors for one family. */
+/** An immutable set of exactly one color per palette role for one family. */
 public final class WorkbenchPalette {
 
 	private final WorkbenchFamily family;
