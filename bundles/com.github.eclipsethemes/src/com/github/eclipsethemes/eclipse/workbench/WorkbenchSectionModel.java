@@ -59,11 +59,14 @@ public record WorkbenchSectionModel(boolean checkboxEnabled, String checkboxLabe
 	/** The one-line result shown after Apply or OK; never reads as complete success when a part did not succeed. */
 	public static String summary(ThemeApplyOutcome outcome) {
 		if (outcome.fullySucceeded()) {
-			return switch (outcome.workbench().status()) {
+			String line = switch (outcome.workbench().status()) {
 			case APPLIED -> "✓ Applied (editors and workbench)";
 			case RELINQUISHED -> "✓ Applied (editors); workbench handed back";
 			default -> "✓ Applied (editors)";
 			};
+			int kept = outcome.workbench().colors().userKeys().size();
+			return kept == 0 ? line : line + "; " + kept + " plug-in " + (kept == 1 ? "color kept your own value"
+					: "colors kept your own values");
 		}
 		StringBuilder text = new StringBuilder();
 		if (!outcome.editor().succeeded()) {

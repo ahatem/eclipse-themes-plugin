@@ -15,7 +15,13 @@ public final class WorkbenchStartup implements IStartup {
 	@Override
 	public void earlyStartup() {
 		EclipseThemes plugin = EclipseThemes.instance();
-		if (plugin == null || !plugin.getPreferenceStore().getBoolean(PreferenceKeys.WORKBENCH_COORDINATION_ENABLED)) {
+		if (plugin == null) {
+			return;
+		}
+		// With coordination off nothing is loaded, unless an earlier run left plug-in colors that must be released.
+		boolean enabled = plugin.getPreferenceStore().getBoolean(PreferenceKeys.WORKBENCH_COORDINATION_ENABLED);
+		boolean leftovers = !plugin.getPreferenceStore().getString(PreferenceKeys.PLUGIN_COLORS_OWNED).isEmpty();
+		if (!enabled && !leftovers) {
 			return;
 		}
 		PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {

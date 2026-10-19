@@ -15,4 +15,10 @@ public interface PreferenceKeys {
 	/** The theme id Eclipse had saved before ownership; meaningful only when the absent flag is false. */
 	String WORKBENCH_PRIOR_SAVED_ID = "WORKBENCH_PRIOR_SAVED_ID";
 	String WORKBENCH_PRIOR_SAVED_ABSENT = "WORKBENCH_PRIOR_SAVED_ABSENT";
+
+	/**
+	 * Which foreign plug-in preference keys this plugin wrote and the exact value of each ({@code node|key|value}
+	 * lines). Absent when it owns none.
+	 */
+	String PLUGIN_COLORS_OWNED = "PLUGIN_COLORS_OWNED";
 }

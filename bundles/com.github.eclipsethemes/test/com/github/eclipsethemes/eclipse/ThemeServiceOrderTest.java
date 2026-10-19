@@ -25,6 +25,8 @@ import com.github.eclipsethemes.core.workbench.EngineProbe;
 import com.github.eclipsethemes.core.workbench.WorkbenchEnvironment;
 import com.github.eclipsethemes.eclipse.preferences.PreferenceKeys;
 import com.github.eclipsethemes.eclipse.workbench.PaletteSink;
+import com.github.eclipsethemes.eclipse.workbench.ForeignPreferences;
+import com.github.eclipsethemes.eclipse.workbench.PluginColorWriter;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchCoordinator;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchThemeEngine;
 
@@ -49,9 +51,15 @@ public class ThemeServiceOrderTest {
 	@Before
 	public void setUp() {
 		engine = new PlatformEngine();
-		store = new PreferenceStore();
+		store = new PreferenceStore() {
+			@Override
+			public void save() {
+				// in memory only
+			}
+		};
 		store.setValue(PreferenceKeys.WORKBENCH_COORDINATION_ENABLED, true);
-		WorkbenchCoordinator coordinator = new WorkbenchCoordinator(engine, new MapSink(), store);
+		WorkbenchCoordinator coordinator = new WorkbenchCoordinator(engine, new MapSink(), store,
+				new PluginColorWriter(new NoForeignPreferences(), store));
 		service = new ThemeService(this::writeEditor, coordinator, noopLog());
 	}
 
@@ -159,6 +167,37 @@ public class ThemeServiceOrderTest {
 		@Override
 		public void clearSavedThemeId() {
 			saved = Optional.empty();
+		}
+
+		@Override
+		public Runnable watchSavedThemeId(java.util.function.Consumer<Optional<String>> listener) {
+			return () -> {
+			};
+		}
+	}
+
+	/** Plug-in colors are not under test here; no bundle is installed, so no key is touched. */
+	private static final class NoForeignPreferences implements ForeignPreferences {
+		@Override
+		public boolean installed(String bundle) {
+			return false;
+		}
+
+		@Override
+		public Optional<String> get(String node, String key) {
+			return Optional.empty();
+		}
+
+		@Override
+		public void put(String node, String key, String value) {
+		}
+
+		@Override
+		public void remove(String node, String key) {
+		}
+
+		@Override
+		public void flush(String node) {
 		}
 	}
 

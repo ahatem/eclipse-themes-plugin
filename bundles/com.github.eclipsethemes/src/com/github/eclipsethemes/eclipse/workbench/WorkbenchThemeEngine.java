@@ -1,6 +1,7 @@
 package com.github.eclipsethemes.eclipse.workbench;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import com.github.eclipsethemes.core.workbench.EngineProbe;
 import com.github.eclipsethemes.core.workbench.WorkbenchEnvironment;
@@ -30,4 +31,13 @@ public interface WorkbenchThemeEngine {
 
 	/** Removes the saved theme id so that Eclipse resolves its own default again. */
 	void clearSavedThemeId();
+
+	/**
+	 * Registers {@code listener} for changes of the saved theme id (the value is empty when the id was removed). It runs
+	 * on the thread that changed the preference, which is the UI thread for the Appearance page and for
+	 * {@link #select}.
+	 *
+	 * @return the call that removes the registration
+	 */
+	Runnable watchSavedThemeId(Consumer<Optional<String>> listener);
 }

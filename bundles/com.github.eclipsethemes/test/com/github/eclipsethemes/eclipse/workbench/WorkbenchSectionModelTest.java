@@ -110,4 +110,24 @@ public class WorkbenchSectionModelTest {
 		assertTrue(new ThemeApplyOutcome(ok, WorkbenchOutcome.failed(null, "")).editor().succeeded());
 		assertEquals(State.UNAVAILABLE, capability("0.15.200", new EngineProbe(true, false, false, false)).state());
 	}
+
+	@Test
+	public void keptUserColorsAreNamedAsACountAndADegradedWriteIsNeverASuccess() {
+		EditorOutcome ok = new EditorOutcome(List.of());
+		WorkbenchOutcome kept = WorkbenchOutcome.applied("x").withColors(
+				new PluginColorSummary(List.of(), List.of("a|b", "c|d"), List.of(), List.of()));
+		assertEquals("✓ Applied (editors and workbench); 2 plug-in colors kept your own values",
+				WorkbenchSectionModel.summary(new ThemeApplyOutcome(ok, kept)));
+		WorkbenchOutcome one = WorkbenchOutcome.applied("x").withColors(
+				new PluginColorSummary(List.of(), List.of("a|b"), List.of(), List.of()));
+		assertTrue(WorkbenchSectionModel.summary(new ThemeApplyOutcome(ok, one)).endsWith("1 plug-in color kept your own value"));
+
+		WorkbenchOutcome degraded = WorkbenchOutcome.applied("Workbench theme set.").withColors(
+				new PluginColorSummary(List.of(), List.of(), List.of(), List.of("flush failed")));
+		assertEquals(WorkbenchOutcome.Status.DEGRADED, degraded.status());
+		assertFalse(degraded.succeeded());
+		String text = WorkbenchSectionModel.summary(new ThemeApplyOutcome(ok, degraded));
+		assertFalse(text.startsWith("✓"));
+		assertTrue(text.contains("flush failed"));
+	}
 }

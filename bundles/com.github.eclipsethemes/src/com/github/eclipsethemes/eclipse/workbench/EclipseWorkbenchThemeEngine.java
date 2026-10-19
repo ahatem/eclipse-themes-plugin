@@ -2,9 +2,11 @@ package com.github.eclipsethemes.eclipse.workbench;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.e4.ui.css.swt.theme.IThemeEngine;
 import org.eclipse.e4.ui.css.swt.theme.ITheme;
@@ -102,6 +104,18 @@ public final class EclipseWorkbenchThemeEngine implements WorkbenchThemeEngine {
 		} catch (BackingStoreException e) {
 			throw new IllegalStateException("Could not persist removal of the saved Eclipse theme id", e);
 		}
+	}
+
+	@Override
+	public Runnable watchSavedThemeId(Consumer<Optional<String>> listener) {
+		IEclipsePreferences node = InstanceScope.INSTANCE.getNode(ENGINE_BUNDLE);
+		IPreferenceChangeListener registered = event -> {
+			if (SAVED_THEME_KEY.equals(event.getKey())) {
+				listener.accept(Optional.ofNullable((String) event.getNewValue()));
+			}
+		};
+		node.addPreferenceChangeListener(registered);
+		return () -> node.removePreferenceChangeListener(registered);
 	}
 
 	private static IThemeEngine engine() {

@@ -3,6 +3,7 @@ package com.github.eclipsethemes.eclipse.workbench;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -12,6 +13,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import com.github.eclipsethemes.core.models.Color;
 import com.github.eclipsethemes.core.models.Theme;
+import com.github.eclipsethemes.core.workbench.PluginColors;
 import com.github.eclipsethemes.core.workbench.WorkbenchCapability;
 import com.github.eclipsethemes.core.workbench.WorkbenchCapability.Reason;
 import com.github.eclipsethemes.core.workbench.WorkbenchCapability.State;
@@ -30,20 +32,30 @@ import com.github.eclipsethemes.eclipse.preferences.PreferenceKeys;
  *
  * <p>
  * The selected theme and the palette resolver are the source of truth; the color registry is only a delivery
- * mechanism and is republished whenever coordination is active. No listener is installed, so a newer external
+ * mechanism and is republished whenever coordination is active. The only listener is the one on the saved theme
+ * id, and it only releases plug-in colors this plugin still owns: nothing ever reapplies, so a newer external
  * Appearance choice is never fought.
+ *
+ * <p>
+ * Order of one apply: resolve the palette, switch the workbench theme (Eclipse's own switch resets preference
+ * defaults that the previous theme overrode, so anything written to other plug-ins' preferences must come after
+ * it), verify the switch, write the plug-in colors, then record ownership.
  */
 public final class WorkbenchCoordinator {
 
 	private final WorkbenchThemeEngine engine;
 	private final PaletteSink sink;
 	private final IPreferenceStore store;
+	private final PluginColorWriter pluginColors;
 	private final Set<String> failedCombinations = new HashSet<>();
+	private Runnable stopWatching;
 
-	public WorkbenchCoordinator(WorkbenchThemeEngine engine, PaletteSink sink, IPreferenceStore store) {
+	public WorkbenchCoordinator(WorkbenchThemeEngine engine, PaletteSink sink, IPreferenceStore store,
+			PluginColorWriter pluginColors) {
 		this.engine = engine;
 		this.sink = sink;
 		this.store = store;
+		this.pluginColors = pluginColors;
 	}
 
 	// ---- state read by the UI and startup ----
@@ -73,21 +85,64 @@ public final class WorkbenchCoordinator {
 		return engine.activeThemeId();
 	}
 
+	/** The result of the latest plug-in color synchronization, for diagnostics. */
+	public PluginColorSummary pluginColorSummary() {
+		return pluginColors.lastSummary();
+	}
+
+	/** The coordinated plug-in keys the ownership record says are still this plugin's. */
+	public List<String> ownedPluginColorKeys() {
+		return pluginColors.ownedKeys();
+	}
+
+	/** True when the ownership record says some plug-in color is still this plugin's. */
+	public boolean ownsPluginColors() {
+		return pluginColors.hasOwned();
+	}
+
+	// ---- external theme change: release only ----
+
+	/**
+	 * Starts, once, watching for another Eclipse theme being chosen. The reaction is to release the plug-in colors
+	 * this plugin still owns; it never reapplies anything.
+	 */
+	public void startWatching() {
+		if (stopWatching == null) {
+			stopWatching = engine.watchSavedThemeId(this::onSavedThemeChanged);
+		}
+	}
+
+	/** Removes the registration made by {@link #startWatching()}. */
+	public void dispose() {
+		if (stopWatching != null) {
+			stopWatching.run();
+			stopWatching = null;
+		}
+	}
+
+	private void onSavedThemeChanged(Optional<String> newId) {
+		if (newId.filter(WorkbenchSlots::isOurs).isEmpty() && pluginColors.hasOwned()) {
+			pluginColors.release();
+		}
+	}
+
 	// ---- apply, relinquish, reconcile ----
 
 	/** Applies the workbench half for the committed intent: coordinates, hands back, or does nothing. */
 	public WorkbenchOutcome apply(Theme theme) {
 		if (!isEnabled()) {
-			return isOwned() ? relinquish() : WorkbenchOutcome.notRequested("Workbench coordination is off.");
+			return isOwned() ? relinquish()
+					: WorkbenchOutcome.notRequested("Workbench coordination is off.").withColors(releaseColors());
 		}
 		WorkbenchCapability capability = capability();
 		if (!capability.usable()) {
 			return WorkbenchOutcome.unavailable(capability.reason(), "Workbench theming is unavailable: "
-					+ capability.reason() + " (" + capability.environment().combination() + ").");
+					+ capability.reason() + " (" + capability.environment().combination() + ").")
+					.withColors(releaseColors());
 		}
 		if (capability.state() == State.EXPERIMENTAL && !isOptedIn(capability)) {
 			return WorkbenchOutcome.notRequested("Experimental workbench theming is not enabled for "
-					+ capability.environment().combination() + ".");
+					+ capability.environment().combination() + ".").withColors(releaseColors());
 		}
 
 		WorkbenchPalette palette = WorkbenchPaletteResolver.resolve(theme);
@@ -95,7 +150,9 @@ public final class WorkbenchCoordinator {
 		String active = engine.activeThemeId().orElse("");
 		boolean keepOwnership = isOwned() && WorkbenchSlots.isOurs(active);
 		if (keepOwnership && WorkbenchSlots.familyOf(active).orElseThrow() == family && publishedEquals(palette)) {
-			return WorkbenchOutcome.applied("Workbench already carries this theme's palette.");
+			startWatching();
+			return WorkbenchOutcome.applied("Workbench already carries this theme's palette.")
+					.withColors(syncColors(palette));
 		}
 
 		// Prior state is captured before the switch, because the switch rewrites the saved theme id.
@@ -124,6 +181,7 @@ public final class WorkbenchCoordinator {
 					"The Eclipse theme engine failed: " + e.getMessage());
 		}
 
+		PluginColorSummary colors = syncColors(palette);
 		if (!keepOwnership) {
 			store.setValue(PreferenceKeys.WORKBENCH_PRIOR_ACTIVE_ID, WorkbenchSlots.isOurs(active) ? "" : active);
 			store.setValue(PreferenceKeys.WORKBENCH_PRIOR_SAVED_ID, savedBefore.orElse(""));
@@ -131,7 +189,8 @@ public final class WorkbenchCoordinator {
 		}
 		store.setValue(PreferenceKeys.WORKBENCH_OWNED_THEME_ID, target);
 		persist();
-		return WorkbenchOutcome.applied("Workbench theme set to " + target + ".");
+		startWatching();
+		return WorkbenchOutcome.applied("Workbench theme set to " + target + ".").withColors(colors);
 	}
 
 	/**
@@ -140,11 +199,13 @@ public final class WorkbenchCoordinator {
 	 */
 	public WorkbenchOutcome reconcile(Theme theme) {
 		if (!isEnabled()) {
-			return WorkbenchOutcome.notRequested("Workbench coordination is off.");
+			return WorkbenchOutcome.notRequested("Workbench coordination is off.").withColors(releaseColors());
 		}
 		String active = engine.activeThemeId().orElse("");
 		if (!WorkbenchSlots.isOurs(active)) {
-			return WorkbenchOutcome.yielded("Another Eclipse theme is active; the plugin changed nothing.");
+			startWatching();
+			return WorkbenchOutcome.yielded("Another Eclipse theme is active; the plugin changed nothing.")
+					.withColors(releaseColors());
 		}
 		return apply(theme);
 	}
@@ -158,7 +219,12 @@ public final class WorkbenchCoordinator {
 		boolean savedAbsent = store.getBoolean(PreferenceKeys.WORKBENCH_PRIOR_SAVED_ABSENT);
 		String active = engine.activeThemeId().orElse("");
 		WorkbenchCapability capability = capability();
+		PluginColorSummary colors = releaseColors();
+		return relinquishTheme(prior, savedAbsent, active, capability).withColors(colors);
+	}
 
+	private WorkbenchOutcome relinquishTheme(String prior, boolean savedAbsent, String active,
+			WorkbenchCapability capability) {
 		if (!WorkbenchSlots.isOurs(active)) {
 			resetPalette();
 			clearOwnership();
@@ -189,6 +255,30 @@ public final class WorkbenchCoordinator {
 	}
 
 	// ---- helpers ----
+
+	/** Writes the dark-family plug-in colors for this palette; a light palette derives none and so releases. */
+	private PluginColorSummary syncColors(WorkbenchPalette palette) {
+		try {
+			return pluginColors.sync(PluginColors.derive(palette));
+		} catch (RuntimeException e) {
+			return failedColors("Updating plug-in colors failed: " + e.getMessage());
+		}
+	}
+
+	private PluginColorSummary releaseColors() {
+		if (!pluginColors.hasOwned()) {
+			return PluginColorSummary.EMPTY;
+		}
+		try {
+			return pluginColors.release();
+		} catch (RuntimeException e) {
+			return failedColors("Releasing plug-in colors failed: " + e.getMessage());
+		}
+	}
+
+	private static PluginColorSummary failedColors(String message) {
+		return new PluginColorSummary(List.of(), List.of(), List.of(), List.of(message));
+	}
 
 	private WorkbenchOutcome failAfterAttempt(WorkbenchCapability capability, String before, String attempted,
 			Map<String, Color> previous, Reason reason, String detail) {

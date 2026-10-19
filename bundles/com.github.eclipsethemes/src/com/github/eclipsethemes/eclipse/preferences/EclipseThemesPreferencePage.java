@@ -356,7 +356,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		ThemeRecord theme = selectedTheme != null ? selectedTheme : currentTheme;
 		String text = WorkbenchDiagnostics.format(capability, coordinator.isEnabled(), coordinator.isOptedIn(capability),
 				theme == null ? null : theme.theme().getName(), coordinator.activeThemeId().orElse(null),
-				coordinator.isOwned());
+				coordinator.isOwned(), coordinator.ownedPluginColorKeys(), coordinator.pluginColorSummary().userKeys(),
+				coordinator.pluginColorSummary().releasedKeys());
 		Clipboard clipboard = new Clipboard(getShell().getDisplay());
 		try {
 			clipboard.setContents(new Object[] { text }, new Transfer[] { TextTransfer.getInstance() });

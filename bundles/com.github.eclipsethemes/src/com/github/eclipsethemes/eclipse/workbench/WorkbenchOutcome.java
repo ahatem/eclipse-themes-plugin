@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.github.eclipsethemes.core.workbench.WorkbenchCapability.Reason;
 
 /** The workbench half of an application result. */
-public record WorkbenchOutcome(Status status, Reason reason, String message) {
+public record WorkbenchOutcome(Status status, Reason reason, String message, PluginColorSummary colors) {
 
 	public enum Status {
 		/** Coordination is off, or an experimental combination has not been opted into. */
@@ -19,12 +19,31 @@ public record WorkbenchOutcome(Status status, Reason reason, String message) {
 		/** The capability gate refused. */
 		UNAVAILABLE,
 		/** An attempt failed; the message says what was and was not reverted. */
-		FAILED
+		FAILED,
+		/** The workbench part is as requested but a plug-in color write or its ownership record failed. */
+		DEGRADED
 	}
 
 	public WorkbenchOutcome {
 		Objects.requireNonNull(status, "status");
 		message = Objects.requireNonNullElse(message, "");
+		colors = Objects.requireNonNullElse(colors, PluginColorSummary.EMPTY);
+	}
+
+	public WorkbenchOutcome(Status status, Reason reason, String message) {
+		this(status, reason, message, PluginColorSummary.EMPTY);
+	}
+
+	/**
+	 * Attaches the plug-in color result. A failed color write turns a success into {@link Status#DEGRADED} and
+	 * says so; it never hides behind a green status.
+	 */
+	public WorkbenchOutcome withColors(PluginColorSummary summary) {
+		if (summary.failed() && succeeded()) {
+			return new WorkbenchOutcome(Status.DEGRADED, reason, message + " Plug-in colors: "
+					+ String.join("; ", summary.failures()), summary);
+		}
+		return new WorkbenchOutcome(status, reason, message, summary);
 	}
 
 	public static WorkbenchOutcome notRequested(String message) {

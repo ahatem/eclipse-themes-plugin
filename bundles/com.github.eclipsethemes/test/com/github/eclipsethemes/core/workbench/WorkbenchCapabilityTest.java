@@ -114,4 +114,18 @@ public class WorkbenchCapabilityTest {
 				classify(environment, new EngineProbe(false, true, true, true)), false, false, null, null, false);
 		assertTrue(unavailable.contains("UNAVAILABLE (HIGH_CONTRAST)"));
 	}
+
+	@Test
+	public void diagnosticsCountPluginColorsAndNameTheKeysOnlyInTheCopyableText() {
+		WorkbenchEnvironment environment = new WorkbenchEnvironment("win32", "win32", "0.15.200", "4.41.0", "21");
+		String text = WorkbenchDiagnostics.format(classify(environment, EngineProbe.usable()), true, false, "t", "a",
+				true, java.util.List.of("org.eclipse.ui.workbench|HYPERLINK_COLOR", "x|y"),
+				java.util.List.of("org.eclipse.ui.workbench|HOVER"), java.util.List.of());
+		assertTrue(text.contains("Plug-in colors owned by this plugin: 2"));
+		assertTrue(text.contains("user's (last sync this session): 1"));
+		assertTrue(text.contains("released after an outside change (last sync this session): 0"));
+		assertTrue(text.contains("  owned: org.eclipse.ui.workbench|HYPERLINK_COLOR"));
+		assertTrue(WorkbenchDiagnostics.format(classify(environment, EngineProbe.usable()), true, false, "t", "a", true)
+				.contains("Plug-in colors owned by this plugin: 0"));
+	}
 }

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.eclipse.jface.preference.PreferenceStore;
 import org.junit.Before;
@@ -40,15 +41,19 @@ public class WorkbenchCoordinatorTest {
 	private final List<String> events = new ArrayList<>();
 	private FakeEngine engine;
 	private FakeSink sink;
-	private PreferenceStore store;
+	private TestPreferenceStore store;
 	private WorkbenchCoordinator coordinator;
+	private MemoryForeignPreferences foreign;
+	private PluginColorWriter writer;
 
 	@Before
 	public void setUp() {
 		engine = new FakeEngine();
 		sink = new FakeSink();
-		store = new PreferenceStore();
-		coordinator = new WorkbenchCoordinator(engine, sink, store);
+		store = new TestPreferenceStore();
+		foreign = new MemoryForeignPreferences();
+		writer = new PluginColorWriter(foreign, store);
+		coordinator = new WorkbenchCoordinator(engine, sink, store, writer);
 		engine.active = STOCK_DARK;
 		engine.saved = Optional.empty();
 	}
@@ -343,7 +348,227 @@ public class WorkbenchCoordinatorTest {
 		enable();
 		engine.active = STOCK_LIGHT;
 		assertEquals(Status.YIELDED, coordinator.reconcile(theme).status());
-		assertTrue(events.isEmpty());
+		assertEquals(List.of("watch"), events);
+	}
+
+	// ---- plug-in colors: lifecycle ----
+
+	private static final String HYPERLINK = "HYPERLINK_COLOR";
+	private static final String HOVER_BG = "org.eclipse.ui.workbench.HOVER_BACKGROUND";
+	private static final String WB = "org.eclipse.ui.workbench";
+
+	private Optional<String> foreignValue(String node, String key) {
+		return foreign.get(node, key);
+	}
+
+	@Test
+	public void coordinatedDarkApplyWritesPluginColorsOnlyAfterTheSwitchAndVerification() {
+		enable();
+		engine.onSelect = () -> engine.mutationsAtSelect = foreign.mutations.size();
+		WorkbenchOutcome outcome = coordinator.apply(dark("#282c34", "#abb2bf"));
+		assertEquals(Status.APPLIED, outcome.status());
+		assertEquals(0, engine.mutationsAtSelect);
+		assertFalse(foreign.mutations.isEmpty());
+		assertEquals(PluginColorTableSize.COUNT, outcome.colors().ownedKeys().size());
+		assertTrue(coordinator.ownsPluginColors());
+	}
+
+	@Test
+	public void leavingTheStockDarkThemeCannotEraseThePluginColorsBecauseTheyAreWrittenAfterTheSwitch() {
+		enable();
+		foreign.set(WB, HYPERLINK, "111,197,238"); // stock Dark's value
+		engine.onSelect = () -> foreign.unset(WB, HYPERLINK); // Eclipse resets the keys the old theme overrode
+		WorkbenchOutcome outcome = coordinator.apply(dark("#282c34", "#abb2bf"));
+		assertEquals(Status.APPLIED, outcome.status());
+		assertTrue(foreignValue(WB, HYPERLINK).isPresent());
+		assertTrue(outcome.colors().userKeys().isEmpty());
+	}
+
+	@Test
+	public void aUserValueSurvivesApplyAndIsReportedAsKeptNotAsAnError() {
+		enable();
+		foreign.set(WB, HYPERLINK, "1,2,3");
+		WorkbenchOutcome outcome = coordinator.apply(dark("#282c34", "#abb2bf"));
+		assertEquals(Status.APPLIED, outcome.status());
+		assertTrue(outcome.succeeded());
+		assertEquals(Optional.of("1,2,3"), foreignValue(WB, HYPERLINK));
+		assertEquals(List.of(WB + "|" + HYPERLINK), outcome.colors().userKeys());
+	}
+
+	@Test
+	public void oneApplyIsEnoughInEveryTransition() {
+		enable();
+		coordinator.apply(dark("#282c34", "#abb2bf"));
+		String atom = foreignValue(WB, HOVER_BG).orElseThrow();
+
+		coordinator.apply(dark("#1e1e2e", "#cdd6f4")); // dark A -> dark B updates
+		String mocha = foreignValue(WB, HOVER_BG).orElseThrow();
+		assertFalse(atom.equals(mocha));
+
+		coordinator.apply(light("#fafafa", "#383a42")); // dark -> light releases
+		assertEquals(Optional.empty(), foreignValue(WB, HYPERLINK));
+		assertFalse(coordinator.ownsPluginColors());
+
+		foreign.mutations.clear();
+		coordinator.apply(light("#fdf6e3", "#657b83")); // light A -> light B writes nothing
+		assertTrue(foreign.mutations.isEmpty());
+
+		coordinator.apply(dark("#282c34", "#abb2bf")); // light -> dark acquires
+		assertEquals(Optional.of(atom), foreignValue(WB, HOVER_BG));
+	}
+
+	@Test
+	public void theUnchangedPaletteShortcutStillSynchronizesPluginColors() {
+		enable();
+		Theme theme = dark("#282c34", "#abb2bf");
+		coordinator.apply(theme);
+		foreign.unset(WB, HYPERLINK); // lost key, for example after an upgrade
+		WorkbenchOutcome outcome = coordinator.apply(theme);
+		assertEquals("Workbench already carries this theme's palette.", outcome.message());
+		assertTrue(foreignValue(WB, HYPERLINK).isPresent());
+	}
+
+	@Test
+	public void aFailedSwitchWritesNoPluginColors() {
+		enable();
+		engine.landOn = Optional.of(STOCK_LIGHT);
+		WorkbenchOutcome outcome = coordinator.apply(dark("#282c34", "#abb2bf"));
+		assertEquals(Status.FAILED, outcome.status());
+		assertTrue(foreign.mutations.isEmpty());
+		assertFalse(coordinator.ownsPluginColors());
+	}
+
+	@Test
+	public void editorOnlyModeWritesNoForeignKeysAndReleasesLeftovers() {
+		assertEquals(Status.NOT_REQUESTED, coordinator.apply(dark("#282c34", "#abb2bf")).status());
+		assertTrue(foreign.mutations.isEmpty());
+
+		enable();
+		coordinator.apply(dark("#282c34", "#abb2bf"));
+		store.setValue(PreferenceKeys.WORKBENCH_COORDINATION_ENABLED, false);
+		WorkbenchOutcome off = coordinator.apply(dark("#282c34", "#abb2bf"));
+		assertEquals(Status.RELINQUISHED, off.status());
+		assertEquals(Optional.empty(), foreignValue(WB, HYPERLINK));
+		assertFalse(coordinator.ownsPluginColors());
+	}
+
+	@Test
+	public void disabledStartupReleasesColorsLeftByAnEarlierRun() {
+		enable();
+		coordinator.apply(dark("#282c34", "#abb2bf"));
+		store.setValue(PreferenceKeys.WORKBENCH_COORDINATION_ENABLED, false);
+		store.setToDefault(PreferenceKeys.WORKBENCH_OWNED_THEME_ID); // ownership of the theme was already given up
+		WorkbenchOutcome outcome = coordinator.reconcile(null);
+		assertEquals(Status.NOT_REQUESTED, outcome.status());
+		assertEquals(Optional.empty(), foreignValue(WB, HYPERLINK));
+	}
+
+	@Test
+	public void startupWithAnotherThemeActiveReleasesButNeverReapplies() {
+		enable();
+		coordinator.apply(dark("#282c34", "#abb2bf"));
+		engine.active = STOCK_LIGHT; // chosen while the plugin was not running
+		WorkbenchOutcome outcome = coordinator.reconcile(dark("#282c34", "#abb2bf"));
+		assertEquals(Status.YIELDED, outcome.status());
+		assertEquals(Optional.empty(), foreignValue(WB, HYPERLINK));
+		assertFalse(coordinator.ownsPluginColors());
+	}
+
+	@Test
+	public void restartReconcileWithTheOursThemeStillActiveKeepsOwnedValues() {
+		enable();
+		Theme theme = dark("#282c34", "#abb2bf");
+		coordinator.apply(theme);
+		String before = foreignValue(WB, HYPERLINK).orElseThrow();
+		WorkbenchCoordinator restarted = new WorkbenchCoordinator(engine, sink, store,
+				new PluginColorWriter(foreign, store));
+		assertTrue(restarted.ownsPluginColors());
+		restarted.reconcile(theme);
+		assertEquals(Optional.of(before), foreignValue(WB, HYPERLINK));
+	}
+
+	@Test
+	public void relinquishReleasesOnlyOwnedValuesAndKeepsAnExternalChange() {
+		enable();
+		coordinator.apply(dark("#282c34", "#abb2bf"));
+		foreign.set(WB, HYPERLINK, "5,5,5");
+		WorkbenchOutcome outcome = coordinator.relinquish();
+		assertEquals(Status.RELINQUISHED, outcome.status());
+		assertEquals(Optional.of("5,5,5"), foreignValue(WB, HYPERLINK));
+		assertEquals(List.of(WB + "|" + HYPERLINK), outcome.colors().releasedKeys());
+		assertEquals(Optional.empty(), foreignValue(WB, "CONTENT_ASSIST_BACKGROUND_COLOR"));
+	}
+
+	@Test
+	public void aFailedForeignWriteMakesTheOutcomeDegradedNeverSuccess() {
+		enable();
+		foreign.failingFlushes.add(WB);
+		WorkbenchOutcome outcome = coordinator.apply(dark("#282c34", "#abb2bf"));
+		assertEquals(Status.DEGRADED, outcome.status());
+		assertFalse(outcome.succeeded());
+		assertTrue(outcome.message().contains("Plug-in colors"));
+		assertEquals(WorkbenchFamily.DARK.themeId(), engine.active);
+	}
+
+	// ---- external theme change: release only ----
+
+	@Test
+	public void theListenerIsRegisteredOnceAndRemovedByDispose() {
+		enable();
+		coordinator.apply(dark("#282c34", "#abb2bf"));
+		coordinator.apply(dark("#1e1e2e", "#cdd6f4"));
+		coordinator.startWatching();
+		assertEquals(1, engine.listeners.size());
+		assertEquals(1, events.stream().filter("watch"::equals).count());
+		coordinator.dispose();
+		assertTrue(engine.listeners.isEmpty());
+		coordinator.dispose();
+		assertTrue(engine.listeners.isEmpty());
+	}
+
+	@Test
+	public void anExternalAppearanceChoiceReleasesOwnedColorsImmediatelyAndWritesNothing() {
+		enable();
+		coordinator.apply(dark("#282c34", "#abb2bf"));
+		foreign.set(WB, "org.eclipse.ui.workbench.HOVER_BACKGROUND", "42,42,42"); // user edit stays
+		foreign.mutations.clear();
+
+		engine.chooseExternally(STOCK_DARK);
+
+		assertEquals(Optional.empty(), foreignValue(WB, HYPERLINK));
+		assertEquals(Optional.of("42,42,42"), foreignValue(WB, "org.eclipse.ui.workbench.HOVER_BACKGROUND"));
+		assertFalse(coordinator.ownsPluginColors());
+		assertTrue(foreign.mutations.stream().noneMatch(m -> m.startsWith("put")));
+		assertEquals(STOCK_DARK, engine.active);
+	}
+
+	@Test
+	public void theListenerIgnoresThePluginsOwnThemeSwitches() {
+		enable();
+		coordinator.apply(dark("#282c34", "#abb2bf"));
+		foreign.mutations.clear();
+		coordinator.apply(dark("#1e1e2e", "#cdd6f4")); // select() fires the listener with our own id
+		assertTrue(foreign.mutations.stream().allMatch(m -> m.startsWith("put")));
+		assertTrue(coordinator.ownsPluginColors());
+	}
+
+	@Test
+	public void afterAnExternalChoiceApplyingAgainIsAnExplicitNewRequestThatAcquiresAbsentKeys() {
+		enable();
+		coordinator.apply(dark("#282c34", "#abb2bf"));
+		engine.chooseExternally(STOCK_LIGHT);
+		assertEquals(Optional.empty(), foreignValue(WB, HYPERLINK));
+		coordinator.apply(dark("#282c34", "#abb2bf"));
+		assertTrue(foreignValue(WB, HYPERLINK).isPresent());
+	}
+
+	@Test
+	public void thePluginsOwnRelinquishRestoreDoesNotTriggerExtraWrites() {
+		enable();
+		coordinator.apply(dark("#282c34", "#abb2bf"));
+		foreign.mutations.clear();
+		coordinator.relinquish();
+		assertTrue(foreign.mutations.stream().noneMatch(m -> m.startsWith("put")));
 	}
 
 	// ---- helpers ----
@@ -379,6 +604,10 @@ public class WorkbenchCoordinatorTest {
 		/** After a select the engine ends up on this theme instead of the requested one. */
 		Optional<String> landOn = Optional.empty();
 		boolean throwAfterSelect;
+		final List<Consumer<Optional<String>>> listeners = new ArrayList<>();
+		Runnable onSelect = () -> {
+		};
+		int mutationsAtSelect = -1;
 
 		@Override
 		public WorkbenchEnvironment environment() {
@@ -398,6 +627,7 @@ public class WorkbenchCoordinatorTest {
 		@Override
 		public boolean select(String themeId) {
 			events.add("select " + themeId);
+			onSelect.run();
 			if (throwAfterSelect && WorkbenchSlots.isOurs(themeId)) {
 				active = themeId;
 				saved = Optional.of(themeId);
@@ -405,6 +635,7 @@ public class WorkbenchCoordinatorTest {
 			}
 			active = landOn.orElse(themeId);
 			saved = Optional.of(active);
+			new ArrayList<>(listeners).forEach(l -> l.accept(saved));
 			return true;
 		}
 
@@ -417,6 +648,21 @@ public class WorkbenchCoordinatorTest {
 		public void clearSavedThemeId() {
 			events.add("clearSaved");
 			saved = Optional.empty();
+			listeners.forEach(l -> l.accept(Optional.empty()));
+		}
+
+		@Override
+		public Runnable watchSavedThemeId(Consumer<Optional<String>> listener) {
+			events.add("watch");
+			listeners.add(listener);
+			return () -> listeners.remove(listener);
+		}
+
+		/** The user picks a theme on the Appearance page: active, saved and listeners, in that order. */
+		void chooseExternally(String themeId) {
+			active = themeId;
+			saved = Optional.of(themeId);
+			new ArrayList<>(listeners).forEach(l -> l.accept(saved));
 		}
 	}
 
@@ -452,5 +698,12 @@ public class WorkbenchCoordinatorTest {
 			events.add("put");
 			values.put(colorId, color);
 		}
+	}
+}
+
+final class PluginColorTableSize {
+	static final int COUNT = com.github.eclipsethemes.core.workbench.PluginColorTable.keys().size();
+
+	private PluginColorTableSize() {
 	}
 }
