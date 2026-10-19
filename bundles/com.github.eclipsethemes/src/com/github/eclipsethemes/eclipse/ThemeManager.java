@@ -1,12 +1,16 @@
 package com.github.eclipsethemes.eclipse;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.ui.IWorkbench;
 
 import com.github.eclipsethemes.EclipseThemes;
+import com.github.eclipsethemes.eclipse.fonts.EclipseWorkbenchFonts;
+import com.github.eclipsethemes.eclipse.fonts.FontOutcome;
+import com.github.eclipsethemes.eclipse.fonts.ThemeFontCoordinator;
 import com.github.eclipsethemes.eclipse.preferences.ThemeSelection;
 import com.github.eclipsethemes.eclipse.workbench.EclipseWorkbenchThemeEngine;
 import com.github.eclipsethemes.eclipse.workbench.PluginColorWriter;
@@ -20,6 +24,7 @@ public final class ThemeManager {
 	private final AdapterRegistry registry;
 	private final ThemeService service;
 	private final WorkbenchCoordinator workbench;
+	private final ThemeFontCoordinator fonts;
 
 	public ThemeManager(ILog log) {
 		File dataDir = EclipseThemes.getPluginDataDirectory();
@@ -28,7 +33,8 @@ public final class ThemeManager {
 		this.workbench = new WorkbenchCoordinator(new EclipseWorkbenchThemeEngine(), new RegistryPaletteSink(),
 				EclipseThemes.instance().getPreferenceStore(),
 				PluginColorWriter.create(EclipseThemes.instance().getPreferenceStore()));
-		this.service = new ThemeService(registry, workbench, log);
+		this.fonts = new ThemeFontCoordinator(new EclipseWorkbenchFonts(), EclipseThemes.instance().getPreferenceStore());
+		this.service = new ThemeService(registry, workbench, fonts, log);
 
 		repository.reload();
 		registry.discover();
@@ -55,6 +61,10 @@ public final class ThemeManager {
 		return workbench;
 	}
 
+	public ThemeFontCoordinator fonts() {
+		return fonts;
+	}
+
 	/** Startup: republish the workbench palette from the selected theme when coordination is active. */
 	public WorkbenchOutcome reconcileWorkbench() {
 		if (!workbench.isEnabled()) {
@@ -72,6 +82,14 @@ public final class ThemeManager {
 
 	public ThemeOperationOutcome updateTheme(ThemeRecord selected, File file) {
 		return repository.updateTheme(selected, file);
+	}
+
+	/**
+	 * Writes the theme as a new theme package at {@code target}; a legacy theme is converted, an installed package is
+	 * written from its model. The installed theme is never changed.
+	 */
+	public void exportTheme(ThemeRecord selected, File target) throws IOException {
+		ThemeExporter.export(selected.theme(), target);
 	}
 
 	public boolean removeTheme(ThemeRecord selected) {

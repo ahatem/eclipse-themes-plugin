@@ -21,4 +21,12 @@ public interface PreferenceKeys {
 	 * lines). Absent when it owns none.
 	 */
 	String PLUGIN_COLORS_OWNED = "PLUGIN_COLORS_OWNED";
+
+	/** User intent: apply the fonts a theme package asks for. Off by default; independent of colors. */
+	String THEME_FONTS_ENABLED = "THEME_FONTS_ENABLED";
+	/**
+	 * The font definitions this plugin wrote, the exact value of each and what the definition held before
+	 * ({@code id}, written value and prior state per line). Absent when it owns none.
+	 */
+	String THEME_FONTS_OWNED = "THEME_FONTS_OWNED";
 }

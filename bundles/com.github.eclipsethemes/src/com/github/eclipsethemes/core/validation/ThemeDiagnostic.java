@@ -49,6 +49,7 @@ public record ThemeDiagnostic(Severity severity, String kind, String message, St
 	public static final String SOURCE = "source";
 	public static final String WORKBENCH_READABILITY = "workbench-readability";
 	public static final String FORMAT_MISMATCH = "format-mismatch";
+	public static final String FONT = "font";
 
 	public ThemeDiagnostic {
 		Objects.requireNonNull(severity, "severity");

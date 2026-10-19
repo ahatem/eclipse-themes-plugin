@@ -1,6 +1,7 @@
 package com.github.eclipsethemes.eclipse.preferences;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,8 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import com.github.eclipsethemes.EclipseThemes;
 import com.github.eclipsethemes.core.Constants;
 import com.github.eclipsethemes.core.models.PackageMetadata;
+import com.github.eclipsethemes.core.parser.ParserFactory;
+import com.github.eclipsethemes.core.validation.ThemeDiagnostic;
 import com.github.eclipsethemes.core.validation.WebsiteUri;
 import com.github.eclipsethemes.core.workbench.WorkbenchCapability;
 import com.github.eclipsethemes.core.workbench.WorkbenchCapability.State;
@@ -56,6 +59,7 @@ import com.github.eclipsethemes.eclipse.ThemeManager;
 import com.github.eclipsethemes.eclipse.ThemeOperationOutcome;
 import com.github.eclipsethemes.eclipse.ThemeOrigin;
 import com.github.eclipsethemes.eclipse.ThemeRecord;
+import com.github.eclipsethemes.eclipse.fonts.FontSectionModel;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchCoordinator;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchOutcome;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchSectionModel;
@@ -73,6 +77,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private Label themeNameLabel;
 	private Label authorLabel;
 	private Label themeTypeLabel;
+	private Label formatLabel;
 	private Link websiteLink;
 	private Label versionLabel;
 	private Label licenseLabel;
@@ -82,11 +87,14 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	private Link downloadMoreLink;
 	private Button importButton;
 	private Button updateButton;
+	private Button exportButton;
 	private Button removeButton;
 	private Button previewToggleButton;
 	private Label statusLabel;
 	private Button workbenchCheckbox;
 	private Label workbenchStatusLabel;
+	private Button fontsCheckbox;
+	private Label fontsStatusLabel;
 
 	// Data
 	private List<ThemeRecord> allThemes;
@@ -101,7 +109,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	EclipseThemesPreferencePage(IPreferenceStore store) {
 		setPreferenceStore(store);
-		setDescription("Select and apply color themes for Eclipse editors");
+		setDescription("Select and apply color themes for Eclipse editors and, optionally, the workbench");
 	}
 
 	@Override
@@ -120,7 +128,9 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		createMainArea(container);
 		// Opt-in coordination of the Eclipse workbench theme
 		createWorkbenchSection(container);
-		// Import, Update, Remove
+		// Opt-in theme fonts
+		createFontsSection(container);
+		// Import, Update, Export, Remove
 		createActionButtons(container);
 
 		// Load themes and set initial components state (eg. selected theme in list and
@@ -239,6 +249,12 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		themeTypeLabel.setText("N/A");
 		themeTypeLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
+		// Format
+		new Label(detailsGroup, SWT.NONE).setText("Format:");
+		formatLabel = new Label(detailsGroup, SWT.WRAP);
+		formatLabel.setText("N/A");
+		formatLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+
 		// Package provenance: shown only for theme packages, never implied by the plugin's own license.
 		versionLabel = packageRow(detailsGroup, "Version:", new Label(detailsGroup, SWT.WRAP));
 		licenseLabel = packageRow(detailsGroup, "License:", new Label(detailsGroup, SWT.WRAP));
@@ -332,6 +348,45 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		refreshWorkbenchSection(true);
 	}
 
+	private void createFontsSection(Composite parent) {
+		Group group = new Group(parent, SWT.NONE);
+		group.setText("Fonts");
+		group.setLayout(new GridLayout(1, false));
+		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+		fontsCheckbox = new Button(group, SWT.CHECK);
+		fontsCheckbox.setText(FontSectionModel.CHECKBOX_LABEL);
+		fontsCheckbox.setToolTipText("Use the editor and workbench fonts the selected theme package asks for");
+		fontsCheckbox.setSelection(EclipseThemes.instance().getManager().fonts().isEnabled());
+
+		fontsStatusLabel = new Label(group, SWT.WRAP);
+		GridData statusData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		statusData.widthHint = 600;
+		fontsStatusLabel.setLayoutData(statusData);
+
+		Label hint = new Label(group, SWT.WRAP);
+		hint.setText(FontSectionModel.HINT);
+		GridData hintData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		hintData.widthHint = 600;
+		hint.setLayoutData(hintData);
+	}
+
+	private void updateFontsStatus() {
+		if (fontsStatusLabel == null || fontsStatusLabel.isDisposed()) {
+			return;
+		}
+		fontsStatusLabel.setText(FontSectionModel.describe(selectedTheme == null ? null : selectedTheme.theme(),
+				EclipseThemes.instance().getManager().fonts()::installed));
+		fontsStatusLabel.getParent().layout(true);
+	}
+
+	/** Writes the committed intent for theme fonts; called only from Apply and OK. */
+	private void commitFontsIntent() {
+		if (fontsCheckbox != null && !fontsCheckbox.isDisposed()) {
+			pluginStore().setValue(PreferenceKeys.THEME_FONTS_ENABLED, fontsCheckbox.getSelection());
+		}
+	}
+
 	/**
 	 * Shows the capability and stored intent. Only on first display does it set the checkbox from the stored
 	 * intent; afterwards the checkbox is the user's uncommitted choice until Apply or OK.
@@ -404,21 +459,29 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		separator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		Composite buttonArea = new Composite(parent, SWT.NONE);
-		buttonArea.setLayout(new GridLayout(5, false));
+		buttonArea.setLayout(new GridLayout(6, false));
 		buttonArea.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		// Import button
 		importButton = new Button(buttonArea, SWT.PUSH);
 		importButton.setText("Import Theme...");
-		importButton.setToolTipText("Import a new theme from file");
+		importButton.setToolTipText("Import a theme package (.ectheme) or a legacy theme (.xml) as a new installed theme");
 		setButtonWidth(importButton, 120);
 
 		// Update button
 		updateButton = new Button(buttonArea, SWT.PUSH);
 		updateButton.setText("Update Selected Theme...");
-		updateButton.setToolTipText("Replace the XML of the selected installed theme, keeping its identity");
+		updateButton.setToolTipText("Replace the content of the selected installed theme with a file of the same format, keeping its identity");
 		updateButton.setEnabled(false);
 		setButtonWidth(updateButton, 150);
+
+		// Export button
+		exportButton = new Button(buttonArea, SWT.PUSH);
+		exportButton.setText("Export as Package...");
+		exportButton.setToolTipText("Save the selected theme as a new .ectheme theme package. A legacy theme is "
+				+ "converted into the new file; the installed theme is not changed");
+		exportButton.setEnabled(false);
+		setButtonWidth(exportButton, 150);
 
 		// Remove button
 		removeButton = new Button(buttonArea, SWT.PUSH);
@@ -605,6 +668,13 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			}
 		});
 
+		exportButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				exportSelectedTheme();
+			}
+		});
+
 		importButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -640,6 +710,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		this.selectedTheme = newTheme;
 		updateThemeDetails(newTheme);
 		updatePreview(newTheme);
+		updateFontsStatus();
 		updateButtonStates();
 	}
 
@@ -649,9 +720,11 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		authorLabel.setText("N/A");
 		websiteLink.setText("N/A");
 		themeTypeLabel.setText("N/A");
+		formatLabel.setText("N/A");
 		showPackageRows(false);
 		themeNameLabel.getParent().layout();
 		showDefaultPreview();
+		updateFontsStatus();
 		updateButtonStates();
 	}
 
@@ -659,6 +732,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		themeNameLabel.setText(theme.theme().getName());
 		authorLabel.setText(theme.theme().getAuthor() != null ? theme.theme().getAuthor() : "N/A");
 		themeTypeLabel.setText(theme.theme().getType().nameCapitalized());
+		formatLabel.setText(formatText(theme));
 		websiteLink.setText(websiteText(theme.theme().getWebsite()));
 		Optional<PackageMetadata> metadata = theme.theme().getPackageMetadata();
 		metadata.ifPresent(m -> {
@@ -670,6 +744,11 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		showPackageRows(metadata.isPresent());
 
 		themeNameLabel.getParent().layout();
+	}
+
+	/** Packages and legacy themes are different formats with different capabilities; say which one this is. */
+	static String formatText(ThemeRecord theme) {
+		return theme.theme().getPackageMetadata().isPresent() ? "Theme package (.ectheme)" : "Legacy XML theme";
 	}
 
 	private String selectedSource() {
@@ -747,6 +826,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		boolean installedSelected = isInstalledTheme(selectedTheme);
 
 		updateButton.setEnabled(installedSelected);
+		exportButton.setEnabled(selectedTheme != null);
 		removeButton.setEnabled(installedSelected);
 	}
 
@@ -771,6 +851,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		try {
 			ThemeSelection.remember(getPreferenceStore(), selectedTheme);
 			commitWorkbenchIntent();
+			commitFontsIntent();
 			ThemeApplyOutcome outcome = EclipseThemes.instance().getManager().applyTheme(workbench, selectedTheme);
 
 			currentTheme = selectedTheme;
@@ -815,12 +896,28 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 				return;
 			}
 
-			showInfoMessage("Import Successful",
-					"Theme '" + admitted.theme().getName() + "' has been imported successfully.");
+			showInfoMessage("Import Successful", "Theme '" + admitted.theme().getName()
+					+ "' has been imported successfully." + warningsText(outcome.diagnostics()));
 		} catch (Exception e) {
 			EclipseThemes.instance().getLogger().error("Import Error", e);
 			showErrorMessage("Import Error", "Error importing theme: " + e.getMessage());
 		}
+	}
+
+	/** The first few warnings of an admitted file, so a package that was only partly understood says so. */
+	static String warningsText(List<ThemeDiagnostic> diagnostics) {
+		List<String> warnings = diagnostics.stream().filter(finding -> !finding.error()).map(ThemeDiagnostic::message)
+				.distinct().toList();
+		if (warnings.isEmpty()) {
+			return "";
+		}
+		StringBuilder text = new StringBuilder("\n\nIt was accepted with ").append(warnings.size())
+				.append(warnings.size() == 1 ? " warning:" : " warnings:");
+		warnings.stream().limit(5).forEach(message -> text.append("\n- ").append(message));
+		if (warnings.size() > 5) {
+			text.append("\n- and ").append(warnings.size() - 5).append(" more (see the Eclipse error log)");
+		}
+		return text.toString();
 	}
 
 	private void updateSelectedTheme() {
@@ -833,7 +930,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			return;
 		}
 		boolean confirmed = showConfirmDialog("Update Theme",
-				"Replace the installed XML content of '" + selectedTheme.theme().getName() + "'?\n\n"
+				"Replace the installed theme content of '" + selectedTheme.theme().getName() + "'?\n\n"
 						+ "The theme keeps its identity and remains selected. This cannot be undone.");
 		if (!confirmed) {
 			return;
@@ -855,11 +952,51 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 				return;
 			}
 
-			showInfoMessage("Update Successful", "Theme '" + admitted.theme().getName() + "' has been updated.");
+			showInfoMessage("Update Successful",
+					"Theme '" + admitted.theme().getName() + "' has been updated." + warningsText(outcome.diagnostics()));
 		} catch (Exception e) {
 			EclipseThemes.instance().getLogger().error("Update Error", e);
 			showErrorMessage("Update Error", "Error updating theme: " + e.getMessage());
 		}
+	}
+
+	private void exportSelectedTheme() {
+		if (selectedTheme == null) {
+			return;
+		}
+		boolean legacy = selectedTheme.theme().getPackageMetadata().isEmpty();
+		FileDialog dialog = new FileDialog(getShell(), SWT.SAVE);
+		dialog.setText(legacy ? "Convert to Theme Package" : "Export Theme Package");
+		dialog.setFilterExtensions(new String[] { "*" + ParserFactory.PACKAGE_EXTENSION });
+		dialog.setFilterNames(new String[] { "Theme Packages (*.ectheme)" });
+		dialog.setFileName(exportFileName(selectedTheme.theme().getName()));
+		dialog.setOverwrite(true);
+		String path = dialog.open();
+		if (path == null) {
+			return;
+		}
+		if (!path.toLowerCase(java.util.Locale.ROOT).endsWith(ParserFactory.PACKAGE_EXTENSION)) {
+			path += ParserFactory.PACKAGE_EXTENSION;
+		}
+		File target = new File(path);
+		String name = selectedTheme.theme().getName();
+		try {
+			EclipseThemes.instance().getManager().exportTheme(selectedTheme, target);
+			showInfoMessage("Export Successful", legacy
+					? "'" + name + "' was converted to a theme package and saved to:\n" + target.getPath()
+							+ "\n\nThe installed theme was not changed. Workbench colors are not written; they are "
+							+ "derived from the editor colors when the package is imported."
+					: "'" + name + "' was exported to:\n" + target.getPath());
+		} catch (IOException e) {
+			EclipseThemes.instance().getLogger().error("Export Error", e);
+			showErrorMessage("Export Failed", "The theme was not exported: " + e.getMessage());
+		}
+	}
+
+	/** A file-system-friendly default name for the exported package. */
+	static String exportFileName(String themeName) {
+		String base = themeName.replaceAll("[^A-Za-z0-9._-]+", "-").replaceAll("^-+|-+$", "");
+		return (base.isEmpty() ? "theme" : base) + ParserFactory.PACKAGE_EXTENSION;
 	}
 
 	private File chooseThemeFile(String dialogTitle) {
@@ -1072,7 +1209,24 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 			return false;
 		}
 		relinquishWorkbench();
+		releaseFonts();
 		return true;
+	}
+
+	/** Stop management also turns theme fonts off and gives back the fonts this plugin replaced. */
+	private void releaseFonts() {
+		pluginStore().setValue(PreferenceKeys.THEME_FONTS_ENABLED, false);
+		if (fontsCheckbox != null && !fontsCheckbox.isDisposed()) {
+			fontsCheckbox.setSelection(false);
+		}
+		var coordinator = EclipseThemes.instance().getManager().fonts();
+		if (coordinator.ownsFonts()) {
+			var outcome = coordinator.release();
+			if (!outcome.succeeded()) {
+				statusLabel.setText("Fonts: " + outcome.message());
+				statusLabel.getParent().layout();
+			}
+		}
 	}
 
 	/** Stop management also hands the workbench back, under the ownership rules (an external choice wins). */
