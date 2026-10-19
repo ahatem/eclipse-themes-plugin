@@ -267,8 +267,8 @@ without a legacy source id, so no package id or package metadata is sent to the 
 ### Requirement: The page is a Theme Manager with a library, selected-theme details, fonts and package export
 
 The page SHALL show a searchable theme library beside the selected theme's header, preview, Appearance, Fonts and details. Fonts
-SHALL offer *Keep current*, *Use theme* or *Custom* per target, with a system font dialog for custom, and SHALL describe the
-resulting font or that it is not installed or not specified. Selection, mode and chooser changes SHALL be written only on Apply or
+SHALL offer exactly two fonts, *Editor font* and *Interface font*, each *Keep current*, *Use theme* or *Custom*, and SHALL describe
+the resulting font or why none applies. Selection, mode and chooser changes SHALL be written only on Apply or
 OK; Cancel discards them. *Stop managing* SHALL set both to Keep and restore the fonts it changed.
 
 #### Scenario: Legacy theme selected

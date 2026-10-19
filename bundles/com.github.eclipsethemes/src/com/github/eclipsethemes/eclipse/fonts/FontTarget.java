@@ -1,49 +1,64 @@
 package com.github.eclipsethemes.eclipse.fonts;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.github.eclipsethemes.core.models.ThemeFonts;
 import com.github.eclipsethemes.eclipse.preferences.PreferenceKeys;
 
 /**
- * The two independent things a font can be chosen for. Each is mapped to the platform font definitions it changes, and
- * to the preference keys that hold the user's choice.
+ * The two semantic fonts a user can choose, and the only two. Each stands for a bounded set of Eclipse font
+ * definitions that {@link FontTargets} resolves; the user never sees that list.
  *
- * <p>
- * The editor font is the platform <em>Text Font</em>. The workbench font is the platform <em>Part title</em>
- * ({@code TAB_TEXT_FONT}), <em>Tree and Table</em> and <em>Dialog</em> font definitions, all given the one chosen font.
+ * <ul>
+ * <li>{@link #EDITOR}: the base font for code and text surfaces, anchored on the Eclipse <em>Text Font</em>.</li>
+ * <li>{@link #INTERFACE}: the base font for the Eclipse interface, anchored on the Eclipse <em>Dialog Font</em>.</li>
+ * </ul>
  */
 public enum FontTarget {
 
-	EDITOR("editor", List.of("org.eclipse.jface.textfont"), PreferenceKeys.FONT_EDITOR_MODE,
-			PreferenceKeys.FONT_EDITOR_FAMILY, PreferenceKeys.FONT_EDITOR_SIZE),
-	WORKBENCH("workbench", List.of("org.eclipse.ui.workbench.TAB_TEXT_FONT", "org.eclipse.ui.workbench.TREE_TABLE_FONT",
-			"org.eclipse.jface.dialogfont"), PreferenceKeys.FONT_WORKBENCH_MODE, PreferenceKeys.FONT_WORKBENCH_FAMILY,
-			PreferenceKeys.FONT_WORKBENCH_SIZE);
+	EDITOR("editor", "Editor font", "Editors, consoles and supported code/text views.", "org.eclipse.jface.textfont",
+			PreferenceKeys.FONT_EDITOR_MODE, PreferenceKeys.FONT_EDITOR_FAMILY, PreferenceKeys.FONT_EDITOR_SIZE),
+	INTERFACE("interface", "Interface font", "Dialogs, views, trees, tables and supported Eclipse chrome.",
+			"org.eclipse.jface.dialogfont", PreferenceKeys.FONT_INTERFACE_MODE, PreferenceKeys.FONT_INTERFACE_FAMILY,
+			PreferenceKeys.FONT_INTERFACE_SIZE);
 
 	private final String role;
-	private final List<String> definitionIds;
+	private final String label;
+	private final String description;
+	private final String baseId;
 	private final String modeKey;
 	private final String familyKey;
 	private final String sizeKey;
 
-	FontTarget(String role, List<String> definitionIds, String modeKey, String familyKey, String sizeKey) {
+	FontTarget(String role, String label, String description, String baseId, String modeKey, String familyKey,
+			String sizeKey) {
 		this.role = role;
-		this.definitionIds = definitionIds;
+		this.label = label;
+		this.description = description;
+		this.baseId = baseId;
 		this.modeKey = modeKey;
 		this.familyKey = familyKey;
 		this.sizeKey = sizeKey;
 	}
 
-	/** The word used in messages: {@code editor} or {@code workbench}. */
+	/** The word used in messages and in the ownership record: {@code editor} or {@code interface}. */
 	public String role() {
 		return role;
 	}
 
-	/** The platform font definitions this target changes; the first is the one shown as the current font. */
-	List<String> definitionIds() {
-		return definitionIds;
+	/** The name shown on the preference page. */
+	public String label() {
+		return label;
+	}
+
+	/** One short line saying what the font is used for. */
+	public String description() {
+		return description;
+	}
+
+	/** The Eclipse definition this font is anchored on; the one shown as the current font. */
+	String baseId() {
+		return baseId;
 	}
 
 	String modeKey() {
@@ -58,8 +73,8 @@ public enum FontTarget {
 		return sizeKey;
 	}
 
-	/** What a theme package asks for this target, if anything. */
+	/** What a theme package asks for this font, if anything. */
 	public Optional<ThemeFonts.Face> themeFace(ThemeFonts fonts) {
-		return this == EDITOR ? fonts.editorFont() : fonts.workbenchFont();
+		return this == EDITOR ? fonts.editorFont() : fonts.interfaceFont();
 	}
 }

@@ -1,6 +1,7 @@
 package com.github.eclipsethemes.eclipse.fonts;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
 import com.github.eclipsethemes.core.models.ThemeFonts;
@@ -12,11 +13,24 @@ import com.github.eclipsethemes.core.models.ThemeFonts;
  */
 public interface WorkbenchFonts {
 
+	/**
+	 * One font definition as the installed bundles declare it.
+	 *
+	 * @param defaultsTo the definition it inherits from, or null
+	 * @param hasValue   true when it declares its own fixed default value, so it never inherits
+	 * @param editable   false for definitions Eclipse does not let users change
+	 */
+	record Definition(String defaultsTo, boolean hasValue, boolean editable) {
+	}
+
+	/** Every font definition declared by the installed bundles, by id. */
+	Map<String, Definition> definitions();
+
 	/** True when the font family is installed on this system. */
 	boolean installed(String family);
 
-	/** The stored representation of a regular-weight font of this family and size. */
-	String represent(ThemeFonts.Face face);
+	/** The stored representation of a font of this family and size, regular or bold. */
+	String represent(ThemeFonts.Face face, boolean bold);
 
 	/** The stored value of the font definition, or empty when it has none (its default applies). */
 	Optional<String> get(String fontId);

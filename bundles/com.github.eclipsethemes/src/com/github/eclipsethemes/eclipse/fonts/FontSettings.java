@@ -7,19 +7,20 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import com.github.eclipsethemes.core.models.ThemeFonts;
 
-/** The user's font choices for both targets, as stored in the plugin's preferences. */
-public record FontSettings(FontChoice editor, FontChoice workbench) {
+/** The user's font choices for the editor and interface fonts, as stored in the plugin's preferences. */
+public record FontSettings(FontChoice editor, FontChoice interfaceChoice) {
 
 	public FontChoice choice(FontTarget target) {
-		return target == FontTarget.EDITOR ? editor : workbench;
+		return target == FontTarget.EDITOR ? editor : interfaceChoice;
 	}
 
 	public FontSettings with(FontTarget target, FontChoice choice) {
-		return target == FontTarget.EDITOR ? new FontSettings(choice, workbench) : new FontSettings(editor, choice);
+		return target == FontTarget.EDITOR ? new FontSettings(choice, interfaceChoice)
+				: new FontSettings(editor, choice);
 	}
 
 	public static FontSettings load(IPreferenceStore store) {
-		return new FontSettings(load(store, FontTarget.EDITOR), load(store, FontTarget.WORKBENCH));
+		return new FontSettings(load(store, FontTarget.EDITOR), load(store, FontTarget.INTERFACE));
 	}
 
 	private static FontChoice load(IPreferenceStore store, FontTarget target) {

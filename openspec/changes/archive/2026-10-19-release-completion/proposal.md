@@ -10,7 +10,7 @@ Baseline: `develop` @ `d40cb615af2a58303aa20ae21b50803b97991ee7` (Theme Package 
 
 ## What Changes
 
-- **Theme fonts.** An optional `<fonts>` section in a package (`<editor family size/>`, `<workbench family size/>`, each
+- **Theme fonts.** An optional `<fonts>` section in a package (`<editor family size/>`, `<interface family size/>`, each
   independently optional, installed families only). The package stays `schemaVersion="1"`; no font file, URL or resource.
 - **Apply theme fonts** — a separate opt-in toggle. Applying colors never changes a font; a package without fonts changes nothing; a
   missing family is reported and skipped. Fonts are written as stored font preferences under the platform's own font-definition ids
@@ -29,7 +29,7 @@ WTP/TM4E, embedded or downloaded fonts, title-bar or third-party-widget hacks.
 ## Decision Gate
 
 **No new maintainer decision is required.** The maintainer's release-completion instruction fixed the product choices: optional
-package-provided fonts, independent editor and workbench entries, family and size only, installed families only, no embedded or
+package-provided fonts, independent editor and interface entries, family and size only, installed families only, no embedded or
 downloaded fonts, schema version unchanged, one simple toggle, explicit legacy conversion with a documented generated id, omission
 of derived values, and conservative restoration. Nothing here is `BREAKING`: existing packages and legacy themes behave as before,
 and the new keys are additive.
@@ -38,7 +38,7 @@ and the new keys are additive.
   `org.eclipse.ui.workbench.TAB_TEXT_FONT`, `TREE_TABLE_FONT`, `org.eclipse.jface.dialogfont`) and that a stored font preference
   under the plain id plus an update of the theme font registry is the public mechanism. Not runtime-verified here: how each
   surface reacts without a restart (the UI says some may need one), and CSS-theme-overridden definitions (not changed).
-- **Engineering (recorded in `design.md`):** one ownership record, the workbench font mapped to three definitions, export
+- **Engineering (recorded in `design.md`):** one ownership record, the interface font mapped to a bounded set of definitions, export
   validated by round-trip parsing.
 - **Deferred:** icons and embedded fonts (future theme-package roadmap work), per-surface coverage UI (R9), other-platform
   verification.

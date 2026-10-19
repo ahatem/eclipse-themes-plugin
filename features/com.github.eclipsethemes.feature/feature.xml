@@ -12,7 +12,7 @@
         for languages like Java, C++, and XML.
 
         Optionally, the selected theme can also color the Eclipse workbench (window, tabs, tool bars,
-        trees and tables) and supply editor and workbench fonts. Import and export themes as declarative
+        trees and tables) and supply editor and interface fonts. Import and export themes as declarative
         .ectheme theme packages, or import legacy XML themes.
         (Note: Native menus, dialogs, title bars and browser content are not themed.)
     </description>

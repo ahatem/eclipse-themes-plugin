@@ -50,6 +50,7 @@ public final class ThemePackageParser implements ThemeParser {
 	private static final String EDITOR = "editor";
 	private static final String WORKBENCH = "workbench";
 	private static final String FONTS = "fonts";
+	private static final String INTERFACE = "interface";
 	private static final Pattern ID = Pattern.compile("[a-z0-9]+(\\.[a-z0-9][a-z0-9-]*)+");
 	private static final Pattern DECIMAL = Pattern.compile("[0-9]+");
 	private static final Pattern ONE = Pattern.compile("0*1");
@@ -218,24 +219,24 @@ public final class ThemePackageParser implements ThemeParser {
 	}
 
 	/**
-	 * Reads {@code <fonts>}: an optional {@code <editor>} and an optional {@code <workbench>} entry, each with a
+	 * Reads {@code <fonts>}: an optional {@code <editor>} and an optional {@code <interface>} entry, each with a
 	 * {@code family} and a point {@code size}. An invalid entry is reported and ignored, so it can never request a
 	 * font; a repeated entry refuses the package, like a repeated workbench role.
 	 */
 	private ThemeFonts fonts(Element fonts, String source) throws ThemeParseException {
 		ThemeFonts.Face editor = null;
-		ThemeFonts.Face workbench = null;
+		ThemeFonts.Face interfaceFace = null;
 		boolean seenEditor = false;
-		boolean seenWorkbench = false;
+		boolean seenInterface = false;
 		for (Element entry : children(fonts)) {
 			String tag = entry.getTagName();
 			boolean isEditor = tag.equals(EDITOR);
-			if (!isEditor && !tag.equals(WORKBENCH)) {
+			if (!isEditor && !tag.equals(INTERFACE)) {
 				warning(ThemeDiagnostic.UNKNOWN_ELEMENT, "Unknown font entry '<" + tag + ">'; it was ignored", source,
 						tag, null);
 				continue;
 			}
-			if (isEditor ? seenEditor : seenWorkbench) {
+			if (isEditor ? seenEditor : seenInterface) {
 				throw refusal(error(ThemeDiagnostic.DUPLICATE_SECTION, "Font entry <" + tag
 						+ "> is declared more than once", source, tag, null));
 			}
@@ -244,11 +245,11 @@ public final class ThemePackageParser implements ThemeParser {
 				seenEditor = true;
 				editor = face;
 			} else {
-				seenWorkbench = true;
-				workbench = face;
+				seenInterface = true;
+				interfaceFace = face;
 			}
 		}
-		return new ThemeFonts(editor, workbench);
+		return new ThemeFonts(editor, interfaceFace);
 	}
 
 	/** The entry's font, or {@code null} after a warning when its family or size is not usable. */

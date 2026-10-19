@@ -340,7 +340,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		browserPreview = new Browser(group, SWT.BORDER);
 		GridData browserData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		browserData.widthHint = WRAP_HINT;
-		browserData.heightHint = 130;
+		browserData.heightHint = 190;
 		browserData.minimumHeight = 90;
 		browserPreview.setLayoutData(browserData);
 		showDefaultPreview();
@@ -387,9 +387,9 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		group.setLayout(layout);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
-		createFontRow(group, FontTarget.EDITOR, "Editor font:", "The font of the source code and text editors");
-		createFontRow(group, FontTarget.WORKBENCH, "Workbench font:",
-				"The font of view and editor tabs, trees, tables and dialogs");
+		for (FontTarget target : FontTarget.values()) {
+			createFontRow(group, target);
+		}
 
 		Label hint = new Label(group, SWT.WRAP);
 		hint.setText(FontSectionModel.HINT);
@@ -399,9 +399,11 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		hint.setLayoutData(hintData);
 	}
 
-	private void createFontRow(Composite group, FontTarget target, String caption, String tooltip) {
+	private void createFontRow(Composite group, FontTarget target) {
+		String tooltip = target.description();
 		Label label = new Label(group, SWT.NONE);
-		label.setText(caption);
+		label.setText(target.label() + ":");
+		label.setToolTipText(tooltip);
 		// The caption spans the combo row and the status line under it, so each font reads as one block.
 		GridData labelData = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 2);
 		labelData.verticalIndent = 4;
@@ -608,7 +610,7 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		Optional<ThemeFonts.Face> start = choice.custom() != null ? Optional.of(choice.custom())
 				: fontCoordinator().current(target);
 		FontDialog dialog = new FontDialog(getShell());
-		dialog.setText("Choose " + target.role() + " font");
+		dialog.setText("Choose " + target.label().toLowerCase());
 		dialog.setEffectsVisible(false);
 		start.ifPresent(face -> dialog.setFontList(new FontData[] { new FontData(face.family(), face.size(), SWT.NORMAL) }));
 		FontData chosen = dialog.open();

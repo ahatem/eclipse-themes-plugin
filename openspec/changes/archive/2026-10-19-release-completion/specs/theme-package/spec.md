@@ -1,13 +1,14 @@
 ## ADDED Requirements
 
-### Requirement: A package may state an editor font and a workbench font
+### Requirement: A package may state an editor font and an interface font
 
-A package MAY contain one `<fonts>` section with an optional `<editor>` and `<workbench>` entry, each a `family` (at most 128
-characters) and a `size` of 4 to 96 whole points. A package SHALL NOT embed or reference font files, and `<fonts>` SHALL NOT change
+A package MAY contain one `<fonts>` section with an optional `<editor>` and `<interface>` entry, each a `family` (at most 128
+characters) and a `size` of 4 to 96 whole points. Each entry is a semantic intent; the platform font definitions it coordinates are
+not part of the format. A package SHALL NOT embed or reference font files, and `<fonts>` SHALL NOT change
 `schemaVersion`. An invalid entry SHALL give a `font` warning and be ignored; a repeated entry or section SHALL refuse the package.
 
 #### Scenario: Both fonts declared
-- **GIVEN** a package with `<fonts><editor family="Consolas" size="11"/><workbench family="Segoe UI" size="9"/></fonts>`
+- **GIVEN** a package with `<fonts><editor family="Consolas" size="11"/><interface family="Segoe UI" size="9"/></fonts>`
 - **WHEN** it is parsed
 - **THEN** the theme carries both fonts and no finding is reported
 

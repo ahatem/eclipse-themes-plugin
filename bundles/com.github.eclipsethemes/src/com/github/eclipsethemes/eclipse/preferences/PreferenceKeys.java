@@ -27,14 +27,14 @@ public interface PreferenceKeys {
 	/** The user's own editor font (family and size); used only while the editor font mode is custom. */
 	String FONT_EDITOR_FAMILY = "FONT_EDITOR_FAMILY";
 	String FONT_EDITOR_SIZE = "FONT_EDITOR_SIZE";
-	/** Where the workbench font comes from: {@code keep}, {@code theme} or {@code custom}. Absent means keep. */
-	String FONT_WORKBENCH_MODE = "FONT_WORKBENCH_MODE";
-	/** The user's own workbench font (family and size); used only while the workbench font mode is custom. */
-	String FONT_WORKBENCH_FAMILY = "FONT_WORKBENCH_FAMILY";
-	String FONT_WORKBENCH_SIZE = "FONT_WORKBENCH_SIZE";
+	/** Where the interface font comes from: {@code keep}, {@code theme} or {@code custom}. Absent means keep. */
+	String FONT_INTERFACE_MODE = "FONT_INTERFACE_MODE";
+	/** The user's own interface font (family and size); used only while the interface font mode is custom. */
+	String FONT_INTERFACE_FAMILY = "FONT_INTERFACE_FAMILY";
+	String FONT_INTERFACE_SIZE = "FONT_INTERFACE_SIZE";
 	/**
 	 * The font definitions this plugin wrote, the exact value of each and what the definition held before
-	 * ({@code id}, written value and prior state per line). Absent when it owns none.
+	 * ({@code group}, {@code id}, written value and prior state per line). Absent when it owns none.
 	 */
 	String THEME_FONTS_OWNED = "THEME_FONTS_OWNED";
 }

@@ -188,14 +188,15 @@ plugin's own license as covering a package.
 - **WHEN** its details are shown
 - **THEN** both values are presented separately
 
-### Requirement: A package may state an editor font and a workbench font
+### Requirement: A package may state an editor font and an interface font
 
-A package MAY contain one `<fonts>` section with an optional `<editor>` and `<workbench>` entry, each a `family` (at most 128
-characters) and a `size` of 4 to 96 whole points. A package SHALL NOT embed or reference font files, and `<fonts>` SHALL NOT change
+A package MAY contain one `<fonts>` section with an optional `<editor>` and `<interface>` entry, each a `family` (at most 128
+characters) and a `size` of 4 to 96 whole points. Each entry is a semantic intent; the platform font definitions it coordinates are
+not part of the format. A package SHALL NOT embed or reference font files, and `<fonts>` SHALL NOT change
 `schemaVersion`. An invalid entry SHALL give a `font` warning and be ignored; a repeated entry or section SHALL refuse the package.
 
 #### Scenario: Both fonts declared
-- **GIVEN** a package with `<fonts><editor family="Consolas" size="11"/><workbench family="Segoe UI" size="9"/></fonts>`
+- **GIVEN** a package with `<fonts><editor family="Consolas" size="11"/><interface family="Segoe UI" size="9"/></fonts>`
 - **WHEN** it is parsed
 - **THEN** the theme carries both fonts and no finding is reported
 
@@ -211,7 +212,7 @@ characters) and a `size` of 4 to 96 whole points. A package SHALL NOT embed or r
 
 ### Requirement: Fonts follow the user's per-target choice and never change by applying colors alone
 
-The editor font and the workbench font SHALL each be *Keep current*, *Use theme* or *Custom*, defaulting to Keep. A theme's fonts
+The editor font and the interface font SHALL each be *Keep current*, *Use theme* or *Custom*, defaulting to Keep. A theme's fonts
 SHALL be used only for *Use theme*; a custom font is a user preference and SHALL NOT be written to a package. A theme without
 fonts SHALL NOT set a font. A requested family that is not installed SHALL be reported and the font left unchanged.
 
@@ -219,6 +220,11 @@ fonts SHALL NOT set a font. A requested family that is not installed SHALL be re
 - **GIVEN** a target is set to Keep current and the theme has fonts
 - **WHEN** the theme is applied
 - **THEN** no font preference is written for that target
+
+#### Scenario: Old workbench font entry
+- **GIVEN** a `<fonts>` section containing a `<workbench>` entry
+- **WHEN** it is parsed
+- **THEN** the entry is reported as an unknown element and ignored, and no interface font is read from it
 
 #### Scenario: Missing family
 - **GIVEN** the editor font is Use theme and its family is not installed

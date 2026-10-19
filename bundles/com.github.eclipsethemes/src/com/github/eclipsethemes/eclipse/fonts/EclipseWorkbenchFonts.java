@@ -1,8 +1,12 @@
 package com.github.eclipsethemes.eclipse.fonts;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -21,7 +25,8 @@ import com.github.eclipsethemes.core.models.ThemeFonts;
  * {@link WorkbenchFonts} over the mechanism Eclipse's own Colors and Fonts page uses: the stored value lives in the
  * instance preferences of {@code org.eclipse.ui.workbench} under the font definition's key (see {@link #key}), and
  * the running workbench is updated through the current {@code ITheme}'s public {@link FontRegistry}, the very
- * registry the Colors and Fonts page shows. No widget is touched directly.
+ * registry the Colors and Fonts page shows. No widget is touched directly. The definitions themselves are read from the
+ * {@code org.eclipse.ui.themes} extension point, the declaration Eclipse builds its own font definitions from.
  *
  * <p>
  * Limit: a font definition that the active Eclipse CSS theme itself overrides is stored by Eclipse under a key
@@ -31,6 +36,20 @@ import com.github.eclipsethemes.core.models.ThemeFonts;
 public final class EclipseWorkbenchFonts implements WorkbenchFonts {
 
 	private static final String NODE = "org.eclipse.ui.workbench";
+	private static final String THEMES_POINT = "org.eclipse.ui.themes";
+
+	@Override
+	public Map<String, Definition> definitions() {
+		Map<String, Definition> definitions = new HashMap<>();
+		for (IConfigurationElement element : Platform.getExtensionRegistry().getConfigurationElementsFor(THEMES_POINT)) {
+			String id = element.getAttribute("id");
+			if ("fontDefinition".equals(element.getName()) && id != null) {
+				definitions.put(id, new Definition(element.getAttribute("defaultsTo"),
+						element.getAttribute("value") != null, !"false".equals(element.getAttribute("isEditable"))));
+			}
+		}
+		return definitions;
+	}
 
 	@Override
 	public boolean installed(String family) {
@@ -46,9 +65,9 @@ public final class EclipseWorkbenchFonts implements WorkbenchFonts {
 	}
 
 	@Override
-	public String represent(ThemeFonts.Face face) {
+	public String represent(ThemeFonts.Face face, boolean bold) {
 		return PreferenceConverter.getStoredRepresentation(
-				new FontData[] { new FontData(face.family(), face.size(), SWT.NORMAL) });
+				new FontData[] { new FontData(face.family(), face.size(), bold ? SWT.BOLD : SWT.NORMAL) });
 	}
 
 	/**
@@ -84,6 +103,18 @@ public final class EclipseWorkbenchFonts implements WorkbenchFonts {
 	public void remove(String fontId) {
 		String key = key(fontId);
 		InstanceScope.INSTANCE.getNode(NODE).remove(key);
+		Definition definition = definitions().get(fontId);
+		if (definition != null && definition.defaultsTo() != null && !definition.hasValue()) {
+			// It inherits again: show what its parent currently shows (the parent is restored before its children).
+			try {
+				FontData[] inherited = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme().getFontRegistry()
+						.getFontData(definition.defaultsTo());
+				PlatformUI.getWorkbench().getThemeManager().getCurrentTheme().getFontRegistry().put(fontId, inherited);
+			} catch (RuntimeException e) {
+				// The inherited font is shown at the next start.
+			}
+			return;
+		}
 		String fallback = DefaultScope.INSTANCE.getNode(NODE).get(key, null);
 		if (fallback != null) {
 			publish(fontId, fallback);

@@ -90,7 +90,7 @@ public final class ThemePackageWriter {
 		if (!fonts.isEmpty()) {
 			xml.append("  <fonts>\n");
 			fonts.editorFont().ifPresent(face -> face(xml, "editor", face));
-			fonts.workbenchFont().ifPresent(face -> face(xml, "workbench", face));
+			fonts.interfaceFont().ifPresent(face -> face(xml, "interface", face));
 			xml.append("  </fonts>\n");
 		}
 		xml.append("</themePackage>\n");

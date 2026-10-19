@@ -4,10 +4,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * The fonts a theme package asks for. Both entries are independently optional; a theme without fonts asks for
- * nothing. Fonts are installed font families only: a package never carries font files.
+ * The two semantic fonts a theme package asks for: the editor font and the interface font. Both are independently
+ * optional; a theme without fonts asks for nothing. They are intents, not platform definitions: the plugin maps each to
+ * the Eclipse font definitions it coordinates. Fonts are installed font families only: a package never carries font
+ * files.
  */
-public record ThemeFonts(Face editor, Face workbench) {
+public record ThemeFonts(Face editor, Face interfaceFace) {
 
 	public static final int MIN_SIZE = 4;
 	public static final int MAX_SIZE = 96;
@@ -51,11 +53,11 @@ public record ThemeFonts(Face editor, Face workbench) {
 		return Optional.ofNullable(editor);
 	}
 
-	public Optional<Face> workbenchFont() {
-		return Optional.ofNullable(workbench);
+	public Optional<Face> interfaceFont() {
+		return Optional.ofNullable(interfaceFace);
 	}
 
 	public boolean isEmpty() {
-		return editor == null && workbench == null;
+		return editor == null && interfaceFace == null;
 	}
 }

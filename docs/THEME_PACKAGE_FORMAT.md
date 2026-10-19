@@ -36,7 +36,7 @@ workbench colors, or a format that refuses mistakes instead of silently filling 
   </workbench>
   <fonts>
     <editor family="Consolas" size="11"/>
-    <workbench family="Segoe UI" size="9"/>
+    <interface family="Segoe UI" size="9"/>
   </fonts>
 </themePackage>
 ```
@@ -109,7 +109,7 @@ A `<workbench>` section never turns workbench theming on or off. It is used only
 
 ### `<fonts>` (optional)
 
-`<fonts>` may contain an `<editor>` and a `<workbench>` entry. Each entry is independently optional and has exactly two
+`<fonts>` may contain an `<editor>` and an `<interface>` entry. Each entry is independently optional and has exactly two
 attributes:
 
 | Attribute | Rule |
@@ -119,12 +119,26 @@ attributes:
 
 There is no weight, style, file, URL or fallback list: a package never embeds, downloads or references a font file.
 
-The user chooses, separately for the editor font and the workbench font, *Keep current font*, *Use theme font* or *Custom font*.
-A package's entries matter only for *Use theme font*:
+The two entries are **semantic intents**, not lists of platform fonts. The user chooses, separately for the **Editor font** and
+the **Interface font**, *Keep current font*, *Use theme font* or *Custom font*. A package's entries matter only for *Use theme
+font*:
 
-- `<editor>` is the font recommended for the platform *Text Font* (the font of the Java editor and other text editors).
-- `<workbench>` is the font recommended for the platform *Part title* (view and editor tabs), *Tree and Table* and *Dialog*
-  fonts, all set to the one requested font.
+- `<editor>` is the font recommended for editors, consoles and supported code and text views. It is applied to the platform
+  *Text Font* and to the definitions Eclipse itself declares to default to it (for example the Java editor, Console and compare
+  fonts), plus a few text definitions that declare no inheritance but serve the same purpose.
+- `<interface>` is the font recommended for dialogs, views, trees, tables and supported Eclipse chrome. It is applied to the
+  platform *Dialog Font*, the definitions that declare it as their default, the view-tab (*Part title*) and *Tree and Table*
+  fonts, and the wizard banner and section header fonts. Those two headings keep their bold weight and their size relative to
+  the chosen font.
+
+The exact definitions are an implementation detail documented in
+[WORKBENCH_THEMING_COMPATIBILITY.md](WORKBENCH_THEMING_COMPATIBILITY.md); a package never names an Eclipse font id, and a
+family and size are the only things a package can state. The coordinated values appear under *Preferences > General >
+Appearance > Colors and Fonts*, using the platform's own storage; this plugin keeps no font settings of its own that Eclipse
+does not know.
+
+The top-level `<workbench>` section above is a different thing: it holds workbench *colors*. There is no `<workbench>` entry
+inside `<fonts>`; an old one is reported as an unknown element and ignored.
 
 A user's *Custom font* is a user preference, not package data: it is remembered across theme switches and is never written to an
 exported package. Exporting a package keeps the fonts the package itself carries, and converting a legacy theme invents none.
@@ -137,8 +151,9 @@ Behavior to design for:
   is.
 - Switching a font back to *Keep current font*, selecting a theme that names no font for a font set to *Use theme font*, or
   choosing **Stop managing**, restores each font definition the plugin changed to what it was before, but only while it still
-  holds the value the plugin wrote. A font the user has since chosen themselves under *Colors and Fonts* is never overwritten
-  unless the user explicitly picks a different font on the preference page.
+  holds the value the plugin wrote. A definition the user has since changed under *Colors and Fonts* is never overwritten
+  behind their back; it is left as found and no longer managed. Choosing **Apply** on the preference page is an explicit request
+  and takes the whole font group over again; the page then says how many changed definitions it replaced.
 - Fonts are stored in the platform preferences and applied through the platform font registry. Some workbench surfaces may
   update only after restarting Eclipse. Where a CSS theme overrides a font definition for itself, that override is not changed.
 
@@ -160,14 +175,14 @@ Reported as warnings (the package is still imported):
 - workbench text roles that had to be adjusted for readability;
 - an invalid `<fonts>` entry (blank or over-long `family`, a `size` that is not a whole number from 4 to 96, or a missing
   attribute): that entry is ignored and the rest of the package is used. An unknown child of `<fonts>` is reported like any
-  unknown element, and a repeated `<editor>` or `<workbench>` entry inside `<fonts>` refuses the package.
+  unknown element, and a repeated `<editor>` or `<interface>` entry inside `<fonts>` refuses the package.
 
 ## Exporting a theme
 
 **Export as Package...** on the preference page saves the selected theme to a new `.ectheme` file that you choose; it never
 changes the installed theme.
 
-- A theme that is already a package is written back with its metadata, editor values, authored workbench colors and fonts. The
+- A theme that is already a package is written back with its metadata, editor values, authored workbench colors and fonts. A custom font chosen on the page is a user preference and is never written. The
   output is deterministic and readable: `background` and `foreground` first, then the other tokens alphabetically.
 - Nothing internal is written: no installed path, no catalog identity and no preference values. Workbench colors that were only
   derived at import time are not written, so an export states only what the theme itself says.
