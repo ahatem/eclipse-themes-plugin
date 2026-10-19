@@ -6,7 +6,9 @@
 ![Eclipse Marketplace Downloads](https://img.shields.io/eclipse-marketplace/dt/eclipse-themes)
 
 
-A plugin for finding and applying color themes in the Eclipse IDE: editor syntax colors, and optionally the workbench (window, tabs, tool bars, trees, tables) and theme-provided fonts.
+**One theme. One coherent Eclipse.**
+
+A plugin for finding and applying color themes in the Eclipse IDE: editor syntax colors, optionally the workbench (window, tabs, tool bars, trees, tables), and your choice of editor and workbench fonts, either from the theme or your own. Native menus, dialogs, title bars and Browser content are outside what Eclipse lets a theme change; see the coverage notes below.
 
 This project started when the original `eclipsecolorthemes.org` website went offline. To help the community, I built a new, modern, open-source alternative: **[eclipse-color-themes.vercel.app](https://eclipse-color-themes.vercel.app/)**.
 
@@ -16,10 +18,11 @@ I then realized the old plugin was also outdated, so I decided to build this one
 
 - **Dozens of popular themes** included right out of the box.
 - A link to **[download hundreds more](https://eclipse-color-themes.vercel.app/)** from the community collection.
-- A clean preference page with a **live preview** for your code.
+- A **Theme Manager** preference page: a searchable theme library, a **live preview**, and the selected theme's appearance, fonts and details side by side.
 - **Import support** for your own favorite legacy `.xml` themes and for **theme packages** (`.ectheme`), a declarative format with provenance, explicit workbench colors and optional fonts. See the [theme package format](docs/THEME_PACKAGE_FORMAT.md).
 - **Export** any installed theme as a new `.ectheme` package, which also converts a legacy theme into the package format.
-- **Optional workbench theming** and **optional theme fonts**, both off by default and both handed back cleanly when turned off.
+- **Optional workbench theming**, so the window, tabs, trees and tables match your editor theme.
+- **Fonts you control**, separately for the editor and the workbench: *Keep current font*, *Use theme font* or *Custom font*. Nothing changes until you choose Apply, and anything the plugin replaced is handed back when you stop using it.
 - Syntax highlighting support for Java, C++, XML, and more via an adapter system.
 
 ## 📸 Screenshots
@@ -45,8 +48,12 @@ I then realized the old plugin was also outdated, so I decided to build this one
 
 1.  Go to `Window -> Preferences` (or `Eclipse -> Settings...` on macOS).
 2.  Navigate to `General -> Appearance -> Eclipse Themes`.
-3.  Pick a theme from the list to see how it looks.
+3.  Search or browse the **Theme Library** on the left and pick a theme to see its preview and details on the right.
 4.  Click **Apply and Close** to set your new editor theme.
+
+Selecting a theme, switching the font options and ticking the workbench option only stage your choices; they take effect when you
+choose **Apply** or **Apply and Close**, and **Cancel** discards them. **Import**, **Export**, **Update** and **Remove** act on the
+theme library straight away and are separate from Apply.
 
 ### Theming the Eclipse workbench (optional)
 
@@ -57,17 +64,26 @@ platforms are experimental and need an explicit opt-in. Native menus, dialogs, t
 See [workbench theming compatibility](docs/WORKBENCH_THEMING_COMPATIBILITY.md) for the support matrix and side effects
 (four extra entries on the Appearance page).
 
-### Theme fonts (optional)
+### Fonts
 
-A theme package may ask for an editor font and a workbench font (family and size only; fonts are never embedded or downloaded).
-Tick **Apply theme fonts** before applying to use them. It is separate from colors: applying colors never changes a font, a
-theme that names no fonts changes nothing, and a font family that is not installed is reported and skipped. Un-ticking it
-restores the fonts it replaced, except any font you have since chosen yourself. Some workbench surfaces may update only after
-restarting Eclipse. See the [theme package format](docs/THEME_PACKAGE_FORMAT.md#fonts-optional).
+The **Fonts** section has two independent choices, the **Editor font** (source code and text editors) and the **Workbench font**
+(view and editor tabs, trees, tables and dialogs). Each is one of:
+
+- **Keep current font** (the default): the plugin leaves that font alone.
+- **Use theme font**: use the font the selected theme recommends. A theme that names none shows *Not specified by this theme* and
+  changes nothing. Theme fonts follow the theme you select.
+- **Custom font**: pick any installed font with the standard system font dialog (family and size). Your custom fonts are your own
+  preferences: they are remembered when you switch themes and are never written into exported packages.
+
+A font family that is not installed is reported and skipped. Fonts are family and size only; they are never embedded or
+downloaded. When you switch back to *Keep current font* or choose a theme without a font, the plugin gives back the font it
+replaced, unless you have changed that font yourself since. Some workbench surfaces may update only after restarting Eclipse, and
+a font that Eclipse CSS overrides cannot be changed from here. See the
+[theme package format](docs/THEME_PACKAGE_FORMAT.md#fonts-optional).
 
 ### Theme packages and export
 
-Import accepts `.ectheme` files as well as `.xml` files; the format is chosen by the file extension. **Export as Package...**
+Import accepts `.ectheme` files as well as `.xml` files; the format is chosen by the file extension. **Export...**
 saves the selected theme as a new `.ectheme` file. For a legacy theme this is an explicit conversion into a new file that you
 choose; the installed theme is not changed. An installed theme can only be updated with a file of the same format.
 
@@ -102,7 +118,7 @@ without deleting it or changing its identity. A `website` value becomes a
 clickable link only when it is an `http` or `https` URI; any other value is shown
 as inert text and is never passed to the platform launcher.
 
-Use **Update Selected Theme...** to replace the content of the selected installed
+Use **Update...** to replace the content of the selected installed
 theme while keeping its identity, and **Remove** to permanently delete its
 managed file after confirmation. Updating a theme does not reapply its colors
 automatically.

@@ -2,7 +2,7 @@
 
 A theme package is one XML document with the extension `.ectheme`. It describes an editor color theme and, optionally, the colors
 the Eclipse workbench should use when the user has turned on *Also theme the Eclipse workbench*, and the editor and workbench
-fonts it would like when the user has turned on *Apply theme fonts*. A package is purely declarative:
+fonts it recommends, used when the user sets a font to *Use theme font*. A package is purely declarative:
 nothing in it is executed, and nothing is loaded from outside it.
 
 Legacy `.xml` themes (`<colorTheme>`) keep working unchanged. Write a package when you want provenance metadata, explicit
@@ -119,21 +119,26 @@ attributes:
 
 There is no weight, style, file, URL or fallback list: a package never embeds, downloads or references a font file.
 
-What the entries change, and only when the user turns on **Apply theme fonts** on the preference page:
+The user chooses, separately for the editor font and the workbench font, *Keep current font*, *Use theme font* or *Custom font*.
+A package's entries matter only for *Use theme font*:
 
-- `<editor>` sets the platform *Text Font* (the font of the Java editor and other text editors).
-- `<workbench>` sets the platform *Part title* (view and editor tabs), *Tree and Table* and *Dialog* fonts, all to the one
-  requested font.
+- `<editor>` is the font recommended for the platform *Text Font* (the font of the Java editor and other text editors).
+- `<workbench>` is the font recommended for the platform *Part title* (view and editor tabs), *Tree and Table* and *Dialog*
+  fonts, all set to the one requested font.
+
+A user's *Custom font* is a user preference, not package data: it is remembered across theme switches and is never written to an
+exported package. Exporting a package keeps the fonts the package itself carries, and converting a legacy theme invents none.
 
 Behavior to design for:
 
-- Applying a theme's colors never changes a font. A package without `<fonts>`, or with fonts turned off, does not set or reset
-  any font.
+- Applying a theme's colors never changes a font unless the user chose *Use theme font* or *Custom font* for it. A package
+  without `<fonts>` shows *Not specified by this theme* and changes nothing.
 - A family that is not installed is reported ("Requested font ... is not installed") and the corresponding font is left as it
   is.
-- Turning **Apply theme fonts** off, or choosing **Stop managing**, restores each font definition the plugin changed to what it
-  was before, but only while it still holds the value the plugin wrote. A font the user has since chosen themselves under
-  *Colors and Fonts* is never overwritten.
+- Switching a font back to *Keep current font*, selecting a theme that names no font for a font set to *Use theme font*, or
+  choosing **Stop managing**, restores each font definition the plugin changed to what it was before, but only while it still
+  holds the value the plugin wrote. A font the user has since chosen themselves under *Colors and Fonts* is never overwritten
+  unless the user explicitly picks a different font on the preference page.
 - Fonts are stored in the platform preferences and applied through the platform font registry. Some workbench surfaces may
   update only after restarting Eclipse. Where a CSS theme overrides a font definition for itself, that override is not changed.
 

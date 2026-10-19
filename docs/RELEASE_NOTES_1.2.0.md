@@ -8,13 +8,19 @@
   the same hardened XML policy as legacy themes and never contains code, CSS or resources. Legacy `.xml` themes keep working.
 - **Explicit workbench colors.** A package can state its eight workbench roles instead of relying on colors derived from the
   editor. Text roles are still adjusted when needed to stay readable.
-- **Optional theme fonts.** A package can ask for an editor font and a workbench font (family and size). A separate
-  *Apply theme fonts* toggle controls them; applying colors never changes a font, a missing family is reported and skipped, and
-  turning the toggle off restores the fonts that were replaced, except fonts you have changed yourself since.
-- **Package import and export.** *Export as Package...* saves any installed theme as a new `.ectheme` file. A legacy theme is
+- **User-selectable editor font.** Keep your current font, use the font the theme recommends, or pick any installed font.
+- **User-selectable workbench font.** The same three choices for view and editor tabs, trees, tables and dialogs. The two fonts
+  are chosen independently, and your custom fonts are remembered when you switch themes.
+- **Theme-provided font recommendations.** A package can recommend an editor font and a workbench font (family and size). They
+  are used only when you choose *Use theme font*; a theme that names none says so and changes nothing. Applying colors never
+  changes a font on its own, a missing family is reported and skipped, and switching back to *Keep current font* restores the
+  font that was replaced, unless you have changed it yourself since.
+- **Redesigned Theme Manager.** The preference page now has a searchable Theme Library on the left and the selected theme on
+  the right: header, preview, Appearance, Fonts and About this theme. Choices are staged until Apply or OK, and Cancel discards
+  them. Import, Export, Update and Remove are library actions kept apart from Apply. Status messages appear inline, and the
+  page resizes with the preferences dialog.
+- **Package import and export.** *Export...* saves any installed theme as a new `.ectheme` file. A legacy theme is
   converted into a new file with a generated `legacy.<name>` id; the installed theme is not changed.
-- **Preference page improvements.** Format row, Fonts section, export action, warnings listed after an import or update, and
-  format-neutral wording.
 - **Safety and ownership.** Every setting the plugin writes for the workbench, other plug-ins' editors and fonts is tracked
   value-exactly: it is restored only while it still holds what the plugin wrote, so your own later choices are never overwritten.
 
@@ -22,7 +28,7 @@
 
 - Runtime: Java 17 and later, as before.
 - Workbench theming is verified on **Windows with Eclipse 4.40 and 4.41**. Other platforms and Eclipse versions are experimental
-  and need an explicit opt-in. Theme fonts follow the same boundary and are not separately verified elsewhere.
+  and need an explicit opt-in. Font choices are not separately verified elsewhere.
 - Native menus, dialogs, title bars and browser content are not themed. Some workbench surfaces may pick up a changed font only
   after restarting Eclipse.
 - Not included: icon theming, CSS authoring or import, embedded or downloaded fonts, a marketplace or remote repository.
