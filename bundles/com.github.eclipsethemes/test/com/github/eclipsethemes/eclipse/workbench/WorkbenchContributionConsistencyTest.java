@@ -1,6 +1,7 @@
 package com.github.eclipsethemes.eclipse.workbench;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.StandardCharsets;
@@ -35,6 +36,9 @@ import com.github.eclipsethemes.core.workbench.WorkbenchSlots;
 public class WorkbenchContributionConsistencyTest {
 
 	private static final Path BUNDLE = Paths.get(".");
+	private static final Set<String> PLATFORM_REFERENCES = Set.of("org-eclipse-ui-workbench-TAB_TEXT_FONT",
+			"org-eclipse-ui-workbench-TREE_TABLE_FONT", "org-eclipse-ui-workbench-FORM_HEADING_ERROR_COLOR",
+			"org-eclipse-ui-workbench-FORM_HEADING_WARNING_COLOR", "org-eclipse-ui-workbench-FORM_HEADING_INFO_COLOR");
 
 	@Test
 	public void pluginXmlDeclaresTheFourThemesWithTheirFamilyStylesheet() throws Exception {
@@ -46,6 +50,8 @@ public class WorkbenchContributionConsistencyTest {
 				Element theme = (Element) list.item(i);
 				themes.put(theme.getAttribute("id"), theme.getAttribute("basestylesheeturi"));
 			}
+			// Only the two family sheets: any other sheet bound to our ids escapes the checks below.
+			assertEquals(0, ext.getElementsByTagName("stylesheet").getLength());
 		}
 		assertEquals(new HashSet<>(WorkbenchSlots.ownThemeIds()), themes.keySet());
 		for (WorkbenchFamily family : WorkbenchFamily.values()) {
@@ -86,15 +92,23 @@ public class WorkbenchContributionConsistencyTest {
 		for (WorkbenchFamily family : WorkbenchFamily.values()) {
 			String css = Files.readString(BUNDLE.resolve("css/workbench-" + family.key() + ".css"), StandardCharsets.UTF_8);
 			Set<String> referenced = new HashSet<>();
-			Matcher matcher = Pattern.compile("'#([A-Za-z0-9-]+)'").matcher(css);
+			Set<String> platform = new HashSet<>();
+			Matcher matcher = Pattern.compile("'#([A-Za-z0-9_-]+)'").matcher(css);
 			while (matcher.find()) {
-				referenced.add(matcher.group(1));
+				String id = matcher.group(1);
+				(id.startsWith("com-github-eclipsethemes-workbench-") ? referenced : platform).add(id);
 			}
 			Set<String> expected = new HashSet<>();
 			for (WorkbenchColor role : WorkbenchColor.values()) {
 				expected.add(role.cssId(family));
 			}
 			assertEquals(family.key(), expected, referenced);
+			// Platform definitions read the same way the stock Dark and Light sheets read them (fonts, form headings).
+			assertEquals(family.key(), PLATFORM_REFERENCES, platform);
+			// Preference and color-definition rules make Eclipse write into other plug-ins' preferences and delete
+			// user values on the next theme change (evidence/runtime/rejected-definitions-sheet), so neither may appear.
+			assertFalse(family.key(), withoutComments(css).contains("IEclipsePreferences"));
+			assertFalse(family.key(), withoutComments(css).contains("ColorDefinition"));
 		}
 	}
 
