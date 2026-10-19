@@ -1,5 +1,7 @@
 package com.github.eclipsethemes.core.models;
 
+import java.util.Locale;
+
 public enum ThemeType {
 	LIGHT, DARK;
 	
@@ -8,6 +10,6 @@ public enum ThemeType {
 	}
 	
 	public static ThemeType from(String type) {
-		return type.toLowerCase().equals("dark") ? DARK : LIGHT;
+		return type.toLowerCase(Locale.ROOT).equals("dark") ? DARK : LIGHT;
 	}
 }

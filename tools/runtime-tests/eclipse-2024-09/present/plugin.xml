@@ -1,0 +1,4 @@
+<plugin>
+  <extension point="org.eclipse.core.runtime.applications" id="core"><application><run class="smoke.CoreContracts"/></application></extension>
+  <extension point="org.eclipse.core.runtime.applications" id="consumers"><application><run class="smoke.EditorConsumers"/></application></extension>
+</plugin>

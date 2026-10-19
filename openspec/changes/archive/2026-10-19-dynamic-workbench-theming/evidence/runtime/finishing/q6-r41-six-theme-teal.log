@@ -1,0 +1,393 @@
+ENV os=Windows 11 10.0 ws=win32 java=25.0.4.1+1-LTS cssThemeBundle=0.15.200.v20260806-0515 platform=4.41.0.v20260828-1142 product=1.1.0.202610182337 state=32
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark, org.eclipse.e4.ui.css.theme.e4_default, com.github.eclipsethemes.workbench.dark, com.github.eclipsethemes.workbench.dark.alt, com.github.eclipsethemes.workbench.light, com.github.eclipsethemes.workbench.light.alt, spike.bis.v0.dark, spike.bis.v8.dark, spike.bis.v9.dark, spike.bis.v10.dark, spike.bis.v11.dark, spike.bis.v12.dark, spike.bis.v13.dark, spike.bis.v14.dark, spike.bis.w0.dark, spike.bis.w1.dark, spike.bis.w2.dark, spike.bis.w3.dark, spike.bis.w4.dark, spike.bis.w5.dark, spike.bis.w6.dark, spike.bis.w7.dark, spike.bis.w8.dark, spike.bis.w9.dark, spike.bis.w10.dark]
+STATE boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_dark | osDark=true | highContrast=false
+OWNPREFS 
+STEP persp|org.eclipse.jdt.ui.JavaPerspective
+PERSP org.eclipse.jdt.ui.JavaPerspective true
+STEP view|org.eclipse.jdt.ui.PackageExplorer
+VIEW org.eclipse.jdt.ui.PackageExplorer
+STEP project
+PROJECT opened Demo.java
+DEFENDER dialog cancelled
+STEP view|org.eclipse.ui.console.ConsoleView
+VIEW org.eclipse.ui.console.ConsoleView
+STEP view|org.eclipse.ui.views.ProblemView
+VIEW org.eclipse.ui.views.ProblemView
+STEP view|spike.p8.view
+VIEW spike.p8.view
+STEP wait|2500
+STEP state|start
+STATE start | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=org.eclipse.e4.ui.css.theme.e4_dark | osDark=true | highContrast=false
+OWNPREFS 
+STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\atom.xml
+IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:29528284-89e6-49ef-9b2f-54da76de4d26, origin=INSTALLED, locator=Optional[d62246ef-141e-4ed6-9b41-ca87b0b08ad1.xml], theme=R8A QA - Atom One Dark], diagnostics=[]]
+STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\dracula.xml
+IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:da6b8e40-6e57-4cee-8b0b-28e902389ad5, origin=INSTALLED, locator=Optional[ab9e225e-18ee-4cd5-b874-6c9206dd1cd3.xml], theme=R8A QA - Dracula], diagnostics=[]]
+STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\mocha.xml
+IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:1d6b4803-7e38-431c-81f7-91c84007bc0c, origin=INSTALLED, locator=Optional[30dba507-20f4-41e4-a071-ed6c94e452b8.xml], theme=R8A QA - Catppuccin Mocha], diagnostics=[]]
+STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\gruvbox.xml
+IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:8eaead84-959d-4f96-b56e-cd78fcd01c98, origin=INSTALLED, locator=Optional[1caed798-fa5b-4ce1-8685-7980802bdc3a.xml], theme=R8A QA - Gruvbox Dark], diagnostics=[]]
+STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\solarized.xml
+IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:f904a5d8-84d1-4f2a-ae74-41e2b9ed25f2, origin=INSTALLED, locator=Optional[578f2ab7-e9ab-430a-b819-68baf80e79c7.xml], theme=R8A QA - Solarized Light], diagnostics=[]]
+STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\github.xml
+IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:edd6133c-a0a9-4c8d-aeab-6274860c5459, origin=INSTALLED, locator=Optional[13404132-da6e-4e5e-8c04-06f6cf63d72b.xml], theme=R8A QA - GitHub Light], diagnostics=[]]
+STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\teal.xml
+IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:4118bcf7-06a6-4097-8690-bf74ecbda2f4, origin=INSTALLED, locator=Optional[e27fe90b-4fb7-462e-82a0-ff615c6ee04f.xml], theme=R8A QA - Unusual Teal], diagnostics=[]]
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP pick|R8A QA - Atom One Dark
+PICK R8A QA - Atom One Dark ok
+STEP check|1
+CHECKBOX label='Also theme the Eclipse workbench' enabled=true before=false
+CHECKBOX after=true
+STEP apply
+APPLY-CLICK found=true ms=847
+STEP wait|4500
+STEP state|atom
+STATE atom | active=com.github.eclipsethemes.workbench.dark | instance=com.github.eclipsethemes.workbench.dark | config=<absent> | default=com.github.eclipsethemes.workbench.dark | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true SELECTED_THEME_LOGICAL_ID=local:29528284-89e6-49ef-9b2f-54da76de4d26 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP regs|atom
+REGS atom d.background=#282c34 d.foreground=#abb2bf d.surface=#252830 d.raised=#2c323c d.border=#4b525d d.muted=#8d949f d.selection=#3e4451 l.background=#ffffff l.foreground=#1f1f1f l.surface=#f3f3f3 l.raised=#e8e8e8 l.border=#cecece l.muted=#6b6b6b l.selection=#cce4f7 
+STEP eprefs|atom
+EPREFS atom Background=40,44,52 Background.SystemDefault=false Foreground=171,178,191 Foreground.SystemDefault=false currentLineColor=44,50,60 java_keyword=198,120,221 
+EPREFS-editor Demo.java
+EPREFS-styled bg=#282c34 fg=#abb2bf len=135
+STEP screen|atom-dlg|dialog
+STEP audit|atom-dlg|dialog
+AUDIT atom-dlg shell='Preferences' bg=#252830 fg=#abb2bf controls=70 lowContrastKinds=0
+SCREEN atom-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pcancel
+CANCEL-CLICK found=true
+STEP wait|1500
+STEP screen|atom
+STEP audit|atom
+AUDIT atom shell='r8aws-q6 - Demo/Demo.java - Eclipse IDE' bg=#252830 fg=#abb2bf controls=96 lowContrastKinds=0
+SCREEN atom Rectangle {286, 297, 1100, 850}
+STEP tabs|atom
+TABFOLDER atom fg=#abb2bf bg=#282c34 selBg=#2c323c selFg=#abb2bf items=Package Explorer[fg=#abb2bf] 
+TREE atom fg=#abb2bf bg=#282c34 items=Demo[fg=#abb2bf bg=#282c34] 
+TABFOLDER atom fg=#8d949f bg=#252830 selBg=#282c34 selFg=#abb2bf items=R8a editor[fg=#8d949f] Demo.java[fg=#8d949f] 
+TABFOLDER atom fg=#8d949f bg=#252830 selBg=#2c323c selFg=#abb2bf items=Outline[fg=#8d949f] Task List[fg=#8d949f] 
+TREE atom fg=#abb2bf bg=#282c34 items=demo[fg=#abb2bf bg=#282c34] Demo[fg=#abb2bf bg=#282c34] 
+TABFOLDER atom fg=#abb2bf bg=#282c34 selBg=#2c323c selFg=#abb2bf items=Problems[fg=#abb2bf] Javadoc[fg=#abb2bf] Declaration[fg=#abb2bf] Console[fg=#abb2bf] P8 surfaces[fg=#abb2bf] Install Java 27 Support[fg=#abb2bf] 
+STEP wait|1200
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP screen|atom-reopened-dlg|dialog
+STEP audit|atom-reopened|dialog
+AUDIT atom-reopened shell='Preferences' bg=#252830 fg=#abb2bf controls=70 lowContrastKinds=0
+SCREEN atom-reopened-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pick|R8A QA - Dracula
+PICK R8A QA - Dracula ok
+STEP apply
+APPLY-CLICK found=true ms=217
+STEP wait|4500
+STEP state|dracula
+STATE dracula | active=com.github.eclipsethemes.workbench.dark.alt | instance=com.github.eclipsethemes.workbench.dark.alt | config=<absent> | default=com.github.eclipsethemes.workbench.dark.alt | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true SELECTED_THEME_LOGICAL_ID=local:da6b8e40-6e57-4cee-8b0b-28e902389ad5 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark.alt WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP regs|dracula
+REGS dracula d.background=#282a36 d.foreground=#f8f8f2 d.surface=#21222c d.raised=#44475a d.border=#65687d d.muted=#a8aaab d.selection=#44475a l.background=#ffffff l.foreground=#1f1f1f l.surface=#f3f3f3 l.raised=#e8e8e8 l.border=#cecece l.muted=#6b6b6b l.selection=#cce4f7 
+STEP eprefs|dracula
+EPREFS dracula Background=40,42,54 Background.SystemDefault=false Foreground=248,248,242 Foreground.SystemDefault=false currentLineColor=68,71,90 java_keyword=198,120,221 
+EPREFS-editor Demo.java
+EPREFS-styled bg=#282a36 fg=#f8f8f2 len=135
+STEP screen|dracula-dlg|dialog
+STEP audit|dracula-dlg|dialog
+AUDIT dracula-dlg shell='Preferences' bg=#21222c fg=#f8f8f2 controls=70 lowContrastKinds=0
+SCREEN dracula-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pcancel
+CANCEL-CLICK found=true
+STEP wait|1500
+STEP screen|dracula
+STEP audit|dracula
+AUDIT dracula shell='r8aws-q6 - Demo/Demo.java - Eclipse IDE' bg=#21222c fg=#f8f8f2 controls=96 lowContrastKinds=0
+SCREEN dracula Rectangle {286, 297, 1100, 850}
+STEP tabs|dracula
+TABFOLDER dracula fg=#f8f8f2 bg=#282a36 selBg=#44475a selFg=#f8f8f2 items=Package Explorer[fg=#f8f8f2] 
+TREE dracula fg=#f8f8f2 bg=#282a36 items=Demo[fg=#f8f8f2 bg=#282a36] 
+TABFOLDER dracula fg=#a8aaab bg=#21222c selBg=#282a36 selFg=#f8f8f2 items=R8a editor[fg=#a8aaab] Demo.java[fg=#a8aaab] 
+TABFOLDER dracula fg=#a8aaab bg=#21222c selBg=#44475a selFg=#f8f8f2 items=Outline[fg=#a8aaab] Task List[fg=#a8aaab] 
+TREE dracula fg=#f8f8f2 bg=#282a36 items=demo[fg=#f8f8f2 bg=#282a36] Demo[fg=#f8f8f2 bg=#282a36] 
+TABFOLDER dracula fg=#f8f8f2 bg=#282a36 selBg=#44475a selFg=#f8f8f2 items=Problems[fg=#f8f8f2] Javadoc[fg=#f8f8f2] Declaration[fg=#f8f8f2] Console[fg=#f8f8f2] P8 surfaces[fg=#f8f8f2] Install Java 27 Support[fg=#f8f8f2] 
+STEP wait|1200
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP screen|dracula-reopened-dlg|dialog
+STEP audit|dracula-reopened|dialog
+AUDIT dracula-reopened shell='Preferences' bg=#21222c fg=#f8f8f2 controls=70 lowContrastKinds=0
+SCREEN dracula-reopened-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pick|R8A QA - Catppuccin Mocha
+PICK R8A QA - Catppuccin Mocha ok
+STEP apply
+APPLY-CLICK found=true ms=213
+STEP wait|4500
+STEP state|mocha
+STATE mocha | active=com.github.eclipsethemes.workbench.dark | instance=com.github.eclipsethemes.workbench.dark | config=<absent> | default=com.github.eclipsethemes.workbench.dark | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true SELECTED_THEME_LOGICAL_ID=local:1d6b4803-7e38-431c-81f7-91c84007bc0c WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP regs|mocha
+REGS mocha d.background=#1e1e2e d.foreground=#cdd6f4 d.surface=#181825 d.raised=#28283d d.border=#47475e d.muted=#8a90a9 d.selection=#3e4056 l.background=#ffffff l.foreground=#1f1f1f l.surface=#f3f3f3 l.raised=#e8e8e8 l.border=#cecece l.muted=#6b6b6b l.selection=#cce4f7 
+STEP eprefs|mocha
+EPREFS mocha Background=30,30,46 Background.SystemDefault=false Foreground=205,214,244 Foreground.SystemDefault=false currentLineColor=40,40,61 java_keyword=198,120,221 
+EPREFS-editor Demo.java
+EPREFS-styled bg=#1e1e2e fg=#cdd6f4 len=135
+STEP screen|mocha-dlg|dialog
+STEP audit|mocha-dlg|dialog
+AUDIT mocha-dlg shell='Preferences' bg=#181825 fg=#cdd6f4 controls=70 lowContrastKinds=0
+SCREEN mocha-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pcancel
+CANCEL-CLICK found=true
+STEP wait|1500
+STEP screen|mocha
+STEP audit|mocha
+AUDIT mocha shell='r8aws-q6 - Demo/Demo.java - Eclipse IDE' bg=#181825 fg=#cdd6f4 controls=96 lowContrastKinds=0
+SCREEN mocha Rectangle {286, 297, 1100, 850}
+STEP tabs|mocha
+TABFOLDER mocha fg=#cdd6f4 bg=#1e1e2e selBg=#28283d selFg=#cdd6f4 items=Package Explorer[fg=#cdd6f4] 
+TREE mocha fg=#cdd6f4 bg=#1e1e2e items=Demo[fg=#cdd6f4 bg=#1e1e2e] 
+TABFOLDER mocha fg=#8a90a9 bg=#181825 selBg=#1e1e2e selFg=#cdd6f4 items=R8a editor[fg=#8a90a9] Demo.java[fg=#8a90a9] 
+TABFOLDER mocha fg=#8a90a9 bg=#181825 selBg=#28283d selFg=#cdd6f4 items=Outline[fg=#8a90a9] Task List[fg=#8a90a9] 
+TREE mocha fg=#cdd6f4 bg=#1e1e2e items=demo[fg=#cdd6f4 bg=#1e1e2e] Demo[fg=#cdd6f4 bg=#1e1e2e] 
+TABFOLDER mocha fg=#cdd6f4 bg=#1e1e2e selBg=#28283d selFg=#cdd6f4 items=Problems[fg=#cdd6f4] Javadoc[fg=#cdd6f4] Declaration[fg=#cdd6f4] Console[fg=#cdd6f4] P8 surfaces[fg=#cdd6f4] Install Java 27 Support[fg=#cdd6f4] 
+STEP wait|1200
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP screen|mocha-reopened-dlg|dialog
+STEP audit|mocha-reopened|dialog
+AUDIT mocha-reopened shell='Preferences' bg=#181825 fg=#cdd6f4 controls=70 lowContrastKinds=0
+SCREEN mocha-reopened-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pick|R8A QA - Gruvbox Dark
+PICK R8A QA - Gruvbox Dark ok
+STEP apply
+APPLY-CLICK found=true ms=222
+STEP wait|4500
+STEP state|gruvbox
+STATE gruvbox | active=com.github.eclipsethemes.workbench.dark.alt | instance=com.github.eclipsethemes.workbench.dark.alt | config=<absent> | default=com.github.eclipsethemes.workbench.dark.alt | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true SELECTED_THEME_LOGICAL_ID=local:8eaead84-959d-4f96-b56e-cd78fcd01c98 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark.alt WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP regs|gruvbox
+REGS gruvbox d.background=#282828 d.foreground=#ebdbb2 d.surface=#32302f d.raised=#3c3836 d.border=#5c5856 d.muted=#a1977e d.selection=#504945 l.background=#ffffff l.foreground=#1f1f1f l.surface=#f3f3f3 l.raised=#e8e8e8 l.border=#cecece l.muted=#6b6b6b l.selection=#cce4f7 
+STEP eprefs|gruvbox
+EPREFS gruvbox Background=40,40,40 Background.SystemDefault=false Foreground=235,219,178 Foreground.SystemDefault=false currentLineColor=60,56,54 java_keyword=198,120,221 
+EPREFS-editor Demo.java
+EPREFS-styled bg=#282828 fg=#ebdbb2 len=135
+STEP screen|gruvbox-dlg|dialog
+STEP audit|gruvbox-dlg|dialog
+AUDIT gruvbox-dlg shell='Preferences' bg=#32302f fg=#ebdbb2 controls=70 lowContrastKinds=0
+SCREEN gruvbox-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pcancel
+CANCEL-CLICK found=true
+STEP wait|1500
+STEP screen|gruvbox
+STEP audit|gruvbox
+AUDIT gruvbox shell='r8aws-q6 - Demo/Demo.java - Eclipse IDE' bg=#32302f fg=#ebdbb2 controls=96 lowContrastKinds=0
+SCREEN gruvbox Rectangle {286, 297, 1100, 850}
+STEP tabs|gruvbox
+TABFOLDER gruvbox fg=#ebdbb2 bg=#282828 selBg=#3c3836 selFg=#ebdbb2 items=Package Explorer[fg=#ebdbb2] 
+TREE gruvbox fg=#ebdbb2 bg=#282828 items=Demo[fg=#ebdbb2 bg=#282828] 
+TABFOLDER gruvbox fg=#a1977e bg=#32302f selBg=#282828 selFg=#ebdbb2 items=R8a editor[fg=#a1977e] Demo.java[fg=#a1977e] 
+TABFOLDER gruvbox fg=#a1977e bg=#32302f selBg=#3c3836 selFg=#ebdbb2 items=Outline[fg=#a1977e] Task List[fg=#a1977e] 
+TREE gruvbox fg=#ebdbb2 bg=#282828 items=demo[fg=#ebdbb2 bg=#282828] Demo[fg=#ebdbb2 bg=#282828] 
+TABFOLDER gruvbox fg=#ebdbb2 bg=#282828 selBg=#3c3836 selFg=#ebdbb2 items=Problems[fg=#ebdbb2] Javadoc[fg=#ebdbb2] Declaration[fg=#ebdbb2] Console[fg=#ebdbb2] P8 surfaces[fg=#ebdbb2] Install Java 27 Support[fg=#ebdbb2] 
+STEP wait|1200
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP screen|gruvbox-reopened-dlg|dialog
+STEP audit|gruvbox-reopened|dialog
+AUDIT gruvbox-reopened shell='Preferences' bg=#32302f fg=#ebdbb2 controls=70 lowContrastKinds=0
+SCREEN gruvbox-reopened-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pick|R8A QA - Solarized Light
+PICK R8A QA - Solarized Light ok
+STEP apply
+APPLY-CLICK found=true ms=206
+STEP wait|4500
+STEP state|solarized
+STATE solarized | active=com.github.eclipsethemes.workbench.light | instance=com.github.eclipsethemes.workbench.light | config=<absent> | default=com.github.eclipsethemes.workbench.light | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true SELECTED_THEME_LOGICAL_ID=local:f904a5d8-84d1-4f2a-ae74-41e2b9ed25f2 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.light WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP regs|solarized
+REGS solarized d.background=#282828 d.foreground=#ebdbb2 d.surface=#32302f d.raised=#3c3836 d.border=#5c5856 d.muted=#a1977e d.selection=#504945 l.background=#fdf6e3 l.foreground=#50656d l.surface=#eee8d5 l.raised=#e4decb l.border=#bdb7a5 l.muted=#5f6a6a l.selection=#e3d8bd 
+STEP eprefs|solarized
+EPREFS solarized Background=253,246,227 Background.SystemDefault=false Foreground=101,123,131 Foreground.SystemDefault=false currentLineColor=238,232,213 java_keyword=198,120,221 
+EPREFS-editor Demo.java
+EPREFS-styled bg=#fdf6e3 fg=#657b83 len=135
+STEP screen|solarized-dlg|dialog
+STEP audit|solarized-dlg|dialog
+AUDIT solarized-dlg shell='Preferences' bg=#eee8d5 fg=#50656d controls=70 lowContrastKinds=0
+SCREEN solarized-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pcancel
+CANCEL-CLICK found=true
+STEP wait|1500
+STEP screen|solarized
+STEP audit|solarized
+AUDIT solarized shell='r8aws-q6 - Demo/Demo.java - Eclipse IDE' bg=#eee8d5 fg=#50656d controls=96 lowContrastKinds=0
+SCREEN solarized Rectangle {286, 297, 1100, 850}
+STEP tabs|solarized
+TABFOLDER solarized fg=#50656d bg=#fdf6e3 selBg=#e4decb selFg=#50656d items=Package Explorer[fg=#50656d] 
+TREE solarized fg=#50656d bg=#fdf6e3 items=Demo[fg=#50656d bg=#fdf6e3] 
+TABFOLDER solarized fg=#5f6a6a bg=#eee8d5 selBg=#fdf6e3 selFg=#50656d items=R8a editor[fg=#5f6a6a] Demo.java[fg=#5f6a6a] 
+TABFOLDER solarized fg=#5f6a6a bg=#eee8d5 selBg=#e4decb selFg=#50656d items=Outline[fg=#5f6a6a] Task List[fg=#5f6a6a] 
+TREE solarized fg=#50656d bg=#fdf6e3 items=demo[fg=#50656d bg=#fdf6e3] Demo[fg=#50656d bg=#fdf6e3] 
+TABFOLDER solarized fg=#50656d bg=#fdf6e3 selBg=#e4decb selFg=#50656d items=Problems[fg=#50656d] Javadoc[fg=#50656d] Declaration[fg=#50656d] Console[fg=#50656d] P8 surfaces[fg=#50656d] Install Java 27 Support[fg=#50656d] 
+STEP wait|1200
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP screen|solarized-reopened-dlg|dialog
+STEP audit|solarized-reopened|dialog
+AUDIT solarized-reopened shell='Preferences' bg=#eee8d5 fg=#50656d controls=70 lowContrastKinds=0
+SCREEN solarized-reopened-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pick|R8A QA - GitHub Light
+PICK R8A QA - GitHub Light ok
+STEP apply
+APPLY-CLICK found=true ms=193
+STEP wait|4500
+STEP state|github
+STATE github | active=com.github.eclipsethemes.workbench.light.alt | instance=com.github.eclipsethemes.workbench.light.alt | config=<absent> | default=com.github.eclipsethemes.workbench.light.alt | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true SELECTED_THEME_LOGICAL_ID=local:edd6133c-a0a9-4c8d-aeab-6274860c5459 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.light.alt WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP regs|github
+REGS github d.background=#282828 d.foreground=#ebdbb2 d.surface=#32302f d.raised=#3c3836 d.border=#5c5856 d.muted=#a1977e d.selection=#504945 l.background=#ffffff l.foreground=#1f2328 l.surface=#f6f8fa l.raised=#eceef0 l.border=#c5c7c9 l.muted=#656d76 l.selection=#d6d6d6 
+STEP eprefs|github
+EPREFS github Background=255,255,255 Background.SystemDefault=false Foreground=31,35,40 Foreground.SystemDefault=false currentLineColor=246,248,250 java_keyword=198,120,221 
+EPREFS-editor Demo.java
+EPREFS-styled bg=#ffffff fg=#1f2328 len=135
+STEP screen|github-dlg|dialog
+STEP audit|github-dlg|dialog
+AUDIT github-dlg shell='Preferences' bg=#f6f8fa fg=#1f2328 controls=70 lowContrastKinds=0
+SCREEN github-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pcancel
+CANCEL-CLICK found=true
+STEP wait|1500
+STEP screen|github
+STEP audit|github
+AUDIT github shell='r8aws-q6 - Demo/Demo.java - Eclipse IDE' bg=#f6f8fa fg=#1f2328 controls=96 lowContrastKinds=0
+SCREEN github Rectangle {286, 297, 1100, 850}
+STEP tabs|github
+TABFOLDER github fg=#1f2328 bg=#ffffff selBg=#eceef0 selFg=#1f2328 items=Package Explorer[fg=#1f2328] 
+TREE github fg=#1f2328 bg=#ffffff items=Demo[fg=#1f2328 bg=#ffffff] 
+TABFOLDER github fg=#656d76 bg=#f6f8fa selBg=#ffffff selFg=#1f2328 items=R8a editor[fg=#656d76] Demo.java[fg=#656d76] 
+TABFOLDER github fg=#656d76 bg=#f6f8fa selBg=#eceef0 selFg=#1f2328 items=Outline[fg=#656d76] Task List[fg=#656d76] 
+TREE github fg=#1f2328 bg=#ffffff items=demo[fg=#1f2328 bg=#ffffff] Demo[fg=#1f2328 bg=#ffffff] 
+TABFOLDER github fg=#1f2328 bg=#ffffff selBg=#eceef0 selFg=#1f2328 items=Problems[fg=#1f2328] Javadoc[fg=#1f2328] Declaration[fg=#1f2328] Console[fg=#1f2328] P8 surfaces[fg=#1f2328] Install Java 27 Support[fg=#1f2328] 
+STEP wait|1200
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP screen|github-reopened-dlg|dialog
+STEP audit|github-reopened|dialog
+AUDIT github-reopened shell='Preferences' bg=#f6f8fa fg=#1f2328 controls=70 lowContrastKinds=0
+SCREEN github-reopened-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pick|R8A QA - Unusual Teal
+PICK R8A QA - Unusual Teal ok
+STEP apply
+APPLY-CLICK found=true ms=181
+STEP wait|4500
+STEP state|teal
+STATE teal | active=com.github.eclipsethemes.workbench.dark | instance=com.github.eclipsethemes.workbench.dark | config=<absent> | default=com.github.eclipsethemes.workbench.dark | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true SELECTED_THEME_LOGICAL_ID=local:4118bcf7-06a6-4097-8690-bf74ecbda2f4 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP regs|teal
+REGS teal d.background=#0b3c49 d.foreground=#f4e3c1 d.surface=#0f5062 d.raised=#1b586b d.border=#417b8f d.muted=#b6bbac d.selection=#1f6f8b l.background=#ffffff l.foreground=#1f2328 l.surface=#f6f8fa l.raised=#eceef0 l.border=#c5c7c9 l.muted=#656d76 l.selection=#d6d6d6 
+STEP eprefs|teal
+EPREFS teal Background=11,60,73 Background.SystemDefault=false Foreground=244,227,193 Foreground.SystemDefault=false currentLineColor=122,31,92 java_keyword=198,120,221 
+EPREFS-editor Demo.java
+EPREFS-styled bg=#0b3c49 fg=#f4e3c1 len=135
+STEP screen|teal-dlg|dialog
+STEP audit|teal-dlg|dialog
+AUDIT teal-dlg shell='Preferences' bg=#0f5062 fg=#f4e3c1 controls=70 lowContrastKinds=0
+SCREEN teal-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pcancel
+CANCEL-CLICK found=true
+STEP wait|1500
+STEP screen|teal
+STEP audit|teal
+AUDIT teal shell='r8aws-q6 - Demo/Demo.java - Eclipse IDE' bg=#0f5062 fg=#f4e3c1 controls=96 lowContrastKinds=0
+SCREEN teal Rectangle {286, 297, 1100, 850}
+STEP tabs|teal
+TABFOLDER teal fg=#f4e3c1 bg=#0b3c49 selBg=#1b586b selFg=#f4e3c1 items=Package Explorer[fg=#f4e3c1] 
+TREE teal fg=#f4e3c1 bg=#0b3c49 items=Demo[fg=#f4e3c1 bg=#0b3c49] 
+TABFOLDER teal fg=#b6bbac bg=#0f5062 selBg=#0b3c49 selFg=#f4e3c1 items=R8a editor[fg=#b6bbac] Demo.java[fg=#b6bbac] 
+TABFOLDER teal fg=#b6bbac bg=#0f5062 selBg=#1b586b selFg=#f4e3c1 items=Outline[fg=#b6bbac] Task List[fg=#b6bbac] 
+TREE teal fg=#f4e3c1 bg=#0b3c49 items=demo[fg=#f4e3c1 bg=#0b3c49] Demo[fg=#f4e3c1 bg=#0b3c49] 
+TABFOLDER teal fg=#f4e3c1 bg=#0b3c49 selBg=#1b586b selFg=#f4e3c1 items=Problems[fg=#f4e3c1] Javadoc[fg=#f4e3c1] Declaration[fg=#f4e3c1] Console[fg=#f4e3c1] P8 surfaces[fg=#f4e3c1] Install Java 27 Support[fg=#f4e3c1] 
+STEP wait|1200
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP screen|teal-reopened-dlg|dialog
+STEP audit|teal-reopened|dialog
+AUDIT teal-reopened shell='Preferences' bg=#0f5062 fg=#f4e3c1 controls=70 lowContrastKinds=0
+SCREEN teal-reopened-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pick|R8A QA - Atom One Dark
+PICK R8A QA - Atom One Dark ok
+STEP apply
+APPLY-CLICK found=true ms=344
+STEP wait|4500
+STEP state|atom
+STATE atom | active=com.github.eclipsethemes.workbench.dark.alt | instance=com.github.eclipsethemes.workbench.dark.alt | config=<absent> | default=com.github.eclipsethemes.workbench.dark.alt | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true SELECTED_THEME_LOGICAL_ID=local:29528284-89e6-49ef-9b2f-54da76de4d26 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark.alt WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP regs|atom
+REGS atom d.background=#282c34 d.foreground=#abb2bf d.surface=#252830 d.raised=#2c323c d.border=#4b525d d.muted=#8d949f d.selection=#3e4451 l.background=#ffffff l.foreground=#1f2328 l.surface=#f6f8fa l.raised=#eceef0 l.border=#c5c7c9 l.muted=#656d76 l.selection=#d6d6d6 
+STEP eprefs|atom
+EPREFS atom Background=40,44,52 Background.SystemDefault=false Foreground=171,178,191 Foreground.SystemDefault=false currentLineColor=44,50,60 java_keyword=198,120,221 
+EPREFS-editor Demo.java
+EPREFS-styled bg=#282c34 fg=#abb2bf len=135
+STEP screen|atom-dlg|dialog
+STEP audit|atom-dlg|dialog
+AUDIT atom-dlg shell='Preferences' bg=#252830 fg=#abb2bf controls=70 lowContrastKinds=0
+SCREEN atom-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP pcancel
+CANCEL-CLICK found=true
+STEP wait|1500
+STEP screen|atom
+STEP audit|atom
+AUDIT atom shell='r8aws-q6 - Demo/Demo.java - Eclipse IDE' bg=#252830 fg=#abb2bf controls=96 lowContrastKinds=0
+SCREEN atom Rectangle {286, 297, 1100, 850}
+STEP tabs|atom
+TABFOLDER atom fg=#abb2bf bg=#282c34 selBg=#2c323c selFg=#abb2bf items=Package Explorer[fg=#abb2bf] 
+TREE atom fg=#abb2bf bg=#282c34 items=Demo[fg=#abb2bf bg=#282c34] 
+TABFOLDER atom fg=#8d949f bg=#252830 selBg=#282c34 selFg=#abb2bf items=R8a editor[fg=#8d949f] Demo.java[fg=#8d949f] 
+TABFOLDER atom fg=#8d949f bg=#252830 selBg=#2c323c selFg=#abb2bf items=Outline[fg=#8d949f] Task List[fg=#8d949f] 
+TREE atom fg=#abb2bf bg=#282c34 items=demo[fg=#abb2bf bg=#282c34] Demo[fg=#abb2bf bg=#282c34] 
+TABFOLDER atom fg=#abb2bf bg=#282c34 selBg=#2c323c selFg=#abb2bf items=Problems[fg=#abb2bf] Javadoc[fg=#abb2bf] Declaration[fg=#abb2bf] Console[fg=#abb2bf] P8 surfaces[fg=#abb2bf] Install Java 27 Support[fg=#abb2bf] 
+STEP wait|1200
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP screen|atom-reopened-dlg|dialog
+STEP audit|atom-reopened|dialog
+AUDIT atom-reopened shell='Preferences' bg=#252830 fg=#abb2bf controls=70 lowContrastKinds=0
+SCREEN atom-reopened-dlg Rectangle {323, 63, 1026, 989}
+STEP wait|1200
+STEP okclose
+OKCLOSE-CLICK found=true ms=81
+STEP wait|1500
+STEP state|end
+STATE end | active=com.github.eclipsethemes.workbench.dark.alt | instance=com.github.eclipsethemes.workbench.dark.alt | config=<absent> | default=com.github.eclipsethemes.workbench.dark.alt | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true SELECTED_THEME_LOGICAL_ID=local:29528284-89e6-49ef-9b2f-54da76de4d26 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark.alt WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+DONE

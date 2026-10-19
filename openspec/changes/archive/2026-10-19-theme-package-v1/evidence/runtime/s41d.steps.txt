@@ -1,0 +1,1 @@
+state|boot;prefs;wait|2500;pick|R9 QA Light;check|0;apply;wait|4000;state|off;regs|off;eprefs|off;pick|R9 QA Minimal;wait|800;bclick|Remove|5000;msg|OK|3000;msg|OK;wait|1500;catalog|removed;files|removed;okclose;wait|1500;state|end

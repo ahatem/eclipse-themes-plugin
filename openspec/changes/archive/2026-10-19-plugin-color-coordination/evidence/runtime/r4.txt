@@ -1,0 +1,1 @@
+state|restart3-boot;wait|6000;state|restart3-after-6s;regs|restart3;pcol|restart-with-owned|v;prefs;wait|1500;labels|open;check|0;apply;wait|4500;state|disabled;pcol|disabled|v;labels|disabled;pcancel;state|end

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+ <extension point="org.eclipse.e4.ui.css.swt.theme">
+  <theme id="spike.p5.theme" label="P5 Proof (research)" basestylesheeturi="css/p5.css"/>
+  <theme id="spike.p5.theme2" label="P5 Proof twin (research)" basestylesheeturi="css/p5.css"/>
+ </extension>
+ <extension point="org.eclipse.ui.themes">
+  <colorDefinition id="spike.p5.surface" label="P5 surface" value="128,128,128"/>
+  <colorDefinition id="spike.p5.fg" label="P5 fg" value="32,32,32"/>
+  <colorDefinition id="spike.p5.accent" label="P5 accent" value="64,64,64"/>
+ </extension>
+ <extension point="org.eclipse.ui.startup"><startup class="spike.p5.Probe"/></extension>
+ <extension point="org.eclipse.ui.views"><view id="spike.p5.view" name="P5 surfaces" class="spike.p5.Probe$View"/></extension>
+ <extension point="org.eclipse.ui.editors"><editor id="spike.p5.editor" name="P5 editor" class="spike.p5.Probe$Editor"/></extension>
+</plugin>

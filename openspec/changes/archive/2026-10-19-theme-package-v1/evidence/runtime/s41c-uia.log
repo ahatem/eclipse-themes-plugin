@@ -1,0 +1,18 @@
+﻿UIA dialog title=Update Selected Theme hwnd=9767744
+UIA filters=Eclipse Themes (*.ectheme, *.xml) | Theme Packages (*.ectheme) | Legacy Theme Files (*.xml)
+UIA filter='Eclipse Themes (*.ectheme, *.xml)' lists=qa-a-minimal-dark.ectheme, qa-b2-authored-dark.ectheme, qa-b-authored-dark.ectheme, qa-c-readability-dark.ectheme, qa-d-light.ectheme, qa-e1-schema2.ectheme, qa-e2-missing-fg.ectheme, qa-e4-oversize.ectheme, qa-legacy.xml, qa-legacy-replacement.xml
+UIA filter='Theme Packages (*.ectheme)' lists=qa-a-minimal-dark.ectheme, qa-b2-authored-dark.ectheme, qa-b-authored-dark.ectheme, qa-c-readability-dark.ectheme, qa-d-light.ectheme, qa-e1-schema2.ectheme, qa-e2-missing-fg.ectheme, qa-e4-oversize.ectheme, qa-legacy.xml, qa-legacy-replacement.xml
+UIA filter='Legacy Theme Files (*.xml)' lists=qa-a-minimal-dark.ectheme, qa-b2-authored-dark.ectheme, qa-b-authored-dark.ectheme, qa-c-readability-dark.ectheme, qa-d-light.ectheme, qa-e1-schema2.ectheme, qa-e2-missing-fg.ectheme, qa-e4-oversize.ectheme, qa-legacy.xml, qa-legacy-replacement.xml
+UIA opened <repo>\tmp\workbench-spike\r9\qa\qa-b2-authored-dark.ectheme
+UIA dialog title=Update Selected Theme hwnd=9835074
+UIA filters=Eclipse Themes (*.ectheme, *.xml) | Theme Packages (*.ectheme) | Legacy Theme Files (*.xml)
+UIA filter='Eclipse Themes (*.ectheme, *.xml)' lists=qa-a-minimal-dark.ectheme, qa-b2-authored-dark.ectheme, qa-b-authored-dark.ectheme, qa-c-readability-dark.ectheme, qa-d-light.ectheme, qa-e1-schema2.ectheme, qa-e2-missing-fg.ectheme, qa-e4-oversize.ectheme, qa-legacy.xml, qa-legacy-replacement.xml
+UIA filter='Theme Packages (*.ectheme)' lists=qa-a-minimal-dark.ectheme, qa-b2-authored-dark.ectheme, qa-b-authored-dark.ectheme, qa-c-readability-dark.ectheme, qa-d-light.ectheme, qa-e1-schema2.ectheme, qa-e2-missing-fg.ectheme, qa-e4-oversize.ectheme, qa-legacy.xml, qa-legacy-replacement.xml
+UIA filter='Legacy Theme Files (*.xml)' lists=qa-a-minimal-dark.ectheme, qa-b2-authored-dark.ectheme, qa-b-authored-dark.ectheme, qa-c-readability-dark.ectheme, qa-d-light.ectheme, qa-e1-schema2.ectheme, qa-e2-missing-fg.ectheme, qa-e4-oversize.ectheme, qa-legacy.xml, qa-legacy-replacement.xml
+UIA opened <repo>\tmp\workbench-spike\r9\qa\qa-legacy-replacement.xml
+UIA dialog title=Update Selected Theme hwnd=10620284
+UIA filters=Eclipse Themes (*.ectheme, *.xml) | Theme Packages (*.ectheme) | Legacy Theme Files (*.xml)
+UIA filter='Eclipse Themes (*.ectheme, *.xml)' lists=qa-a-minimal-dark.ectheme, qa-b2-authored-dark.ectheme, qa-b-authored-dark.ectheme, qa-c-readability-dark.ectheme, qa-d-light.ectheme, qa-e1-schema2.ectheme, qa-e2-missing-fg.ectheme, qa-e4-oversize.ectheme, qa-legacy.xml, qa-legacy-replacement.xml
+UIA filter='Theme Packages (*.ectheme)' lists=qa-a-minimal-dark.ectheme, qa-b2-authored-dark.ectheme, qa-b-authored-dark.ectheme, qa-c-readability-dark.ectheme, qa-d-light.ectheme, qa-e1-schema2.ectheme, qa-e2-missing-fg.ectheme, qa-e4-oversize.ectheme, qa-legacy.xml, qa-legacy-replacement.xml
+UIA filter='Legacy Theme Files (*.xml)' lists=qa-a-minimal-dark.ectheme, qa-b2-authored-dark.ectheme, qa-b-authored-dark.ectheme, qa-c-readability-dark.ectheme, qa-d-light.ectheme, qa-e1-schema2.ectheme, qa-e2-missing-fg.ectheme, qa-e4-oversize.ectheme, qa-legacy.xml, qa-legacy-replacement.xml
+UIA opened <repo>\tmp\workbench-spike\r9\qa\qa-e4-oversize.ectheme

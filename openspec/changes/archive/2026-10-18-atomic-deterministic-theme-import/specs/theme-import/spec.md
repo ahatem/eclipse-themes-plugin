@@ -1,0 +1,216 @@
+# Theme Import Delta
+
+## MODIFIED Requirements
+
+### Requirement: A valid supported theme can be imported
+
+The system SHALL allow a user to select a supported theme file and SHALL create exactly one new installed record. Import SHALL copy the selected bytes once to an attempt-owned staging file, parse those staged bytes, allocate a new unused managed locator, move the staged file there without replacement, persist one new binding, and only then admit the catalog record. Import SHALL NOT overwrite, relocate, re-identify, or remove any existing installed or bundled record, regardless of display name, source ID, basename, or content equality.
+
+#### Scenario: Successful import
+- **GIVEN** a valid supported theme file and a managed directory whose staging area can be created
+- **WHEN** the user imports it
+- **THEN** the theme becomes selectable from the workspace catalog under a new persistent local logical identity
+- **AND** its installed file contains the exact bytes that were parsed
+- **AND** its managed filename is repository-allocated rather than derived from the source
+
+#### Scenario: Import survives repository reconstruction
+- **GIVEN** a successful import
+- **WHEN** the repository is reconstructed in the same workspace
+- **THEN** the imported theme is rediscovered with the same logical identity
+- **AND** its installed bytes are unchanged
+
+#### Scenario: Existing legacy installations are not migrated
+- **GIVEN** a bound installed theme at an existing basename-named locator
+- **WHEN** a new import succeeds
+- **THEN** that existing file, locator, binding, and logical identity remain unchanged
+
+### Requirement: Import failure is reported as failure
+
+The system SHALL NOT report an import as successful unless the staged file was parsed successfully, moved to a new locator, bound to a new identity, and admitted to the catalog. On any failure it SHALL report failure, SHALL NOT return an admitted theme, and SHALL best-effort remove only artifacts created by that attempt. It SHALL preserve all prior files, bindings, catalog records, and selected intent.
+
+#### Scenario: Invalid input
+- **GIVEN** a file that cannot be accepted as a supported theme
+- **WHEN** import is attempted
+- **THEN** the operation reports failure and no successful imported theme is returned
+- **AND** no binding or catalog entry is created
+- **AND** the source file remains unmodified
+
+#### Scenario: Binding persistence fails after the staged move
+- **GIVEN** staged bytes were parsed and moved to a newly allocated locator
+- **WHEN** new binding persistence fails
+- **THEN** import reports failure without catalog admission or an admitted generated identity
+- **AND** the locator created by this attempt is removed when cleanup succeeds
+- **AND** prior bindings, catalog records, and selected intent remain unchanged
+
+#### Scenario: Allocation encounters an occupied locator
+- **GIVEN** a repository-allocated candidate locator is unexpectedly occupied
+- **WHEN** import prepares to commit
+- **THEN** it chooses another unused locator or fails
+- **AND** it never replaces the occupied file or reuses its identity
+
+### Requirement: Imported themes can be removed from managed storage
+
+The system SHALL provide an explicit removal operation for one selected installed theme. Removal SHALL target that record's established logical identity and managed locator, SHALL remove only that locator's binding, SHALL delete only that managed file with an observed result, and SHALL remove the catalog record only after both the binding and the locator's absence are confirmed. If the managed file is already absent while the binding and the selected record are established and consistent, removal SHALL treat the file-removal condition as satisfied, SHALL NOT recreate the file or regenerate identity, and MAY complete successfully. If the managed path exists but is not the expected safe target type or state, removal SHALL fail closed rather than treating it as absent. Removal SHALL preserve unrelated files, bindings, catalog records, and selected intent. Bundled themes SHALL NOT be removal targets.
+
+#### Scenario: Remove installed theme
+- **GIVEN** a bound theme that came from managed installed-theme storage
+- **WHEN** the user confirms its removal and both binding and file removal succeed
+- **THEN** it no longer appears as an installed theme after reload
+- **AND** unrelated installed themes remain available with unchanged identities
+
+#### Scenario: Bundled theme cannot be removed
+- **GIVEN** the selected theme is bundled
+- **WHEN** removal is requested
+- **THEN** removal is refused before any managed file or binding changes
+
+#### Scenario: Managed file is already absent
+- **GIVEN** an established installed record whose exact binding matches and whose managed file is already absent
+- **WHEN** the user explicitly confirms removal
+- **THEN** the file is not recreated and no identity is regenerated
+- **AND** the exact binding and the catalog record are removed
+- **AND** removal reports success
+
+#### Scenario: Managed path exists in an unexpected state
+- **GIVEN** the selected installed record's managed path exists but is not the expected safe file type or state
+- **WHEN** removal is attempted
+- **THEN** removal fails closed
+- **AND** the path, binding, and catalog record are left unchanged
+
+## REMOVED Requirements
+
+### Requirement: Occupied or reserved managed locators are refused before mutation
+
+**Reason**: New imports no longer derive a managed destination from the source basename. Allocation chooses an unused repository-owned locator and never overwrites; refused-basename collisions are replaced by deterministic coexistence.
+
+**Migration**: Existing basename-named locators and bindings remain valid and are not renamed. The no-overwrite and no-reuse guarantees are retained by the modified import requirements and the added update requirements.
+
+### Requirement: Failed new-locator admission leaves no new binding or managed destination
+
+**Reason**: Replaced by staged validation and the explicit commit/cleanup ordering for a repository-allocated locator.
+
+**Migration**: None. Prior bindings and catalog records remain unchanged; failed attempts still leave no new binding or admitted record.
+
+
+## ADDED Requirements
+
+### Requirement: New import never infers continuity
+
+A new import SHALL always create an independent installed record. Equal display name, equal `ect-id`, equal source basename, identical bytes, or similarity to a bundled theme SHALL NOT cause replacement, silent deduplication, or reuse of another logical identity or locator.
+
+#### Scenario: Same display name
+- **GIVEN** an installed or bundled theme with display name `N`
+- **WHEN** a supported source whose display name is also `N` is imported
+- **THEN** a new independent record is added
+- **AND** the existing record remains selectable and unchanged
+
+#### Scenario: Same source ID
+- **GIVEN** an existing record whose XML claims source ID `S`
+- **WHEN** a different supported source also claims `S` is imported
+- **THEN** source ID is treated only as metadata
+- **AND** both records remain independently addressable
+
+#### Scenario: Identical bytes
+- **GIVEN** an installed theme with byte-identical content to the selected source
+- **WHEN** import is performed
+- **THEN** a new independent record is created rather than silently reusing the existing record
+
+#### Scenario: Same basename as an existing managed file
+- **GIVEN** an existing managed file whose basename equals the selected source basename
+- **WHEN** import is performed
+- **THEN** the new record receives a different repository-allocated locator
+- **AND** the existing file and binding remain unchanged
+
+#### Scenario: Source is itself an installed file
+- **GIVEN** the selected source is an existing managed theme file
+- **WHEN** import is performed
+- **THEN** the source is read into staging and is never opened for writing
+- **AND** the existing managed file, binding, and identity remain unchanged
+
+### Requirement: Installed theme update is explicit and identity-preserving
+
+The system SHALL provide an update operation only for an explicitly selected installed record, identified by that record's established logical identity and managed locator rather than incoming metadata, basename, or content. Update SHALL validate a staged copy, atomically replace the target's bytes, update the catalog only after replacement, and preserve the identity, locator, binding, and unrelated records. Bundled or unbound records SHALL NOT be update targets.
+
+#### Scenario: Successful update
+- **GIVEN** a selected installed theme with an established binding
+- **WHEN** the user explicitly updates it from a valid supported file and the atomic replacement succeeds
+- **THEN** the installed record retains its logical identity and locator
+- **AND** its installed file contains exactly the validated staged bytes
+- **AND** exactly one catalog record exists for that logical identity
+
+#### Scenario: Replacement input is invalid
+- **GIVEN** a selected installed theme
+- **WHEN** update input cannot be staged or parsed
+- **THEN** update reports failure
+- **AND** the prior installed file, binding, catalog entry, and selected intent remain unchanged
+
+#### Scenario: Atomic replacement is unsupported
+- **GIVEN** the filesystem cannot atomically replace the target locator
+- **WHEN** update is attempted
+- **THEN** update reports failure without performing a non-atomic replacement
+- **AND** the prior installed file remains unchanged
+
+#### Scenario: Bundled theme is selected
+- **GIVEN** the selected theme is bundled
+- **WHEN** update is requested
+- **THEN** update is refused before any managed write
+
+#### Scenario: Binding is missing or inconsistent
+- **GIVEN** a selected installed record whose locator has no established binding or has a different identity
+- **WHEN** update is requested
+- **THEN** update is refused diagnostically
+- **AND** it neither generates a replacement identity nor modifies managed bytes
+
+#### Scenario: Update target file is missing
+- **GIVEN** a selected installed record with a consistent established binding whose managed file is absent
+- **WHEN** update is requested
+- **THEN** update reports failure and does not recreate the file under the established identity
+- **AND** the binding, catalog record, and selected intent remain unchanged
+
+#### Scenario: Incoming metadata matches another record
+- **GIVEN** the replacement XML claims a name or source ID belonging to a different record
+- **WHEN** update is performed on the explicitly selected record
+- **THEN** only the selected logical identity is replaced
+- **AND** the other record remains unchanged
+
+
+### Requirement: Removal reports only committed removal
+
+Removal SHALL report success only after the target binding is removed and the target managed file is observed absent. If file deletion fails after binding removal, the system SHALL attempt to restore the exact prior binding and SHALL report failure while preserving the file; if restoration also fails, it SHALL report both failures and SHALL NOT claim removal. Removal SHALL NOT delete, rewrite, or re-identify an unrelated file or binding.
+
+#### Scenario: File deletion fails
+- **GIVEN** the target binding was removed and the managed file remains
+- **WHEN** file deletion fails
+- **THEN** removal restores the prior binding when possible and reports failure
+- **AND** the file is not reported as removed
+
+#### Scenario: Binding removal fails
+- **GIVEN** the target installed record exists
+- **WHEN** its binding cannot be removed
+- **THEN** removal reports failure
+- **AND** the managed file, other bindings, catalog records, and selected intent remain unchanged
+
+#### Scenario: Unrelated records are preserved
+- **GIVEN** multiple installed records with distinct bindings
+- **WHEN** one record is removed successfully
+- **THEN** only that record's file and binding are removed
+- **AND** all other record identities and files remain unchanged
+
+### Requirement: Supported extension acceptance is locale-independent
+
+Import and update SHALL accept a source only when its final extension is `.xml`, compared case-insensitively without the default locale. Catalog discovery and theme-type classification used by admission SHALL use the same locale-independent case mapping. Unsupported extensions SHALL be refused before staging, binding, or catalog mutation.
+
+#### Scenario: Uppercase extension
+- **GIVEN** a valid theme filename ending in `.XML`
+- **WHEN** catalog discovery or import classification runs
+- **THEN** it is treated as a supported theme file
+- **AND** the parser is selected consistently
+
+#### Scenario: Locale with different case mapping
+- **GIVEN** the process default locale maps `I` differently from the root locale
+- **WHEN** an `.xml` filename is classified
+- **THEN** extension acceptance is unchanged
+
+#### Scenario: Unsupported extension
+- **GIVEN** a selected file whose extension is not `.xml`
+- **WHEN** import is requested
+- **THEN** it is refused with a diagnostic before any staged or managed file is created

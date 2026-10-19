@@ -11,13 +11,12 @@ public final class TokenKey {
 
 	private static final Map<String, TokenKey> TOKENS = new HashMap<>();
 
-	public static TokenKey register(TokenKey key) {
-		TOKENS.put(key.name, key);
+	private static TokenKey register(String name, TokenKey inheritsFrom) {
+		TokenKey key = new TokenKey(Objects.requireNonNull(name, "name"), inheritsFrom);
+		if (TOKENS.putIfAbsent(name, key) != null) {
+			throw new IllegalStateException("Duplicate token role declaration: " + name);
+		}
 		return key;
-	}
-
-	public static TokenKey register(String name, TokenKey inheritsFrom) {
-		return register(new TokenKey(name, inheritsFrom));
 	}
 
 	public static TokenKey byId(String id) {
@@ -29,6 +28,7 @@ public final class TokenKey {
 	    FOREGROUND                  = register("foreground", null),
 	    BACKGROUND                  = register("background", null),
 	    SELECTION_BACKGROUND        = register("selectionBackground", BACKGROUND),
+	    SOURCE_HOVER_BACKGROUND     = register("sourceHoverBackground", BACKGROUND),
 	    SELECTION_FOREGROUND        = register("selectionForeground", FOREGROUND),
 	    CURRENT_LINE                = register("currentLine", BACKGROUND),
 	    ERROR                       = register("error", FOREGROUND),
@@ -46,6 +46,7 @@ public final class TokenKey {
 	    DEBUG_CALL_STACK            = register("debugCallStack", CURRENT_INSTRUCTION_POINTER),
 	    LINE_NUMBER                 = register("lineNumber", FOREGROUND),
 	    COMMENT                     = register("comment", FOREGROUND),
+	    XML_COMMENT                 = register("xmlComment", COMMENT),
 	    MULTILINE_COMMENT           = register("multiLineComment", COMMENT),
 	    TASK_TAG                    = register("taskTag", COMMENT),
 	    KEYWORD                     = register("keyword", FOREGROUND),
@@ -65,6 +66,7 @@ public final class TokenKey {
 	    FIELD                       = register("field", FOREGROUND),
 	    STATIC_FIELD                = register("staticField", FIELD),
 	    CONSTANT                    = register("constant", STATIC_FIELD),
+	    STATIC_FINAL_FIELD          = register("staticFinalField", CONSTANT),
 	    INHERITED_FIELD             = register("inheritedField", FIELD),
 	    LOCAL_VARIABLE              = register("localVariable", FOREGROUND),
 	    LOCAL_VARIABLE_DECLARATION  = register("localVariableDeclaration", LOCAL_VARIABLE),

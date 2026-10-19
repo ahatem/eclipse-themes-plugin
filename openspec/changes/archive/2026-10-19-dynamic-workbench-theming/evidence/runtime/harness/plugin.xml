@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+ <extension point="org.eclipse.ui.startup"><startup class="spike.p8.Probe"/></extension>
+ <extension point="org.eclipse.ui.views"><view id="spike.p8.view" name="P8 surfaces" class="spike.p8.Probe$View"/></extension>
+ <extension point="org.eclipse.ui.editors"><editor id="spike.p8.editor" name="P8 editor" class="spike.p8.Probe$Editor"/></extension>
+</plugin>

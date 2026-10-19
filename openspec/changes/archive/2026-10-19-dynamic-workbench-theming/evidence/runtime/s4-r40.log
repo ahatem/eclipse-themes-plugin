@@ -1,0 +1,97 @@
+ENV os=Windows 11 10.0 ws=win32 java=21.0.11+10-LTS cssThemeBundle=0.15.100.v20260507-0340 platform=4.40.0.v20260601-0713 product=1.1.0.202610182337 state=32
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark, org.eclipse.e4.ui.css.theme.e4_default, com.github.eclipsethemes.workbench.dark, com.github.eclipsethemes.workbench.dark.alt, com.github.eclipsethemes.workbench.light, com.github.eclipsethemes.workbench.light.alt]
+STATE boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS 
+STEP state|boot
+STATE boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS 
+DEFENDER dialog cancelled
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP pick|Catppuccin Mocha
+PICK Catppuccin Mocha ok
+STEP check|1
+CHECKBOX label='Also theme the Eclipse workbench' enabled=true before=false
+CHECKBOX after=true
+STEP pcancel
+CANCEL-CLICK found=true
+STEP wait|1500
+STEP state|after-cancel
+STATE after-cancel | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS 
+STEP regs|after-cancel
+REGS after-cancel d.background=#1e1e1e d.foreground=#d4d4d4 d.surface=#252526 d.raised=#2d2d30 d.border=#3c3c3c d.muted=#9d9d9d d.selection=#264f78 l.background=#ffffff l.foreground=#1f1f1f l.surface=#f3f3f3 l.raised=#e8e8e8 l.border=#cecece l.muted=#6b6b6b l.selection=#cce4f7 
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP pick|Catppuccin Mocha
+PICK Catppuccin Mocha ok
+STEP check|1
+CHECKBOX label='Also theme the Eclipse workbench' enabled=true before=false
+CHECKBOX after=true
+STEP apply
+APPLY-CLICK found=true ms=980
+STEP labels|immediately
+CHECKBOX-STATE 'Also theme the Eclipse workbench' enabled=true selected=true
+LABEL Verified on win32/win32 with theme engine 0.15.100.
+LABEL Coordinates core workbench surfaces (window, tabs, toolbars, trees, tables, status line). Native menus, dialogs, title bars, Browser content and icons may not change.
+LABEL ✓ Applied (editors and workbench)
+STEP wait|3000
+STEP state|enabled
+STATE enabled | active=com.github.eclipsethemes.workbench.dark | instance=com.github.eclipsethemes.workbench.dark | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ABSENT=true SELECTED_THEME_LOGICAL_ID=bundled:10257d9f-bb01-40c2-ba7e-e3c74e60c675 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+STEP regs|enabled
+REGS enabled d.background=#1e1e2e d.foreground=#cdd6f4 d.surface=#272738 d.raised=#303042 d.border=#45465a d.muted=#9096af d.selection=#3e4056 l.background=#ffffff l.foreground=#1f1f1f l.surface=#f3f3f3 l.raised=#e8e8e8 l.border=#cecece l.muted=#6b6b6b l.selection=#cce4f7 
+STEP shot|e1-enabled|main
+PRINT true
+SHOT e1-enabled
+STEP check|0
+CHECKBOX label='Also theme the Eclipse workbench' enabled=true before=true
+CHECKBOX after=false
+STEP apply
+APPLY-CLICK found=true ms=433
+STEP labels|immediately-disable
+CHECKBOX-STATE 'Also theme the Eclipse workbench' enabled=true selected=false
+LABEL Verified on win32/win32 with theme engine 0.15.100.
+LABEL Coordinates core workbench surfaces (window, tabs, toolbars, trees, tables, status line). Native menus, dialogs, title bars, Browser content and icons may not change.
+LABEL ✓ Applied (editors); workbench handed back
+STEP wait|3000
+STEP state|disabled-saved-absent
+STATE disabled-saved-absent | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS SELECTED_THEME_LOGICAL_ID=bundled:10257d9f-bb01-40c2-ba7e-e3c74e60c675 
+STEP regs|disabled
+REGS disabled d.background=#1e1e1e d.foreground=#d4d4d4 d.surface=#252526 d.raised=#2d2d30 d.border=#3c3c3c d.muted=#9d9d9d d.selection=#264f78 l.background=#ffffff l.foreground=#1f1f1f l.surface=#f3f3f3 l.raised=#e8e8e8 l.border=#cecece l.muted=#6b6b6b l.selection=#cce4f7 
+STEP surfaces|disabled
+SURFACE disabled Shell#IDEWindow bg=#48484c fg=#eeeeee
+SURFACE disabled CTabFolder#topLeft bg=#292929 fg=#dddddd tabSelBg=#292929
+SURFACE disabled ToolBar bg=#f0f0f0 fg=#000000
+SURFACE disabled ToolBar#org-eclipse-ui-navigator-ProjectExplorer bg=#48484c fg=#eeeeee
+SURFACE disabled CTabFolder#bottomLeft bg=#48484c fg=#bbbbbb tabSelBg=#48484c
+SURFACE disabled ToolBar#org-eclipse-ui-views-ContentOutline bg=#48484c fg=#eeeeee
+SURFACE disabled CTabFolder#org-eclipse-e4-primaryDataStack bg=#48484c fg=#bbbbbb tabSelBg=#48484c
+SURFACE disabled StyledText bg=#3f4447 fg=#bbbbbb
+SURFACE disabled CTabFolder#bottomRight bg=#292929 fg=#dddddd tabSelBg=#292929
+SURFACE disabled ToolBar#spike-p8-view bg=#48484c fg=#eeeeee
+SURFACE disabled Tree bg=#2f2f2f fg=#aaaaaa
+SURFACE disabled Table bg=#313538 fg=#cccccc
+SURFACE disabled StatusLine#org-eclipse-ui-StatusLine bg=#48484c fg=#eeeeee
+SURFACE disabled ToolBar#org-eclipse-tips-ide-toolbar-status bg=#48484c fg=#eeeeee
+SURFACE disabled ToolBar#org-eclipse-ui-workbench-file bg=#48484c fg=#eeeeee
+SURFACE disabled ToolBar#org-eclipse-ui-workbench-edit bg=#48484c fg=#eeeeee
+SURFACE disabled ToolBar#org-eclipse-debug-ui-launchActionSet bg=#48484c fg=#eeeeee
+SURFACE disabled ToolBar#org-eclipse-search-searchActionSet bg=#48484c fg=#eeeeee
+SURFACE disabled ToolBar#org-eclipse-terminal-view-ui-toolbar bg=#48484c fg=#eeeeee
+SURFACE disabled ToolBar#org-eclipse-ui-workbench-navigate bg=#48484c fg=#eeeeee
+STEP shot|e2-disabled|main
+PRINT true
+SHOT e2-disabled
+STEP okclose
+OKCLOSE-CLICK found=true ms=60
+STEP wait|1000
+STEP state|end
+STATE end | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS SELECTED_THEME_LOGICAL_ID=bundled:10257d9f-bb01-40c2-ba7e-e3c74e60c675 
+DONE

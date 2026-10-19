@@ -1,0 +1,95 @@
+R8A ENV os=Windows 11 10.0 ws=win32 java=21.0.11+10-LTS cssThemeBundle=0.15.100.v20260507-0340 platform=4.40.0.v20260601-0713 product=1.1.0.202610182337 state=32
+R8A THEMES [org.eclipse.e4.ui.css.theme.e4_dark, org.eclipse.e4.ui.css.theme.e4_default, com.github.eclipsethemes.workbench.dark, com.github.eclipsethemes.workbench.dark.alt, com.github.eclipsethemes.workbench.light, com.github.eclipsethemes.workbench.light.alt, spike.bis.v0.dark, spike.bis.v8.dark, spike.bis.v9.dark, spike.bis.v10.dark, spike.bis.v11.dark, spike.bis.v12.dark, spike.bis.v13.dark, spike.bis.v14.dark, spike.bis.w0.dark, spike.bis.w1.dark, spike.bis.w2.dark, spike.bis.w3.dark, spike.bis.w4.dark, spike.bis.w5.dark, spike.bis.w6.dark, spike.bis.w7.dark, spike.bis.w8.dark, spike.bis.w9.dark, spike.bis.w10.dark]
+R8A STATE boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=<absent> | osDark=true | highContrast=false
+R8A OWNPREFS 
+R8A STEP persp|org.eclipse.jdt.ui.JavaPerspective
+R8A PERSP org.eclipse.jdt.ui.JavaPerspective true
+R8A STEP view|org.eclipse.jdt.ui.PackageExplorer
+R8A VIEW org.eclipse.jdt.ui.PackageExplorer
+R8A STEP project
+R8A PROJECT opened Demo.java
+R8A STEP view|org.eclipse.jdt.ui.PackageExplorer
+R8A VIEW org.eclipse.jdt.ui.PackageExplorer
+R8A STEP wait|2500
+R8A STEP stock|org.eclipse.e4.ui.css.theme.e4_dark
+R8A STOCK org.eclipse.e4.ui.css.theme.e4_dark found=true
+R8A STOCK-SET ms=1238 active=org.eclipse.e4.ui.css.theme.e4_dark
+R8A STEP wait|3000
+R8A STEP jfc|stockdark
+R8A JFC stockdark HYPERLINK_COLOR=#6fc5ee ACTIVE_HYPERLINK_COLOR=#8ac9f2 ERROR_COLOR=#f74475 DECORATIONS_COLOR=#957d47 QUALIFIER_COLOR=#808080 COUNTER_COLOR=#007fae CONTENT_ASSIST_BACKGROUND_COLOR=#34393d CONTENT_ASSIST_FOREGROUND_COLOR=#eeeeee HOVER_BACKGROUND=#34393d HOVER_FOREGROUND=#eeeeee INFORMATION_BACKGROUND=#515658 egit.IgnoredResourceForegroundColor=#787878 egit.UncommittedChangeForegroundColor=#729dba
+R8A STEP pexp|11
+R8A PEXP k=11 style=22000302 cls=null id=null chain=Composite bg=#2f2f2f > Composite bg=#2f2f2f >  bg=#292929 > Composite bg=#48484c > CTabFolder bg=#48484c > Composite bg=#48484c > Composite bg=#48484c > Composite bg=#48484c > Composite bg=#48484c > Composite bg=#48484c > Shell bg=#48484c >  item.fg=#aaaaaa font=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|0|0|0|0|1|0|0|0|0|Segoe UI
+R8A PAINTITEM gcFg=#787878 gcBg=#2f2f2f detail=24 item=Demo
+R8A STEP font|stockdark
+R8A FONT stockdark tree=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|0|0|0|0|1|0|0|0|0|Segoe UI TREE_TABLE_FONT=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI TAB_TEXT_FONT=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI
+R8A STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\atom.xml
+R8A IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:92843f8b-0153-4c57-9220-0f2d1de336a6, origin=INSTALLED, locator=Optional[6b8a83a0-4669-4d8e-94eb-2317189e9299.xml], theme=R8A QA - Atom One Dark], diagnostics=[]]
+R8A STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\solarized.xml
+R8A IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:ce635515-26ef-4def-a68f-289ac5dbaa92, origin=INSTALLED, locator=Optional[621f3233-7842-4bfb-b55f-f7dd94345d4f.xml], theme=R8A QA - Solarized Light], diagnostics=[]]
+R8A STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\dracula.xml
+R8A IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:135daee6-72e5-4c92-97fe-169199911f5f, origin=INSTALLED, locator=Optional[c4e62398-5c1a-4b85-ac26-13ff4269e384.xml], theme=R8A QA - Dracula], diagnostics=[]]
+R8A STEP prefs
+R8A PREFS pageIdValid=true
+R8A PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+R8A STEP wait|1500
+R8A STEP pick|R8A QA - Atom One Dark
+R8A PICK R8A QA - Atom One Dark ok
+R8A STEP check|1
+R8A CHECKBOX label='Also theme the Eclipse workbench' enabled=true before=false
+R8A CHECKBOX after=true
+R8A STEP apply
+R8A APPLY-CLICK found=true ms=899
+R8A STEP wait|4000
+R8A STEP jfc|atom
+R8A JFC atom HYPERLINK_COLOR=#0066cc ACTIVE_HYPERLINK_COLOR=#00478f ERROR_COLOR=#ff0000 DECORATIONS_COLOR=#957d47 QUALIFIER_COLOR=#808080 COUNTER_COLOR=#007fae CONTENT_ASSIST_BACKGROUND_COLOR=#ffffff CONTENT_ASSIST_FOREGROUND_COLOR=#000000 HOVER_BACKGROUND=#ffffe1 HOVER_FOREGROUND=#000000 INFORMATION_BACKGROUND=#ffffe1 egit.IgnoredResourceForegroundColor=#000000 egit.UncommittedChangeForegroundColor=#000000
+R8A STEP pexp|11
+R8A PEXP k=11 style=22000302 cls=null id=null chain=Composite bg=#282c34 > Composite bg=#282c34 >  bg=#282c34 > Composite bg=#252830 > CTabFolder bg=#282c34 > Composite bg=#252830 > Composite bg=#252830 > Composite bg=#252830 > Composite bg=#252830 > Composite bg=#252830 > Shell bg=#252830 >  item.fg=#abb2bf font=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|0|0|0|0|1|0|0|0|0|Segoe UI
+R8A PAINTITEM gcFg=#000000 gcBg=#282c34 detail=16 item=Demo
+R8A STEP font|atom
+R8A FONT atom tree=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|0|0|0|0|1|0|0|0|0|Segoe UI TREE_TABLE_FONT=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI TAB_TEXT_FONT=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI
+R8A STEP wbpref|HYPERLINK_COLOR|1,2,3
+R8A WBPREF set HYPERLINK_COLOR=1,2,3
+R8A STEP wait|1500
+R8A STEP jfc|atom-userlink
+R8A JFC atom-userlink HYPERLINK_COLOR=#010203 ACTIVE_HYPERLINK_COLOR=#00478f ERROR_COLOR=#ff0000 DECORATIONS_COLOR=#957d47 QUALIFIER_COLOR=#808080 COUNTER_COLOR=#007fae CONTENT_ASSIST_BACKGROUND_COLOR=#ffffff CONTENT_ASSIST_FOREGROUND_COLOR=#000000 HOVER_BACKGROUND=#ffffe1 HOVER_FOREGROUND=#000000 INFORMATION_BACKGROUND=#ffffe1 egit.IgnoredResourceForegroundColor=#000000 egit.UncommittedChangeForegroundColor=#000000
+R8A STEP wbget|HYPERLINK_COLOR
+R8A STEP pick|R8A QA - Solarized Light
+R8A PICK R8A QA - Solarized Light ok
+R8A STEP apply
+R8A APPLY-CLICK found=true ms=413
+R8A STEP wait|4000
+R8A STEP jfc|sol
+R8A JFC sol HYPERLINK_COLOR=#0066cc ACTIVE_HYPERLINK_COLOR=#00478f ERROR_COLOR=#ff0000 DECORATIONS_COLOR=#957d47 QUALIFIER_COLOR=#808080 COUNTER_COLOR=#007fae CONTENT_ASSIST_BACKGROUND_COLOR=#ffffff CONTENT_ASSIST_FOREGROUND_COLOR=#000000 HOVER_BACKGROUND=#ffffe1 HOVER_FOREGROUND=#000000 INFORMATION_BACKGROUND=#ffffe1 egit.IgnoredResourceForegroundColor=#000000 egit.UncommittedChangeForegroundColor=#000000
+R8A STEP pexp|11
+R8A PEXP k=11 style=22000302 cls=null id=null chain=Composite bg=#fdf6e3 > Composite bg=#fdf6e3 >  bg=#fdf6e3 > Composite bg=#eee8d5 > CTabFolder bg=#fdf6e3 > Composite bg=#eee8d5 > Composite bg=#eee8d5 > Composite bg=#eee8d5 > Composite bg=#eee8d5 > Composite bg=#eee8d5 > Shell bg=#eee8d5 >  item.fg=#50656d font=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|0|0|0|0|1|0|0|0|0|Segoe UI
+R8A PAINTITEM gcFg=#000000 gcBg=#fdf6e3 detail=16 item=Demo
+R8A STEP font|sol
+R8A FONT sol tree=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|0|0|0|0|1|0|0|0|0|Segoe UI TREE_TABLE_FONT=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI TAB_TEXT_FONT=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI
+R8A STEP wbget|HYPERLINK_COLOR
+R8A STEP pick|R8A QA - Dracula
+R8A PICK R8A QA - Dracula ok
+R8A STEP apply
+R8A APPLY-CLICK found=true ms=445
+R8A STEP wait|4000
+R8A STEP jfc|dracula
+R8A JFC dracula HYPERLINK_COLOR=#6fc5ee ACTIVE_HYPERLINK_COLOR=#8ac9f2 ERROR_COLOR=#f74475 DECORATIONS_COLOR=#957d47 QUALIFIER_COLOR=#808080 COUNTER_COLOR=#007fae CONTENT_ASSIST_BACKGROUND_COLOR=#34393d CONTENT_ASSIST_FOREGROUND_COLOR=#eeeeee HOVER_BACKGROUND=#34393d HOVER_FOREGROUND=#eeeeee INFORMATION_BACKGROUND=#515658 egit.IgnoredResourceForegroundColor=#787878 egit.UncommittedChangeForegroundColor=#729dba
+R8A STEP pexp|11
+R8A PEXP k=11 style=22000302 cls=null id=null chain=Composite bg=#282a36 > Composite bg=#282a36 >  bg=#282a36 > Composite bg=#21222c > CTabFolder bg=#282a36 > Composite bg=#21222c > Composite bg=#21222c > Composite bg=#21222c > Composite bg=#21222c > Composite bg=#21222c > Shell bg=#21222c >  item.fg=#f8f8f2 font=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|0|0|0|0|1|0|0|0|0|Segoe UI
+R8A PAINTITEM gcFg=#787878 gcBg=#282a36 detail=16 item=Demo
+R8A STEP wbget|HYPERLINK_COLOR
+R8A STEP okclose
+R8A OKCLOSE-CLICK found=true ms=75
+R8A STEP wait|1500
+R8A STEP stock|org.eclipse.e4.ui.css.theme.e4_default
+R8A STOCK org.eclipse.e4.ui.css.theme.e4_default found=true
+R8A STOCK-SET ms=145 active=org.eclipse.e4.ui.css.theme.e4_default
+R8A STEP wait|3000
+R8A STEP jfc|stocklight
+R8A JFC stocklight HYPERLINK_COLOR=#0066cc ACTIVE_HYPERLINK_COLOR=#00478f ERROR_COLOR=#ff0000 DECORATIONS_COLOR=#957d47 QUALIFIER_COLOR=#808080 COUNTER_COLOR=#007fae CONTENT_ASSIST_BACKGROUND_COLOR=#ffffff CONTENT_ASSIST_FOREGROUND_COLOR=#000000 HOVER_BACKGROUND=#ffffe1 HOVER_FOREGROUND=#000000 INFORMATION_BACKGROUND=#ffffe1 egit.IgnoredResourceForegroundColor=#000000 egit.UncommittedChangeForegroundColor=#000000
+R8A STEP font|stocklight
+R8A FONT stocklight tree=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|0|0|0|0|1|0|0|0|0|Segoe UI TREE_TABLE_FONT=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI TAB_TEXT_FONT=1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI
+R8A STEP wbget|HYPERLINK_COLOR
+R8A STEP state|end
+R8A STATE end | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=<absent> | osDark=true | highContrast=false
+R8A OWNPREFS WORKBENCH_PRIOR_SAVED_ID=org.eclipse.e4.ui.css.theme.e4_dark SELECTED_THEME_LOGICAL_ID=local:135daee6-72e5-4c92-97fe-169199911f5f WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_ACTIVE_ID=org.eclipse.e4.ui.css.theme.e4_dark 
+R8A DONE

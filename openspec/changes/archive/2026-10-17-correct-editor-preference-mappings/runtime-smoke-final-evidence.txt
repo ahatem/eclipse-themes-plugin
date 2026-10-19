@@ -1,0 +1,190 @@
+Final bounded runtime smoke evidence, 2026-10-17.
+Consumer observations excerpted from tmp/pm6-runtime.log; full unfiltered log remains at that path.
+
+PASS packaged product available
+RUNTIME 4.33.0.v20240903-0240 JDT=3.33.0.v20240822-0459 Java=21.0.12.1
+PASS default PDE accessor works before probe obtains the plugin store
+PASS debug current painter listener consumes currentIPColor
+PASS debug secondary painter listener consumes secondaryIPColor
+PASS debug indication switches preserved
+PASS deprecated-member default is enabled
+PASS semantic listener inheritedMethodInvocation enabled=true
+PASS semantic role found inheritedMethodInvocation
+PASS stored optional state inheritedMethodInvocation
+PASS semantic listener inheritedField enabled=true
+PASS semantic role found inheritedField
+PASS stored optional state inheritedField
+PASS semantic listener typeArgument enabled=true
+PASS semantic role found typeArgument
+PASS stored optional state typeArgument
+PASS semantic listener deprecatedMember enabled=true
+PASS semantic role found deprecatedMember
+PASS stored optional state deprecatedMember
+PASS new source hover consumes explicit background
+HOVER present=true actual=RGB {35, 69, 103}
+PASS semantic listener inheritedMethodInvocation enabled=false
+PASS semantic role found inheritedMethodInvocation
+PASS stored optional state inheritedMethodInvocation
+PASS sparse override absent inheritedMethodInvocation.color
+PASS sparse override absent inheritedMethodInvocation.bold
+PASS sparse override absent inheritedMethodInvocation.italic
+PASS sparse override absent inheritedMethodInvocation.underline
+PASS sparse override absent inheritedMethodInvocation.strikethrough
+PASS semantic listener inheritedField enabled=false
+PASS semantic role found inheritedField
+PASS stored optional state inheritedField
+PASS sparse override absent inheritedField.color
+PASS sparse override absent inheritedField.bold
+PASS sparse override absent inheritedField.italic
+PASS sparse override absent inheritedField.underline
+PASS sparse override absent inheritedField.strikethrough
+PASS semantic listener typeArgument enabled=false
+PASS semantic role found typeArgument
+PASS stored optional state typeArgument
+PASS sparse override absent typeArgument.color
+PASS sparse override absent typeArgument.bold
+PASS sparse override absent typeArgument.italic
+PASS sparse override absent typeArgument.underline
+PASS sparse override absent typeArgument.strikethrough
+PASS semantic listener deprecatedMember enabled=false
+PASS semantic role found deprecatedMember
+PASS stored optional state deprecatedMember
+PASS sparse override absent deprecatedMember.color
+PASS sparse override absent deprecatedMember.bold
+PASS sparse override absent deprecatedMember.italic
+PASS sparse override absent deprecatedMember.underline
+PASS sparse override absent deprecatedMember.strikethrough
+PASS omitted hover exposes system-default preference
+HOVER present=false actual=RGB {16, 17, 18}
+PASS semantic listener inheritedMethodInvocation enabled=false
+PASS semantic role found inheritedMethodInvocation
+PASS stored optional state inheritedMethodInvocation
+PASS sparse override absent inheritedMethodInvocation.color
+PASS sparse override absent inheritedMethodInvocation.bold
+PASS sparse override absent inheritedMethodInvocation.italic
+PASS sparse override absent inheritedMethodInvocation.underline
+PASS sparse override absent inheritedMethodInvocation.strikethrough
+PASS semantic listener inheritedField enabled=false
+PASS semantic role found inheritedField
+PASS stored optional state inheritedField
+PASS sparse override absent inheritedField.color
+PASS sparse override absent inheritedField.bold
+PASS sparse override absent inheritedField.italic
+PASS sparse override absent inheritedField.underline
+PASS sparse override absent inheritedField.strikethrough
+PASS semantic listener typeArgument enabled=false
+PASS semantic role found typeArgument
+PASS stored optional state typeArgument
+PASS sparse override absent typeArgument.color
+PASS sparse override absent typeArgument.bold
+PASS sparse override absent typeArgument.italic
+PASS sparse override absent typeArgument.underline
+PASS sparse override absent typeArgument.strikethrough
+PASS semantic listener deprecatedMember enabled=false
+PASS semantic role found deprecatedMember
+PASS stored optional state deprecatedMember
+PASS sparse override absent deprecatedMember.color
+PASS sparse override absent deprecatedMember.bold
+PASS sparse override absent deprecatedMember.italic
+PASS sparse override absent deprecatedMember.underline
+PASS sparse override absent deprecatedMember.strikethrough
+PASS omitted hover exposes system-default preference
+HOVER present=false actual=RGB {16, 17, 18}
+PASS semantic listener inheritedMethodInvocation enabled=true
+PASS semantic role found inheritedMethodInvocation
+PASS stored optional state inheritedMethodInvocation
+PASS semantic listener inheritedField enabled=true
+PASS semantic role found inheritedField
+PASS stored optional state inheritedField
+PASS semantic listener typeArgument enabled=true
+PASS semantic role found typeArgument
+PASS stored optional state typeArgument
+PASS semantic listener deprecatedMember enabled=true
+PASS semantic role found deprecatedMember
+PASS stored optional state deprecatedMember
+PASS new source hover consumes explicit background
+HOVER present=true actual=RGB {35, 69, 103}
+PDE actual=Color {69, 103, 137, 255} style=1 ANT actual=Color {69, 103, 137, 255} style=1
+PASS PDE comment listener consumes XML role
+PASS Ant comment listener consumes XML role
+PASS PDE comment bold listener transition
+PASS Ant comment bold listener transition
+PASS PDE/Ant complete supported style and fallback transition
+PASS default-valued PDE bold remains explicit
+PASS default-valued PDE italic remains explicit
+PDE actual=Color {120, 154, 188, 255} style=2 ANT actual=Color {120, 154, 188, 255} style=2
+PASS PDE comment listener consumes XML role
+PASS Ant comment listener consumes XML role
+PASS PDE comment bold listener transition
+PASS Ant comment bold listener transition
+PASS PDE/Ant complete supported style and fallback transition
+PASS default-valued PDE bold remains explicit
+PASS default-valued PDE italic remains explicit
+PDE actual=Color {222, 223, 224, 255} style=0 ANT actual=Color {222, 223, 224, 255} style=0
+PASS PDE comment listener consumes XML role
+PASS Ant comment listener consumes XML role
+PASS PDE comment bold listener transition
+PASS Ant comment bold listener transition
+PASS PDE/Ant complete supported style and fallback transition
+PASS default-valued PDE bold remains explicit
+PASS default-valued PDE italic remains explicit
+PDE actual=Color {171, 196, 86, 255} style=2 ANT actual=Color {171, 196, 86, 255} style=2
+PASS PDE comment listener consumes XML role
+PASS Ant comment listener consumes XML role
+PASS PDE comment bold listener transition
+PASS Ant comment bold listener transition
+PASS PDE/Ant complete supported style and fallback transition
+PASS default-valued PDE bold remains explicit
+PASS default-valued PDE italic remains explicit
+PDE actual=Color {171, 196, 86, 255} style=2 ANT actual=Color {171, 196, 86, 255} style=2
+PASS PDE comment listener consumes XML role
+PASS Ant comment listener consumes XML role
+PASS PDE comment bold listener transition
+PASS Ant comment bold listener transition
+PASS PDE/Ant complete supported style and fallback transition
+PASS default-valued PDE bold remains explicit
+PASS default-valued PDE italic remains explicit
+PDE actual=Color {69, 103, 137, 255} style=1 ANT actual=Color {69, 103, 137, 255} style=1
+PASS PDE comment listener consumes XML role
+PASS Ant comment listener consumes XML role
+PASS PDE comment bold listener transition
+PASS Ant comment bold listener transition
+PASS PDE/Ant complete supported style and fallback transition
+PASS default-valued PDE bold remains explicit
+PASS default-valued PDE italic remains explicit
+PASS actual PDE store receives typed true
+PASS actual PDE store receives typed false
+PASS PDE emits no unsupported style notifications
+PASS Ant emits no unsupported style notifications
+RECOVERY PATH Window > Preferences > General > Editors > Text Editors > Annotations
+RECOVERY CONTROLS Bookmarks | Breakpoints | Debug Call Stack | Debug Current Instruction Pointer | Errors | Filtered Search Results | Infos | Occurrences | Override Indicators | Search Results | Spelling Errors | Tasks | Text Occurrence | Warnings | Write Occurrences | &Vertical ruler | &Overview ruler | &Text as |  | &Include in next/previous navigation | Restore &Defaults | &Apply | 
+PASS both debug annotation entries exist on recovery page
+PASS manual recovery annotation page instantiated in verified preference hierarchy
+PASS zero runtime listener exceptions (no log filtering/suppression)
+PASS available JDT adapter discovered
+PASS incompatible PDE accessor causes no PDE mutation
+PASS existing service reports incompatible PDE and continues
+PASS unrelated text integration still applies beside incompatible PDE
+MAPPING SMOKE COMPLETE
+
+Exact PDE event-type samples from the unfiltered event trace:
+editor.color.xml_comment_bold=false [java.lang.Boolean]
+editor.color.xml_comment_bold=false [java.lang.String]
+editor.color.xml_comment_bold=true [java.lang.Boolean]
+editor.color.xml_comment_bold=true [java.lang.String]
+editor.color.xml_comment_italic=false [java.lang.Boolean]
+editor.color.xml_comment_italic=false [java.lang.String]
+editor.color.xml_comment_italic=true [java.lang.Boolean]
+editor.color.xml_comment_italic=true [java.lang.String]
+
+Absent-integration assertions from tmp/pm6-absent-final.log (startup unresolved optional-dependent bundle diagnostics remain in that unfiltered log):
+PASS JDT absent in disposable configuration
+PASS PDE absent in disposable configuration
+PASS existing registry contributions retained without changing discovery semantics
+PASS absent JDT receives no hover/semantic preference mutation
+PASS absent PDE receives no preference mutation
+PASS unavailable integrations are skipped without application errors
+PASS text selection still applies independently of absent JDT/PDE
+PASS direct absent-PDE access reports a checked integration failure
+PASS absent accessor fails before PDE mutation without substitute store
+ABSENT DISCOVERY SMOKE COMPLETE

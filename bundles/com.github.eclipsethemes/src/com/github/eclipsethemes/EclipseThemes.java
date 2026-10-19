@@ -37,6 +37,9 @@ public class EclipseThemes extends AbstractUIPlugin {
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		if (themeManager != null) {
+			themeManager.dispose();
+		}
 		instance = null;
 		super.stop(context);
 	}

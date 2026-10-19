@@ -1,0 +1,1 @@
+state|restart-boot;wait|5000;state|restart-after-5s;pcol|after-external-light;prefs;wait|1500;labels|conflict-view;pick|R8A QA - Catppuccin Mocha;apply;wait|4500;state|mocha-again;pcol|mocha-again|v;labels|mocha-again;pcancel;appearance;wait|800;choose|Dark;aok;wait|3500;state|external-dark;pcol|external-dark|v;state|end

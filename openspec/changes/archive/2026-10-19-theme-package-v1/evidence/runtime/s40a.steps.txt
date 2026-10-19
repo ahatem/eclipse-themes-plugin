@@ -1,0 +1,1 @@
+state|boot;prefs;wait|2500;lsnr;uia|Import Theme|<repo>\tmp\workbench-spike\r9\qa\qa-b-authored-dark.ectheme;bclick|Import Theme...|12000;msg|OK;wait|1500;details|imp-B;pick|R9 QA Authored;check|1;apply;wait|4000;state|B;regs|B;shot|B|main;navcount|end;okclose;wait|2000;state|end

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<themePackage schemaVersion='2' id='qa.r9.future' name='R9 QA Future' appearance='dark'>
+<editor><background color='#1b1f2a'/><foreground color='#c8d0e0'/><keyword color='#c792ea' bold='true'/><string color='#c3e88d'/><singleLineComment color='#697098' italic='true'/></editor>
+</themePackage>

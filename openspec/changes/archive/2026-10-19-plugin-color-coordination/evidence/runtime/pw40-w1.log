@@ -1,0 +1,880 @@
+ENV os=Windows 11 10.0 ws=win32 java=21.0.11+10-LTS cssThemeBundle=0.15.100.v20260507-0340 platform=4.40.0.v20260601-0713 product=1.1.0.202610182337 state=32
+THEMES [org.eclipse.e4.ui.css.theme.e4_dark, org.eclipse.e4.ui.css.theme.e4_default, com.github.eclipsethemes.workbench.dark, com.github.eclipsethemes.workbench.dark.alt, com.github.eclipsethemes.workbench.light, com.github.eclipsethemes.workbench.light.alt, s
+STATE boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS 
+STEP state|boot
+STATE boot | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=<absent> | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS 
+STEP stock|org.eclipse.e4.ui.css.theme.e4_default
+STOCK org.eclipse.e4.ui.css.theme.e4_default found=true
+STOCK-SET ms=340 active=org.eclipse.e4.ui.css.theme.e4_default
+DEFENDER dialog cancelled
+STEP wait|2500
+STEP import|C:\Users\cw\eclipse-workspace-plugins\eclipse-themes-plugin\tmp\workbench-spike\v8\qa\atom.xml
+IMPORT ThemeOperationOutcome[record=ThemeRecord[logicalId=local:1c3742dc-ba85-4d47-8068-b40b710246a8, origin=INSTALLED, locator=Optional[4f551986-95d2-48f6-8e25-04b8c343a86f.xml], theme=R8A QA - Atom One Dark], diagnostics=[]]
+STEP prefs
+PREFS pageIdValid=true
+PREFS selectedPage=com.github.eclipsethemes.eclipse.preferences.EclipseThemesPreferencePage
+STEP wait|1500
+STEP pick|R8A QA - Atom One Dark
+PICK R8A QA - Atom One Dark ok
+STEP check|1
+CHECKBOX label='Also theme the Eclipse workbench' enabled=true before=false
+CHECKBOX after=true
+STEP apply
+APPLY-CLICK found=true ms=928
+STEP wait|4500
+STEP okclose
+OKCLOSE-CLICK found=true ms=197
+STEP wait|1500
+STEP pcol|atom|v
+PCOL atom keys=68 present=68 owned=66 ownedAndPresent=66
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.backgroundColor inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.foregroundColor inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_FOREGROUND inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_BACKGROUND inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_FOREGROUND inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_BACKGROUND_COLOR inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_FOREGROUND_COLOR inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|HYPERLINK_COLOR inst=103,176,249 live=103,176,249 OWNED
+  PCOLKEY org.eclipse.ui.workbench|ACTIVE_HYPERLINK_COLOR inst=130,178,229 live=130,178,229 OWNED
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_background inst=255,255,255
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_foreground inst=0,0,0
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_background inst=44,50,60 OWNED
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_foreground inst=171,178,191 OWNED
+  PCOLKEY org.eclipse.jdt.ui|javadocElementsStyling.darkModeDefaultColors inst=true OWNED
+  PCOLKEY org.eclipse.ui.workbench|ERROR_COLOR inst=251,129,122 live=251,129,122 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR inst=251,129,122 live=251,129,122 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR inst=214,162,10 live=214,162,10 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR inst=141,148,159 live=141,148,159 OWNED
+  PCOLKEY org.eclipse.ui.workbench|INCOMING_COLOR inst=51,187,231 live=51,187,231 OWNED
+  PCOLKEY org.eclipse.ui.workbench|OUTGOING_COLOR inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|CONFLICTING_COLOR inst=251,129,122 live=251,129,122 OWNED
+  PCOLKEY org.eclipse.ui.workbench|RESOLVED_COLOR inst=90,197,118 live=90,197,118 OWNED
+  PCOLKEY org.eclipse.ui.workbench|EDITION_COLOR inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.CommitMessageCommentColor inst=141,148,159 live=141,148,159 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor inst=19,78,38 live=19,78,38 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddForegroundColor inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveBackgroundColor inst=105,43,40 live=105,43,40 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveForegroundColor inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkBackgroundColor inst=14,72,91 live=14,72,91 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkForegroundColor inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineBackgroundColor inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineForegroundColor inst=171,178,191 live=171,178,191 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceBackgroundColor inst=40,44,52 live=40,44,52 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceForegroundColor inst=141,148,159 live=141,148,159 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeBackgroundColor inst=40,44,52 live=40,44,52 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeForegroundColor inst=103,176,249 live=103,176,249 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.search.ui.match.highlight inst=84,61,1 live=84,61,1 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_NEWEST_COLOR inst=84,61,1 live=84,61,1 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_OLDEST_COLOR inst=73,60,33 live=73,60,33 OWNED
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor inst=103,176,249 OWNED
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor.SystemDefault inst=false OWNED
+  PCOLKEY org.eclipse.ui.editors|linked.slave.color inst=14,72,91 OWNED
+  PCOLKEY org.eclipse.ui.editors|breakpointIndicationColor inst=51,187,231 OWNED
+  PCOLKEY org.eclipse.ui.editors|fullcoverage_color inst=19,78,38 OWNED
+  PCOLKEY org.eclipse.ui.editors|partialcoverage_color inst=84,61,1 OWNED
+  PCOLKEY org.eclipse.ui.editors|nocoverage_color inst=105,43,40 OWNED
+  PCOLKEY org.eclipse.ui.editors|org.eclipse.ui.editors.stickyLinesSeparatorColor inst=75,82,93 OWNED
+  PCOLKEY org.eclipse.ui.editors|inlineDiffColor inst=44,69,49 OWNED
+  PCOLKEY org.eclipse.ui.editors|detailedInlineDiffColor inst=19,78,38 OWNED
+  PCOLKEY org.eclipse.ui.editors|deletionInlineDiffColor inst=83,52,50 OWNED
+  PCOLKEY org.eclipse.ui.editors|detailedDeletionInlineDiffColor inst=105,43,40 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.inherited inst=141,148,159 live=141,148,159 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight inst=84,61,1 live=84,61,1 OWNED
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND inst=84,61,1 OWNED
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.MemoryHistoryKnownColor inst=171,178,191 OWNED
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.changedDebugElement inst=251,129,122 OWNED
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.informationColor inst=51,187,231 OWNED
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.debugColor inst=171,178,191 OWNED
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.errorColor inst=251,129,122 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled inst=51,187,231 live=51,187,231 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled inst=51,187,231 live=51,187,231 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled inst=141,148,159 live=141,148,159 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.task.active inst=103,176,249 live=103,176,249 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.start inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.end inst=44,50,60 live=44,50,60 OWNED
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.color.text.quoted inst=51,187,231 live=51,187,231 OWNED
+  PCOLKEY org.eclipse.epp.mpc.ui|native-borders inst=false OWNED
+STEP pwatch
+WATCH on
+STEP appearance
+APPEARANCE pageIdValid=true
+COMBO items=[Dark, Light, Eclipse Themes Dark, Eclipse Themes Dark (alternate), Eclipse Themes Light, Eclipse Themes Light (alternate), bis v0, bis v8, bis v9, bis v10, bis v11, bis v12, bis v13, bis v14, bis w0, bis w1, bis w2, bis w3, bis w4, bis w5, bis w6,
+COMBO items=[Default (current), Reduced Palette, Classic Theme] selected=Default (current)
+STEP wait|800
+STEP choose|Dark
+COMBO choose=Dark actual=Dark
+STEP aok
+PREFCHG t=622701 org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.backgroundColor 44,50,60 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$wat
+PREFCHG t=622784 org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.foregroundColor 171,178,191 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$
+PREFTRACE org.eclipse.ui.workbench/HYPERLINK_COLOR 103,176,249 -> null :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.remove < InstancePreferences.remove < PluginColorWriter.sync < PluginColorWriter.release < WorkbenchCoordinator.onSavedThemeCh
+PREFTRACE org.eclipse.ui.workbench/ACTIVE_HYPERLINK_COLOR 130,178,229 -> null :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.remove < InstancePreferences.remove < PluginColorWriter.sync < PluginColorWriter.release < WorkbenchCoordinator.onSaved
+PREFCHG t=623017 org.eclipse.jdt.ui/content_assist_parameters_background 44,50,60 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedTheme
+PREFCHG t=623018 org.eclipse.jdt.ui/content_assist_parameters_foreground 171,178,191 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedTh
+PREFCHG t=623020 org.eclipse.jdt.ui/javadocElementsStyling.darkModeDefaultColors true -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedT
+PREFCHG t=623022 org.eclipse.ui.workbench/org.eclipse.egit.ui.CommitMessageCommentColor 141,148,159 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lamb
+PREFCHG t=623022 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffAddBackgroundColor 19,78,38 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$wat
+PREFCHG t=623023 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffAddForegroundColor 171,178,191 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$
+PREFCHG t=623024 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffRemoveBackgroundColor 105,43,40 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda
+PREFCHG t=623025 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffRemoveForegroundColor 171,178,191 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lamb
+PREFCHG t=623026 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHunkBackgroundColor 14,72,91 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$wa
+PREFCHG t=623027 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHunkForegroundColor 171,178,191 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda
+PREFCHG t=623028 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHeadlineBackgroundColor 44,50,60 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambd
+PREFCHG t=623029 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHeadlineForegroundColor 171,178,191 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.la
+PREFCHG t=623030 org.eclipse.ui.workbench/org.eclipse.egit.ui.IgnoredResourceBackgroundColor 40,44,52 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.la
+PREFCHG t=623031 org.eclipse.ui.workbench/org.eclipse.egit.ui.IgnoredResourceForegroundColor 141,148,159 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine
+PREFCHG t=623032 org.eclipse.ui.workbench/org.eclipse.egit.ui.UncommittedChangeBackgroundColor 40,44,52 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.
+PREFCHG t=623033 org.eclipse.ui.workbench/org.eclipse.egit.ui.UncommittedChangeForegroundColor 103,176,249 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngi
+PREFCHG t=623035 org.eclipse.ui.editors/hyperlinkColor 103,176,249 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedThemeId$0 
+PREFCHG t=623037 org.eclipse.ui.editors/hyperlinkColor.SystemDefault false -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedThemeId$0 
+PREFCHG t=623038 org.eclipse.ui.editors/linked.slave.color 14,72,91 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedThemeId$0 
+PREFCHG t=623038 org.eclipse.ui.editors/breakpointIndicationColor 51,187,231 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedThemeId$0 
+PREFCHG t=623039 org.eclipse.ui.editors/fullcoverage_color 19,78,38 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedThemeId$0 
+PREFCHG t=623040 org.eclipse.ui.editors/partialcoverage_color 84,61,1 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedThemeId$0 
+PREFCHG t=623041 org.eclipse.ui.editors/nocoverage_color 105,43,40 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedThemeId$0 
+PREFCHG t=623042 org.eclipse.ui.editors/org.eclipse.ui.editors.stickyLinesSeparatorColor 75,82,93 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda
+PREFCHG t=623043 org.eclipse.ui.editors/inlineDiffColor 44,69,49 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedThemeId$0 
+PREFCHG t=623044 org.eclipse.ui.editors/detailedInlineDiffColor 19,78,38 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedThemeId$0 
+PREFCHG t=623044 org.eclipse.ui.editors/deletionInlineDiffColor 83,52,50 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedThemeId$0 
+PREFCHG t=623045 org.eclipse.ui.editors/detailedDeletionInlineDiffColor 105,43,40 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$watchSavedTheme
+PREFCHG t=623046 org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.inherited 141,148,159 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda$
+PREFCHG t=623047 org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight 84,61,1 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine
+PREFCHG t=623048 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled 51,187,231 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchTh
+PREFCHG t=623049 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled 51,187,231 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThe
+PREFCHG t=623050 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled 141,148,159 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkben
+PREFCHG t=623051 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.task.active 103,176,249 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchTheme
+PREFCHG t=623052 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.category.gradient.start 44,50,60 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEn
+PREFCHG t=623053 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.category.gradient.end 44,50,60 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngi
+PREFCHG t=623055 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.color.text.quoted 51,187,231 -> null by InstancePreferences.remove PluginColorWriter.sync PluginColorWriter.release WorkbenchCoordinator.onSavedThemeChanged EclipseWorkbenchThemeEngine.lambda
+PREFCHG t=623072 org.eclipse.e4.ui.css.swt.theme/themeid com.github.eclipsethemes.workbench.dark -> org.eclipse.e4.ui.css.theme.e4_dark by ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=623083 org.eclipse.ui.editors/fullcoverage_color null -> 6,74,6 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS null -> ,fullcoverage_color, :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.put < EclipsePreferencesHelper.appendOverriddenPropertyName < EclipsePreferencesHandler.overrideProperty < EclipsePrefe
+PREFCHG t=623086 org.eclipse.ui.editors/fullcoverage_color,defaultValueBeforeOverriddenFromCSS null -> 192,255,192 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferen
+PREFCHG t=623087 org.eclipse.ui.editors/partialcoverage_color null -> 98,98,0 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color, -> ,fullcoverage_color,partialcoverage_color, :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.put < EclipsePreferencesHelper.appendOverriddenPropertyName < EclipsePreferencesH
+PREFCHG t=623089 org.eclipse.ui.editors/partialcoverage_color,defaultValueBeforeOverriddenFromCSS null -> 255,255,128 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePrefe
+PREFCHG t=623089 org.eclipse.ui.editors/nocoverage_color null -> 98,5,5 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color, -> ,fullcoverage_color,partialcoverage_color,nocoverage_color, :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.put < EclipsePreferencesHelper.appendOverr
+PREFCHG t=623092 org.eclipse.ui.editors/nocoverage_color,defaultValueBeforeOverriddenFromCSS null -> 255,160,160 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreference
+PREFCHG t=623093 org.eclipse.ui.editors/LSP4EReadOccurrenceIndicationColor 52,60,71 -> 27,98,145 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSPrope
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color, -> ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor, :: EclipsePreferences.firePreferenceEvent < EclipsePr
+PREFCHG t=623095 org.eclipse.ui.editors/LSP4EReadOccurrenceIndicationColor,defaultValueBeforeOverriddenFromCSS null -> 212,212,212 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty
+PREFCHG t=623096 org.eclipse.ui.editors/LSP4EWriteOccurrenceIndicationColor 52,60,71 -> 27,98,145 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProp
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor, -> ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenc
+PREFCHG t=623098 org.eclipse.ui.editors/LSP4EWriteOccurrenceIndicationColor,defaultValueBeforeOverriddenFromCSS null -> 240,216,168 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overridePropert
+PREFCHG t=623098 org.eclipse.ui.editors/LSP4ETextOccurrenceIndicationColor 52,60,71 -> 27,98,145 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSPrope
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor, -> ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenc
+PREFCHG t=623100 org.eclipse.ui.editors/LSP4ETextOccurrenceIndicationColor,defaultValueBeforeOverriddenFromCSS null -> 212,212,212 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty
+PREFCHG t=623101 org.eclipse.ui.editors/TM4EMatchingPairColor null -> 27,98,145 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor, -> ,fullcoverage_color,partialcoverage_color,
+PREFCHG t=623104 org.eclipse.ui.editors/TextOccurrenceIndicationColor 52,60,71 -> 27, 98, 145 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor, -> ,fullcoverage_color,
+PREFCHG t=623106 org.eclipse.ui.editors/TextOccurrenceIndicationColor,defaultValueBeforeOverriddenFromCSS null -> 212,212,212 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty Ecli
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623108 org.eclipse.ui.editors/AbstractTextEditor.Color.Background.SystemDefault,defaultValueBeforeOverriddenFromCSS null -> true by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.override
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623110 org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionForeground.SystemDefault,defaultValueBeforeOverriddenFromCSS null -> true by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623112 org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionBackground.SystemDefault,defaultValueBeforeOverriddenFromCSS null -> true by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler
+PREFCHG t=623113 org.eclipse.ui.editors/AbstractTextEditor.Color.Background 40,44,52 -> 30,31,34 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSPrope
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623116 org.eclipse.ui.editors/AbstractTextEditor.Color.Background,defaultValueBeforeOverriddenFromCSS null -> 255,255,255 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overridePropert
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623118 org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground.SystemDefault,defaultValueBeforeOverriddenFromCSS null -> true by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.override
+PREFCHG t=623118 org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionBackground 62,68,81 -> 33,66,131 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.app
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623120 org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionForeground 171,178,191 -> 147,161,161 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngin
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623122 org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground 171,178,191 -> 204,204,204 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCS
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623124 org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty Ecli
+PREFCHG t=623124 org.eclipse.ui.editors/AbstractTextEditor.Color.FindScope 62,68,81 -> 30,120,155 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProp
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623126 org.eclipse.ui.editors/AbstractTextEditor.Color.FindScope,defaultValueBeforeOverriddenFromCSS null -> 185,176,180 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty
+PREFCHG t=623127 org.eclipse.ui.editors/asOccurencesIndicationColor null -> 72,72,72 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623129 org.eclipse.ui.editors/breakpointIndicationColor null -> 51,119,193 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623130 org.eclipse.ui.editors/breakpointIndicationColor,defaultValueBeforeOverriddenFromCSS null -> 0,0,255 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePrefe
+PREFCHG t=623131 org.eclipse.ui.editors/currentIPColor 44,50,60 -> 90,90,90 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623133 org.eclipse.ui.editors/currentIPColor,defaultValueBeforeOverriddenFromCSS null -> 198,219,174 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesH
+PREFCHG t=623134 org.eclipse.ui.editors/currentLineColor 44,50,60 -> 55,55,55 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623136 org.eclipse.ui.editors/currentLineColor,defaultValueBeforeOverriddenFromCSS null -> 232,242,254 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreference
+PREFCHG t=623136 org.eclipse.ui.editors/deletionIndicationColor 224,108,117 -> 224,226,228 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623138 org.eclipse.ui.editors/deletionIndicationColor,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferenc
+PREFCHG t=623139 org.eclipse.ui.editors/filteredSearchResultIndicationColor 52,60,71 -> 27,98,145 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProp
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623141 org.eclipse.ui.editors/filteredSearchResultIndicationColor,defaultValueBeforeOverriddenFromCSS null -> 237,237,252 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overridePropert
+PREFCHG t=623142 org.eclipse.ui.editors/hyperlinkColor null -> 102,175,249 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623144 org.eclipse.ui.editors/hyperlinkColor,defaultValueBeforeOverriddenFromCSS null -> 0,102,204 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHan
+PREFCHG t=623144 org.eclipse.ui.editors/hyperlinkColor.SystemDefault null -> false by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623147 org.eclipse.ui.editors/hyperlinkColor.SystemDefault,defaultValueBeforeOverriddenFromCSS null -> true by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePrefe
+PREFCHG t=623148 org.eclipse.ui.editors/infoIndicationColor null -> 86,194,170 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623153 org.eclipse.ui.editors/infoIndicationColor,defaultValueBeforeOverriddenFromCSS null -> 130,160,190 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePrefere
+PREFCHG t=623154 org.eclipse.ui.editors/lineNumberColor 75,83,99 -> 119,145,154 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623156 org.eclipse.ui.editors/lineNumberColor,defaultValueBeforeOverriddenFromCSS null -> 115,115,115 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferences
+PREFCHG t=623156 org.eclipse.ui.editors/linked.slave.color null -> 66,156,255 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623159 org.eclipse.ui.editors/linked.slave.color,defaultValueBeforeOverriddenFromCSS null -> 180,215,255 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferen
+PREFCHG t=623160 org.eclipse.ui.editors/matchingTagIndicationColor null -> 72,72,72 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623161 org.eclipse.ui.editors/occurrenceIndicationColor 52,60,71 -> 27,98,145 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623165 org.eclipse.ui.editors/occurrenceIndicationColor,defaultValueBeforeOverriddenFromCSS null -> 212,212,212 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipseP
+PREFCHG t=623167 org.eclipse.ui.editors/overrideIndicatorColor null -> 78,120,117 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623170 org.eclipse.ui.editors/overrideIndicatorColor,defaultValueBeforeOverriddenFromCSS null -> 180,207,205 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePref
+PREFCHG t=623172 org.eclipse.ui.editors/printMarginColor 75,83,99 -> 81,86,88 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623173 org.eclipse.ui.editors/printMarginColor,defaultValueBeforeOverriddenFromCSS null -> 176,180,185 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreference
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623176 org.eclipse.ui.editors/searchResultIndicationColor 52,60,71 -> 94,94,94 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623178 org.eclipse.ui.editors/searchResultIndicationColor,defaultValueBeforeOverriddenFromCSS null -> 206,204,247 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty Eclips
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623180 org.eclipse.ui.editors/secondaryIPColor 44,50,60 -> 90,90,90 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623183 org.eclipse.ui.editors/secondaryIPColor,defaultValueBeforeOverriddenFromCSS null -> 219,235,204 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreference
+PREFCHG t=623185 org.eclipse.ui.editors/spellingIndicationColor null -> 253,170,211 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623186 org.eclipse.ui.editors/spellingIndicationColor,defaultValueBeforeOverriddenFromCSS null -> 255,128,64 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePref
+PREFCHG t=623187 org.eclipse.ui.editors/writeOccurrenceIndicationColor 52,60,71 -> 27,98,145 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623189 org.eclipse.ui.editors/writeOccurrenceIndicationColor,defaultValueBeforeOverriddenFromCSS null -> 240,216,168 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty Ecl
+PREFCHG t=623190 org.eclipse.ui.editors/org.eclipse.ui.editors.stickyLinesSeparatorColor null -> 81,86,88 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.appl
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=623192 org.eclipse.ui.editors/org.eclipse.ui.editors.stickyLinesSeparatorColor,defaultValueBeforeOverriddenFromCSS null -> 232,232,232 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.ov
+PREFCHG t=623193 org.eclipse.jdt.ui/content_assist_completion_replacement_background null -> 200,200,0 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCS
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS null -> ,content_assist_completion_replacement_background, :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.put < EclipsePreferencesHelper.appendOverriddenPropertyName < EclipsePreferencesHandler.overr
+PREFCHG t=623196 org.eclipse.jdt.ui/content_assist_completion_replacement_background,defaultValueBeforeOverriddenFromCSS null -> 255,255,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.override
+PREFCHG t=623197 org.eclipse.jdt.ui/content_assist_completion_replacement_foreground null -> 200,0,0 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSP
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background, -> ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground, :: EclipsePreferences.firePreferenceEvent < EclipsePreference
+PREFCHG t=623199 org.eclipse.jdt.ui/content_assist_completion_replacement_foreground,defaultValueBeforeOverriddenFromCSS null -> 255,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overridePr
+PREFCHG t=623199 org.eclipse.jdt.ui/content_assist_parameters_background null -> 52,57,61 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground, -> ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assis
+PREFCHG t=623201 org.eclipse.jdt.ui/content_assist_parameters_background,defaultValueBeforeOverriddenFromCSS null -> 255,255,255 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty E
+PREFCHG t=623202 org.eclipse.jdt.ui/content_assist_parameters_foreground null -> 238,238,238 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background, -> ,content_assist_completion_replacement_background,content_assist_completion
+PREFCHG t=623204 org.eclipse.jdt.ui/content_assist_parameters_foreground,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty Eclipse
+PREFCHG t=623205 org.eclipse.jdt.ui/content_assist_proposals_background 255,255,255 -> 52,57,61 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProper
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground, -> ,content_assist_completion_replacement
+PREFCHG t=623206 org.eclipse.jdt.ui/content_assist_proposals_background,defaultValueBeforeOverriddenFromCSS null -> 255,255,255 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty Ec
+PREFCHG t=623208 org.eclipse.jdt.ui/content_assist_proposals_foreground 0,0,0 -> 238,238,238 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background, -> ,c
+PREFCHG t=623210 org.eclipse.jdt.ui/content_assist_proposals_foreground,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipseP
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623233 org.eclipse.jdt.ui/matchingBracketsColor 171,178,191 -> 249,250,244 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623234 org.eclipse.jdt.ui/matchingBracketsColor,defaultValueBeforeOverriddenFromCSS null -> 127,0,85 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesH
+PREFCHG t=623237 org.eclipse.jdt.ui/pf_coloring_argument null -> 221,40,103 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623239 org.eclipse.jdt.ui/pf_coloring_argument,defaultValueBeforeOverriddenFromCSS null -> 127,0,85 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHa
+PREFCHG t=623239 org.eclipse.jdt.ui/pf_coloring_assignment null -> 217,232,247 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623241 org.eclipse.jdt.ui/pf_coloring_assignment,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHan
+PREFCHG t=623242 org.eclipse.jdt.ui/pf_coloring_comment null -> 128,128,128 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623245 org.eclipse.jdt.ui/pf_coloring_comment,defaultValueBeforeOverriddenFromCSS null -> 63,127,95 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHa
+PREFCHG t=623246 org.eclipse.jdt.ui/pf_coloring_key null -> 217,232,247 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623247 org.eclipse.jdt.ui/pf_coloring_key,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.ap
+PREFCHG t=623248 org.eclipse.jdt.ui/pf_coloring_value null -> 23,198,163 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623251 org.eclipse.jdt.ui/pf_coloring_value,defaultValueBeforeOverriddenFromCSS null -> 42,0,255 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandl
+PREFCHG t=623252 org.eclipse.jdt.ui/semanticHighlighting.abstractClass.color 229,192,123 -> 62,171,230 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCS
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623254 org.eclipse.jdt.ui/semanticHighlighting.abstractClass.color,defaultValueBeforeOverriddenFromCSS null -> 139,136,22 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overridePropert
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623256 org.eclipse.jdt.ui/semanticHighlighting.abstractMethodInvocation.color 97,175,239 -> 128,246,167 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEng
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623257 org.eclipse.jdt.ui/semanticHighlighting.abstractMethodInvocation.color,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideP
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623259 org.eclipse.jdt.ui/semanticHighlighting.annotation.color 224,108,117 -> 160,160,160 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSP
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623261 org.eclipse.jdt.ui/semanticHighlighting.annotation.color,defaultValueBeforeOverriddenFromCSS null -> 100,100,100 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623264 org.eclipse.jdt.ui/semanticHighlighting.annotationElementReference.color 224,108,117 -> 235,75,100 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSE
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623265 org.eclipse.jdt.ui/semanticHighlighting.annotationElementReference.color,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrid
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623267 org.eclipse.jdt.ui/semanticHighlighting.class.color 229,192,123 -> 18,144,195 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSPropert
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623269 org.eclipse.jdt.ui/semanticHighlighting.class.color,defaultValueBeforeOverriddenFromCSS null -> 0,80,50 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePr
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623271 org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.color 130,137,151 -> 128,128,128 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.app
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623274 org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.color,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623278 org.eclipse.jdt.ui/semanticHighlighting.enum.color 152,195,121 -> 204,129,186 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSPropert
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623279 org.eclipse.jdt.ui/semanticHighlighting.enum.color,defaultValueBeforeOverriddenFromCSS null -> 100,70,50 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipseP
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623282 org.eclipse.jdt.ui/semanticHighlighting.field.color 224,108,117 -> 102,225,248 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProper
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623284 org.eclipse.jdt.ui/semanticHighlighting.field.color,defaultValueBeforeOverriddenFromCSS null -> 0,0,192 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePr
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623286 org.eclipse.jdt.ui/semanticHighlighting.inheritedField.color null -> 143,143,191 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProp
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623287 org.eclipse.jdt.ui/semanticHighlighting.inheritedField.color,defaultValueBeforeOverriddenFromCSS null -> 0,0,192 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty 
+PREFCHG t=623288 org.eclipse.jdt.ui/semanticHighlighting.inheritedMethodInvocation.color 97,175,239 -> 205,246,104 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEn
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623290 org.eclipse.jdt.ui/semanticHighlighting.inheritedMethodInvocation.color,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.override
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623292 org.eclipse.jdt.ui/semanticHighlighting.interface.color 229,192,123 -> 128,242,246 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSPr
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623294 org.eclipse.jdt.ui/semanticHighlighting.interface.color,defaultValueBeforeOverriddenFromCSS null -> 50,63,112 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty Ecl
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623295 org.eclipse.jdt.ui/semanticHighlighting.localVariable.color 224,108,117 -> 243,236,121 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyC
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623297 org.eclipse.jdt.ui/semanticHighlighting.localVariable.color,defaultValueBeforeOverriddenFromCSS null -> 106,62,62 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623299 org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.color 224,108,117 -> 242,242,0 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngi
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623300 org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.color,defaultValueBeforeOverriddenFromCSS null -> 106,62,62 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overr
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623303 org.eclipse.jdt.ui/semanticHighlighting.method.color 97,175,239 -> 167,236,33 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSPropert
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623305 org.eclipse.jdt.ui/semanticHighlighting.method.color,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePre
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623307 org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.color 97,175,239 -> 30,181,64 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.a
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623308 org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.color,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProp
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623311 org.eclipse.jdt.ui/semanticHighlighting.number.color 209,154,102 -> 104,151,187 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSPrope
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623313 org.eclipse.jdt.ui/semanticHighlighting.number.color,defaultValueBeforeOverriddenFromCSS null -> 42,0,255 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty Eclipse
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623314 org.eclipse.jdt.ui/semanticHighlighting.parameterVariable.color 86,182,194 -> 121,171,255 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.app
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623317 org.eclipse.jdt.ui/semanticHighlighting.parameterVariable.color,defaultValueBeforeOverriddenFromCSS null -> 106,62,62 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProp
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623318 org.eclipse.jdt.ui/semanticHighlighting.staticField.color 209,154,102 -> 141,218,248 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSS
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623320 org.eclipse.jdt.ui/semanticHighlighting.staticField.color,defaultValueBeforeOverriddenFromCSS null -> 0,0,192 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty Ecl
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623321 org.eclipse.jdt.ui/semanticHighlighting.staticFinalField.color 209,154,102 -> 141,218,248 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.app
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623323 org.eclipse.jdt.ui/semanticHighlighting.staticFinalField.color,defaultValueBeforeOverriddenFromCSS null -> 0,0,192 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overridePropert
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623325 org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.color 97,175,239 -> 150,236,63 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623326 org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.color,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overridePro
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623328 org.eclipse.jdt.ui/semanticHighlighting.typeArgument.color 86,182,194 -> 177,102,218 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSS
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623329 org.eclipse.jdt.ui/semanticHighlighting.typeArgument.color,defaultValueBeforeOverriddenFromCSS null -> 13,100,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty E
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623331 org.eclipse.jdt.ui/semanticHighlighting.typeParameter.color 86,182,194 -> 191,164,164 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCS
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623332 org.eclipse.jdt.ui/semanticHighlighting.typeParameter.color,defaultValueBeforeOverriddenFromCSS null -> 100,70,50 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623334 org.eclipse.jdt.ui/semanticHighlighting.restrictedKeywords.color 198,120,221 -> 204,108,29 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.ap
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623336 org.eclipse.jdt.ui/semanticHighlighting.restrictedKeywords.color,defaultValueBeforeOverriddenFromCSS null -> 127,0,85 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProp
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623337 org.eclipse.jdt.ui/sourceHoverBackgroundColor 37,40,48 -> 68,68,68 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623339 org.eclipse.jdt.ui/javadocElementsStyling.darkModeDefaultColors null -> true by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSSProperty
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=623341 org.eclipse.ui.workbench/org.eclipse.egit.ui.CommitMessageCommentColor null -> 128,128,128 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.ap
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS null -> ,org.eclipse.egit.ui.CommitMessageCommentColor, :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.put < EclipsePreferencesHelper.appendOverriddenPropertyName < EclipsePreferencesHandler.ov
+PREFCHG t=623343 org.eclipse.ui.workbench/org.eclipse.egit.ui.CommitMessageCommentColor,defaultValueBeforeOverriddenFromCSS null -> 63,127,95 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overr
+PREFCHG t=623343 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffAddBackgroundColor null -> 11,121,90 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCS
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor, -> ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor, :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.put 
+PREFCHG t=623345 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffAddBackgroundColor,defaultValueBeforeOverriddenFromCSS null -> 221,255,221 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overri
+PREFCHG t=623345 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffAddForegroundColor null -> 216,254,245 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.apply
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor, -> ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffA
+PREFCHG t=623347 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffAddForegroundColor,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProp
+PREFCHG t=623348 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHeadlineBackgroundColor null -> 71,71,71 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.app
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor, -> ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffA
+PREFCHG t=623349 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHeadlineBackgroundColor,defaultValueBeforeOverriddenFromCSS null -> 170,170,170 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.o
+PREFCHG t=623350 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHeadlineForegroundColor null -> 242,242,242 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor, -> ,org.eclipse.egit.ui.Com
+PREFCHG t=623352 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHeadlineForegroundColor,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrid
+PREFCHG t=623353 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHunkBackgroundColor null -> 53,97,113 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyC
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623355 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHunkBackgroundColor,defaultValueBeforeOverriddenFromCSS null -> 234,242,245 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overr
+PREFCHG t=623356 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHunkForegroundColor null -> 233,242,254 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.appl
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623357 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHunkForegroundColor,defaultValueBeforeOverriddenFromCSS null -> 153,153,153 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overr
+PREFCHG t=623358 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffRemoveBackgroundColor null -> 117,2,36 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.apply
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623360 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffRemoveBackgroundColor,defaultValueBeforeOverriddenFromCSS null -> 255,221,221 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.ove
+PREFCHG t=623360 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffRemoveForegroundColor null -> 255,232,237 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.ap
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623361 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffRemoveForegroundColor,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideP
+PREFCHG t=623363 org.eclipse.ui.workbench/org.eclipse.egit.ui.IgnoredResourceBackgroundColor null -> 47,47,47 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623364 org.eclipse.ui.workbench/org.eclipse.egit.ui.IgnoredResourceBackgroundColor,defaultValueBeforeOverriddenFromCSS null -> 255,255,255 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandle
+PREFCHG t=623365 org.eclipse.ui.workbench/org.eclipse.egit.ui.IgnoredResourceForegroundColor null -> 120,120,120 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngi
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623367 org.eclipse.ui.workbench/org.eclipse.egit.ui.IgnoredResourceForegroundColor,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.over
+PREFCHG t=623368 org.eclipse.ui.workbench/org.eclipse.egit.ui.UncommittedChangeBackgroundColor null -> 47,47,47 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngin
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623369 org.eclipse.ui.workbench/org.eclipse.egit.ui.UncommittedChangeBackgroundColor,defaultValueBeforeOverriddenFromCSS null -> 255,255,255 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHand
+PREFCHG t=623370 org.eclipse.ui.workbench/org.eclipse.egit.ui.UncommittedChangeForegroundColor null -> 114,157,186 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEn
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623372 org.eclipse.ui.workbench/org.eclipse.egit.ui.UncommittedChangeForegroundColor,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.ov
+PREFCHG t=623373 org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.inherited null -> 143,143,191 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.apply
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623374 org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.inherited,defaultValueBeforeOverriddenFromCSS null -> 0,0,128 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overridePr
+PREFCHG t=623375 org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.backgroundColor null -> 52,57,61 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyCSS
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623377 org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.backgroundColor,defaultValueBeforeOverriddenFromCSS null -> 255,255,225 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overri
+PREFCHG t=623377 org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.foregroundColor null -> 238,238,238 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.apply
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623379 org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.foregroundColor,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProp
+PREFCHG t=623380 org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight null -> 255,128,128 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSS
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623381 org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight,defaultValueBeforeOverriddenFromCSS null -> 240,216,168 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHa
+PREFCHG t=623382 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled null -> 52,101,164 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty Abstra
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623384 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled,defaultValueBeforeOverriddenFromCSS null -> 32,21,223 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferenc
+PREFCHG t=623385 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled null -> 52,101,164 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty Abstrac
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623387 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled,defaultValueBeforeOverriddenFromCSS null -> 32,21,223 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreference
+PREFCHG t=623388 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled null -> 85,87,83 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty Abstr
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623389 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled,defaultValueBeforeOverriddenFromCSS null -> 0,0,0 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreference
+PREFCHG t=623390 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.task.active null -> 117,80,123 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCS
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623392 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.task.active,defaultValueBeforeOverriddenFromCSS null -> 36,22,50 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHan
+PREFCHG t=623392 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.category.gradient.start null -> 85,87,83 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSS
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623395 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.category.gradient.start,defaultValueBeforeOverriddenFromCSS null -> 240,240,240 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreference
+PREFCHG t=623396 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.category.gradient.end null -> 136,137,133 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCS
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623397 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.category.gradient.end,defaultValueBeforeOverriddenFromCSS null -> 220,220,220 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesH
+PREFCHG t=623398 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.color.text.quoted null -> 106,133,255 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.app
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623400 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.color.text.quoted,defaultValueBeforeOverriddenFromCSS null -> 38,86,145 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overri
+PREFCHG t=623401 org.eclipse.ui.workbench/org.eclipse.ui.editors.inlineAnnotationColor null -> 155,155,155 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.app
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623402 org.eclipse.ui.workbench/org.eclipse.ui.editors.inlineAnnotationColor,defaultValueBeforeOverriddenFromCSS null -> 128,128,128 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.over
+PREFTRACE org.eclipse.ui.workbench/ACTIVE_HYPERLINK_COLOR null -> 138,201,242 :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.put < EclipsePreferencesHandler.overrideProperty < EclipsePreferencesHandler.overrideProperty < EclipsePreferencesHandl
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/ACTIVE_HYPERLINK_COLOR,defaultValueBeforeOverriddenFromCSS null -> 0,71,143 :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.put < EclipsePreferencesHelper.overrideDefault < EclipsePreferencesHandler.overridePro
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/HYPERLINK_COLOR null -> 111,197,238 :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.put < EclipsePreferencesHandler.overrideProperty < EclipsePreferencesHandler.overrideProperty < EclipsePreferencesHandler.appl
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/HYPERLINK_COLOR,defaultValueBeforeOverriddenFromCSS null -> 0,102,204 :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.put < EclipsePreferencesHelper.overrideDefault < EclipsePreferencesHandler.overrideProperty 
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623448 org.eclipse.ui.workbench/org.eclipse.ui.editors.rangeIndicatorColor null -> 27,118,153 by EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.applyCSSProperty AbstractCSSEngine.applyC
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFCHG t=623451 org.eclipse.ui.workbench/org.eclipse.ui.editors.rangeIndicatorColor,defaultValueBeforeOverriddenFromCSS null -> 0,120,215 by EclipsePreferencesHelper.overrideDefault EclipsePreferencesHandler.overrideProperty EclipsePreferencesHandler.override
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+RESTART-DIALOG title=Theme Changed buttons=[&Use as default theme (only applies to workspaces without a configured theme), &Restart, &Don't restart]
+A-OK-CLICK found=true
+STATE after-appearance-ok | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=org.eclipse.e4.ui.css.theme.e4_dark | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ID=org.eclipse.e4.ui.css.theme.e4_default SELECTED_THEME_LOGICAL_ID=local:1c3742dc-ba85-4d47-8068-b40b710246a8 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_A
+STEP wait|3500
+STEP state|external-dark
+STATE external-dark | active=org.eclipse.e4.ui.css.theme.e4_dark | instance=org.eclipse.e4.ui.css.theme.e4_dark | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ID=org.eclipse.e4.ui.css.theme.e4_default SELECTED_THEME_LOGICAL_ID=local:1c3742dc-ba85-4d47-8068-b40b710246a8 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_A
+STEP pcol|external-dark|v
+PCOL external-dark keys=68 present=63 owned=0 ownedAndPresent=0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.backgroundColor inst=52,57,61 live=52,57,61
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.foregroundColor inst=238,238,238 live=238,238,238
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND inst=52,57,61 live=52,57,61
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_FOREGROUND inst=238,238,238 live=238,238,238
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_BACKGROUND inst=81,86,88 live=81,86,88
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_FOREGROUND inst=238,238,238 live=238,238,238
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_BACKGROUND_COLOR inst=52,57,61 live=52,57,61
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_FOREGROUND_COLOR inst=238,238,238 live=238,238,238
+  PCOLKEY org.eclipse.ui.workbench|HYPERLINK_COLOR inst=111,197,238 live=111,197,238
+  PCOLKEY org.eclipse.ui.workbench|ACTIVE_HYPERLINK_COLOR inst=138,201,242 live=138,201,242
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_background inst=52,57,61
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_foreground inst=238,238,238
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_background inst=52,57,61
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_foreground inst=238,238,238
+  PCOLKEY org.eclipse.jdt.ui|javadocElementsStyling.darkModeDefaultColors inst=true
+  PCOLKEY org.eclipse.ui.workbench|ERROR_COLOR inst=247,68,117 live=247,68,117
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR inst=255,110,110 live=255,110,110
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR inst=255,200,0 live=255,200,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR inst=170,170,170 live=170,170,170
+  PCOLKEY org.eclipse.ui.workbench|INCOMING_COLOR inst=31,179,235 live=31,179,235
+  PCOLKEY org.eclipse.ui.workbench|OUTGOING_COLOR inst=238,238,238 live=238,238,238
+  PCOLKEY org.eclipse.ui.workbench|CONFLICTING_COLOR inst=240,15,66 live=240,15,66
+  PCOLKEY org.eclipse.ui.workbench|RESOLVED_COLOR inst=108,210,17 live=108,210,17
+  PCOLKEY org.eclipse.ui.workbench|EDITION_COLOR inst=238,238,238 live=238,238,238
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.CommitMessageCommentColor inst=128,128,128 live=128,128,128
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor inst=11,121,90 live=11,121,90
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddForegroundColor inst=216,254,245 live=216,254,245
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveBackgroundColor inst=117,2,36 live=117,2,36
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveForegroundColor inst=255,232,237 live=255,232,237
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkBackgroundColor inst=53,97,113 live=53,97,113
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkForegroundColor inst=233,242,254 live=233,242,254
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineBackgroundColor inst=71,71,71 live=71,71,71
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineForegroundColor inst=242,242,242 live=242,242,242
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceBackgroundColor inst=47,47,47 live=47,47,47
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceForegroundColor inst=120,120,120 live=120,120,120
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeBackgroundColor inst=47,47,47 live=47,47,47
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeForegroundColor inst=114,157,186 live=114,157,186
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.search.ui.match.highlight inst=206,92,0 live=206,92,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_NEWEST_COLOR inst=75,44,3 live=75,44,3
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_OLDEST_COLOR inst=154,113,61 live=154,113,61
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor inst=102,175,249
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor.SystemDefault inst=false
+  PCOLKEY org.eclipse.ui.editors|linked.slave.color inst=66,156,255
+  PCOLKEY org.eclipse.ui.editors|breakpointIndicationColor inst=51,119,193
+  PCOLKEY org.eclipse.ui.editors|fullcoverage_color inst=6,74,6
+  PCOLKEY org.eclipse.ui.editors|partialcoverage_color inst=98,98,0
+  PCOLKEY org.eclipse.ui.editors|nocoverage_color inst=98,5,5
+  PCOLKEY org.eclipse.ui.editors|org.eclipse.ui.editors.stickyLinesSeparatorColor inst=81,86,88
+  PCOLKEY org.eclipse.ui.editors|inlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|detailedInlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|deletionInlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|detailedDeletionInlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.inherited inst=143,143,191 live=143,143,191
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight inst=255,128,128 live=255,128,128
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND inst=150,80,115
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.MemoryHistoryKnownColor inst=235,235,235
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.changedDebugElement inst=255,128,128
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.informationColor inst=140,175,210
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.debugColor inst=235,235,235
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.errorColor inst=225,30,70
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled inst=52,101,164 live=52,101,164
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled inst=52,101,164 live=52,101,164
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled inst=85,87,83 live=85,87,83
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.task.active inst=117,80,123 live=117,80,123
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.start inst=85,87,83 live=85,87,83
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.end inst=136,137,133 live=136,137,133
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.color.text.quoted inst=106,133,255 live=106,133,255
+  PCOLKEY org.eclipse.epp.mpc.ui|native-borders inst=<absent>
+STEP appearance
+APPEARANCE pageIdValid=true
+COMBO items=[Dark, Light, Eclipse Themes Dark, Eclipse Themes Dark (alternate), Eclipse Themes Light, Eclipse Themes Light (alternate), bis v0, bis v8, bis v9, bis v10, bis v11, bis v12, bis v13, bis v14, bis w0, bis w1, bis w2, bis w3, bis w4, bis w5, bis w6,
+COMBO items=[Default (current), Reduced Palette, Classic Theme] selected=Default (current)
+STEP wait|800
+STEP choose|Light
+COMBO choose=Light actual=Light
+STEP aok
+PREFCHG t=633053 org.eclipse.e4.ui.css.swt.theme/themeid org.eclipse.e4.ui.css.theme.e4_dark -> org.eclipse.e4.ui.css.theme.e4_default by ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633062 org.eclipse.ui.editors/filteredSearchResultIndicationColor,defaultValueBeforeOverriddenFromCSS 237,237,252 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633063 org.eclipse.ui.editors/linked.slave.color,defaultValueBeforeOverriddenFromCSS 180,215,255 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633063 org.eclipse.ui.editors/writeOccurrenceIndicationColor,defaultValueBeforeOverriddenFromCSS 240,216,168 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633064 org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633065 org.eclipse.ui.editors/searchResultIndicationColor,defaultValueBeforeOverriddenFromCSS 206,204,247 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633066 org.eclipse.ui.editors/nocoverage_color,defaultValueBeforeOverriddenFromCSS 255,160,160 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633067 org.eclipse.ui.editors/spellingIndicationColor,defaultValueBeforeOverriddenFromCSS 255,128,64 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633068 org.eclipse.ui.editors/hyperlinkColor.SystemDefault,defaultValueBeforeOverriddenFromCSS true -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633069 org.eclipse.ui.editors/AbstractTextEditor.Color.FindScope,defaultValueBeforeOverriddenFromCSS 185,176,180 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633070 org.eclipse.ui.editors/lineNumberColor,defaultValueBeforeOverriddenFromCSS 115,115,115 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633071 org.eclipse.ui.editors/TextOccurrenceIndicationColor,defaultValueBeforeOverriddenFromCSS 212,212,212 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633071 org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionForeground.SystemDefault,defaultValueBeforeOverriddenFromCSS true -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeE
+PREFCHG t=633072 org.eclipse.ui.editors/fullcoverage_color,defaultValueBeforeOverriddenFromCSS 192,255,192 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633074 org.eclipse.ui.editors/hyperlinkColor,defaultValueBeforeOverriddenFromCSS 0,102,204 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633075 org.eclipse.ui.editors/org.eclipse.ui.editors.stickyLinesSeparatorColor,defaultValueBeforeOverriddenFromCSS 232,232,232 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngi
+PREFCHG t=633076 org.eclipse.ui.editors/AbstractTextEditor.Color.Background,defaultValueBeforeOverriddenFromCSS 255,255,255 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633077 org.eclipse.ui.editors/breakpointIndicationColor,defaultValueBeforeOverriddenFromCSS 0,0,255 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633077 org.eclipse.ui.editors/deletionIndicationColor,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633078 org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionBackground.SystemDefault,defaultValueBeforeOverriddenFromCSS true -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeE
+PREFCHG t=633079 org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground.SystemDefault,defaultValueBeforeOverriddenFromCSS true -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.set
+PREFCHG t=633080 org.eclipse.ui.editors/LSP4ETextOccurrenceIndicationColor,defaultValueBeforeOverriddenFromCSS 212,212,212 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633082 org.eclipse.ui.editors/LSP4EWriteOccurrenceIndicationColor,defaultValueBeforeOverriddenFromCSS 240,216,168 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633083 org.eclipse.ui.editors/currentLineColor,defaultValueBeforeOverriddenFromCSS 232,242,254 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633085 org.eclipse.ui.editors/infoIndicationColor,defaultValueBeforeOverriddenFromCSS 130,160,190 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633087 org.eclipse.ui.editors/occurrenceIndicationColor,defaultValueBeforeOverriddenFromCSS 212,212,212 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633089 org.eclipse.ui.editors/currentIPColor,defaultValueBeforeOverriddenFromCSS 198,219,174 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633090 org.eclipse.ui.editors/printMarginColor,defaultValueBeforeOverriddenFromCSS 176,180,185 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633092 org.eclipse.ui.editors/AbstractTextEditor.Color.Background.SystemDefault,defaultValueBeforeOverriddenFromCSS true -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.set
+PREFCHG t=633093 org.eclipse.ui.editors/overrideIndicatorColor,defaultValueBeforeOverriddenFromCSS 180,207,205 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633093 org.eclipse.ui.editors/LSP4EReadOccurrenceIndicationColor,defaultValueBeforeOverriddenFromCSS 212,212,212 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633094 org.eclipse.ui.editors/secondaryIPColor,defaultValueBeforeOverriddenFromCSS 219,235,204 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633094 org.eclipse.ui.editors/partialcoverage_color,defaultValueBeforeOverriddenFromCSS 255,255,128 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633095 org.eclipse.ui.editors/fullcoverage_color 6,74,6 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633096 org.eclipse.ui.editors/partialcoverage_color 98,98,0 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633096 org.eclipse.ui.editors/nocoverage_color 98,5,5 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633097 org.eclipse.ui.editors/LSP4EReadOccurrenceIndicationColor 27,98,145 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633107 org.eclipse.ui.editors/LSP4EWriteOccurrenceIndicationColor 27,98,145 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633108 org.eclipse.ui.editors/LSP4ETextOccurrenceIndicationColor 27,98,145 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633110 org.eclipse.ui.editors/TM4EMatchingPairColor 27,98,145 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633111 org.eclipse.ui.editors/TextOccurrenceIndicationColor 27, 98, 145 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633112 org.eclipse.ui.editors/AbstractTextEditor.Color.Background.SystemDefault false -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633112 org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionForeground.SystemDefault false -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633113 org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionBackground.SystemDefault false -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633114 org.eclipse.ui.editors/AbstractTextEditor.Color.Background 30,31,34 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633115 org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground.SystemDefault false -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633117 org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionBackground 33,66,131 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633117 org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionForeground 147,161,161 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633118 org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground 204,204,204 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633119 org.eclipse.ui.editors/AbstractTextEditor.Color.FindScope 30,120,155 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633120 org.eclipse.ui.editors/asOccurencesIndicationColor 72,72,72 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633120 org.eclipse.ui.editors/breakpointIndicationColor 51,119,193 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633121 org.eclipse.ui.editors/currentIPColor 90,90,90 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633122 org.eclipse.ui.editors/currentLineColor 55,55,55 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633123 org.eclipse.ui.editors/deletionIndicationColor 224,226,228 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633124 org.eclipse.ui.editors/filteredSearchResultIndicationColor 27,98,145 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633124 org.eclipse.ui.editors/hyperlinkColor 102,175,249 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633125 org.eclipse.ui.editors/hyperlinkColor.SystemDefault false -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633126 org.eclipse.ui.editors/infoIndicationColor 86,194,170 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633126 org.eclipse.ui.editors/lineNumberColor 119,145,154 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633127 org.eclipse.ui.editors/linked.slave.color 66,156,255 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633128 org.eclipse.ui.editors/matchingTagIndicationColor 72,72,72 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633129 org.eclipse.ui.editors/occurrenceIndicationColor 27,98,145 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633130 org.eclipse.ui.editors/overrideIndicatorColor 78,120,117 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633130 org.eclipse.ui.editors/printMarginColor 81,86,88 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633131 org.eclipse.ui.editors/searchResultIndicationColor 94,94,94 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633132 org.eclipse.ui.editors/secondaryIPColor 90,90,90 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633134 org.eclipse.ui.editors/spellingIndicationColor 253,170,211 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633135 org.eclipse.ui.editors/writeOccurrenceIndicationColor 27,98,145 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633135 org.eclipse.ui.editors/org.eclipse.ui.editors.stickyLinesSeparatorColor 81,86,88 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFTRACE org.eclipse.ui.editors/overriddenByCSS ,fullcoverage_color,partialcoverage_color,nocoverage_color,LSP4EReadOccurrenceIndicationColor,LSP4EWriteOccurrenceIndicationColor,LSP4ETextOccurrenceIndicationColor,TM4EMatchingPairColor,TextOccurrenceIndication
+PREFCHG t=633137 org.eclipse.jdt.ui/semanticHighlighting.inheritedMethodInvocation.color,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.set
+PREFCHG t=633138 org.eclipse.jdt.ui/content_assist_parameters_background,defaultValueBeforeOverriddenFromCSS 255,255,255 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633139 org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.color,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633140 org.eclipse.jdt.ui/semanticHighlighting.interface.color,defaultValueBeforeOverriddenFromCSS 50,63,112 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633141 org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.color,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setThem
+PREFCHG t=633142 org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.color,defaultValueBeforeOverriddenFromCSS 106,62,62 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.
+PREFCHG t=633142 org.eclipse.jdt.ui/semanticHighlighting.class.color,defaultValueBeforeOverriddenFromCSS 0,80,50 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633143 org.eclipse.jdt.ui/semanticHighlighting.staticField.color,defaultValueBeforeOverriddenFromCSS 0,0,192 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633144 org.eclipse.jdt.ui/semanticHighlighting.enum.color,defaultValueBeforeOverriddenFromCSS 100,70,50 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633144 org.eclipse.jdt.ui/matchingBracketsColor,defaultValueBeforeOverriddenFromCSS 127,0,85 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633145 org.eclipse.jdt.ui/semanticHighlighting.abstractMethodInvocation.color,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setT
+PREFCHG t=633146 org.eclipse.jdt.ui/pf_coloring_comment,defaultValueBeforeOverriddenFromCSS 63,127,95 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633147 org.eclipse.jdt.ui/content_assist_completion_replacement_background,defaultValueBeforeOverriddenFromCSS 255,255,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.set
+PREFCHG t=633148 org.eclipse.jdt.ui/semanticHighlighting.annotationElementReference.color,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.se
+PREFCHG t=633149 org.eclipse.jdt.ui/pf_coloring_value,defaultValueBeforeOverriddenFromCSS 42,0,255 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633150 org.eclipse.jdt.ui/semanticHighlighting.localVariable.color,defaultValueBeforeOverriddenFromCSS 106,62,62 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633151 org.eclipse.jdt.ui/content_assist_parameters_foreground,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633152 org.eclipse.jdt.ui/pf_coloring_key,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633153 org.eclipse.jdt.ui/semanticHighlighting.field.color,defaultValueBeforeOverriddenFromCSS 0,0,192 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633153 org.eclipse.jdt.ui/pf_coloring_assignment,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633154 org.eclipse.jdt.ui/content_assist_proposals_background,defaultValueBeforeOverriddenFromCSS 255,255,255 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633155 org.eclipse.jdt.ui/semanticHighlighting.staticFinalField.color,defaultValueBeforeOverriddenFromCSS 0,0,192 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633155 org.eclipse.jdt.ui/semanticHighlighting.typeParameter.color,defaultValueBeforeOverriddenFromCSS 100,70,50 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633156 org.eclipse.jdt.ui/semanticHighlighting.annotation.color,defaultValueBeforeOverriddenFromCSS 100,100,100 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633157 org.eclipse.jdt.ui/semanticHighlighting.abstractClass.color,defaultValueBeforeOverriddenFromCSS 139,136,22 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633158 org.eclipse.jdt.ui/semanticHighlighting.method.color,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633159 org.eclipse.jdt.ui/semanticHighlighting.typeArgument.color,defaultValueBeforeOverriddenFromCSS 13,100,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633159 org.eclipse.jdt.ui/semanticHighlighting.restrictedKeywords.color,defaultValueBeforeOverriddenFromCSS 127,0,85 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setThem
+PREFCHG t=633160 org.eclipse.jdt.ui/content_assist_completion_replacement_foreground,defaultValueBeforeOverriddenFromCSS 255,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTh
+PREFCHG t=633161 org.eclipse.jdt.ui/semanticHighlighting.number.color,defaultValueBeforeOverriddenFromCSS 42,0,255 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633161 org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.color,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setThe
+PREFCHG t=633162 org.eclipse.jdt.ui/semanticHighlighting.inheritedField.color,defaultValueBeforeOverriddenFromCSS 0,0,192 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633163 org.eclipse.jdt.ui/semanticHighlighting.parameterVariable.color,defaultValueBeforeOverriddenFromCSS 106,62,62 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setThem
+PREFCHG t=633164 org.eclipse.jdt.ui/content_assist_proposals_foreground,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633164 org.eclipse.jdt.ui/pf_coloring_argument,defaultValueBeforeOverriddenFromCSS 127,0,85 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633165 org.eclipse.jdt.ui/content_assist_completion_replacement_background 200,200,0 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633166 org.eclipse.jdt.ui/content_assist_completion_replacement_foreground 200,0,0 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633167 org.eclipse.jdt.ui/content_assist_parameters_background 52,57,61 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633167 org.eclipse.jdt.ui/content_assist_parameters_foreground 238,238,238 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633168 org.eclipse.jdt.ui/content_assist_proposals_background 52,57,61 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633168 org.eclipse.jdt.ui/content_assist_proposals_foreground 238,238,238 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633171 org.eclipse.jdt.ui/matchingBracketsColor 249,250,244 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633171 org.eclipse.jdt.ui/pf_coloring_argument 221,40,103 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633172 org.eclipse.jdt.ui/pf_coloring_assignment 217,232,247 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633173 org.eclipse.jdt.ui/pf_coloring_comment 128,128,128 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633174 org.eclipse.jdt.ui/pf_coloring_key 217,232,247 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633174 org.eclipse.jdt.ui/pf_coloring_value 23,198,163 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633175 org.eclipse.jdt.ui/semanticHighlighting.abstractClass.color 62,171,230 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633176 org.eclipse.jdt.ui/semanticHighlighting.abstractMethodInvocation.color 128,246,167 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633177 org.eclipse.jdt.ui/semanticHighlighting.annotation.color 160,160,160 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633177 org.eclipse.jdt.ui/semanticHighlighting.annotationElementReference.color 235,75,100 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633178 org.eclipse.jdt.ui/semanticHighlighting.class.color 18,144,195 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633179 org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.color 128,128,128 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633180 org.eclipse.jdt.ui/semanticHighlighting.enum.color 204,129,186 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633180 org.eclipse.jdt.ui/semanticHighlighting.field.color 102,225,248 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633181 org.eclipse.jdt.ui/semanticHighlighting.inheritedField.color 143,143,191 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633182 org.eclipse.jdt.ui/semanticHighlighting.inheritedMethodInvocation.color 205,246,104 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633183 org.eclipse.jdt.ui/semanticHighlighting.interface.color 128,242,246 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633184 org.eclipse.jdt.ui/semanticHighlighting.localVariable.color 243,236,121 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633185 org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.color 242,242,0 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633185 org.eclipse.jdt.ui/semanticHighlighting.method.color 167,236,33 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633186 org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.color 30,181,64 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633187 org.eclipse.jdt.ui/semanticHighlighting.number.color 104,151,187 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633187 org.eclipse.jdt.ui/semanticHighlighting.parameterVariable.color 121,171,255 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633188 org.eclipse.jdt.ui/semanticHighlighting.staticField.color 141,218,248 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633189 org.eclipse.jdt.ui/semanticHighlighting.staticFinalField.color 141,218,248 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633189 org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.color 150,236,63 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633190 org.eclipse.jdt.ui/semanticHighlighting.typeArgument.color 177,102,218 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633191 org.eclipse.jdt.ui/semanticHighlighting.typeParameter.color 191,164,164 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633191 org.eclipse.jdt.ui/semanticHighlighting.restrictedKeywords.color 204,108,29 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633192 org.eclipse.jdt.ui/sourceHoverBackgroundColor 68,68,68 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633192 org.eclipse.jdt.ui/javadocElementsStyling.darkModeDefaultColors true -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFTRACE org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,conten
+PREFCHG t=633195 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled,defaultValueBeforeOverriddenFromCSS 32,21,223 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setThe
+PREFCHG t=633196 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHeadlineBackgroundColor,defaultValueBeforeOverriddenFromCSS 170,170,170 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEng
+PREFCHG t=633197 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHunkBackgroundColor,defaultValueBeforeOverriddenFromCSS 234,242,245 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.
+PREFCHG t=633198 org.eclipse.ui.workbench/org.eclipse.egit.ui.CommitMessageCommentColor,defaultValueBeforeOverriddenFromCSS 63,127,95 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.
+PREFCHG t=633199 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffRemoveForegroundColor,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setT
+PREFCHG t=633199 org.eclipse.ui.workbench/org.eclipse.egit.ui.IgnoredResourceForegroundColor,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine
+PREFCHG t=633200 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.task.active,defaultValueBeforeOverriddenFromCSS 36,22,50 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme Th
+PREFCHG t=633201 org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight,defaultValueBeforeOverriddenFromCSS 240,216,168 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme T
+PREFCHG t=633202 org.eclipse.ui.workbench/org.eclipse.egit.ui.UncommittedChangeForegroundColor,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngi
+PREFCHG t=633203 org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.backgroundColor,defaultValueBeforeOverriddenFromCSS 255,255,225 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.s
+PREFCHG t=633203 org.eclipse.ui.workbench/org.eclipse.ui.editors.inlineAnnotationColor,defaultValueBeforeOverriddenFromCSS 128,128,128 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine
+PREFTRACE org.eclipse.ui.workbench/HYPERLINK_COLOR,defaultValueBeforeOverriddenFromCSS 0,102,204 -> null :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.remove < EclipsePreferencesHelper.resetOverriddenDefaults < PartRenderingEngine$StylingPrefe
+PREFCHG t=633204 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffAddForegroundColor,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setThem
+PREFCHG t=633205 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHeadlineForegroundColor,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.se
+PREFCHG t=633206 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.category.gradient.end,defaultValueBeforeOverriddenFromCSS 220,220,220 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme 
+PREFCHG t=633207 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffRemoveBackgroundColor,defaultValueBeforeOverriddenFromCSS 255,221,221 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngin
+PREFCHG t=633208 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.category.gradient.start,defaultValueBeforeOverriddenFromCSS 240,240,240 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setThem
+PREFCHG t=633208 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHunkForegroundColor,defaultValueBeforeOverriddenFromCSS 153,153,153 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.
+PREFTRACE org.eclipse.ui.workbench/ACTIVE_HYPERLINK_COLOR,defaultValueBeforeOverriddenFromCSS 0,71,143 -> null :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.remove < EclipsePreferencesHelper.resetOverriddenDefaults < PartRenderingEngine$Stylin
+PREFCHG t=633210 org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.inherited,defaultValueBeforeOverriddenFromCSS 0,0,128 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTh
+PREFCHG t=633211 org.eclipse.ui.workbench/org.eclipse.egit.ui.IgnoredResourceBackgroundColor,defaultValueBeforeOverriddenFromCSS 255,255,255 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme Theme
+PREFCHG t=633211 org.eclipse.ui.workbench/org.eclipse.ui.editors.rangeIndicatorColor,defaultValueBeforeOverriddenFromCSS 0,120,215 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.set
+PREFCHG t=633212 org.eclipse.ui.workbench/org.eclipse.egit.ui.UncommittedChangeBackgroundColor,defaultValueBeforeOverriddenFromCSS 255,255,255 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme The
+PREFCHG t=633213 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffAddBackgroundColor,defaultValueBeforeOverriddenFromCSS 221,255,221 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.s
+PREFCHG t=633214 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled,defaultValueBeforeOverriddenFromCSS 32,21,223 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setThem
+PREFCHG t=633214 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setThem
+PREFCHG t=633215 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.color.text.quoted,defaultValueBeforeOverriddenFromCSS 38,86,145 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.s
+PREFCHG t=633216 org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.foregroundColor,defaultValueBeforeOverriddenFromCSS 0,0,0 -> null by EclipsePreferencesHelper.resetOverriddenDefaults ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setThem
+PREFCHG t=633217 org.eclipse.ui.workbench/org.eclipse.egit.ui.CommitMessageCommentColor 128,128,128 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633218 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffAddBackgroundColor 11,121,90 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633219 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffAddForegroundColor 216,254,245 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633220 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHeadlineBackgroundColor 71,71,71 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633221 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHeadlineForegroundColor 242,242,242 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633221 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHunkBackgroundColor 53,97,113 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633222 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffHunkForegroundColor 233,242,254 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633223 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffRemoveBackgroundColor 117,2,36 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633224 org.eclipse.ui.workbench/org.eclipse.egit.ui.DiffRemoveForegroundColor 255,232,237 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633225 org.eclipse.ui.workbench/org.eclipse.egit.ui.IgnoredResourceBackgroundColor 47,47,47 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633226 org.eclipse.ui.workbench/org.eclipse.egit.ui.IgnoredResourceForegroundColor 120,120,120 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633226 org.eclipse.ui.workbench/org.eclipse.egit.ui.UncommittedChangeBackgroundColor 47,47,47 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633227 org.eclipse.ui.workbench/org.eclipse.egit.ui.UncommittedChangeForegroundColor 114,157,186 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633228 org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.inherited 143,143,191 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633229 org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.backgroundColor 52,57,61 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633230 org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.foregroundColor 238,238,238 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633230 org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight 255,128,128 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633231 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled 52,101,164 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633232 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled 52,101,164 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633233 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled 85,87,83 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633233 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.foreground.task.active 117,80,123 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633234 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.category.gradient.start 85,87,83 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633235 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.colors.category.gradient.end 136,137,133 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633235 org.eclipse.ui.workbench/org.eclipse.mylyn.tasks.ui.color.text.quoted 106,133,255 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFCHG t=633236 org.eclipse.ui.workbench/org.eclipse.ui.editors.inlineAnnotationColor 155,155,155 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFTRACE org.eclipse.ui.workbench/ACTIVE_HYPERLINK_COLOR 138,201,242 -> null :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.remove < PartRenderingEngine$StylingPreferencesHandler.resetOverriddenPreferences < PartRenderingEngine$StylingPreferen
+PREFTRACE org.eclipse.ui.workbench/HYPERLINK_COLOR 111,197,238 -> null :: EclipsePreferences.firePreferenceEvent < EclipsePreferences.remove < PartRenderingEngine$StylingPreferencesHandler.resetOverriddenPreferences < PartRenderingEngine$StylingPreferencesHand
+PREFCHG t=633263 org.eclipse.ui.workbench/org.eclipse.ui.editors.rangeIndicatorColor 27,118,153 -> null by ThemeEngine.sendThemeChangeEvent ThemeEngine.setTheme ThemeEngine.setTheme 
+PREFTRACE org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.egit.ui.CommitMessageCommentColor,org.eclipse.egit.ui.DiffAddBackgroundColor,org.eclipse.egit.ui.DiffAddForegroundColor,org.eclipse.egit.ui.DiffHeadlineBackgroundColor,org.eclipse.egit.ui.DiffHead
+RESTART-DIALOG title=Theme Changed buttons=[&Use as default theme (only applies to workspaces without a configured theme), &Restart, &Don't restart]
+A-OK-CLICK found=true
+STATE after-appearance-ok | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ID=org.eclipse.e4.ui.css.theme.e4_default SELECTED_THEME_LOGICAL_ID=local:1c3742dc-ba85-4d47-8068-b40b710246a8 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_A
+STEP wait|3500
+STEP state|external-light
+STATE external-light | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ID=org.eclipse.e4.ui.css.theme.e4_default SELECTED_THEME_LOGICAL_ID=local:1c3742dc-ba85-4d47-8068-b40b710246a8 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_A
+STEP pcol|stock-dark-left|v
+PCOL stock-dark-left keys=68 present=0 owned=0 ownedAndPresent=0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.backgroundColor inst=<absent> live=255,255,225
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.Javadoc.foregroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_BACKGROUND inst=<absent> live=255,255,225
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.HOVER_FOREGROUND inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_BACKGROUND inst=<absent> live=255,255,225
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.INFORMATION_FOREGROUND inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_BACKGROUND_COLOR inst=<absent> live=255,255,255
+  PCOLKEY org.eclipse.ui.workbench|CONTENT_ASSIST_FOREGROUND_COLOR inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|HYPERLINK_COLOR inst=<absent> live=0,102,204
+  PCOLKEY org.eclipse.ui.workbench|ACTIVE_HYPERLINK_COLOR inst=<absent> live=0,71,143
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_background inst=<absent>
+  PCOLKEY org.eclipse.jdt.ui|content_assist_proposals_foreground inst=<absent>
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_background inst=<absent>
+  PCOLKEY org.eclipse.jdt.ui|content_assist_parameters_foreground inst=<absent>
+  PCOLKEY org.eclipse.jdt.ui|javadocElementsStyling.darkModeDefaultColors inst=<absent>
+  PCOLKEY org.eclipse.ui.workbench|ERROR_COLOR inst=<absent> live=255,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR inst=<absent> live=255,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR inst=<absent> live=128,128,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|INCOMING_COLOR inst=<absent> live=0,0,255
+  PCOLKEY org.eclipse.ui.workbench|OUTGOING_COLOR inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|CONFLICTING_COLOR inst=<absent> live=255,0,0
+  PCOLKEY org.eclipse.ui.workbench|RESOLVED_COLOR inst=<absent> live=0,255,0
+  PCOLKEY org.eclipse.ui.workbench|EDITION_COLOR inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.CommitMessageCommentColor inst=<absent> live=63,127,95
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddBackgroundColor inst=<absent> live=221,255,221
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffAddForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveBackgroundColor inst=<absent> live=255,221,221
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffRemoveForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkBackgroundColor inst=<absent> live=234,242,245
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHunkForegroundColor inst=<absent> live=153,153,153
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineBackgroundColor inst=<absent> live=170,170,170
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.DiffHeadlineForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceBackgroundColor inst=<absent> live=255,255,255
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.IgnoredResourceForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeBackgroundColor inst=<absent> live=255,255,255
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.egit.ui.UncommittedChangeForegroundColor inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.search.ui.match.highlight inst=<absent> live=206,204,247
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_NEWEST_COLOR inst=<absent> live=199,134,57
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jface.REVISION_OLDEST_COLOR inst=<absent> live=241,225,206
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|hyperlinkColor.SystemDefault inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|linked.slave.color inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|breakpointIndicationColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|fullcoverage_color inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|partialcoverage_color inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|nocoverage_color inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|org.eclipse.ui.editors.stickyLinesSeparatorColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|inlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|detailedInlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|deletionInlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.editors|detailedDeletionInlineDiffColor inst=<absent>
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.inherited inst=<absent> live=0,0,128
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight inst=<absent> live=240,216,168
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND inst=<absent>
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.MemoryHistoryKnownColor inst=<absent>
+  PCOLKEY org.eclipse.debug.ui|org.eclipse.debug.ui.changedDebugElement inst=<absent>
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.informationColor inst=<absent>
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.debugColor inst=<absent>
+  PCOLKEY org.eclipse.ant.ui|org.eclipse.ant.ui.errorColor inst=<absent>
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled inst=<absent> live=32,21,223
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled inst=<absent> live=32,21,223
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled inst=<absent> live=0,0,0
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.foreground.task.active inst=<absent> live=36,22,50
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.start inst=<absent> live=240,240,240
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.colors.category.gradient.end inst=<absent> live=220,220,220
+  PCOLKEY org.eclipse.ui.workbench|org.eclipse.mylyn.tasks.ui.color.text.quoted inst=<absent> live=38,86,145
+  PCOLKEY org.eclipse.epp.mpc.ui|native-borders inst=<absent>
+STEP state|end
+STATE end | active=org.eclipse.e4.ui.css.theme.e4_default | instance=org.eclipse.e4.ui.css.theme.e4_default | config=<absent> | default=<absent> | osDark=true | highContrast=false
+OWNPREFS WORKBENCH_PRIOR_SAVED_ID=org.eclipse.e4.ui.css.theme.e4_default SELECTED_THEME_LOGICAL_ID=local:1c3742dc-ba85-4d47-8068-b40b710246a8 WORKBENCH_OWNED_THEME_ID=com.github.eclipsethemes.workbench.dark WORKBENCH_COORDINATION_ENABLED=true WORKBENCH_PRIOR_A
+DONE

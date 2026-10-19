@@ -28,3 +28,24 @@ Thumbs.db
 # Other
 HOWTO.md
 TODO.md
+
+# AI coding tools / local agent state
+.agents/
+.cline/
+.clinerules/
+.commandcode/
+.opencode/
+.claude/
+.codex/
+.cursor/
+.continue/
+.roo/
+.windsurf/
+.gemini/
+.aider*
+
+# Local SDD pack delivery metadata
+FILE_INVENTORY.md
+PACK_MANIFEST.md
+README-SDD-PACK.md
+pack-metadata.json

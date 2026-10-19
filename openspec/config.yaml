@@ -1,0 +1,52 @@
+schema: spec-driven
+
+context: |
+  Eclipse Themes is a brownfield Eclipse IDE plugin built with Java, OSGi, Eclipse RCP/SWT/JFace and Maven/Tycho.
+  Integration branch: develop.
+  Runtime execution environment: JavaSE-17. The build toolchain may require a newer JDK; do not conflate build JVM with runtime compatibility.
+  The product currently coordinates editor-oriented themes through Eclipse/plugin preferences. Full-workbench theming is roadmap work, not current behavior.
+  Safety, reversibility, truthful state, compatibility, accessibility and preservation of user/plugin preferences take priority over feature expansion.
+  Treat theme files/packages as untrusted input.
+  Prefer public Eclipse APIs. Any internal/version-fragile API or preference-key coupling must be isolated, documented and tested.
+  Keep logical architecture clean before introducing new physical OSGi bundles.
+  Historical audit findings must be re-verified against current code before implementation.
+
+rules:
+  proposal:
+    - Keep one coherent user/system outcome per change; split unrelated audit findings.
+    - State affected capabilities, compatibility surface, migration/state risk, and rollback/recovery impact when relevant.
+    - Link the motivating audit finding or GitHub issue when one exists, but do not treat it as unquestionable current truth.
+    - Every behavioral proposal must include a `## Decision Gate` section before implementation is authorized.
+    - Classify material unresolved questions as Evidence-dependent, Engineering, Product / Maintainer decision, or Deferred.
+    - Investigate Evidence-dependent questions before converting assumptions into requirements whenever practical; otherwise record the required experiment or compatibility evidence.
+    - Product / Maintainer decisions must present realistic options, consequences, and a recommended option with rationale; do not silently choose them.
+    - Any BREAKING compatibility behavior, migration policy, fallback semantics, supported-platform/version boundary, public extension/API commitment, or destructive/recovery behavior requires explicit maintainer review.
+    - If no maintainer decision is required, say so explicitly in the Decision Gate section.
+    - Deferred questions must identify their future roadmap/spec owner when known and must not be accidentally decided by the current change.
+    - Do not ask the maintainer to answer questions that should first be resolved through technical investigation.
+  specs:
+    - Describe observable behavior, invariants, inputs/outputs, failure behavior, security and compatibility constraints; keep Java classes and step-by-step implementation out unless contractual.
+    - Use testable GIVEN/WHEN/THEN-style scenarios and include negative/failure/transition scenarios where state is involved.
+    - For preference mutations, explicitly protect unrelated settings and distinguish absent values from explicit values.
+    - For Eclipse integrations, state supported/unsupported behavior rather than implying universal IDE coverage.
+  design:
+    - Prefer public Eclipse APIs and call out every internal/version-fragile dependency plus isolation/testing strategy.
+    - Cover OSGi boundary/API implications, SWT threading/resource lifecycle, preference ownership, persistence/migration, and rollback where applicable.
+    - Do not split bundles or add abstractions without a demonstrated lifecycle, dependency, API-ownership, or testability benefit.
+    - For risky state transitions, describe failure ordering and compensating rollback rather than assuming atomicity.
+  tasks:
+    - Reproduce or directly verify the motivating defect before fixing it when applicable.
+    - Add focused regression tests for reproduced bugs and exact preference/mapping transitions.
+    - Run focused verification before broad reactor/runtime checks; include broader checks only when justified by scope.
+    - Include OpenSpec validation and full-diff review before completion.
+
+operations:
+  apply:
+    guidance:
+      - Preserve unrelated working-tree changes and avoid unrelated cleanup.
+      - Keep proposal/spec/design/tasks coherent when implementation evidence changes; do not silently diverge.
+      - Run the smallest meaningful tests as tasks complete.
+  archive:
+    guidance:
+      - Archive only after implementation, tests, behavior, and artifacts agree.
+      - Summarize shipped behavior, verification, compatibility notes, and any explicitly deferred risk.

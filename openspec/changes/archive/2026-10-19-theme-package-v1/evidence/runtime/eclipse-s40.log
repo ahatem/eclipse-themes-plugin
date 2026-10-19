@@ -1,0 +1,56 @@
+!SESSION 2026-10-19 14:46:21.939 -----------------------------------------------
+eclipse.buildId=4.40.0.20260604-0652
+java.version=21.0.11
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -clean -consoleLog -data <repo>\tmp\workbench-spike\r9\ws-s40
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:46:32.129
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:46:34.720
+!MESSAGE Logback config file: <repo>\tmp\workbench-spike\r9\ws-s40\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.101.20251017-1242.xml
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:47:02.715
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:47:02.729
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:47:02.891
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:47:02.898
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:47:16.915
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:47:16.924
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+!SESSION 2026-10-19 14:47:45.740 -----------------------------------------------
+eclipse.buildId=4.40.0.20260604-0652
+java.version=21.0.11
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -clean -consoleLog -data <repo>\tmp\workbench-spike\r9\ws-s40
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:47:54.079
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-10-19 14:47:55.858
+!MESSAGE Logback config file: <repo>\tmp\workbench-spike\r9\ws-s40\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.101.20251017-1242.xml
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:48:06.458
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:48:06.471
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:48:11.311
+!MESSAGE Unknown theme element '<warning>'; it was ignored
+
+!ENTRY com.github.eclipsethemes 2 0 2026-10-19 14:48:11.316
+!MESSAGE Unknown theme element '<warning>'; it was ignored

@@ -1,0 +1,1389 @@
+# R7 runtime evidence, 2026-10-18
+# Extracted from isolated probe logs; policy and source hashes in README.md.
+# Object-identity strings from getStyle() are omitted. Widget RGB values are unchanged.
+
+## W01
+ENV os=Windows 11 10.0 ws=win32 java=21.0.12.1+1-LTS themeBundle=0.14.400.v20240424-0956 platform=4.33.0.v20240903-0240
+THEMES [org.eclipse.e4.ui.css.theme.e4_classic=Classic, org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, org.eclipse.e4.ui.css.theme.e4_preview=Light (Preview), org.eclipse.e4.ui.css.theme.high-contrast=High Contrast, spike.probe.theme.a=Spike A (research)]
+STATE boot active=org.eclipse.e4.ui.css.theme.e4_dark themeid=<absent> osDark=true highContrast=false
+STEP wait|2500
+STEP state|baseline
+STATE baseline active=org.eclipse.e4.ui.css.theme.e4_dark themeid=<absent> osDark=true highContrast=false
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#515658
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#292929 selected=#292929
+WIDGET Tree id=null class=null bg=#2f2f2f
+WIDGET Table id=null class=null bg=#313538
+WIDGET Button id=null class=null bg=#2f2f2f
+WIDGET SashForm id=null class=null bg=#2f2f2f
+WIDGET Browser id=null class=null bg=#313538
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#515658
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#515658
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#515658
+STEP set|spike.probe.theme.a|true
+POST expected=spike.probe.theme.a actual=spike.probe.theme.a match=true
+STATE after-set active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid <absent> -> spike.probe.theme.a
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.commentsColor 204,204,204 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.constantStringsColor 23,198,163 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.constantStringsColor_italic true -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.debugColor 235,235,235 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.dtdColor 140,210,20 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.errorColor 225,30,70 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.informationColor 140,175,210 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.processingInstructionsColor 221,40,103 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.processingInstructionsColor_bold true -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.tagsColor 38,139,210 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.tagsColor_bold true -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.textColor 217,232,247 -> <absent>
+PREF after-set /org.eclipse.ant.ui/overriddenByCSS ,org.eclipse.ant.ui.commentsColor,org.eclipse.ant.ui.constantStringsColor,org.eclipse.ant.ui.constantStringsColor_italic,org.eclipse.ant.ui.dtdColor,org.eclipse.ant.ui.processingInstructionsColor,org.eclipse.ant.ui.processingInstructionsColor_bold,org.eclipse.ant.ui.tagsColor,org.eclipse.ant.ui.tagsColor_bold,org.eclipse.ant.ui.textColor,org.eclipse.ant.ui.debugColor,org.eclipse.ant.ui.errorColor,org.eclipse.ant.ui.informationColor, -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.MemoryHistoryKnownColor 235,235,235 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.MemoryHistoryUnknownColor 170,175,185 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND 150,80,115 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.changedDebugElement 255,128,128 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.consoleBackground 53,53,53 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.errorColor 225,30,70 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.inColor 140,175,210 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.outColor 235,235,235 -> <absent>
+PREF after-set /org.eclipse.debug.ui/overriddenByCSS ,org.eclipse.debug.ui.MemoryHistoryKnownColor,org.eclipse.debug.ui.MemoryHistoryUnknownColor,org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND,org.eclipse.debug.ui.changedDebugElement,org.eclipse.debug.ui.consoleBackground,org.eclipse.debug.ui.errorColor,org.eclipse.debug.ui.inColor,org.eclipse.debug.ui.outColor, -> <absent>
+PREF after-set /org.eclipse.jdt.ui/content_assist_completion_replacement_background 200,200,0 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/content_assist_completion_replacement_foreground 200,0,0 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/content_assist_parameters_background 52,57,61 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/content_assist_parameters_foreground 238,238,238 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/content_assist_proposals_background 52,57,61 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/content_assist_proposals_foreground 238,238,238 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_bracket 249,250,244 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_comment_task_tag 154,140,124 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_default 217,232,247 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_doc_default 128,128,128 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_doc_keyword 154,140,124 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_doc_link 169,156,140 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_doc_tag 30,120,155 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_keyword 204,108,29 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_keyword_bold false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_keyword_return 204,108,29 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_keyword_return_bold false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_multi_line_comment 128,128,128 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_operator 230,230,250 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_single_line_comment 128,128,128 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_string 23,198,163 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/javadocElementsStyling.darkModeDefaultColors true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/matchingBracketsColor 249,250,244 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,content_assist_proposals_foreground,java_bracket,java_comment_task_tag,java_default,java_doc_default,java_doc_keyword,java_doc_link,java_doc_tag,java_keyword,java_keyword_bold,java_keyword_return,java_keyword_return_bold,java_multi_line_comment,java_operator,java_single_line_comment,java_string,matchingBracketsColor,pf_coloring_argument,pf_coloring_assignment,pf_coloring_comment,pf_coloring_key,pf_coloring_value,semanticHighlighting.abstractClass.color,semanticHighlighting.abstractClass.enabled,semanticHighlighting.abstractMethodInvocation.color,semanticHighlighting.abstractMethodInvocation.enabled,semanticHighlighting.annotation.color,semanticHighlighting.annotation.enabled,semanticHighlighting.annotation.italic,semanticHighlighting.annotationElementReference.color,semanticHighlighting.annotationElementReference.enabled,semanticHighlighting.class.color,semanticHighlighting.class.enabled,semanticHighlighting.deprecatedMember.color,semanticHighlighting.deprecatedMember.enabled,semanticHighlighting.deprecatedMember.underline,semanticHighlighting.deprecatedMember.strikethrough,semanticHighlighting.enum.color,semanticHighlighting.enum.enabled,semanticHighlighting.enum.italic,semanticHighlighting.field.color,semanticHighlighting.field.enabled,semanticHighlighting.inheritedField.color,semanticHighlighting.inheritedMethodInvocation.color,semanticHighlighting.inheritedMethodInvocation.enabled,semanticHighlighting.interface.color,semanticHighlighting.interface.enabled,semanticHighlighting.localVariable.color,semanticHighlighting.localVariable.enabled,semanticHighlighting.localVariableDeclaration.color,semanticHighlighting.localVariableDeclaration.enabled,semanticHighlighting.localVariableDeclaration.bold,semanticHighlighting.method.color,semanticHighlighting.method.enabled,semanticHighlighting.methodDeclarationName.color,semanticHighlighting.methodDeclarationName.enabled,semanticHighlighting.methodDeclarationName.bold,semanticHighlighting.number.color,semanticHighlighting.number.enabled,semanticHighlighting.parameterVariable.color,semanticHighlighting.parameterVariable.enabled,semanticHighlighting.staticField.color,semanticHighlighting.staticField.enabled,semanticHighlighting.staticFinalField.color,semanticHighlighting.staticFinalField.enabled,semanticHighlighting.staticMethodInvocation.color,semanticHighlighting.staticMethodInvocation.enabled,semanticHighlighting.typeArgument.color,semanticHighlighting.typeArgument.enabled,semanticHighlighting.typeParameter.color,semanticHighlighting.typeParameter.enabled,semanticHighlighting.typeParameter.bold,semanticHighlighting.restrictedKeywords.color,semanticHighlighting.restrictedKeywords.bold,sourceHoverBackgroundColor,javadocElementsStyling.darkModeDefaultColors, -> <absent>
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_argument 221,40,103 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_assignment 217,232,247 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_comment 128,128,128 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_key 217,232,247 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_value 23,198,163 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.abstractClass.color 62,171,230 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.abstractClass.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.abstractMethodInvocation.color 128,246,167 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.abstractMethodInvocation.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotation.color 160,160,160 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotation.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotation.italic true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotationElementReference.color 235,75,100 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotationElementReference.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.class.color 18,144,195 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.class.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.color 128,128,128 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.strikethrough true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.underline false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.enum.color 204,129,186 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.enum.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.enum.italic true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.field.color 102,225,248 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.field.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.inheritedField.color 143,143,191 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.inheritedMethodInvocation.color 205,246,104 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.inheritedMethodInvocation.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.interface.color 128,242,246 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.interface.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariable.color 243,236,121 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariable.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.bold false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.color 242,242,0 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.method.color 167,236,33 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.method.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.bold false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.color 30,181,64 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.number.color 104,151,187 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.number.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.parameterVariable.color 121,171,255 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.parameterVariable.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.restrictedKeywords.bold false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.restrictedKeywords.color 204,108,29 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticField.color 141,218,248 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticField.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticFinalField.color 141,218,248 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticFinalField.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.color 150,236,63 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeArgument.color 177,102,218 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeArgument.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeParameter.bold false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeParameter.color 191,164,164 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeParameter.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/sourceHoverBackgroundColor 68,68,68 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.default 217,232,247 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.externalized_string 140,210,20 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.externalized_string_italic true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_assignment 103,207,241 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_assignment_bold true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_attributes 140,210,20 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_key 221,40,103 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_key_bold true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_osgi 38,139,210 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_value 23,198,163 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_value_italic true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.instr 221,40,103 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.instr_bold true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.string 23,198,163 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.string_italic true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.tag 38,139,210 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.tag_bold true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.xml_comment 98,98,98 -> <absent>
+PREF after-set /org.eclipse.pde.ui/overriddenByCSS ,editor.color.default,editor.color.externalized_string,editor.color.externalized_string_italic,editor.color.header_assignment,editor.color.header_assignment_bold,editor.color.header_attributes,editor.color.header_key,editor.color.header_key_bold,editor.color.header_osgi,editor.color.header_value,editor.color.header_value_italic,editor.color.instr,editor.color.instr_bold,editor.color.string,editor.color.string_italic,editor.color.tag,editor.color.tag_bold,editor.color.xml_comment, -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.Background 47,47,47 -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.Background.SystemDefault false -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.FindScope 30,120,155 -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground 204,204,204 -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground.SystemDefault false -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionBackground 33,66,131 -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionBackground.SystemDefault false -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionForeground 147,161,161 -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionForeground.SystemDefault false -> <absent>
+PREF after-set /org.eclipse.ui.editors/TextOccurrenceIndicationColor 27, 98, 145 -> <absent>
+PREF after-set /org.eclipse.ui.editors/asOccurencesIndicationColor 72,72,72 -> <absent>
+PREF after-set /org.eclipse.ui.editors/breakpointIndicationColor 51,119,193 -> <absent>
+PREF after-set /org.eclipse.ui.editors/currentIPColor 90,90,90 -> <absent>
+PREF after-set /org.eclipse.ui.editors/currentLineColor 55,55,55 -> <absent>
+PREF after-set /org.eclipse.ui.editors/deletionIndicationColor 224,226,228 -> <absent>
+PREF after-set /org.eclipse.ui.editors/filteredSearchResultIndicationColor 27,98,145 -> <absent>
+PREF after-set /org.eclipse.ui.editors/hyperlinkColor 102,175,249 -> <absent>
+PREF after-set /org.eclipse.ui.editors/hyperlinkColor.SystemDefault false -> <absent>
+PREF after-set /org.eclipse.ui.editors/infoIndicationColor 86,194,170 -> <absent>
+PREF after-set /org.eclipse.ui.editors/lineNumberColor 119,145,154 -> <absent>
+PREF after-set /org.eclipse.ui.editors/linked.slave.color 66,156,255 -> <absent>
+PREF after-set /org.eclipse.ui.editors/matchingTagIndicationColor 72,72,72 -> <absent>
+PREF after-set /org.eclipse.ui.editors/occurrenceIndicationColor 27,98,145 -> <absent>
+PREF after-set /org.eclipse.ui.editors/org.eclipse.ui.editors.stickyLinesSeparatorColor 81,86,88 -> <absent>
+PREF after-set /org.eclipse.ui.editors/overriddenByCSS ,TextOccurrenceIndicationColor,AbstractTextEditor.Color.Background.SystemDefault,AbstractTextEditor.Color.SelectionForeground.SystemDefault,AbstractTextEditor.Color.SelectionBackground.SystemDefault,AbstractTextEditor.Color.Background,AbstractTextEditor.Color.Foreground.SystemDefault,AbstractTextEditor.Color.SelectionBackground,AbstractTextEditor.Color.SelectionForeground,AbstractTextEditor.Color.Foreground,AbstractTextEditor.Color.FindScope,asOccurencesIndicationColor,breakpointIndicationColor,currentIPColor,currentLineColor,deletionIndicationColor,filteredSearchResultIndicationColor,hyperlinkColor,hyperlinkColor.SystemDefault,infoIndicationColor,lineNumberColor,linked.slave.color,matchingTagIndicationColor,occurrenceIndicationColor,overrideIndicatorColor,printMarginColor,searchResultHighlighting,searchResultIndication,searchResultIndicationColor,searchResultTextStyle,secondaryIPColor,spellingIndicationColor,writeOccurrenceIndicationColor,org.eclipse.ui.editors.stickyLinesSeparatorColor, -> <absent>
+PREF after-set /org.eclipse.ui.editors/overrideIndicatorColor 78,120,117 -> <absent>
+PREF after-set /org.eclipse.ui.editors/printMarginColor 81,86,88 -> <absent>
+PREF after-set /org.eclipse.ui.editors/searchResultHighlighting false -> <absent>
+PREF after-set /org.eclipse.ui.editors/searchResultIndication true -> <absent>
+PREF after-set /org.eclipse.ui.editors/searchResultIndicationColor 94,94,94 -> <absent>
+PREF after-set /org.eclipse.ui.editors/searchResultTextStyle BOX -> <absent>
+PREF after-set /org.eclipse.ui.editors/secondaryIPColor 90,90,90 -> <absent>
+PREF after-set /org.eclipse.ui.editors/spellingIndicationColor 253,170,211 -> <absent>
+PREF after-set /org.eclipse.ui.editors/writeOccurrenceIndicationColor 27,98,145 -> <absent>
+PREF after-set /org.eclipse.ui.genericeditor/matchingBracketsColor 249,250,244 -> <absent>
+PREF after-set /org.eclipse.ui.genericeditor/overriddenByCSS ,matchingBracketsColor, -> <absent>
+PREF after-set /org.eclipse.ui.workbench/ACTIVE_HYPERLINK_COLOR 138,201,242 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/CONFLICTING_COLOR 240,15,66 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/CONTENT_ASSIST_BACKGROUND_COLOR 52,57,61 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/CONTENT_ASSIST_FOREGROUND_COLOR 238,238,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/EDITION_COLOR 238,238,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/ERROR_COLOR 247,68,117 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/HYPERLINK_COLOR 111,197,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/INCOMING_COLOR 31,179,235 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/OUTGOING_COLOR 238,238,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/RESOLVED_COLOR 108,210,17 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.inherited 143,143,191 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight 255,128,128 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.backgroundColor 52,57,61 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.foregroundColor 238,238,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jface.REVISION_NEWEST_COLOR 75,44,3 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jface.REVISION_OLDEST_COLOR 154,113,61 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.attribute 196,138,114 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.comment 96,139,78 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.header 128,128,128 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.quote 118,200,244 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.tag 86,156,214 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.text 212,212,212 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.search.ui.match.highlight 206,92,0 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.editors.rangeIndicatorColor 27,118,153 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_BG_END 41,41,41 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_BG_START 43,44,45 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_TEXT_COLOR 204,204,204 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_TAB_BG_END 41,41,41 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_TAB_BG_START 43,44,45 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_TAB_TEXT_COLOR 221,221,221 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR 255,110,110 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR 170,170,170 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR 255,200,0 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.HOVER_BACKGROUND 52,57,61 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.HOVER_FOREGROUND 238,238,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INACTIVE_TAB_BG_END 49,53,56 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INACTIVE_TAB_BG_START 59,64,66 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INACTIVE_TAB_TEXT_COLOR 187,187,187 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INFORMATION_BACKGROUND 81,86,88 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INFORMATION_FOREGROUND 238,238,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.jdt.ui.ColoredLabels.inherited,org.eclipse.jdt.ui.Javadoc.backgroundColor,org.eclipse.jdt.ui.Javadoc.foregroundColor,org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight,org.eclipse.pde.genericeditor.extension.editor.color.tag,org.eclipse.pde.genericeditor.extension.editor.color.attribute,org.eclipse.pde.genericeditor.extension.editor.color.text,org.eclipse.pde.genericeditor.extension.editor.color.header,org.eclipse.pde.genericeditor.extension.editor.color.comment,org.eclipse.pde.genericeditor.extension.editor.color.quote,ACTIVE_HYPERLINK_COLOR,CONFLICTING_COLOR,CONTENT_ASSIST_BACKGROUND_COLOR,CONTENT_ASSIST_FOREGROUND_COLOR,org.eclipse.ui.workbench.INFORMATION_BACKGROUND,org.eclipse.ui.workbench.INFORMATION_FOREGROUND,org.eclipse.ui.workbench.HOVER_BACKGROUND,org.eclipse.ui.workbench.HOVER_FOREGROUND,org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR,org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR,org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR,ERROR_COLOR,HYPERLINK_COLOR,INCOMING_COLOR,OUTGOING_COLOR,RESOLVED_COLOR,EDITION_COLOR,org.eclipse.search.ui.match.highlight,org.eclipse.ui.editors.rangeIndicatorColor,org.eclipse.jface.REVISION_NEWEST_COLOR,org.eclipse.jface.REVISION_OLDEST_COLOR, -> <absent>
+STEP wait|1500
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f8bbd0
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#f8bbd0 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET Table id=null class=null bg=#b2ebf2
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f8bbd0
+WIDGET Browser id=null class=null bg=#f8bbd0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#ffe082
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#a5d6a7
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#ffe082
+STEP shot|a
+STEP appearance
+COMBO items=[Classic, Dark, Light, Light (Preview), Spike A (research)] selected=Spike A (research)
+COMBO items=[Default (current), Reduced Palette, Classic Theme] selected=Default (current)
+STEP wait|1500
+STEP shot|appearance
+STEP cancel
+STATE appearance-closed active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+STEP state|end
+STATE end active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+DONE
+
+## W02
+ENV os=Windows 11 10.0 ws=win32 java=21.0.12.1+1-LTS themeBundle=0.14.400.v20240424-0956 platform=4.33.0.v20240903-0240
+THEMES [org.eclipse.e4.ui.css.theme.e4_classic=Classic, org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, org.eclipse.e4.ui.css.theme.e4_preview=Light (Preview), org.eclipse.e4.ui.css.theme.high-contrast=High Contrast, spike.probe.theme.a=Spike A (research)]
+STATE boot active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+STEP wait|1500
+STEP state|restart-a
+STATE restart-a active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f8bbd0
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#d1c4e9 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET Table id=null class=null bg=#b2ebf2
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f8bbd0
+WIDGET Browser id=null class=null bg=#f8bbd0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#ffe082
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#a5d6a7
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#ffe082
+STEP shot|restart
+STEP set|org.eclipse.e4.ui.css.theme.e4_dark|true
+POST expected=org.eclipse.e4.ui.css.theme.e4_dark actual=org.eclipse.e4.ui.css.theme.e4_dark match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.commentsColor <absent> -> 204,204,204
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.constantStringsColor <absent> -> 23,198,163
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.constantStringsColor_italic <absent> -> true
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.debugColor <absent> -> 235,235,235
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.dtdColor <absent> -> 140,210,20
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.errorColor <absent> -> 225,30,70
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.informationColor <absent> -> 140,175,210
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.processingInstructionsColor <absent> -> 221,40,103
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.processingInstructionsColor_bold <absent> -> true
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.tagsColor <absent> -> 38,139,210
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.tagsColor_bold <absent> -> true
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.textColor <absent> -> 217,232,247
+PREF after-set /org.eclipse.ant.ui/overriddenByCSS <absent> -> ,org.eclipse.ant.ui.commentsColor,org.eclipse.ant.ui.constantStringsColor,org.eclipse.ant.ui.constantStringsColor_italic,org.eclipse.ant.ui.dtdColor,org.eclipse.ant.ui.processingInstructionsColor,org.eclipse.ant.ui.processingInstructionsColor_bold,org.eclipse.ant.ui.tagsColor,org.eclipse.ant.ui.tagsColor_bold,org.eclipse.ant.ui.textColor,org.eclipse.ant.ui.debugColor,org.eclipse.ant.ui.errorColor,org.eclipse.ant.ui.informationColor,
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.MemoryHistoryKnownColor <absent> -> 235,235,235
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.MemoryHistoryUnknownColor <absent> -> 170,175,185
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND <absent> -> 150,80,115
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.changedDebugElement <absent> -> 255,128,128
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.consoleBackground <absent> -> 53,53,53
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.errorColor <absent> -> 225,30,70
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.inColor <absent> -> 140,175,210
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.outColor <absent> -> 235,235,235
+PREF after-set /org.eclipse.debug.ui/overriddenByCSS <absent> -> ,org.eclipse.debug.ui.MemoryHistoryKnownColor,org.eclipse.debug.ui.MemoryHistoryUnknownColor,org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND,org.eclipse.debug.ui.changedDebugElement,org.eclipse.debug.ui.consoleBackground,org.eclipse.debug.ui.errorColor,org.eclipse.debug.ui.inColor,org.eclipse.debug.ui.outColor,
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid spike.probe.theme.a -> org.eclipse.e4.ui.css.theme.e4_dark
+PREF after-set /org.eclipse.jdt.ui/content_assist_completion_replacement_background <absent> -> 200,200,0
+PREF after-set /org.eclipse.jdt.ui/content_assist_completion_replacement_foreground <absent> -> 200,0,0
+PREF after-set /org.eclipse.jdt.ui/content_assist_parameters_background <absent> -> 52,57,61
+PREF after-set /org.eclipse.jdt.ui/content_assist_parameters_foreground <absent> -> 238,238,238
+PREF after-set /org.eclipse.jdt.ui/content_assist_proposals_background 255,255,255 -> 52,57,61
+PREF after-set /org.eclipse.jdt.ui/content_assist_proposals_foreground 0,0,0 -> 238,238,238
+PREF after-set /org.eclipse.jdt.ui/java_bracket <absent> -> 249,250,244
+PREF after-set /org.eclipse.jdt.ui/java_comment_task_tag <absent> -> 154,140,124
+PREF after-set /org.eclipse.jdt.ui/java_default <absent> -> 217,232,247
+PREF after-set /org.eclipse.jdt.ui/java_doc_default <absent> -> 128,128,128
+PREF after-set /org.eclipse.jdt.ui/java_doc_keyword <absent> -> 154,140,124
+PREF after-set /org.eclipse.jdt.ui/java_doc_link <absent> -> 169,156,140
+PREF after-set /org.eclipse.jdt.ui/java_doc_tag <absent> -> 30,120,155
+PREF after-set /org.eclipse.jdt.ui/java_keyword <absent> -> 204,108,29
+PREF after-set /org.eclipse.jdt.ui/java_keyword_bold <absent> -> false
+PREF after-set /org.eclipse.jdt.ui/java_keyword_return <absent> -> 204,108,29
+PREF after-set /org.eclipse.jdt.ui/java_keyword_return_bold <absent> -> false
+PREF after-set /org.eclipse.jdt.ui/java_multi_line_comment <absent> -> 128,128,128
+PREF after-set /org.eclipse.jdt.ui/java_operator <absent> -> 230,230,250
+PREF after-set /org.eclipse.jdt.ui/java_single_line_comment <absent> -> 128,128,128
+PREF after-set /org.eclipse.jdt.ui/java_string <absent> -> 23,198,163
+PREF after-set /org.eclipse.jdt.ui/javadocElementsStyling.darkModeDefaultColors <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/matchingBracketsColor <absent> -> 249,250,244
+PREF after-set /org.eclipse.jdt.ui/overriddenByCSS <absent> -> ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,content_assist_proposals_foreground,java_bracket,java_comment_task_tag,java_default,java_doc_default,java_doc_keyword,java_doc_link,java_doc_tag,java_keyword,java_keyword_bold,java_keyword_return,java_keyword_return_bold,java_multi_line_comment,java_operator,java_single_line_comment,java_string,matchingBracketsColor,pf_coloring_argument,pf_coloring_assignment,pf_coloring_comment,pf_coloring_key,pf_coloring_value,semanticHighlighting.abstractClass.color,semanticHighlighting.abstractClass.enabled,semanticHighlighting.abstractMethodInvocation.color,semanticHighlighting.abstractMethodInvocation.enabled,semanticHighlighting.annotation.color,semanticHighlighting.annotation.enabled,semanticHighlighting.annotation.italic,semanticHighlighting.annotationElementReference.color,semanticHighlighting.annotationElementReference.enabled,semanticHighlighting.class.color,semanticHighlighting.class.enabled,semanticHighlighting.deprecatedMember.color,semanticHighlighting.deprecatedMember.enabled,semanticHighlighting.deprecatedMember.underline,semanticHighlighting.deprecatedMember.strikethrough,semanticHighlighting.enum.color,semanticHighlighting.enum.enabled,semanticHighlighting.enum.italic,semanticHighlighting.field.color,semanticHighlighting.field.enabled,semanticHighlighting.inheritedField.color,semanticHighlighting.inheritedMethodInvocation.color,semanticHighlighting.inheritedMethodInvocation.enabled,semanticHighlighting.interface.color,semanticHighlighting.interface.enabled,semanticHighlighting.localVariable.color,semanticHighlighting.localVariable.enabled,semanticHighlighting.localVariableDeclaration.color,semanticHighlighting.localVariableDeclaration.enabled,semanticHighlighting.localVariableDeclaration.bold,semanticHighlighting.method.color,semanticHighlighting.method.enabled,semanticHighlighting.methodDeclarationName.color,semanticHighlighting.methodDeclarationName.enabled,semanticHighlighting.methodDeclarationName.bold,semanticHighlighting.number.color,semanticHighlighting.number.enabled,semanticHighlighting.parameterVariable.color,semanticHighlighting.parameterVariable.enabled,semanticHighlighting.staticField.color,semanticHighlighting.staticField.enabled,semanticHighlighting.staticFinalField.color,semanticHighlighting.staticFinalField.enabled,semanticHighlighting.staticMethodInvocation.color,semanticHighlighting.staticMethodInvocation.enabled,semanticHighlighting.typeArgument.color,semanticHighlighting.typeArgument.enabled,semanticHighlighting.typeParameter.color,semanticHighlighting.typeParameter.enabled,semanticHighlighting.typeParameter.bold,semanticHighlighting.restrictedKeywords.color,semanticHighlighting.restrictedKeywords.bold,sourceHoverBackgroundColor,javadocElementsStyling.darkModeDefaultColors,
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_argument <absent> -> 221,40,103
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_assignment <absent> -> 217,232,247
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_comment <absent> -> 128,128,128
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_key <absent> -> 217,232,247
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_value <absent> -> 23,198,163
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.abstractClass.color <absent> -> 62,171,230
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.abstractClass.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.abstractMethodInvocation.color <absent> -> 128,246,167
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.abstractMethodInvocation.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotation.color <absent> -> 160,160,160
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotation.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotation.italic <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotationElementReference.color <absent> -> 235,75,100
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotationElementReference.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.class.color <absent> -> 18,144,195
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.class.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.color <absent> -> 128,128,128
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.strikethrough <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.underline <absent> -> false
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.enum.color <absent> -> 204,129,186
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.enum.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.enum.italic <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.field.color <absent> -> 102,225,248
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.field.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.inheritedField.color <absent> -> 143,143,191
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.inheritedMethodInvocation.color <absent> -> 205,246,104
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.inheritedMethodInvocation.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.interface.color <absent> -> 128,242,246
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.interface.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariable.color <absent> -> 243,236,121
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariable.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.bold <absent> -> false
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.color <absent> -> 242,242,0
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.method.color <absent> -> 167,236,33
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.method.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.bold <absent> -> false
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.color <absent> -> 30,181,64
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.number.color <absent> -> 104,151,187
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.number.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.parameterVariable.color <absent> -> 121,171,255
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.parameterVariable.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.restrictedKeywords.bold <absent> -> false
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.restrictedKeywords.color <absent> -> 204,108,29
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticField.color <absent> -> 141,218,248
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticField.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticFinalField.color <absent> -> 141,218,248
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticFinalField.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.color <absent> -> 150,236,63
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeArgument.color <absent> -> 177,102,218
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeArgument.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeParameter.bold <absent> -> false
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeParameter.color <absent> -> 191,164,164
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeParameter.enabled <absent> -> true
+PREF after-set /org.eclipse.jdt.ui/sourceHoverBackgroundColor <absent> -> 68,68,68
+PREF after-set /org.eclipse.pde.ui/editor.color.default <absent> -> 217,232,247
+PREF after-set /org.eclipse.pde.ui/editor.color.externalized_string <absent> -> 140,210,20
+PREF after-set /org.eclipse.pde.ui/editor.color.externalized_string_italic <absent> -> true
+PREF after-set /org.eclipse.pde.ui/editor.color.header_assignment <absent> -> 103,207,241
+PREF after-set /org.eclipse.pde.ui/editor.color.header_assignment_bold <absent> -> true
+PREF after-set /org.eclipse.pde.ui/editor.color.header_attributes <absent> -> 140,210,20
+PREF after-set /org.eclipse.pde.ui/editor.color.header_key <absent> -> 221,40,103
+PREF after-set /org.eclipse.pde.ui/editor.color.header_key_bold <absent> -> true
+PREF after-set /org.eclipse.pde.ui/editor.color.header_osgi <absent> -> 38,139,210
+PREF after-set /org.eclipse.pde.ui/editor.color.header_value <absent> -> 23,198,163
+PREF after-set /org.eclipse.pde.ui/editor.color.header_value_italic <absent> -> true
+PREF after-set /org.eclipse.pde.ui/editor.color.instr <absent> -> 221,40,103
+PREF after-set /org.eclipse.pde.ui/editor.color.instr_bold <absent> -> true
+PREF after-set /org.eclipse.pde.ui/editor.color.string <absent> -> 23,198,163
+PREF after-set /org.eclipse.pde.ui/editor.color.string_italic <absent> -> true
+PREF after-set /org.eclipse.pde.ui/editor.color.tag <absent> -> 38,139,210
+PREF after-set /org.eclipse.pde.ui/editor.color.tag_bold <absent> -> true
+PREF after-set /org.eclipse.pde.ui/editor.color.xml_comment <absent> -> 98,98,98
+PREF after-set /org.eclipse.pde.ui/overriddenByCSS <absent> -> ,editor.color.default,editor.color.externalized_string,editor.color.externalized_string_italic,editor.color.header_assignment,editor.color.header_assignment_bold,editor.color.header_attributes,editor.color.header_key,editor.color.header_key_bold,editor.color.header_osgi,editor.color.header_value,editor.color.header_value_italic,editor.color.instr,editor.color.instr_bold,editor.color.string,editor.color.string_italic,editor.color.tag,editor.color.tag_bold,editor.color.xml_comment,
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.Background <absent> -> 47,47,47
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.Background.SystemDefault <absent> -> false
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.FindScope <absent> -> 30,120,155
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground <absent> -> 204,204,204
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground.SystemDefault <absent> -> false
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionBackground <absent> -> 33,66,131
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionBackground.SystemDefault <absent> -> false
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionForeground <absent> -> 147,161,161
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionForeground.SystemDefault <absent> -> false
+PREF after-set /org.eclipse.ui.editors/TextOccurrenceIndicationColor <absent> -> 27, 98, 145
+PREF after-set /org.eclipse.ui.editors/asOccurencesIndicationColor <absent> -> 72,72,72
+PREF after-set /org.eclipse.ui.editors/breakpointIndicationColor <absent> -> 51,119,193
+PREF after-set /org.eclipse.ui.editors/currentIPColor <absent> -> 90,90,90
+PREF after-set /org.eclipse.ui.editors/currentLineColor <absent> -> 55,55,55
+PREF after-set /org.eclipse.ui.editors/deletionIndicationColor <absent> -> 224,226,228
+PREF after-set /org.eclipse.ui.editors/filteredSearchResultIndicationColor <absent> -> 27,98,145
+PREF after-set /org.eclipse.ui.editors/hyperlinkColor <absent> -> 102,175,249
+PREF after-set /org.eclipse.ui.editors/hyperlinkColor.SystemDefault <absent> -> false
+PREF after-set /org.eclipse.ui.editors/infoIndicationColor <absent> -> 86,194,170
+PREF after-set /org.eclipse.ui.editors/lineNumberColor <absent> -> 119,145,154
+PREF after-set /org.eclipse.ui.editors/linked.slave.color <absent> -> 66,156,255
+PREF after-set /org.eclipse.ui.editors/matchingTagIndicationColor <absent> -> 72,72,72
+PREF after-set /org.eclipse.ui.editors/occurrenceIndicationColor <absent> -> 27,98,145
+PREF after-set /org.eclipse.ui.editors/org.eclipse.ui.editors.stickyLinesSeparatorColor <absent> -> 81,86,88
+PREF after-set /org.eclipse.ui.editors/overriddenByCSS <absent> -> ,TextOccurrenceIndicationColor,AbstractTextEditor.Color.Background.SystemDefault,AbstractTextEditor.Color.SelectionForeground.SystemDefault,AbstractTextEditor.Color.SelectionBackground.SystemDefault,AbstractTextEditor.Color.Background,AbstractTextEditor.Color.Foreground.SystemDefault,AbstractTextEditor.Color.SelectionBackground,AbstractTextEditor.Color.SelectionForeground,AbstractTextEditor.Color.Foreground,AbstractTextEditor.Color.FindScope,asOccurencesIndicationColor,breakpointIndicationColor,currentIPColor,currentLineColor,deletionIndicationColor,filteredSearchResultIndicationColor,hyperlinkColor,hyperlinkColor.SystemDefault,infoIndicationColor,lineNumberColor,linked.slave.color,matchingTagIndicationColor,occurrenceIndicationColor,overrideIndicatorColor,printMarginColor,searchResultHighlighting,searchResultIndication,searchResultIndicationColor,searchResultTextStyle,secondaryIPColor,spellingIndicationColor,writeOccurrenceIndicationColor,org.eclipse.ui.editors.stickyLinesSeparatorColor,
+PREF after-set /org.eclipse.ui.editors/overrideIndicatorColor <absent> -> 78,120,117
+PREF after-set /org.eclipse.ui.editors/printMarginColor <absent> -> 81,86,88
+PREF after-set /org.eclipse.ui.editors/searchResultHighlighting <absent> -> false
+PREF after-set /org.eclipse.ui.editors/searchResultIndication <absent> -> true
+PREF after-set /org.eclipse.ui.editors/searchResultIndicationColor <absent> -> 94,94,94
+PREF after-set /org.eclipse.ui.editors/searchResultTextStyle <absent> -> BOX
+PREF after-set /org.eclipse.ui.editors/secondaryIPColor <absent> -> 90,90,90
+PREF after-set /org.eclipse.ui.editors/spellingIndicationColor <absent> -> 253,170,211
+PREF after-set /org.eclipse.ui.editors/writeOccurrenceIndicationColor <absent> -> 27,98,145
+PREF after-set /org.eclipse.ui.genericeditor/matchingBracketsColor <absent> -> 249,250,244
+PREF after-set /org.eclipse.ui.genericeditor/overriddenByCSS <absent> -> ,matchingBracketsColor,
+PREF after-set /org.eclipse.ui.workbench/ACTIVE_HYPERLINK_COLOR <absent> -> 138,201,242
+PREF after-set /org.eclipse.ui.workbench/CONFLICTING_COLOR <absent> -> 240,15,66
+PREF after-set /org.eclipse.ui.workbench/CONTENT_ASSIST_BACKGROUND_COLOR <absent> -> 52,57,61
+PREF after-set /org.eclipse.ui.workbench/CONTENT_ASSIST_FOREGROUND_COLOR <absent> -> 238,238,238
+PREF after-set /org.eclipse.ui.workbench/EDITION_COLOR <absent> -> 238,238,238
+PREF after-set /org.eclipse.ui.workbench/ERROR_COLOR <absent> -> 247,68,117
+PREF after-set /org.eclipse.ui.workbench/HYPERLINK_COLOR <absent> -> 111,197,238
+PREF after-set /org.eclipse.ui.workbench/INCOMING_COLOR <absent> -> 31,179,235
+PREF after-set /org.eclipse.ui.workbench/OUTGOING_COLOR <absent> -> 238,238,238
+PREF after-set /org.eclipse.ui.workbench/RESOLVED_COLOR <absent> -> 108,210,17
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.inherited <absent> -> 143,143,191
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight <absent> -> 255,128,128
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.backgroundColor <absent> -> 52,57,61
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.foregroundColor <absent> -> 238,238,238
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jface.REVISION_NEWEST_COLOR <absent> -> 75,44,3
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jface.REVISION_OLDEST_COLOR <absent> -> 154,113,61
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.attribute <absent> -> 196,138,114
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.comment <absent> -> 96,139,78
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.header <absent> -> 128,128,128
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.quote <absent> -> 118,200,244
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.tag <absent> -> 86,156,214
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.text <absent> -> 212,212,212
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.search.ui.match.highlight <absent> -> 206,92,0
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.editors.rangeIndicatorColor <absent> -> 27,118,153
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_BG_END <absent> -> 41,41,41
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_BG_START <absent> -> 43,44,45
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_TEXT_COLOR <absent> -> 204,204,204
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_TAB_BG_END <absent> -> 41,41,41
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_TAB_BG_START <absent> -> 43,44,45
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_TAB_TEXT_COLOR <absent> -> 221,221,221
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR <absent> -> 255,110,110
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR <absent> -> 170,170,170
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR <absent> -> 255,200,0
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.HOVER_BACKGROUND <absent> -> 52,57,61
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.HOVER_FOREGROUND <absent> -> 238,238,238
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INACTIVE_TAB_BG_END <absent> -> 49,53,56
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INACTIVE_TAB_BG_START <absent> -> 59,64,66
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INACTIVE_TAB_TEXT_COLOR <absent> -> 187,187,187
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INFORMATION_BACKGROUND <absent> -> 81,86,88
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INFORMATION_FOREGROUND <absent> -> 238,238,238
+PREF after-set /org.eclipse.ui.workbench/overriddenByCSS <absent> -> ,org.eclipse.jdt.ui.ColoredLabels.inherited,org.eclipse.jdt.ui.Javadoc.backgroundColor,org.eclipse.jdt.ui.Javadoc.foregroundColor,org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight,org.eclipse.pde.genericeditor.extension.editor.color.tag,org.eclipse.pde.genericeditor.extension.editor.color.attribute,org.eclipse.pde.genericeditor.extension.editor.color.text,org.eclipse.pde.genericeditor.extension.editor.color.header,org.eclipse.pde.genericeditor.extension.editor.color.comment,org.eclipse.pde.genericeditor.extension.editor.color.quote,ACTIVE_HYPERLINK_COLOR,CONFLICTING_COLOR,CONTENT_ASSIST_BACKGROUND_COLOR,CONTENT_ASSIST_FOREGROUND_COLOR,org.eclipse.ui.workbench.INFORMATION_BACKGROUND,org.eclipse.ui.workbench.INFORMATION_FOREGROUND,org.eclipse.ui.workbench.HOVER_BACKGROUND,org.eclipse.ui.workbench.HOVER_FOREGROUND,org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR,org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR,org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR,ERROR_COLOR,HYPERLINK_COLOR,INCOMING_COLOR,OUTGOING_COLOR,RESOLVED_COLOR,EDITION_COLOR,org.eclipse.search.ui.match.highlight,org.eclipse.ui.editors.rangeIndicatorColor,org.eclipse.jface.REVISION_NEWEST_COLOR,org.eclipse.jface.REVISION_OLDEST_COLOR,
+STEP wait|1000
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#515658
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#292929 selected=#292929
+WIDGET Tree id=null class=null bg=#2f2f2f
+WIDGET Table id=null class=null bg=#313538
+WIDGET Button id=null class=null bg=#2f2f2f
+WIDGET SashForm id=null class=null bg=#2f2f2f
+WIDGET Browser id=null class=null bg=#313538
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#515658
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#515658
+STEP shot|dark
+STEP set|org.eclipse.e4.ui.css.theme.e4_default|false
+POST expected=org.eclipse.e4.ui.css.theme.e4_default actual=org.eclipse.e4.ui.css.theme.e4_default match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_default themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_BG_END 41,41,41 -> 255,255,255
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_BG_START 43,44,45 -> 255,255,255
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_TEXT_COLOR 204,204,204 -> 16,16,16
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_TAB_BG_END 41,41,41 -> 255,255,255
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_TAB_BG_START 43,44,45 -> 255,255,255
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INACTIVE_TAB_BG_START 59,64,66 -> 242,242,242
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.commentsColor 204,204,204 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.constantStringsColor 23,198,163 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.constantStringsColor_italic true -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.debugColor 235,235,235 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.dtdColor 140,210,20 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.errorColor 225,30,70 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.informationColor 140,175,210 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.processingInstructionsColor 221,40,103 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.processingInstructionsColor_bold true -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.tagsColor 38,139,210 -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.tagsColor_bold true -> <absent>
+PREF after-set /org.eclipse.ant.ui/org.eclipse.ant.ui.textColor 217,232,247 -> <absent>
+PREF after-set /org.eclipse.ant.ui/overriddenByCSS ,org.eclipse.ant.ui.commentsColor,org.eclipse.ant.ui.constantStringsColor,org.eclipse.ant.ui.constantStringsColor_italic,org.eclipse.ant.ui.dtdColor,org.eclipse.ant.ui.processingInstructionsColor,org.eclipse.ant.ui.processingInstructionsColor_bold,org.eclipse.ant.ui.tagsColor,org.eclipse.ant.ui.tagsColor_bold,org.eclipse.ant.ui.textColor,org.eclipse.ant.ui.debugColor,org.eclipse.ant.ui.errorColor,org.eclipse.ant.ui.informationColor, -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.MemoryHistoryKnownColor 235,235,235 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.MemoryHistoryUnknownColor 170,175,185 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND 150,80,115 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.changedDebugElement 255,128,128 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.consoleBackground 53,53,53 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.errorColor 225,30,70 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.inColor 140,175,210 -> <absent>
+PREF after-set /org.eclipse.debug.ui/org.eclipse.debug.ui.outColor 235,235,235 -> <absent>
+PREF after-set /org.eclipse.debug.ui/overriddenByCSS ,org.eclipse.debug.ui.MemoryHistoryKnownColor,org.eclipse.debug.ui.MemoryHistoryUnknownColor,org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND,org.eclipse.debug.ui.changedDebugElement,org.eclipse.debug.ui.consoleBackground,org.eclipse.debug.ui.errorColor,org.eclipse.debug.ui.inColor,org.eclipse.debug.ui.outColor, -> <absent>
+PREF after-set /org.eclipse.jdt.ui/content_assist_completion_replacement_background 200,200,0 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/content_assist_completion_replacement_foreground 200,0,0 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/content_assist_parameters_background 52,57,61 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/content_assist_parameters_foreground 238,238,238 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/content_assist_proposals_background 52,57,61 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/content_assist_proposals_foreground 238,238,238 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_bracket 249,250,244 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_comment_task_tag 154,140,124 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_default 217,232,247 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_doc_default 128,128,128 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_doc_keyword 154,140,124 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_doc_link 169,156,140 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_doc_tag 30,120,155 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_keyword 204,108,29 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_keyword_bold false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_keyword_return 204,108,29 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_keyword_return_bold false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_multi_line_comment 128,128,128 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_operator 230,230,250 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_single_line_comment 128,128,128 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/java_string 23,198,163 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/javadocElementsStyling.darkModeDefaultColors true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/matchingBracketsColor 249,250,244 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/overriddenByCSS ,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,content_assist_proposals_background,content_assist_proposals_foreground,java_bracket,java_comment_task_tag,java_default,java_doc_default,java_doc_keyword,java_doc_link,java_doc_tag,java_keyword,java_keyword_bold,java_keyword_return,java_keyword_return_bold,java_multi_line_comment,java_operator,java_single_line_comment,java_string,matchingBracketsColor,pf_coloring_argument,pf_coloring_assignment,pf_coloring_comment,pf_coloring_key,pf_coloring_value,semanticHighlighting.abstractClass.color,semanticHighlighting.abstractClass.enabled,semanticHighlighting.abstractMethodInvocation.color,semanticHighlighting.abstractMethodInvocation.enabled,semanticHighlighting.annotation.color,semanticHighlighting.annotation.enabled,semanticHighlighting.annotation.italic,semanticHighlighting.annotationElementReference.color,semanticHighlighting.annotationElementReference.enabled,semanticHighlighting.class.color,semanticHighlighting.class.enabled,semanticHighlighting.deprecatedMember.color,semanticHighlighting.deprecatedMember.enabled,semanticHighlighting.deprecatedMember.underline,semanticHighlighting.deprecatedMember.strikethrough,semanticHighlighting.enum.color,semanticHighlighting.enum.enabled,semanticHighlighting.enum.italic,semanticHighlighting.field.color,semanticHighlighting.field.enabled,semanticHighlighting.inheritedField.color,semanticHighlighting.inheritedMethodInvocation.color,semanticHighlighting.inheritedMethodInvocation.enabled,semanticHighlighting.interface.color,semanticHighlighting.interface.enabled,semanticHighlighting.localVariable.color,semanticHighlighting.localVariable.enabled,semanticHighlighting.localVariableDeclaration.color,semanticHighlighting.localVariableDeclaration.enabled,semanticHighlighting.localVariableDeclaration.bold,semanticHighlighting.method.color,semanticHighlighting.method.enabled,semanticHighlighting.methodDeclarationName.color,semanticHighlighting.methodDeclarationName.enabled,semanticHighlighting.methodDeclarationName.bold,semanticHighlighting.number.color,semanticHighlighting.number.enabled,semanticHighlighting.parameterVariable.color,semanticHighlighting.parameterVariable.enabled,semanticHighlighting.staticField.color,semanticHighlighting.staticField.enabled,semanticHighlighting.staticFinalField.color,semanticHighlighting.staticFinalField.enabled,semanticHighlighting.staticMethodInvocation.color,semanticHighlighting.staticMethodInvocation.enabled,semanticHighlighting.typeArgument.color,semanticHighlighting.typeArgument.enabled,semanticHighlighting.typeParameter.color,semanticHighlighting.typeParameter.enabled,semanticHighlighting.typeParameter.bold,semanticHighlighting.restrictedKeywords.color,semanticHighlighting.restrictedKeywords.bold,sourceHoverBackgroundColor,javadocElementsStyling.darkModeDefaultColors, -> <absent>
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_argument 221,40,103 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_assignment 217,232,247 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_comment 128,128,128 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_key 217,232,247 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/pf_coloring_value 23,198,163 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.abstractClass.color 62,171,230 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.abstractClass.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.abstractMethodInvocation.color 128,246,167 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.abstractMethodInvocation.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotation.color 160,160,160 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotation.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotation.italic true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotationElementReference.color 235,75,100 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.annotationElementReference.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.class.color 18,144,195 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.class.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.color 128,128,128 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.strikethrough true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.deprecatedMember.underline false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.enum.color 204,129,186 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.enum.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.enum.italic true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.field.color 102,225,248 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.field.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.inheritedField.color 143,143,191 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.inheritedMethodInvocation.color 205,246,104 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.inheritedMethodInvocation.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.interface.color 128,242,246 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.interface.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariable.color 243,236,121 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariable.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.bold false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.color 242,242,0 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.localVariableDeclaration.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.method.color 167,236,33 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.method.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.bold false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.color 30,181,64 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.methodDeclarationName.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.number.color 104,151,187 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.number.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.parameterVariable.color 121,171,255 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.parameterVariable.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.restrictedKeywords.bold false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.restrictedKeywords.color 204,108,29 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticField.color 141,218,248 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticField.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticFinalField.color 141,218,248 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticFinalField.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.color 150,236,63 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeArgument.color 177,102,218 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeArgument.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeParameter.bold false -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeParameter.color 191,164,164 -> <absent>
+PREF after-set /org.eclipse.jdt.ui/semanticHighlighting.typeParameter.enabled true -> <absent>
+PREF after-set /org.eclipse.jdt.ui/sourceHoverBackgroundColor 68,68,68 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.default 217,232,247 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.externalized_string 140,210,20 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.externalized_string_italic true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_assignment 103,207,241 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_assignment_bold true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_attributes 140,210,20 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_key 221,40,103 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_key_bold true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_osgi 38,139,210 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_value 23,198,163 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.header_value_italic true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.instr 221,40,103 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.instr_bold true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.string 23,198,163 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.string_italic true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.tag 38,139,210 -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.tag_bold true -> <absent>
+PREF after-set /org.eclipse.pde.ui/editor.color.xml_comment 98,98,98 -> <absent>
+PREF after-set /org.eclipse.pde.ui/overriddenByCSS ,editor.color.default,editor.color.externalized_string,editor.color.externalized_string_italic,editor.color.header_assignment,editor.color.header_assignment_bold,editor.color.header_attributes,editor.color.header_key,editor.color.header_key_bold,editor.color.header_osgi,editor.color.header_value,editor.color.header_value_italic,editor.color.instr,editor.color.instr_bold,editor.color.string,editor.color.string_italic,editor.color.tag,editor.color.tag_bold,editor.color.xml_comment, -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.Background 47,47,47 -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.Background.SystemDefault false -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.FindScope 30,120,155 -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground 204,204,204 -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.Foreground.SystemDefault false -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionBackground 33,66,131 -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionBackground.SystemDefault false -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionForeground 147,161,161 -> <absent>
+PREF after-set /org.eclipse.ui.editors/AbstractTextEditor.Color.SelectionForeground.SystemDefault false -> <absent>
+PREF after-set /org.eclipse.ui.editors/TextOccurrenceIndicationColor 27, 98, 145 -> <absent>
+PREF after-set /org.eclipse.ui.editors/asOccurencesIndicationColor 72,72,72 -> <absent>
+PREF after-set /org.eclipse.ui.editors/breakpointIndicationColor 51,119,193 -> <absent>
+PREF after-set /org.eclipse.ui.editors/currentIPColor 90,90,90 -> <absent>
+PREF after-set /org.eclipse.ui.editors/currentLineColor 55,55,55 -> <absent>
+PREF after-set /org.eclipse.ui.editors/deletionIndicationColor 224,226,228 -> <absent>
+PREF after-set /org.eclipse.ui.editors/filteredSearchResultIndicationColor 27,98,145 -> <absent>
+PREF after-set /org.eclipse.ui.editors/hyperlinkColor 102,175,249 -> <absent>
+PREF after-set /org.eclipse.ui.editors/hyperlinkColor.SystemDefault false -> <absent>
+PREF after-set /org.eclipse.ui.editors/infoIndicationColor 86,194,170 -> <absent>
+PREF after-set /org.eclipse.ui.editors/lineNumberColor 119,145,154 -> <absent>
+PREF after-set /org.eclipse.ui.editors/linked.slave.color 66,156,255 -> <absent>
+PREF after-set /org.eclipse.ui.editors/matchingTagIndicationColor 72,72,72 -> <absent>
+PREF after-set /org.eclipse.ui.editors/occurrenceIndicationColor 27,98,145 -> <absent>
+PREF after-set /org.eclipse.ui.editors/org.eclipse.ui.editors.stickyLinesSeparatorColor 81,86,88 -> <absent>
+PREF after-set /org.eclipse.ui.editors/overriddenByCSS ,TextOccurrenceIndicationColor,AbstractTextEditor.Color.Background.SystemDefault,AbstractTextEditor.Color.SelectionForeground.SystemDefault,AbstractTextEditor.Color.SelectionBackground.SystemDefault,AbstractTextEditor.Color.Background,AbstractTextEditor.Color.Foreground.SystemDefault,AbstractTextEditor.Color.SelectionBackground,AbstractTextEditor.Color.SelectionForeground,AbstractTextEditor.Color.Foreground,AbstractTextEditor.Color.FindScope,asOccurencesIndicationColor,breakpointIndicationColor,currentIPColor,currentLineColor,deletionIndicationColor,filteredSearchResultIndicationColor,hyperlinkColor,hyperlinkColor.SystemDefault,infoIndicationColor,lineNumberColor,linked.slave.color,matchingTagIndicationColor,occurrenceIndicationColor,overrideIndicatorColor,printMarginColor,searchResultHighlighting,searchResultIndication,searchResultIndicationColor,searchResultTextStyle,secondaryIPColor,spellingIndicationColor,writeOccurrenceIndicationColor,org.eclipse.ui.editors.stickyLinesSeparatorColor, -> <absent>
+PREF after-set /org.eclipse.ui.editors/overrideIndicatorColor 78,120,117 -> <absent>
+PREF after-set /org.eclipse.ui.editors/printMarginColor 81,86,88 -> <absent>
+PREF after-set /org.eclipse.ui.editors/searchResultHighlighting false -> <absent>
+PREF after-set /org.eclipse.ui.editors/searchResultIndication true -> <absent>
+PREF after-set /org.eclipse.ui.editors/searchResultIndicationColor 94,94,94 -> <absent>
+PREF after-set /org.eclipse.ui.editors/searchResultTextStyle BOX -> <absent>
+PREF after-set /org.eclipse.ui.editors/secondaryIPColor 90,90,90 -> <absent>
+PREF after-set /org.eclipse.ui.editors/spellingIndicationColor 253,170,211 -> <absent>
+PREF after-set /org.eclipse.ui.editors/writeOccurrenceIndicationColor 27,98,145 -> <absent>
+PREF after-set /org.eclipse.ui.genericeditor/matchingBracketsColor 249,250,244 -> <absent>
+PREF after-set /org.eclipse.ui.genericeditor/overriddenByCSS ,matchingBracketsColor, -> <absent>
+PREF after-set /org.eclipse.ui.workbench/ACTIVE_HYPERLINK_COLOR 138,201,242 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/CONFLICTING_COLOR 240,15,66 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/CONTENT_ASSIST_BACKGROUND_COLOR 52,57,61 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/CONTENT_ASSIST_FOREGROUND_COLOR 238,238,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/EDITION_COLOR 238,238,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/ERROR_COLOR 247,68,117 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/HYPERLINK_COLOR 111,197,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/INCOMING_COLOR 31,179,235 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/OUTGOING_COLOR 238,238,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/RESOLVED_COLOR 108,210,17 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.inherited 143,143,191 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight 255,128,128 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.backgroundColor 52,57,61 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jdt.ui.Javadoc.foregroundColor 238,238,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jface.REVISION_NEWEST_COLOR 75,44,3 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.jface.REVISION_OLDEST_COLOR 154,113,61 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.attribute 196,138,114 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.comment 96,139,78 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.header 128,128,128 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.quote 118,200,244 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.tag 86,156,214 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.pde.genericeditor.extension.editor.color.text 212,212,212 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.search.ui.match.highlight 206,92,0 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.editors.rangeIndicatorColor 27,118,153 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.ACTIVE_TAB_TEXT_COLOR 221,221,221 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR 255,110,110 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR 170,170,170 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR 255,200,0 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.HOVER_BACKGROUND 52,57,61 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.HOVER_FOREGROUND 238,238,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INACTIVE_TAB_BG_END 49,53,56 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INACTIVE_TAB_TEXT_COLOR 187,187,187 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INFORMATION_BACKGROUND 81,86,88 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/org.eclipse.ui.workbench.INFORMATION_FOREGROUND 238,238,238 -> <absent>
+PREF after-set /org.eclipse.ui.workbench/overriddenByCSS ,org.eclipse.jdt.ui.ColoredLabels.inherited,org.eclipse.jdt.ui.Javadoc.backgroundColor,org.eclipse.jdt.ui.Javadoc.foregroundColor,org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight,org.eclipse.pde.genericeditor.extension.editor.color.tag,org.eclipse.pde.genericeditor.extension.editor.color.attribute,org.eclipse.pde.genericeditor.extension.editor.color.text,org.eclipse.pde.genericeditor.extension.editor.color.header,org.eclipse.pde.genericeditor.extension.editor.color.comment,org.eclipse.pde.genericeditor.extension.editor.color.quote,ACTIVE_HYPERLINK_COLOR,CONFLICTING_COLOR,CONTENT_ASSIST_BACKGROUND_COLOR,CONTENT_ASSIST_FOREGROUND_COLOR,org.eclipse.ui.workbench.INFORMATION_BACKGROUND,org.eclipse.ui.workbench.INFORMATION_FOREGROUND,org.eclipse.ui.workbench.HOVER_BACKGROUND,org.eclipse.ui.workbench.HOVER_FOREGROUND,org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR,org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR,org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR,ERROR_COLOR,HYPERLINK_COLOR,INCOMING_COLOR,OUTGOING_COLOR,RESOLVED_COLOR,EDITION_COLOR,org.eclipse.search.ui.match.highlight,org.eclipse.ui.editors.rangeIndicatorColor,org.eclipse.jface.REVISION_NEWEST_COLOR,org.eclipse.jface.REVISION_OLDEST_COLOR, -> <absent>
+STEP wait|1000
+STEP state|false-light
+STATE false-light active=org.eclipse.e4.ui.css.theme.e4_default themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f0f0f0 css=
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#e4e4e4 css= selected=#ffffff
+WIDGET Tree id=null class=null bg=#80cbc4
+WIDGET Table id=null class=null bg=#80cbc4
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f0f0f0 css=
+WIDGET Browser id=null class=null bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#f0f0f0 css=
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#f0f0f0 css=
+STEP shot|light-b
+DONE
+
+## W03
+ENV os=Windows 11 10.0 ws=win32 java=21.0.12.1+1-LTS themeBundle=0.14.400.v20240424-0956 platform=4.33.0.v20240903-0240
+THEMES [org.eclipse.e4.ui.css.theme.e4_classic=Classic, org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, org.eclipse.e4.ui.css.theme.e4_preview=Light (Preview), org.eclipse.e4.ui.css.theme.high-contrast=High Contrast, spike.probe.theme.a=Spike A (research)]
+STATE boot active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+STEP wait|1000
+STEP state|restart-after-false
+STATE restart-after-false active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+STEP set|org.eclipse.e4.ui.css.theme.e4_default|true
+POST expected=org.eclipse.e4.ui.css.theme.e4_default actual=org.eclipse.e4.ui.css.theme.e4_default match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_default themeid=org.eclipse.e4.ui.css.theme.e4_default osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid org.eclipse.e4.ui.css.theme.e4_dark -> org.eclipse.e4.ui.css.theme.e4_default
+STEP wait|800
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f0f0f0 css=
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#e4e4e4 css= selected=#ffffff
+WIDGET Tree id=null class=null bg=#80cbc4
+WIDGET Table id=null class=null bg=#80cbc4
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f0f0f0 css=
+WIDGET Browser id=null class=null bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#f0f0f0 css=
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#f0f0f0 css=
+STEP shot|b
+STEP set|org.eclipse.e4.ui.css.theme.e4_dark|true
+POST expected=org.eclipse.e4.ui.css.theme.e4_dark actual=org.eclipse.e4.ui.css.theme.e4_dark match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid org.eclipse.e4.ui.css.theme.e4_default -> org.eclipse.e4.ui.css.theme.e4_dark
+STEP wait|800
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#515658
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#292929 selected=#292929
+WIDGET Tree id=null class=null bg=#2f2f2f
+WIDGET Table id=null class=null bg=#313538
+WIDGET Button id=null class=null bg=#2f2f2f
+WIDGET SashForm id=null class=null bg=#2f2f2f
+WIDGET Browser id=null class=null bg=#313538
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#515658
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#515658
+STEP set|org.eclipse.e4.ui.css.theme.e4_default|true
+POST expected=org.eclipse.e4.ui.css.theme.e4_default actual=org.eclipse.e4.ui.css.theme.e4_default match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_default themeid=org.eclipse.e4.ui.css.theme.e4_default osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid org.eclipse.e4.ui.css.theme.e4_dark -> org.eclipse.e4.ui.css.theme.e4_default
+STEP wait|800
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f0f0f0 css=
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#e4e4e4 css= selected=#ffffff
+WIDGET Tree id=null class=null bg=#80cbc4
+WIDGET Table id=null class=null bg=#80cbc4
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f0f0f0 css=
+WIDGET Browser id=null class=null bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#f0f0f0 css=
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#f0f0f0 css=
+STEP state|b-return
+STATE b-return active=org.eclipse.e4.ui.css.theme.e4_default themeid=org.eclipse.e4.ui.css.theme.e4_default osDark=true highContrast=false
+DONE
+
+## W04
+ENV os=Windows 11 10.0 ws=win32 java=21.0.12.1+1-LTS themeBundle=0.14.400.v20240424-0956 platform=4.33.0.v20240903-0240
+THEMES [org.eclipse.e4.ui.css.theme.e4_classic=Classic, org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, org.eclipse.e4.ui.css.theme.e4_preview=Light (Preview), org.eclipse.e4.ui.css.theme.high-contrast=High Contrast, spike.probe.theme.a=Spike A (research)]
+STATE boot active=org.eclipse.e4.ui.css.theme.e4_default themeid=org.eclipse.e4.ui.css.theme.e4_default osDark=true highContrast=false
+STEP wait|1000
+STEP state|restart-b
+STATE restart-b active=org.eclipse.e4.ui.css.theme.e4_default themeid=org.eclipse.e4.ui.css.theme.e4_default osDark=true highContrast=false
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f0f0f0 css=
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#e4e4e4 css= selected=#ffffff
+WIDGET Tree id=null class=null bg=#80cbc4
+WIDGET Table id=null class=null bg=#80cbc4
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f0f0f0 css=
+WIDGET Browser id=null class=null bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#f0f0f0 css=
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#f0f0f0 css=
+STEP sheet|platform:/plugin/spike.probe/css/c.css|org.eclipse.e4.ui.css.theme.e4_default
+SHEET registered platform:/plugin/spike.probe/css/c.css
+STEP apply
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f0f0f0 css=
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#e4e4e4 css= selected=#ffffff
+WIDGET Tree id=null class=null bg=#80cbc4
+WIDGET Table id=null class=null bg=#80cbc4
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f0f0f0 css=
+WIDGET Browser id=null class=null bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#f0f0f0 css=
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#f0f0f0 css=
+STEP set|org.eclipse.e4.ui.css.theme.e4_default|true
+POST expected=org.eclipse.e4.ui.css.theme.e4_default actual=org.eclipse.e4.ui.css.theme.e4_default match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_default themeid=org.eclipse.e4.ui.css.theme.e4_default osDark=true highContrast=false
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f0f0f0 css=
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#e4e4e4 css= selected=#ffffff
+WIDGET Tree id=null class=null bg=#80cbc4
+WIDGET Table id=null class=null bg=#80cbc4
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f0f0f0 css=
+WIDGET Browser id=null class=null bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#f0f0f0 css=
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#f0f0f0 css=
+STEP set|org.eclipse.e4.ui.css.theme.e4_dark|false
+POST expected=org.eclipse.e4.ui.css.theme.e4_dark actual=org.eclipse.e4.ui.css.theme.e4_dark match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_default osDark=true highContrast=false
+STEP set|org.eclipse.e4.ui.css.theme.e4_default|true
+POST expected=org.eclipse.e4.ui.css.theme.e4_default actual=org.eclipse.e4.ui.css.theme.e4_default match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_default themeid=org.eclipse.e4.ui.css.theme.e4_default osDark=true highContrast=false
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f0f0f0 css=
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#e4e4e4 css= selected=#ffffff
+WIDGET Tree id=null class=null bg=#ce93d8
+WIDGET Table id=null class=null bg=#80cbc4
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f0f0f0 css=
+WIDGET Browser id=null class=null bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#f0f0f0 css=
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#f0f0f0 css=
+STEP sheet|platform:/plugin/spike.probe/css/c.css|org.eclipse.e4.ui.css.theme.e4_default
+SHEET registered platform:/plugin/spike.probe/css/c.css
+STEP reg|spike.probe.c|platform:/plugin/spike.probe/css/a.css
+REGISTER spike.probe.c
+STEP reg|spike.probe.c|platform:/plugin/spike.probe/css/a.css
+THREW reg|spike.probe.c|platform:/plugin/spike.probe/css/a.css java.lang.IllegalArgumentException: A theme with the id 'spike.probe.c' is already registered
+STATE after-throw active=org.eclipse.e4.ui.css.theme.e4_default themeid=org.eclipse.e4.ui.css.theme.e4_default osDark=true highContrast=false
+STEP sheet|platform:/plugin/spike.probe/css/c.css|spike.probe.c
+SHEET registered platform:/plugin/spike.probe/css/c.css
+STEP set|spike.probe.c|true
+POST expected=spike.probe.c actual=spike.probe.c match=true
+STATE after-set active=spike.probe.c themeid=spike.probe.c osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid org.eclipse.e4.ui.css.theme.e4_default -> spike.probe.c
+STEP wait|1000
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f8bbd0
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#d1c4e9 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ce93d8
+WIDGET Table id=null class=null bg=#b2ebf2
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f8bbd0
+WIDGET Browser id=null class=null bg=#f8bbd0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#ffe082
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#a5d6a7
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#ffe082
+STEP shot|c
+STEP set|unknown.theme|true
+POST expected=unknown.theme actual=spike.probe.c match=false
+STATE after-set active=spike.probe.c themeid=spike.probe.c osDark=true highContrast=false
+STEP state|end
+STATE end active=spike.probe.c themeid=spike.probe.c osDark=true highContrast=false
+DONE
+
+## W05
+ENV os=Windows 11 10.0 ws=win32 java=21.0.12.1+1-LTS themeBundle=0.14.400.v20240424-0956 platform=4.33.0.v20240903-0240
+THEMES [org.eclipse.e4.ui.css.theme.e4_classic=Classic, org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, org.eclipse.e4.ui.css.theme.e4_preview=Light (Preview), org.eclipse.e4.ui.css.theme.high-contrast=High Contrast, spike.probe.theme.a=Spike A (research)]
+STATE boot active=org.eclipse.e4.ui.css.theme.e4_dark themeid=spike.probe.c osDark=true highContrast=false
+STEP wait|1000
+STEP state|restart-c-missing
+STATE restart-c-missing active=org.eclipse.e4.ui.css.theme.e4_dark themeid=spike.probe.c osDark=true highContrast=false
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#515658
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#292929 selected=#292929
+WIDGET Tree id=null class=null bg=#2f2f2f
+WIDGET Table id=null class=null bg=#313538
+WIDGET Button id=null class=null bg=#2f2f2f
+WIDGET SashForm id=null class=null bg=#2f2f2f
+WIDGET Browser id=null class=null bg=#313538
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#515658
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#515658
+STEP reg|spike.probe.c|platform:/plugin/spike.probe/css/a.css
+REGISTER spike.probe.c
+STEP restore|org.eclipse.e4.ui.css.theme.e4_default
+STATE after-restore active=spike.probe.c themeid=spike.probe.c osDark=true highContrast=false
+STEP state|registered-after-restore
+STATE registered-after-restore active=spike.probe.c themeid=spike.probe.c osDark=true highContrast=false
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f8bbd0
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#d1c4e9 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET Table id=null class=null bg=#b2ebf2
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f8bbd0
+WIDGET Browser id=null class=null bg=#f8bbd0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#ffe082
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#a5d6a7
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#ffe082
+STEP shot|reregistered
+STEP reg|spike.bad|platform:/plugin/spike.probe/css/does-not-exist.css
+REGISTER spike.bad
+STEP set|spike.bad|true
+POST expected=spike.bad actual=spike.bad match=true
+STATE after-set active=spike.bad themeid=spike.bad osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid spike.probe.c -> spike.bad
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f0f0f0 css=
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#f0f0f0 css= selected=#ffffff
+WIDGET Tree id=null class=null bg=#ffffff css=
+WIDGET Table id=null class=null bg=#ffffff css=
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f0f0f0 css=
+WIDGET Browser id=null class=null bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#f0f0f0 css=
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#f0f0f0 css=
+STEP reg|spike.badcss|platform:/plugin/spike.probe/css/bad.css
+REGISTER spike.badcss
+STEP set|spike.badcss|true
+POST expected=spike.badcss actual=spike.badcss match=true
+STATE after-set active=spike.badcss themeid=spike.badcss osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid spike.bad -> spike.badcss
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f0f0f0 css=
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#f0f0f0 css= selected=#ffffff
+WIDGET Tree id=null class=null bg=#000000
+WIDGET Table id=null class=null bg=#ffffff css=
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f0f0f0 css=
+WIDGET Browser id=null class=null bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#f0f0f0 css=
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#f0f0f0 css=
+STEP set|spike.probe.theme.a|true
+POST expected=spike.probe.theme.a actual=spike.probe.theme.a match=true
+STATE after-set active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid spike.badcss -> spike.probe.theme.a
+STEP state|recover-a
+STATE recover-a active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+DONE
+
+## W07
+ENV os=Windows 11 10.0 ws=win32 java=21.0.12.1+1-LTS themeBundle=0.14.400.v20240424-0956 platform=4.33.0.v20240903-0240
+THEMES [org.eclipse.e4.ui.css.theme.e4_classic=Classic, org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, org.eclipse.e4.ui.css.theme.e4_preview=Light (Preview), org.eclipse.e4.ui.css.theme.high-contrast=High Contrast, spike.probe.theme.a=Spike A (research)]
+STATE boot active=org.eclipse.e4.ui.css.theme.e4_dark themeid=<absent> osDark=true highContrast=false
+PERSPECTIVE available=true before=org.eclipse.ui.internal.registry.PerspectiveDescriptor {id=org.eclipse.ui.resourcePerspective}
+STEP wait|2000
+DEFENDER cancelled; no exclusion requested
+STEP set|spike.probe.theme.a|true
+POST expected=spike.probe.theme.a actual=spike.probe.theme.a match=true
+STATE after-set active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid <absent> -> spike.probe.theme.a
+STEP wait|1000
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f8bbd0
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#f8bbd0 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET Table id=null class=null bg=#b2ebf2
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f8bbd0
+WIDGET Browser id=null class=null bg=#f8bbd0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#ffe082
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#a5d6a7
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#ffe082
+STEP shot|a
+STEP appearance
+COMBO items=[Classic, Dark, Light, Light (Preview), Spike A (research)] selected=Spike A (research)
+COMBO items=[Default (current), Reduced Palette, Classic Theme] selected=Default (current)
+STEP choose|Dark
+COMBO choose=Dark actual=Dark
+STATE appearance-selection active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+STEP state|before-ok
+STATE before-ok active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+STEP ok
+RESTART-DIALOG Theme Changed
+STATE appearance-ok active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+PREF appearance-ok /org.eclipse.e4.ui.css.swt.theme/themeid spike.probe.theme.a -> org.eclipse.e4.ui.css.theme.e4_dark
+PREF appearance-ok /org.eclipse.e4.ui.workbench.renderers.swt/HIDE_ICONS_FOR_VIEW_TABS <absent> -> false
+PREF appearance-ok /org.eclipse.e4.ui.workbench.renderers.swt/SHOW_FULL_TEXT_FOR_VIEW_TABS <absent> -> false
+PREF appearance-ok /org.eclipse.e4.ui.workbench.renderers.swt/USE_ROUND_TABS <absent> -> false
+PREF appearance-ok /org.eclipse.e4.ui.workbench.renderers.swt/enableMRU <absent> -> true
+PREF appearance-ok /org.eclipse.e4.ui.workbench.renderers.swt/themeEnabled <absent> -> true
+STEP state|after-ok
+STATE after-ok active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+STEP cancel
+STATE appearance-closed active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#515658
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#292929 selected=#292929
+WIDGET Tree id=null class=null bg=#2f2f2f
+WIDGET Table id=null class=null bg=#313538
+WIDGET Button id=null class=null bg=#2f2f2f
+WIDGET SashForm id=null class=null bg=#2f2f2f
+WIDGET Browser id=null class=null bg=#313538
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#515658
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#515658
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#515658
+STEP shot|dark
+STEP set|org.eclipse.e4.ui.css.theme.high-contrast|true
+POST expected=org.eclipse.e4.ui.css.theme.high-contrast actual=org.eclipse.e4.ui.css.theme.high-contrast match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.high-contrast themeid=org.eclipse.e4.ui.css.theme.high-contrast osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid org.eclipse.e4.ui.css.theme.e4_dark -> org.eclipse.e4.ui.css.theme.high-contrast
+STEP state|eclipse-hc
+STATE eclipse-hc active=org.eclipse.e4.ui.css.theme.high-contrast themeid=org.eclipse.e4.ui.css.theme.high-contrast osDark=true highContrast=false
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f0f0f0 css=
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#f0f0f0 css= selected=#f0f0f0
+WIDGET Tree id=null class=null bg=#ffffff css=
+WIDGET Table id=null class=null bg=#ffffff css=
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#000000 css=
+WIDGET Browser id=null class=null bg=#000000 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#f0f0f0 css=
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#f0f0f0 css=
+STEP set|spike.probe.theme.a|true
+POST expected=spike.probe.theme.a actual=spike.probe.theme.a match=true
+STATE after-set active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid org.eclipse.e4.ui.css.theme.high-contrast -> spike.probe.theme.a
+STEP wait|1000
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f8bbd0
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#f8bbd0 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET Table id=null class=null bg=#b2ebf2
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f8bbd0
+WIDGET Browser id=null class=null bg=#f8bbd0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#ffe082
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#a5d6a7
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#ffe082
+STEP appearance
+COMBO items=[Classic, Dark, Light, Light (Preview), Spike A (research)] selected=Spike A (research)
+COMBO items=[Default (current), Reduced Palette, Classic Theme] selected=Default (current)
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f8bbd0
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#f8bbd0 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET Table id=null class=null bg=#b2ebf2
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f8bbd0
+WIDGET Browser id=null class=null bg=#f8bbd0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#ffe082
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#a5d6a7
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#ffe082
+WIDGET Shell id=null class=null bg=#f8bbd0
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+STEP shot|dialog
+STEP cancel
+STATE appearance-closed active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+DONE
+
+## W08
+ENV os=Windows 11 10.0 ws=win32 java=21.0.12.1+1-LTS themeBundle=0.14.400.v20240424-0956 platform=4.33.0.v20240903-0240
+THEMES [org.eclipse.e4.ui.css.theme.e4_classic=Classic, org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, org.eclipse.e4.ui.css.theme.e4_preview=Light (Preview), org.eclipse.e4.ui.css.theme.high-contrast=High Contrast, spike.probe.theme.a=Spike A (research)]
+STATE boot active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+PERSPECTIVE available=true before=org.eclipse.ui.internal.registry.PerspectiveDescriptor {id=org.eclipse.ui.resourcePerspective}
+STEP wait|2000
+DEFENDER cancelled; no exclusion requested
+STEP layout
+LAYOUT editors=1 zoom=true area=true
+PART view=org.eclipse.ui.navigator.ProjectExplorer state=2
+PART view=org.eclipse.ui.views.ContentOutline state=2
+PART view=org.eclipse.ui.views.TaskList state=2
+PART view=spike.probe.view state=1
+PART editor=spike.probe.editor state=2
+STEP wait|1000
+STEP set|spike.probe.theme.a|true
+POST expected=spike.probe.theme.a actual=spike.probe.theme.a match=true
+STATE after-set active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=true highContrast=false
+STEP wait|1000
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f8bbd0
+WIDGET CTabFolder id=topLeft class=MPartStack org.eclipse.e4.primaryNavigationStack bg=#d1c4e9 selected=#d1c4e9
+WIDGET CTabFolder id=bottomLeft class=MPartStack org.eclipse.e4.secondaryNavigationStack bg=#d1c4e9 selected=#d1c4e9
+WIDGET CTabFolder id=org-eclipse-e4-primaryDataStack class=MPartStack EditorStack org.eclipse.e4.primaryDataStack active bg=#d1c4e9 selected=#d1c4e9
+WIDGET StyledText id=null class=null bg=#ffffff css=
+WIDGET CTabFolder id=bottomRight class=MPartStack org.eclipse.e4.secondaryDataStack bg=#d1c4e9 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#d1c4e9 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET Table id=null class=null bg=#b2ebf2
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f8bbd0
+WIDGET Browser id=null class=null bg=#f8bbd0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#ffe082
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#a5d6a7
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#ffe082
+STEP shot|a
+STEP set|org.eclipse.e4.ui.css.theme.e4_dark|true
+POST expected=org.eclipse.e4.ui.css.theme.e4_dark actual=org.eclipse.e4.ui.css.theme.e4_dark match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid spike.probe.theme.a -> org.eclipse.e4.ui.css.theme.e4_dark
+STEP wait|1000
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#515658
+WIDGET CTabFolder id=topLeft class=MPartStack org.eclipse.e4.primaryNavigationStack bg=#292929 selected=#292929
+WIDGET CTabFolder id=bottomLeft class=MPartStack org.eclipse.e4.secondaryNavigationStack bg=#292929 selected=#292929
+WIDGET CTabFolder id=org-eclipse-e4-primaryDataStack class=MPartStack EditorStack org.eclipse.e4.primaryDataStack active bg=#292929 selected=#292929
+WIDGET StyledText id=null class=null bg=#3f4447
+WIDGET CTabFolder id=bottomRight class=MPartStack org.eclipse.e4.secondaryDataStack bg=#292929 selected=#292929
+WIDGET Tree id=null class=null bg=#2f2f2f
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#292929 selected=#292929
+WIDGET Tree id=null class=null bg=#2f2f2f
+WIDGET Table id=null class=null bg=#313538
+WIDGET Button id=null class=null bg=#2f2f2f
+WIDGET SashForm id=null class=null bg=#2f2f2f
+WIDGET Browser id=null class=null bg=#313538
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#515658
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#515658
+STEP shot|dark
+STEP set|org.eclipse.e4.ui.css.theme.e4_default|true
+POST expected=org.eclipse.e4.ui.css.theme.e4_default actual=org.eclipse.e4.ui.css.theme.e4_default match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_default themeid=org.eclipse.e4.ui.css.theme.e4_default osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid org.eclipse.e4.ui.css.theme.e4_dark -> org.eclipse.e4.ui.css.theme.e4_default
+STEP wait|1000
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f0f0f0 css=
+WIDGET CTabFolder id=topLeft class=MPartStack org.eclipse.e4.primaryNavigationStack bg=#e4e4e4 css= selected=#ffffff
+WIDGET CTabFolder id=bottomLeft class=MPartStack org.eclipse.e4.secondaryNavigationStack bg=#e4e4e4 css= selected=#ffffff
+WIDGET CTabFolder id=org-eclipse-e4-primaryDataStack class=MPartStack EditorStack org.eclipse.e4.primaryDataStack active bg=#f0f0f0 css= selected=#ffffff
+WIDGET StyledText id=null class=null bg=#ffffff css=
+WIDGET CTabFolder id=bottomRight class=MPartStack org.eclipse.e4.secondaryDataStack bg=#e4e4e4 css= selected=#ffffff
+WIDGET Tree id=null class=null bg=#80cbc4
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#e4e4e4 css= selected=#ffffff
+WIDGET Tree id=null class=null bg=#80cbc4
+WIDGET Table id=null class=null bg=#80cbc4
+WIDGET Button id=null class=null bg=#f0f0f0 css=
+WIDGET SashForm id=null class=null bg=#f0f0f0 css=
+WIDGET Browser id=null class=null bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#f0f0f0 css=
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#f0f0f0 css=
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#f0f0f0 css=
+STEP shot|b
+STEP set|org.eclipse.e4.ui.css.theme.e4_dark|true
+POST expected=org.eclipse.e4.ui.css.theme.e4_dark actual=org.eclipse.e4.ui.css.theme.e4_dark match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid org.eclipse.e4.ui.css.theme.e4_default -> org.eclipse.e4.ui.css.theme.e4_dark
+STEP state|end
+STATE end active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+DONE
+
+## G03
+ENV os=Linux 6.18.33.2-microsoft-standard-WSL2 ws=gtk java=21.0.12.1+1-1-26.04.4-Ubuntu themeBundle=0.14.400.v20240424-0956 platform=4.33.0.v20240903-0240
+THEMES [org.eclipse.e4.ui.css.theme.e4_classic=Classic, org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, org.eclipse.e4.ui.css.theme.e4_preview=Light (Preview), org.eclipse.e4.ui.css.theme.high-contrast=High Contrast, spike.probe.theme.a=Spike A (research)]
+STATE boot active=org.eclipse.e4.ui.css.theme.e4_default themeid=<absent> osDark=false highContrast=false
+BROWSER unavailable org.eclipse.swt.SWTError: No more handles because there is no underlying browser available.
+STEP wait|2500
+STEP state|baseline
+STATE baseline active=org.eclipse.e4.ui.css.theme.e4_default themeid=<absent> osDark=false highContrast=false
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f6f5f4
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other active bg=#e1dedb css= selected=#ffffff
+WIDGET Tree id=null class=null bg=#80cbc4
+WIDGET Table id=null class=null bg=#80cbc4
+WIDGET Button id=null class=null bg=#f6f5f4 css=
+WIDGET SashForm id=null class=null bg=#ffffff css=
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#f6f5f4
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#f6f5f4 css=
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#f6f5f4
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#f6f5f4
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#f6f5f4
+STEP set|spike.probe.theme.a|true
+POST expected=spike.probe.theme.a actual=spike.probe.theme.a match=true
+STATE after-set active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=false highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid <absent> -> spike.probe.theme.a
+STEP wait|1000
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f8bbd0
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other active bg=#f8bbd0 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET Table id=null class=null bg=#b2ebf2
+WIDGET Button id=null class=null bg=#f6f5f4 css=
+WIDGET SashForm id=null class=null bg=#f8bbd0
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#ffe082
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#a5d6a7
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#ffe082
+STEP shot|a
+STEP appearance
+COMBO items=[Classic, Dark, High Contrast, Light, Light (Preview), Spike A (research)] selected=Spike A (research)
+COMBO items=[Default (current), Reduced Palette, Classic Theme] selected=Default (current)
+STEP wait|1000
+STEP shot|appearance
+STEP cancel
+STATE appearance-closed active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=false highContrast=false
+STEP state|end
+STATE end active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=false highContrast=false
+DONE
+
+## G04
+BROWSER unavailable org.eclipse.swt.SWTError: No more handles because there is no underlying browser available.
+ENV os=Linux 6.18.33.2-microsoft-standard-WSL2 ws=gtk java=21.0.12.1+1-1-26.04.4-Ubuntu themeBundle=0.14.400.v20240424-0956 platform=4.33.0.v20240903-0240
+THEMES [org.eclipse.e4.ui.css.theme.e4_classic=Classic, org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, org.eclipse.e4.ui.css.theme.e4_preview=Light (Preview), org.eclipse.e4.ui.css.theme.high-contrast=High Contrast, spike.probe.theme.a=Spike A (research)]
+STATE boot active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=false highContrast=false
+STEP wait|1500
+STEP state|restart-a
+STATE restart-a active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=false highContrast=false
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f8bbd0
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#d1c4e9 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET Table id=null class=null bg=#b2ebf2
+WIDGET Button id=null class=null bg=#f6f5f4 css=
+WIDGET SashForm id=null class=null bg=#f8bbd0
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#ffe082
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#a5d6a7
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#ffe082
+STEP set|org.eclipse.e4.ui.css.theme.e4_dark|true
+POST expected=org.eclipse.e4.ui.css.theme.e4_dark actual=org.eclipse.e4.ui.css.theme.e4_dark match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=false highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid spike.probe.theme.a -> org.eclipse.e4.ui.css.theme.e4_dark
+STEP wait|1000
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#515658
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#292929 selected=#292929
+WIDGET Tree id=null class=null bg=#2f2f2f
+WIDGET Table id=null class=null bg=#313538
+WIDGET Button id=null class=null bg=#2f2f2f
+WIDGET SashForm id=null class=null bg=#2f2f2f
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#515658
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#515658
+STEP set|spike.probe.theme.a|true
+POST expected=spike.probe.theme.a actual=spike.probe.theme.a match=true
+STATE after-set active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=false highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid org.eclipse.e4.ui.css.theme.e4_dark -> spike.probe.theme.a
+STEP wait|1000
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f8bbd0
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#d1c4e9 selected=#ffffff
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET Table id=null class=null bg=#b2ebf2
+WIDGET Button id=null class=null bg=#f6f5f4 css=
+WIDGET SashForm id=null class=null bg=#f8bbd0
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#ffe082
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#a5d6a7
+WIDGET Composite id=org-eclipse-ui-trim-vertical1 class=MTrimBar bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#ffe082
+STEP shot|a
+DONE
+
+## G05
+BROWSER unavailable org.eclipse.swt.SWTError: No more handles because there is no underlying browser available.
+ENV os=Linux 6.18.33.2-microsoft-standard-WSL2 ws=gtk java=21.0.12.1+1-1-26.04.4-Ubuntu themeBundle=0.14.400.v20240424-0956 platform=4.33.0.v20240903-0240
+THEMES [org.eclipse.e4.ui.css.theme.e4_classic=Classic, org.eclipse.e4.ui.css.theme.e4_dark=Dark, org.eclipse.e4.ui.css.theme.e4_default=Light, org.eclipse.e4.ui.css.theme.e4_preview=Light (Preview), org.eclipse.e4.ui.css.theme.high-contrast=High Contrast, spike.probe.theme.a=Spike A (research)]
+STATE boot active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=false highContrast=false
+PERSPECTIVE available=true before=org.eclipse.ui.internal.registry.PerspectiveDescriptor {id=org.eclipse.ui.resourcePerspective}
+STEP wait|1500
+STEP layout
+LAYOUT editors=1 zoom=true area=true
+PART view=org.eclipse.ui.navigator.ProjectExplorer state=2
+PART view=org.eclipse.ui.views.ContentOutline state=2
+PART view=org.eclipse.ui.views.TaskList state=2
+PART view=spike.probe.view state=1
+PART editor=spike.probe.editor state=2
+STEP wait|1000
+STEP set|spike.probe.theme.a|true
+POST expected=spike.probe.theme.a actual=spike.probe.theme.a match=true
+STATE after-set active=spike.probe.theme.a themeid=spike.probe.theme.a osDark=false highContrast=false
+STEP wait|1000
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#f8bbd0
+WIDGET CTabFolder id=topLeft class=MPartStack org.eclipse.e4.primaryNavigationStack bg=#d1c4e9 selected=#d1c4e9
+WIDGET CTabFolder id=bottomLeft class=MPartStack org.eclipse.e4.secondaryNavigationStack bg=#d1c4e9 selected=#d1c4e9
+WIDGET CTabFolder id=org-eclipse-e4-primaryDataStack class=MPartStack EditorStack org.eclipse.e4.primaryDataStack active noFocus bg=#d1c4e9 selected=#d1c4e9
+WIDGET StyledText id=null class=null bg=#ffffff css=
+WIDGET CTabFolder id=bottomRight class=MPartStack org.eclipse.e4.secondaryDataStack bg=#d1c4e9 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#d1c4e9 selected=#d1c4e9
+WIDGET Tree id=null class=null bg=#ffcc80
+WIDGET Table id=null class=null bg=#b2ebf2
+WIDGET Button id=null class=null bg=#f6f5f4 css=
+WIDGET SashForm id=null class=null bg=#f8bbd0
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#ffe082
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#ffe082
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#a5d6a7
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#ffe082
+STEP shot|a
+GTK-PRINT true
+STEP set|org.eclipse.e4.ui.css.theme.e4_dark|true
+POST expected=org.eclipse.e4.ui.css.theme.e4_dark actual=org.eclipse.e4.ui.css.theme.e4_dark match=true
+STATE after-set active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=false highContrast=false
+PREF after-set /org.eclipse.e4.ui.css.swt.theme/themeid spike.probe.theme.a -> org.eclipse.e4.ui.css.theme.e4_dark
+STEP wait|1000
+STEP widgets
+WIDGET Shell id=IDEWindow class=MTrimmedWindow topLevel bg=#515658
+WIDGET CTabFolder id=topLeft class=MPartStack org.eclipse.e4.primaryNavigationStack bg=#292929 selected=#292929
+WIDGET CTabFolder id=bottomLeft class=MPartStack org.eclipse.e4.secondaryNavigationStack bg=#292929 selected=#292929
+WIDGET CTabFolder id=org-eclipse-e4-primaryDataStack class=MPartStack EditorStack org.eclipse.e4.primaryDataStack active noFocus bg=#292929 selected=#292929
+WIDGET StyledText id=null class=null bg=#3f4447
+WIDGET CTabFolder id=bottomRight class=MPartStack org.eclipse.e4.secondaryDataStack bg=#292929 selected=#292929
+WIDGET Tree id=null class=null bg=#2f2f2f
+WIDGET CTabFolder id=stickyFolderRight class=MPartStack Maximized Other bg=#292929 selected=#292929
+WIDGET Tree id=null class=null bg=#2f2f2f
+WIDGET Table id=null class=null bg=#313538
+WIDGET Button id=null class=null bg=#2f2f2f
+WIDGET SashForm id=null class=null bg=#2f2f2f
+WIDGET Composite id=org-eclipse-ui-main-toolbar class=MTrimBar ToolbarComposite bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-status class=MTrimBar bg=#515658
+WIDGET StatusLine id=org-eclipse-ui-StatusLine class=MToolControl stretch bg=#515658
+WIDGET Composite id=org-eclipse-ui-trim-vertical2 class=MTrimBar bg=#515658
+STEP shot|dark
+GTK-PRINT true
+STEP state|end
+STATE end active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=false highContrast=false
+DONE
+
+
+## W10 (restart check of Windows glyph observation)
+ENV os=Windows 11 10.0 ws=win32 java=21.0.12.1+1-LTS themeBundle=0.14.400.v20240424-0956 platform=4.33.0.v20240903-0240
+STATE boot active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+STEP wait|2000
+STEP layout
+LAYOUT editors=1 zoom=false area=true
+PART view=org.eclipse.ui.navigator.ProjectExplorer state=2
+PART view=org.eclipse.ui.views.ContentOutline state=2
+PART view=org.eclipse.ui.views.TaskList state=2
+PART view=spike.probe.view state=2
+PART editor=spike.probe.editor state=2
+STEP wait|1000
+STEP state|dark-restart
+STATE dark-restart active=org.eclipse.e4.ui.css.theme.e4_dark themeid=org.eclipse.e4.ui.css.theme.e4_dark osDark=true highContrast=false
+STEP widgets
+STEP shot|dark-restart
+DONE

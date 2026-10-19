@@ -1,0 +1,3 @@
+<plugin>
+  <extension point="org.eclipse.core.runtime.applications" id="run"><application><run class="smoke.AbsentIntegrations"/></application></extension>
+</plugin>
