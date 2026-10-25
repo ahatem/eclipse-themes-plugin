@@ -111,7 +111,7 @@ public final class PreferenceReset {
 
 			Map<Key, Owned> journalBeforeNode = new LinkedHashMap<>(owned);
 			List<Key> handled = new ArrayList<>();
-			boolean mutated = false;
+			List<Key> restored = new ArrayList<>();
 
 			for (Key key : node.getValue()) {
 				Owned entry = owned.get(key);
@@ -128,17 +128,18 @@ public final class PreferenceReset {
 				try {
 					entry.original().restore(prefs, key.key());
 					handled.add(key);
-					mutated = true;
+					restored.add(key);
 				} catch (RuntimeException e) {
 					failures.add(new Failure(integration, nodeId, List.of(key.key()), "restore original", e));
 				}
 			}
 
-			if (mutated) {
+			if (!restored.isEmpty()) {
 				try {
 					prefs.flush();
 				} catch (BackingStoreException | RuntimeException e) {
-					failures.add(new Failure(integration, nodeId, keys(handled), "persist restoration", e));
+					failures.add(new Failure(integration, nodeId, keys(restored), "persist restoration", e));
+					rewind(prefs, restored, owned, integration, nodeId, failures);
 					continue;
 				}
 			}
@@ -167,6 +168,35 @@ public final class PreferenceReset {
 		Result result = reset();
 		if (result.successful()) onSuccess.run();
 		return result;
+	}
+
+	/**
+	 * Puts only the keys this reset actually restored back to the value the journal says the plugin last wrote.
+	 * Conflict keys were never touched and are deliberately excluded. The journal is not changed here.
+	 */
+	private static void rewind(IEclipsePreferences prefs, List<Key> restored, Map<Key, Owned> owned,
+			String integration, String nodeId, List<Failure> failures) {
+		boolean changed = false;
+		for (Key key : restored) {
+			Owned entry = owned.get(key);
+			if (entry == null) {
+				continue;
+			}
+			try {
+				entry.written().restore(prefs, key.key());
+				changed = true;
+			} catch (RuntimeException e) {
+				failures.add(new Failure(integration, nodeId, List.of(key.key()), "rewind failed restoration", e));
+			}
+		}
+		if (!changed) {
+			return;
+		}
+		try {
+			prefs.flush();
+		} catch (BackingStoreException | RuntimeException e) {
+			failures.add(new Failure(integration, nodeId, keys(restored), "persist retry-safe rollback", e));
+		}
 	}
 
 	private static List<String> keys(List<Key> entries) {

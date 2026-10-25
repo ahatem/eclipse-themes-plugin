@@ -64,9 +64,10 @@ public class PreferenceResetTest {
 	public void flushFailureKeepsTheRecoveryRecordAndDoesNotCommit() throws Exception {
 		Map<String, MemoryPreferences> nodes = nodes();
 		MemoryPreferences editors = nodes.get(EDITORS);
-		editors.values.put("AbstractTextEditor.Color.Background", "theme");
+		String key = "AbstractTextEditor.Color.Background";
+		editors.values.put(key, "theme");
 		editors.failFlush = true;
-		PreferenceStore store = journal(EDITORS, "AbstractTextEditor.Color.Background", "original", "theme");
+		PreferenceStore store = journal(EDITORS, key, "original", "theme");
 		AtomicInteger commits = new AtomicInteger();
 
 		PreferenceReset.Result result = new PreferenceReset(id -> nodes.get(id).node, store)
@@ -75,8 +76,40 @@ public class PreferenceResetTest {
 		assertFalse(result.successful());
 		assertEquals(0, commits.get());
 		assertTrue(result.describeFailures().contains("persist restoration"));
-		assertTrue(new EditorPreferenceOwnership(store).read()
-				.containsKey(new Key(EDITORS, "AbstractTextEditor.Color.Background")));
+		assertTrue(new EditorPreferenceOwnership(store).read().containsKey(new Key(EDITORS, key)));
+		assertEquals("theme", editors.values.get(key));
+
+		editors.failFlush = false;
+		PreferenceReset.Result retry = new PreferenceReset(id -> nodes.get(id).node, store)
+				.resetAndCommit(commits::incrementAndGet);
+
+		assertTrue(retry.describeFailures(), retry.successful());
+		assertTrue(retry.conflicts().isEmpty());
+		assertEquals(1, commits.get());
+		assertEquals("original", editors.values.get(key));
+		assertTrue(new EditorPreferenceOwnership(store).read().isEmpty());
+	}
+
+	@Test
+	public void failedRestorationFlushNeverRewindsAConflictingExternalValue() throws Exception {
+		Map<String, MemoryPreferences> nodes = nodes();
+		MemoryPreferences editors = nodes.get(EDITORS);
+		String safe = "safe.key";
+		String conflict = "conflict.key";
+		editors.values.put(safe, "theme-safe");
+		editors.values.put(conflict, "external-newer");
+		editors.failFlush = true;
+		PreferenceStore store = journal(EDITORS, safe, "original-safe", "theme-safe");
+		own(store, EDITORS, conflict, "original-conflict", "theme-conflict");
+
+		PreferenceReset.Result result = new PreferenceReset(id -> nodes.get(id).node, store).reset();
+
+		assertFalse(result.successful());
+		assertEquals("theme-safe", editors.values.get(safe));
+		assertEquals("external-newer", editors.values.get(conflict));
+		assertEquals(1, result.conflicts().size());
+		assertTrue(new EditorPreferenceOwnership(store).read().containsKey(new Key(EDITORS, safe)));
+		assertTrue(new EditorPreferenceOwnership(store).read().containsKey(new Key(EDITORS, conflict)));
 	}
 
 	@Test
