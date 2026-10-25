@@ -23,6 +23,7 @@ import com.github.eclipsethemes.core.models.TokenBuilder;
 import com.github.eclipsethemes.core.models.TokenKey;
 import com.github.eclipsethemes.core.workbench.EngineProbe;
 import com.github.eclipsethemes.core.workbench.WorkbenchEnvironment;
+import com.github.eclipsethemes.eclipse.ThemeApplyOutcome.EditorOutcome;
 import com.github.eclipsethemes.eclipse.preferences.PreferenceKeys;
 import com.github.eclipsethemes.eclipse.workbench.PaletteSink;
 import com.github.eclipsethemes.eclipse.workbench.ForeignPreferences;
@@ -104,12 +105,12 @@ public class ThemeServiceOrderTest {
 		assertEquals(systemDefault, editorPrefs.get(SYSTEM_DEFAULT));
 	}
 
-	private List<String> writeEditor(Theme theme) {
+	private EditorOutcome writeEditor(Theme theme) {
 		events.add("editor");
 		Color bg = theme.get(TokenKey.BACKGROUND).getColor();
 		editorPrefs.put(BACKGROUND, bg.red() + "," + bg.green() + "," + bg.blue());
 		editorPrefs.put(SYSTEM_DEFAULT, "false");
-		return List.of();
+		return new EditorOutcome(List.of());
 	}
 
 	private static Theme theme(ThemeType type, String background, String foreground) {

@@ -75,8 +75,18 @@ public record WorkbenchSectionModel(boolean checkboxEnabled, String checkboxLabe
 		}
 		StringBuilder text = new StringBuilder();
 		if (!outcome.editor().succeeded()) {
-			text.append("Editor colors were not fully applied (").append(String.join(", ", outcome.editor().failedAdapters()))
-					.append("). ");
+			if (!outcome.editor().failedAdapters().isEmpty()) {
+				text.append("Editor colors were not fully applied (")
+						.append(String.join(", ", outcome.editor().failedAdapters())).append("). ");
+			} else {
+				text.append("Editor colors were not fully applied. ");
+			}
+			int conflicts = outcome.editor().conflicts().size();
+			if (conflicts > 0) {
+				text.append(conflicts).append(" editor preference")
+						.append(conflicts == 1 ? " was" : "s were")
+						.append(" changed outside Eclipse Themes and left alone. ");
+			}
 		} else {
 			text.append("Editor colors applied. ");
 		}

@@ -25,8 +25,9 @@ tool bars, trees, tables, status line) and, if you want, the **fonts** too. Them
 - **Two fonts, one place**: an **Editor font** and an **Interface font**, each *Keep current*, *Use theme* or *Custom*.
 - **Theme packages** (`.ectheme`): a declarative single-file format with author and license details, workbench colors and font
   recommendations, plus **import and export**.
-- **Safe by design**: everything the plugin changes is tracked and handed back when you turn it off, and your own later changes
-  are never overwritten behind your back.
+- **Safe by design**: from this version onward, every editor color, workbench choice, coordinated plug-in color and font the
+  plugin writes is recorded with what existed before and handed back when you stop managing. Values you change later are
+  preserved instead of overwritten behind your back.
 
 ![One place to choose themes, workbench appearance and fonts.](assets/theme_manager.png)
 
@@ -96,8 +97,8 @@ choose Apply or Apply and Close, and **Cancel** discards them. **Import**, **Exp
 library straight away and are separate from Apply.
 
 **Restore Defaults** asks how to reset: apply the default theme (workbench theming off, both fonts back to *Keep current
-font*), or stop Eclipse Themes management entirely. Either way, fonts the plugin replaced are given back unless you changed them
-since.
+font*), or stop Eclipse Themes management entirely. Either way, editor colors, fonts and coordinated workbench values the plugin
+replaced are given back unless you changed them since.
 
 ### If you change a font yourself
 

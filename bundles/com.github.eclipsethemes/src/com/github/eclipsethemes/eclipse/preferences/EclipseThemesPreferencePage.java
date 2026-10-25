@@ -1015,30 +1015,35 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	// ── Apply ─────────────────────────────────────────────────────────────────
 
-	protected void applySelectedTheme() {
+	protected boolean applySelectedTheme() {
 		if (selectedTheme == null) {
-			return;
+			return false;
 		}
 
 		try {
-			ThemeSelection.remember(getPreferenceStore(), selectedTheme);
 			commitWorkbenchIntent();
 			if (!commitFontsIntent()) {
-				return;
+				return false;
 			}
 			ThemeApplyOutcome outcome = EclipseThemes.instance().getManager().applyTheme(workbench, selectedTheme);
+			boolean editorApplied = ThemeSelection.rememberApplied(getPreferenceStore(), selectedTheme, outcome);
 
-			currentTheme = selectedTheme;
+			if (editorApplied) {
+				// The selected intent and the applied indicator change only after the editor half succeeded.
+				currentTheme = selectedTheme;
+				subtitleLabel.setText(subtitle(selectedTheme, true));
+			}
 			updateButtonStates();
 			themeViewer.refresh(); // to update the "●" indicator
-			subtitleLabel.setText(subtitle(selectedTheme, true));
 			refreshWorkbenchSection(false);
 			updateFontRows();
 
 			showStatus(WorkbenchSectionModel.summary(outcome),
 					outcome.fullySucceeded() ? IMessageProvider.INFORMATION : IMessageProvider.WARNING);
+			return editorApplied;
 		} catch (Exception e) {
 			showErrorMessage("Apply Theme Failed", "Failed to apply theme: " + e.getMessage());
+			return false;
 		}
 	}
 
@@ -1283,9 +1288,12 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		if (defaultTheme == null) {
 			return false;
 		}
-		EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);
+		ThemeApplyOutcome outcome = EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);
+		if (!ThemeSelection.rememberApplied(getPreferenceStore(), defaultTheme, outcome)) {
+			showStatus(WorkbenchSectionModel.summary(outcome), IMessageProvider.WARNING);
+			return false;
+		}
 		currentTheme = defaultTheme;
-		ThemeSelection.remember(getPreferenceStore(), defaultTheme);
 		return true;
 	}
 
@@ -1339,8 +1347,8 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 
 	@Override
 	public boolean performOk() {
-		if (selectedTheme != null) {
-			applySelectedTheme();
+		if (selectedTheme != null && !applySelectedTheme()) {
+			return false;
 		}
 		return super.performOk();
 	}
@@ -1373,9 +1381,12 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		releaseFonts();
 		ThemeRecord defaultTheme = getDefaultThemeForCurrentMode();
 		if (defaultTheme != null) {
-			ThemeSelection.remember(getPreferenceStore(), defaultTheme);
-			EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);
-			currentTheme = defaultTheme;
+			ThemeApplyOutcome outcome = EclipseThemes.instance().getManager().applyTheme(workbench, defaultTheme);
+			if (ThemeSelection.rememberApplied(getPreferenceStore(), defaultTheme, outcome)) {
+				currentTheme = defaultTheme;
+			} else {
+				showStatus(WorkbenchSectionModel.summary(outcome), IMessageProvider.WARNING);
+			}
 		} else {
 			ThemeSelection.clear(getPreferenceStore());
 			currentTheme = null;
@@ -1388,12 +1399,13 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	}
 
 	private boolean stopThemeManagement() {
-		PreferenceReset.Result result = new PreferenceReset(InstanceScope.INSTANCE::getNode).resetAndCommit(() -> {
-			ThemeSelection.clear(getPreferenceStore());
-			currentTheme = null;
-			refreshThemeList();
-			clearSelection();
-		});
+		PreferenceReset.Result result = new PreferenceReset(InstanceScope.INSTANCE::getNode, pluginStore())
+				.resetAndCommit(() -> {
+					ThemeSelection.clear(getPreferenceStore());
+					currentTheme = null;
+					refreshThemeList();
+					clearSelection();
+				});
 		if (!result.successful()) {
 			result.failures().forEach(failure -> EclipseThemes.instance().getLogger()
 					.error(failure.description(), failure.cause()));
@@ -1405,6 +1417,12 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 		}
 		relinquishWorkbench();
 		releaseFonts();
+		if (!result.conflicts().isEmpty()) {
+			result.conflicts().forEach(conflict -> EclipseThemes.instance().getLogger()
+					.warn("Editor preference kept: " + conflict.description()));
+			showStatus("Management stopped; " + result.conflicts().size()
+					+ " editor preference(s) changed outside Eclipse Themes were left alone.", IMessageProvider.WARNING);
+		}
 		return true;
 	}
 

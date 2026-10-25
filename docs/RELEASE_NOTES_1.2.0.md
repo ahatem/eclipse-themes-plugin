@@ -26,8 +26,10 @@
   page resizes with the preferences dialog.
 - **Package import and export.** *Export...* saves any installed theme as a new `.ectheme` file. A legacy theme is
   converted into a new file with a generated `legacy.<name>` id; the installed theme is not changed.
-- **Safety and ownership.** Every setting the plugin writes for the workbench, other plug-ins' editors and fonts is tracked
-  value-exactly: it is restored only while it still holds what the plugin wrote, so your own later choices are never overwritten.
+- **Safety and ownership.** Workbench choices, coordinated plug-in colors and fonts are tracked value-exactly: they are restored
+  only while they still hold what the plugin wrote, so your own later choices are never overwritten. Editor preference ownership
+  was added after 1.2.0: from that version onward, the editor values a theme replaces are also recorded and restored under the
+  same rule.
 
 ## Compatibility
 

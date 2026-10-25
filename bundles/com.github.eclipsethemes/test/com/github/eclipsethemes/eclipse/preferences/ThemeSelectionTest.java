@@ -16,7 +16,11 @@ import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.ThemeType;
 import com.github.eclipsethemes.core.models.TokenBuilder;
 import com.github.eclipsethemes.core.models.TokenKey;
+import com.github.eclipsethemes.eclipse.ThemeApplyOutcome;
+import com.github.eclipsethemes.eclipse.ThemeApplyOutcome.EditorConflict;
+import com.github.eclipsethemes.eclipse.ThemeApplyOutcome.EditorOutcome;
 import com.github.eclipsethemes.eclipse.ThemeRecord;
+import com.github.eclipsethemes.eclipse.workbench.WorkbenchOutcome;
 
 public class ThemeSelectionTest {
     @Test public void legacyResolutionIsUniqueAndReadOnlyAndDoesNotInterpretDefaultLabels() {
@@ -120,6 +124,30 @@ public class ThemeSelectionTest {
                 theme("local:other", "website-source", "Other", "#334455"));
     }
 
+    @Test public void partialOrConflictingEditorApplyDoesNotPersistTheSelectedTheme() {
+        var store = new PreferenceStore();
+        ThemeRecord applied = theme("local:applied", "applied", "Applied", "#112233");
+        ThemeRecord selected = theme("local:selected", "selected", "Selected", "#334455");
+        ThemeSelection.remember(store, applied);
+
+        ThemeApplyOutcome conflict = new ThemeApplyOutcome(
+                new EditorOutcome(List.of(), List.of(new EditorConflict("TextEditorThemeAdapter",
+                        "org.eclipse.ui.editors", "AbstractTextEditor.Color.Background", "kept"))),
+                WorkbenchOutcome.notRequested("off"));
+        assertFalse(ThemeSelection.rememberApplied(store, selected, conflict));
+        assertEquals("local:applied", store.getString(PreferenceKeys.SELECTED_THEME_LOGICAL_ID));
+
+        ThemeApplyOutcome failure = new ThemeApplyOutcome(new EditorOutcome(List.of("TextEditorThemeAdapter")),
+                WorkbenchOutcome.notRequested("off"));
+        assertFalse(ThemeSelection.rememberApplied(store, selected, failure));
+        assertEquals("local:applied", store.getString(PreferenceKeys.SELECTED_THEME_LOGICAL_ID));
+
+        ThemeApplyOutcome success = new ThemeApplyOutcome(new EditorOutcome(List.of()),
+                WorkbenchOutcome.notRequested("off"));
+        assertTrue(ThemeSelection.rememberApplied(store, selected, success));
+        assertEquals("local:selected", store.getString(PreferenceKeys.SELECTED_THEME_LOGICAL_ID));
+    }
+
     private static ThemeRecord theme(String logical, String source, String name, String background) {
         return ThemeRecord.installed(logical, name + ".xml", model(source, name, background));
     }
@@ -137,11 +165,12 @@ public class ThemeSelectionTest {
         final List<ThemeRecord> received = new ArrayList<>();
         RecordingPage(PreferenceStore store) { super(store); }
         void apply() { performApply(); }
-        @Override protected void applySelectedTheme() {
+        @Override protected boolean applySelectedTheme() {
             try {
                 Field field = EclipseThemesPreferencePage.class.getDeclaredField("selectedTheme");
                 field.setAccessible(true);
                 received.add((ThemeRecord) field.get(this));
+                return true;
             } catch (ReflectiveOperationException e) { throw new AssertionError(e); }
         }
     }
