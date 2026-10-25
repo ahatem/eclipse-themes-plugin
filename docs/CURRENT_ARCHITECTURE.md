@@ -89,12 +89,18 @@ Current state is distributed:
 - imported theme files: plugin workspace state directory, as `<uuid>.xml` or `<uuid>.ectheme` (the locator keeps the source format, and an update may not change it);
 - selected theme intent: plugin `InstanceScope` preferences;
 - applied editor colors/styles: preference nodes owned by Eclipse/other plugins;
+- editor preference ownership: a value-exact journal in plugin `InstanceScope` preferences, per `nodeId|key`, with the state
+  before this plugin first took the key and the exact state it last wrote; entries are saved only after the foreign node
+  persisted, and a key changed by anyone else is preserved and released;
 - workbench coordination: intent, ownership (owned theme id, prior active theme id, prior saved theme-id state including absence) and the experimental opt-in in plugin `InstanceScope` preferences, written only after the switch postcondition holds; the published palette is ephemeral and re-derived from the selected theme at startup;
 - theme collection: in memory;
 - page selection/filter/preview state: UI fields;
 - e4 context/application model: no durable theme state currently stored there.
 
-The selected theme ID records intent, not proof that target preferences still equal that theme. There is no current ownership journal, rollback snapshot, startup reconciliation, or uninstall restoration.
+The selected theme ID records intent, not proof that target preferences still equal that theme. Editor preference ownership is
+now recorded value-exactly and restored only while the key still matches what this plugin wrote; a newer external value is
+preserved and reported. The journal is not a rollback snapshot for themes applied before it existed, it does not reconcile
+workbench state at startup, and there is no uninstall hook.
 
 ### Logical theme identity
 
@@ -104,9 +110,13 @@ Admitted themes have logical IDs independent of display names and source XML `ec
 
 Installed identity bindings live in `theme-identities.properties` in the existing plugin workspace state directory, mapping managed relative filenames to opaque logical IDs. They are introduced lazily without rewriting or relocating XML. The filename locates a record; it does not generate its ID. A generated ID is exposed only after staged atomic replacement of this small binding file succeeds. Failure preserves old bindings and XML, diagnoses the affected admission and does not invent a transient stable ID. Unsupported metadata atomic replacement fails admission rather than falling back to a destructive write. Arbitrary manual moves, deletion/recreation of managed files, metadata loss and cross-workspace transport are not an identity recovery protocol; a future supported relocation must carry its binding.
 
-New selected intent uses `SELECTED_THEME_LOGICAL_ID`. With no modern explicit reference, a nonblank explicit legacy `ACTIVE_THEME_ID` resolves only when exactly one loaded candidate claims it. Ambiguous/missing/blank intent remains unresolved. Opening/restoring selection does not rewrite old intent, apply colors or select a guessed fallback. An explicit application writes modern intent and dispatches current content, including when its identity is unchanged. Unchanged explicit Apply/OK can therefore reapply. Default actions use the curated bundled identities. This remains selected intent, not successful-applied-state tracking; R3 owns application truth and recovery.
+New selected intent uses `SELECTED_THEME_LOGICAL_ID`. With no modern explicit reference, a nonblank explicit legacy `ACTIVE_THEME_ID` resolves only when exactly one loaded candidate claims it. Ambiguous/missing/blank intent remains unresolved. Opening/restoring selection does not rewrite old intent, apply colors or select a guessed fallback. An explicit application writes modern intent and dispatches current content, including when its identity is unchanged. Unchanged explicit Apply/OK can therefore reapply. Default actions use the curated bundled identities. Selected intent is persisted
+only after the editor half succeeds; a failed or conflicted editor apply leaves the prior applied intent and indicator unchanged.
+Workbench and font outcomes are reported separately. Broader R3 reconciliation and uninstall recovery remain later work.
 
-No revision ID, production digest, history or content-comparison mechanism is present. Downgrades can read unchanged XML but may require reselection. Versions before theme packages list only `*.xml`, so an installed `.ectheme` is ignored there (its file and binding are kept) and reappears after upgrading again. New imports use fresh repository-allocated locators; removed locators are not silently reassigned to a different identity. Staging files under `installed_themes/.staging` are never catalogued, and parse/copy/binding failures clean only attempt-created artifacts while preserving prior records, bindings and selected intent. Update requires one atomic replacement and fails without a non-atomic fallback. Removal may succeed when the exact managed file is already absent, but fails closed for an unexpected path type; a crash between binding removal and file deletion can leave an unbound file that is later re-admitted under a new identity. Offline preview, R3 applied-state truth and the conflict/diagnostic UI remain later work.
+No revision ID, production digest, history or content-comparison mechanism is present. Downgrades can read unchanged XML but may require reselection. Versions before theme packages list only `*.xml`, so an installed `.ectheme` is ignored there (its file and binding are kept) and reappears after upgrading again. New imports use fresh repository-allocated locators; removed locators are not silently reassigned to a different identity. Staging files under `installed_themes/.staging` are never catalogued, and parse/copy/binding failures clean only attempt-created artifacts while preserving prior records, bindings and selected intent. Update requires one atomic replacement and fails without a non-atomic fallback. Removal may succeed when the exact managed file is already absent, but fails closed for an unexpected path type; a crash between binding removal and file deletion can leave an unbound file that is later re-admitted under a new identity. Offline preview, the broader R3 change-plan/reconciliation work and the conflict/diagnostic UI remain later work. Editor
+preference truth is now value-exact, and Apply/OK no longer record or display a theme as applied when the editor half failed or
+preserved an external conflict.
 
 ## Validation and diagnostics
 

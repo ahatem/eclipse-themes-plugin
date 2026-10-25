@@ -1,210 +1,165 @@
 package com.github.eclipsethemes.eclipse.preferences;
 
-import static com.github.eclipsethemes.eclipse.preferences.AdapterTestSupport.adapters;
-import static com.github.eclipsethemes.eclipse.preferences.AdapterTestSupport.theme;
-
 import static org.junit.Assert.*;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.eclipse.jface.preference.PreferenceStore;
 import org.junit.Test;
 
-import com.github.eclipsethemes.core.models.Theme;
-import com.github.eclipsethemes.core.models.ThemeType;
-import com.github.eclipsethemes.eclipse.adapters.EclipseThemeAdapter;
+import com.github.eclipsethemes.eclipse.preferences.EditorPreferenceOwnership.Key;
+import com.github.eclipsethemes.eclipse.preferences.EditorPreferenceOwnership.Owned;
 
 public class PreferenceResetTest {
+
+	private static final String EDITORS = "org.eclipse.ui.editors";
+	private static final String JDT = "org.eclipse.jdt.ui";
+	private static final String CDT = "org.eclipse.cdt.ui";
+
 	@Test
-	public void hoverAndOptionalEnableOverridesResetWithContextualFailures() throws Exception {
-		for (String key : List.of("sourceHoverBackgroundColor", "sourceHoverBackgroundColor.SystemDefault",
-				"semanticHighlighting.inheritedMethodInvocation.enabled", "semanticHighlighting.inheritedField.enabled",
-				"semanticHighlighting.typeArgument.enabled", "semanticHighlighting.deprecatedMember.enabled")) {
-			for (boolean failRemoval : List.of(false, true)) {
-				for (boolean failFlush : List.of(false, true)) {
-					Map<String, MemoryPreferences> nodes = seededNodes();
-					MemoryPreferences jdt = nodes.get("org.eclipse.jdt.ui");
-					assertTrue("Managed " + key, jdt.values.containsKey(key));
-					jdt.failingKey = failRemoval ? key : null;
-					jdt.failFlush = failFlush;
-					AtomicInteger commits = new AtomicInteger();
-					PreferenceReset reset = new PreferenceReset(id -> nodes.get(id).node);
-					for (int run = 0; run < 2; run++) {
-						PreferenceReset.Result result = reset.resetAndCommit(commits::incrementAndGet);
-						assertEquals(!failRemoval && !failFlush, result.successful());
-						if (!result.successful()) {
-							assertTrue(result.describeFailures().contains("JavaEditorThemeAdapter"));
-							assertTrue(result.describeFailures().contains("org.eclipse.jdt.ui"));
-							assertTrue(result.describeFailures().contains(key));
-						}
-						assertEquals(failRemoval ? "legacy override" : null, jdt.values.get(key));
-						assertEquals("7", jdt.values.get("editor.tab.width"));
-						assertEquals(0, jdt.clears);
-					}
-					assertEquals(!failRemoval && !failFlush ? 2 : 0, commits.get());
-				}
-			}
-		}
+	public void restoresExplicitOriginalAndAbsenceWithoutTouchingUnrelatedValues() throws Exception {
+		Map<String, MemoryPreferences> nodes = nodes();
+		MemoryPreferences editors = nodes.get(EDITORS);
+		editors.values.put("AbstractTextEditor.Color.Background", "10,20,30");
+		editors.values.put("currentLineColor", "40,50,60");
+		editors.values.put("editor.tab.width", "7");
+		editors.values.put("unrelated", "keep");
+		PreferenceStore store = journal(EDITORS, "AbstractTextEditor.Color.Background", "1,2,3", "10,20,30");
+		own(store, EDITORS, "currentLineColor", null, "40,50,60");
+
+		PreferenceReset.Result result = new PreferenceReset(id -> nodes.get(id).node, store).reset();
+
+		assertTrue(result.describeFailures(), result.successful());
+		assertTrue(result.conflicts().isEmpty());
+		assertEquals("1,2,3", editors.values.get("AbstractTextEditor.Color.Background"));
+		assertFalse(editors.values.containsKey("currentLineColor"));
+		assertEquals("7", editors.values.get("editor.tab.width"));
+		assertEquals("keep", editors.values.get("unrelated"));
+		assertEquals(0, editors.clears);
+		assertTrue(new EditorPreferenceOwnership(store).read().isEmpty());
 	}
 
 	@Test
-	public void correctedKeysResetWithoutGuessingHistoricalIndications() {
-		for (String indication : java.util.Arrays.asList("true", "false", null, "1,2,3")) {
-			for (String failingKey : java.util.Arrays.asList(null, "currentIPColor", "secondaryIPColor")) {
-				for (boolean failFlush : List.of(false, true)) {
-					Map<String, MemoryPreferences> nodes = seededNodes();
-					MemoryPreferences editor = nodes.get("org.eclipse.ui.editors");
-					if (indication != null) {
-						editor.values.put("currentIPIndication", indication);
-						editor.values.put("secondaryIPIndication", indication);
-					}
-					editor.failingKey = failingKey;
-					editor.failFlush = failFlush;
-					AtomicInteger commits = new AtomicInteger();
-					PreferenceReset reset = new PreferenceReset(id -> nodes.get(id).node);
-					for (int run = 0; run < 2; run++) {
-						PreferenceReset.Result result = reset.resetAndCommit(commits::incrementAndGet);
-						assertEquals(failingKey == null && !failFlush, result.successful());
-						if (failingKey != null) assertTrue(result.describeFailures().contains(failingKey));
-						if (failFlush) assertTrue(result.describeFailures().contains("persist removals"));
-						assertEquals(indication, editor.values.get("currentIPIndication"));
-						assertEquals(indication, editor.values.get("secondaryIPIndication"));
-						for (String key : List.of("currentIPColor", "secondaryIPColor")) {
-							assertEquals(key.equals(failingKey) ? "legacy override" : null, editor.values.get(key));
-						}
-						assertEquals("7", editor.values.get("editor.tab.width"));
-						assertEquals(0, editor.clears);
-					}
-					assertEquals(failingKey == null && !failFlush ? 2 : 0, commits.get());
-				}
-			}
-		}
+	public void conflictPreservesTheNewerValueAndStillReleasesTheRecord() throws Exception {
+		Map<String, MemoryPreferences> nodes = nodes();
+		MemoryPreferences editors = nodes.get(EDITORS);
+		editors.values.put("AbstractTextEditor.Color.Background", "user,changed");
+		PreferenceStore store = journal(EDITORS, "AbstractTextEditor.Color.Background", "original", "theme");
+		AtomicInteger commits = new AtomicInteger();
+
+		PreferenceReset.Result result = new PreferenceReset(id -> nodes.get(id).node, store)
+				.resetAndCommit(commits::incrementAndGet);
+
+		assertTrue(result.describeFailures(), result.successful());
+		assertEquals(1, result.conflicts().size());
+		assertTrue(result.describeConflicts().contains("AbstractTextEditor.Color.Background"));
+		assertEquals("user,changed", editors.values.get("AbstractTextEditor.Color.Background"));
+		assertEquals(1, commits.get());
+		assertTrue(new EditorPreferenceOwnership(store).read().isEmpty());
 	}
 
-	private Map<String, MemoryPreferences> seededNodes() {
+	@Test
+	public void flushFailureKeepsTheRecoveryRecordAndDoesNotCommit() throws Exception {
+		Map<String, MemoryPreferences> nodes = nodes();
+		MemoryPreferences editors = nodes.get(EDITORS);
+		editors.values.put("AbstractTextEditor.Color.Background", "theme");
+		editors.failFlush = true;
+		PreferenceStore store = journal(EDITORS, "AbstractTextEditor.Color.Background", "original", "theme");
+		AtomicInteger commits = new AtomicInteger();
+
+		PreferenceReset.Result result = new PreferenceReset(id -> nodes.get(id).node, store)
+				.resetAndCommit(commits::incrementAndGet);
+
+		assertFalse(result.successful());
+		assertEquals(0, commits.get());
+		assertTrue(result.describeFailures().contains("persist restoration"));
+		assertTrue(new EditorPreferenceOwnership(store).read()
+				.containsKey(new Key(EDITORS, "AbstractTextEditor.Color.Background")));
+	}
+
+	@Test
+	public void nodeFailureIsContextualAndOtherNodesStillRecover() throws Exception {
+		Map<String, MemoryPreferences> nodes = nodes();
+		nodes.get(JDT).values.put("java_string", "theme");
+		nodes.get(CDT).values.put("c_string", "theme");
+		PreferenceStore store = journal(CDT, "c_string", "cdt-original", "theme");
+		own(store, JDT, "java_string", "jdt-original", "theme");
+
+		PreferenceReset.Result result = new PreferenceReset(id -> {
+			if (id.equals(CDT)) throw new IllegalStateException("Node unavailable");
+			return nodes.get(id).node;
+		}, store).reset();
+
+		assertFalse(result.successful());
+		assertEquals(1, result.failures().size());
+		assertTrue(result.describeFailures().contains("CppEditorThemeAdapter"));
+		assertTrue(result.describeFailures().contains(CDT));
+		assertEquals("jdt-original", nodes.get(JDT).values.get("java_string"));
+		assertEquals("theme", nodes.get(CDT).values.get("c_string"));
+		assertFalse(new EditorPreferenceOwnership(store).read().containsKey(new Key(JDT, "java_string")));
+		assertTrue(new EditorPreferenceOwnership(store).read().containsKey(new Key(CDT, "c_string")));
+	}
+
+	@Test
+	public void anOptionalPluginDoesNotNeedToBeInstalledToRecoverItsNode() throws Exception {
+		Map<String, MemoryPreferences> nodes = nodes();
+		nodes.get(CDT).values.put("c_string", "theme");
+		PreferenceStore store = journal(CDT, "c_string", "cdt-original", "theme");
+
+		PreferenceReset.Result result = new PreferenceReset(id -> nodes.get(id).node, store).reset();
+
+		assertTrue(result.describeFailures(), result.successful());
+		assertEquals("cdt-original", nodes.get(CDT).values.get("c_string"));
+		assertTrue(new EditorPreferenceOwnership(store).read().isEmpty());
+	}
+
+	@Test
+	public void absentOriginalRemovesThePluginValueAndIsRepeatable() throws Exception {
+		Map<String, MemoryPreferences> nodes = nodes();
+		MemoryPreferences editors = nodes.get(EDITORS);
+		editors.values.put("AbstractTextEditor.Color.Background", "theme");
+		PreferenceStore store = journal(EDITORS, "AbstractTextEditor.Color.Background", null, "theme");
+		PreferenceReset reset = new PreferenceReset(id -> nodes.get(id).node, store);
+
+		assertTrue(reset.reset().successful());
+		assertTrue(reset.reset().successful());
+		assertFalse(editors.values.containsKey("AbstractTextEditor.Color.Background"));
+		assertEquals(0, editors.clears);
+	}
+
+	private static Map<String, MemoryPreferences> nodes() {
 		Map<String, MemoryPreferences> nodes = new LinkedHashMap<>();
-		for (EclipseThemeAdapter adapter : adapters()) {
-			MemoryPreferences prefs = new MemoryPreferences();
-			adapter.getManagedKeys().forEach(key -> prefs.values.put(key, "legacy override"));
-			prefs.values.put("unrelated.preference", "keep\n=☃");
-			prefs.values.put("editor.tab.width", "7");
-			prefs.values.put("semanticHighlighting.unmapped.color", "1,2,3");
-			nodes.put(adapter.getPreferencesId(), prefs);
+		for (String id : new String[] { EDITORS, JDT, CDT, "org.eclipse.pde.ui", "org.eclipse.ant.ui",
+				"org.eclipse.debug.ui" }) {
+			nodes.put(id, new MemoryPreferences());
 		}
 		return nodes;
 	}
 
-	@Test
-	public void resetPreservesMultipleUnrelatedValuesInEveryNode() {
-		Map<String, MemoryPreferences> nodes = seededNodes();
-		AtomicInteger commits = new AtomicInteger();
-		PreferenceReset.Result result = new PreferenceReset(id -> nodes.get(id).node).resetAndCommit(commits::incrementAndGet);
-		assertTrue(result.describeFailures(), result.successful());
-		assertEquals(1, commits.get());
-		for (MemoryPreferences prefs : nodes.values()) {
-			assertEquals(Map.of("unrelated.preference", "keep\n=☃", "editor.tab.width", "7",
-					"semanticHighlighting.unmapped.color", "1,2,3"), prefs.values);
-			assertEquals(0, prefs.clears);
-			assertEquals(1, prefs.flushes);
-			assertTrue(prefs.mutations.stream().allMatch(mutation -> mutation.startsWith("remove ")));
-		}
+	private static PreferenceStore journal(String node, String key, String original, String written) throws Exception {
+		PreferenceStore store = memoryStore();
+		own(store, node, key, original, written);
+		return store;
 	}
 
-	@Test
-	public void ownershipExactlyMatchesExistingFullAndSparseAdapterMutations() throws Exception {
-		for (EclipseThemeAdapter adapter : adapters()) {
-			Set<String> observed = new LinkedHashSet<>();
-			for (Theme theme : List.of(theme(ThemeType.DARK, true),
-					theme(ThemeType.DARK, false), theme(ThemeType.LIGHT, false))) {
-				MemoryPreferences prefs = new MemoryPreferences();
-				adapter.apply(theme, prefs.node);
-				prefs.mutations.stream().map(mutation -> mutation.substring(mutation.indexOf(' ') + 1).split("=", 2)[0])
-						.forEach(observed::add);
+	private static PreferenceStore memoryStore() {
+		return new PreferenceStore() {
+			@Override
+			public void save() {
+				// in memory only
 			}
-			assertEquals(adapter.getPreferencesId(), observed, adapter.getManagedKeys());
-		}
+		};
 	}
 
-	@Test
-	public void absentManagedKeysStayAbsentAndResetIsRepeatable() {
-		Map<String, MemoryPreferences> nodes = seededNodes();
-		nodes.values().forEach(prefs -> prefs.values.clear());
-		PreferenceReset reset = new PreferenceReset(id -> nodes.get(id).node);
-		assertTrue(reset.reset().successful());
-		assertTrue(reset.reset().successful());
-		nodes.values().forEach(prefs -> {
-			assertTrue(prefs.values.isEmpty());
-			assertEquals(0, prefs.clears);
-		});
-	}
-
-	@Test
-	public void removalFailureIsContextualAndDoesNotCommitSuccessOrClearNodes() {
-		Map<String, MemoryPreferences> nodes = seededNodes();
-		MemoryPreferences failing = nodes.get("org.eclipse.jdt.ui");
-		failing.failingKey = "java_default";
-		AtomicInteger commits = new AtomicInteger();
-		PreferenceReset.Result result = new PreferenceReset(id -> nodes.get(id).node).resetAndCommit(commits::incrementAndGet);
-		assertFalse(result.successful());
-		assertEquals(0, commits.get());
-		assertEquals(1, result.failures().size());
-		assertTrue(result.describeFailures().contains("JavaEditorThemeAdapter"));
-		assertTrue(result.describeFailures().contains("org.eclipse.jdt.ui"));
-		assertTrue(result.describeFailures().contains("java_default"));
-		assertEquals("legacy override", failing.values.get("java_default"));
-		assertNull(failing.values.get("java_string"));
-		assertEquals("7", failing.values.get("editor.tab.width"));
-		nodes.values().forEach(prefs -> assertEquals(0, prefs.clears));
-	}
-
-	@Test
-	public void flushFailureReportsAllUncertainKeysAndOtherNodesContinue() {
-		Map<String, MemoryPreferences> nodes = seededNodes();
-		nodes.get("org.eclipse.ui.editors").failFlush = true;
-		nodes.get("org.eclipse.ant.ui").failFlush = true;
-		AtomicInteger commits = new AtomicInteger();
-		PreferenceReset.Result result = new PreferenceReset(id -> nodes.get(id).node).resetAndCommit(commits::incrementAndGet);
-		assertFalse(result.successful());
-		assertEquals(0, commits.get());
-		assertEquals(2, result.failures().size());
-		assertTrue(result.describeFailures().contains("AbstractTextEditor.Color.Background.SystemDefault"));
-		assertTrue(result.describeFailures().contains("org.eclipse.ant.ui.tagsColor"));
-		nodes.values().forEach(prefs -> {
-			assertEquals(1, prefs.flushes);
-			assertEquals(0, prefs.clears);
-			assertEquals(3, prefs.values.size());
-		});
-	}
-
-	@Test
-	public void nodeAccessFailureIsReportedAndOtherNodesContinue() {
-		Map<String, MemoryPreferences> nodes = seededNodes();
-		PreferenceReset.Result result = new PreferenceReset(id -> {
-			if (id.equals("org.eclipse.cdt.ui")) throw new IllegalStateException("Node unavailable");
-			return nodes.get(id).node;
-		}).reset();
-		assertFalse(result.successful());
-		assertEquals(1, result.failures().size());
-		assertTrue(result.describeFailures().contains("CppEditorThemeAdapter"));
-		assertTrue(result.describeFailures().contains("org.eclipse.cdt.ui"));
-		assertEquals(3, nodes.get("org.eclipse.debug.ui").values.size());
-	}
-
-	@Test
-	public void recordedAbsenceAndExplicitValuesRemainDistinct() {
-		MemoryPreferences prefs = new MemoryPreferences();
-		prefs.values.put("key", "theme value");
-		PreferenceValue.absent().restore(prefs.node, "key");
-		assertFalse(prefs.values.containsKey("key"));
-		PreferenceValue.present("").restore(prefs.node, "key");
-		assertTrue(prefs.values.containsKey("key"));
-		assertEquals("", prefs.values.get("key"));
-		PreferenceValue.present("original value").restore(prefs.node, "key");
-		assertEquals("original value", prefs.values.get("key"));
-		assertEquals(0, prefs.clears);
+	private static void own(PreferenceStore store, String node, String key, String original, String written)
+			throws Exception {
+		EditorPreferenceOwnership ownership = new EditorPreferenceOwnership(store);
+		Map<Key, Owned> entries = new LinkedHashMap<>(ownership.read());
+		entries.put(new Key(node, key), new Owned(
+				original == null ? PreferenceValue.absent() : PreferenceValue.present(original),
+				written == null ? PreferenceValue.absent() : PreferenceValue.present(written)));
+		ownership.save(entries);
 	}
 }
