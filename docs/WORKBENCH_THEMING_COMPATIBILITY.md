@@ -82,6 +82,34 @@ turns both into instance preference writes (the owning plug-in's node, or `org.e
 on the next theme change (measured; a test keeps them out). High-contrast mode disables coordination, so accessibility choices are never
 overridden.
 
+### Known platform limits for theme authors
+
+Engine limits that explain some SYSTEM/NATIVE rows above, so nobody goes looking for a selector that does not exist. They were
+**reported by the vogella Eclipse Themes project** against the Eclipse 2026-06 target (`org.eclipse.e4.ui.css.swt` 0.17.100), mostly
+measured on Linux/GTK, and have **not been re-verified here** unless a row above says so. Sources:
+[styling-limits.md](https://github.com/vogellacompany/eclipse-themes/blob/main/docs/styling-limits.md) and
+[platform-styling-bugs.md](https://github.com/vogellacompany/eclipse-themes/blob/main/docs/platform-styling-bugs.md).
+
+- **Tree, Table and List selection colors.** `org.eclipse.e4.ui.css.swt` has no CSS property for them, only `swt-header-color` and
+  `swt-header-background-color` for column headers. The selected row uses the platform or desktop accent color. On GTK,
+  `-Dorg.eclipse.swt.internal.gtk.cssFile=<file>` in `eclipse.ini` can override it, but SWT reads that once at startup, so it cannot
+  follow a theme switch, and this plug-in does not use it.
+- **Selectors match exact class names.** The engine uses the widget's simple class name and does not walk up superclasses, so a
+  `Composite` subclass escapes every `Composite` rule unless a rule names it. This is why the stock sheets, and ours, list subclasses
+  such as `ProgressMonitorPart` and `DelayedFilterCheckboxTree` by name.
+- **`ToolItem:checked` is inert by default.** The pseudo-class only updates when `-Dorg.eclipse.e4.ui.css.dynamic=true` is set.
+  Without it the rule parses and silently matches nothing. Our sheets do not use it.
+- **Check box and radio indicators on GTK.** SWT sends a `Button` background to GTK as a universal selector that also fills the
+  indicator, so on a dark page an unchecked box shows only its border. A theme cannot fix this without putting a visible background
+  behind every button label.
+- **Theme ids decide GTK dark mode before Eclipse 2026-12.** Older releases call `display.setDarkThemePreferred(id.contains("dark"))`.
+  From 2026-12 the `<theme>` element accepts `isDarkTheme`
+  ([eclipse.platform.ui#4354](https://github.com/eclipse-platform/eclipse.platform.ui/pull/4354)). Our dark ids contain `dark` for
+  this reason (see `WorkbenchFamily`).
+- **Third-party colors bound to the stock dark id.** Several plug-ins (EGit, Compare, Ant, PDE, Mylyn, Spring Tools) contribute
+  their dark values only for `org.eclipse.e4.ui.css.theme.e4_dark`, so they keep light defaults under any other dark theme. This is
+  why the plug-in color table below exists.
+
 ## Plug-in colors and the ownership rule
 
 Colors that other plug-ins keep in their own preferences (popups, hyperlinks, diff and status colors, annotation colors, Mylyn and
