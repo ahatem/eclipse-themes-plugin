@@ -35,10 +35,10 @@
 	</extension>
 	<extension
          point="org.eclipse.e4.ui.css.swt.theme">
-		<theme id="com.github.eclipsethemes.workbench.dark" label="Eclipse Themes Dark" basestylesheeturi="css/workbench-dark.css"></theme>
-		<theme id="com.github.eclipsethemes.workbench.dark.alt" label="Eclipse Themes Dark (alternate)" basestylesheeturi="css/workbench-dark.css"></theme>
-		<theme id="com.github.eclipsethemes.workbench.light" label="Eclipse Themes Light" basestylesheeturi="css/workbench-light.css"></theme>
-		<theme id="com.github.eclipsethemes.workbench.light.alt" label="Eclipse Themes Light (alternate)" basestylesheeturi="css/workbench-light.css"></theme>
+		<theme id="com.github.eclipsethemes.workbench.dark" isDarkTheme="true" label="Eclipse Themes Dark" basestylesheeturi="css/workbench-dark.css"></theme>
+		<theme id="com.github.eclipsethemes.workbench.dark.alt" isDarkTheme="true" label="Eclipse Themes Dark (alternate)" basestylesheeturi="css/workbench-dark.css"></theme>
+		<theme id="com.github.eclipsethemes.workbench.light" isDarkTheme="false" label="Eclipse Themes Light" basestylesheeturi="css/workbench-light.css"></theme>
+		<theme id="com.github.eclipsethemes.workbench.light.alt" isDarkTheme="false" label="Eclipse Themes Light (alternate)" basestylesheeturi="css/workbench-light.css"></theme>
 	</extension>
 	<extension
          point="org.eclipse.ui.themes">
