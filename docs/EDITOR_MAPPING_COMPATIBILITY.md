@@ -1,9 +1,7 @@
 # Editor mapping corrections
 
 PM1–PM6 are approved. The bounded corrections are covered by focused tests and
-real Eclipse 2024-09 consumer/listener checks. See the
-[verification record](../openspec/changes/archive/2026-10-17-correct-editor-preference-mappings/verification.md)
-for exact evidence and compatibility limits.
+real Eclipse 2024-09 consumer/listener checks.
 
 Legacy XML keeps separate `selectionBackground` and `sourceHoverBackground`,
 `comment` and `xmlComment`, and `constant` and `staticFinalField` roles, including
@@ -30,7 +28,7 @@ style flags are never merged. Accepted conflicting colors or effective flags
 produce a warning with the role, source names/occurrences and selected winner.
 Equivalent candidates produce no conflict warning. Invalid/missing colors retain
 the existing skip behavior. This does not define a new XML format or relax XML
-security. The alias table is in the [change design](../openspec/changes/archive/2026-10-17-correct-editor-preference-mappings/design.md).
+security. The alias table lives in `core.parser.mapper`.
 
 JDT uses static-final fields, CDT enumerators use constants, JDT/CDT use generic
 comments, and PDE/Ant use XML comments. Explicit source-hover background controls
@@ -54,7 +52,7 @@ PDE UI `3.15.300.v20240815-2201`. Typed Boolean notifications accompany explicit
 instance values, including flags equal to defaults and repeat application. No
 substitute scoped-store fallback claims success. Missing/incompatible access is
 reported through the existing integration failure path while other integrations
-continue. A public/upstream replacement remains deferred R6 compatibility work.
+continue. A public/upstream replacement remains deferred work.
 
 The four existing optional JDT roles (`inheritedMethod`, `inheritedField`,
 `templateArgument` / legacy `typeArgument`, and `deprecated` / legacy
