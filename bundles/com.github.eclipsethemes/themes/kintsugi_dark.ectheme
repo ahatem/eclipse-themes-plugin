@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.kintsugi-dark" name="Kintsugi Dark" appearance="dark" author="Ahmed Hatem" website="https://github.com/ahatem">
+  <editor>
+    <background color="#161618"/>
+    <foreground color="#dddddd"/>
+    <abstractClass color="#939799"/>
+    <abstractMethod color="#dddddd"/>
+    <annotation color="#678e87"/>
+    <argument color="#dddddd"/>
+    <bracket color="#868165"/>
+    <class color="#939799"/>
+    <comment color="#af9661"/>
+    <constant color="#939799"/>
+    <currentLine color="#1d1d1c"/>
+    <deprecated color="#b38f8f" bold="true"/>
+    <doc color="#af9661"/>
+    <docLink color="#8a8970"/>
+    <docTag color="#8a8970"/>
+    <docXmlTag color="#8a8970"/>
+    <enum color="#939799"/>
+    <field color="#dddddd"/>
+    <filteredSearchResult color="#212226"/>
+    <findScope color="#1b1c1f"/>
+    <inheritedMethod color="#dddddd"/>
+    <interface color="#939799"/>
+    <keyword color="#dbad49" bold="true"/>
+    <lineNumber color="#444444"/>
+    <localVariable color="#dddddd"/>
+    <localVariableDeclaration color="#dddddd"/>
+    <method color="#dddddd"/>
+    <methodDeclaration color="#dddddd"/>
+    <multiLineComment color="#af9661"/>
+    <number color="#819aff"/>
+    <occurrence color="#26292d"/>
+    <operator color="#dddddd"/>
+    <removedLine color="#b38f8f"/>
+    <searchResult color="#2c2f35"/>
+    <selectionBackground color="#26292d"/>
+    <selectionForeground color="#dddddd"/>
+    <sourceHoverBackground color="#1c1c1c"/>
+    <staticField color="#939799"/>
+    <staticFinalField color="#939799"/>
+    <staticMethod color="#dddddd"/>
+    <string color="#98c379"/>
+    <taskTag color="#af9661"/>
+    <templateArgument color="#939799"/>
+    <templateParameter color="#939799"/>
+    <writeOccurrence color="#31353c"/>
+    <xmlAttribute color="#939799"/>
+    <xmlComment color="#af9661"/>
+    <xmlTag color="#939799"/>
+  </editor>
+</themePackage>

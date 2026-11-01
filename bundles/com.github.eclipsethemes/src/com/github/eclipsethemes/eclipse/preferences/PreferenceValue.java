@@ -20,6 +20,12 @@ public record PreferenceValue(Optional<String> value) {
 		return new PreferenceValue(Optional.of(value));
 	}
 
+	/** The instance value only; a node default is not a stored value and is reported as absent. */
+	public static PreferenceValue read(IEclipsePreferences preferences, String key) {
+		String value = preferences.get(key, null);
+		return value == null ? absent() : present(value);
+	}
+
 	public void restore(IEclipsePreferences preferences, String key) {
 		if (value.isPresent()) preferences.put(key, value.get());
 		else preferences.remove(key);

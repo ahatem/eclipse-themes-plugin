@@ -81,6 +81,11 @@ Reapply using the existing explicit Apply action to receive corrected mappings.
 Themes relying on previous document-order collisions, cross-role overwrites or
 default re-enablement can render differently. Bundled themes and synthetic
 one-sided/alias cases are tested; non-bundled legacy compatibility remains an
-acknowledged evidence limitation. XML is not rewritten. Reset removes declared
-instance overrides to expose defaults, without reconstructing earlier user
-values. Downgrading may restore the defects and is not a recovery mechanism.
+acknowledged evidence limitation. XML is not rewritten. Reset restores the
+editor preference values recorded before Eclipse Themes first took each managed
+key. A key changed after the plugin wrote it is preserved and reported as a
+conflict instead of being overwritten. Themes applied before the ownership
+journal existed have no recorded originals; their old overrides cannot be
+reconstructed, so the first Apply after upgrading records the current state as
+the recovery baseline. Downgrading may restore the defects and is not a recovery
+mechanism.

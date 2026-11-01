@@ -12,15 +12,33 @@ import com.github.eclipsethemes.eclipse.workbench.WorkbenchOutcome;
  */
 public record ThemeApplyOutcome(EditorOutcome editor, WorkbenchOutcome workbench, FontOutcome fonts) {
 
-	/** The adapters whose preferences could not be written; empty means every adapter succeeded. */
-	public record EditorOutcome(List<String> failedAdapters) {
+	/**
+	 * One editor preference that was changed outside Eclipse Themes after this plugin wrote it. The external value
+	 * is preserved and ownership of the key is released.
+	 */
+	public record EditorConflict(String integration, String nodeId, String key, String message) {
+		public EditorConflict {
+			Objects.requireNonNull(integration, "integration");
+			Objects.requireNonNull(nodeId, "nodeId");
+			Objects.requireNonNull(key, "key");
+			Objects.requireNonNull(message, "message");
+		}
+	}
+
+	/** The adapters whose preferences could not be written, and keys preserved because someone else changed them. */
+	public record EditorOutcome(List<String> failedAdapters, List<EditorConflict> conflicts) {
 
 		public EditorOutcome {
 			failedAdapters = List.copyOf(Objects.requireNonNull(failedAdapters, "failedAdapters"));
+			conflicts = List.copyOf(Objects.requireNonNull(conflicts, "conflicts"));
+		}
+
+		public EditorOutcome(List<String> failedAdapters) {
+			this(failedAdapters, List.of());
 		}
 
 		public boolean succeeded() {
-			return failedAdapters.isEmpty();
+			return failedAdapters.isEmpty() && conflicts.isEmpty();
 		}
 	}
 

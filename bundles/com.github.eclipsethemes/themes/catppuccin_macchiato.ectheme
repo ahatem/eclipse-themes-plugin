@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.catppuccin-macchiato" name="Catppuccin Macchiato" appearance="dark" author="Eclipse Themes">
+  <editor>
+    <background color="#24273a"/>
+    <foreground color="#cad3f5"/>
+    <abstractClass color="#eed49f" italic="true"/>
+    <abstractMethod color="#8aadf4" italic="true"/>
+    <annotation color="#f5a97f"/>
+    <argument color="#ee99a0" italic="true"/>
+    <bracket color="#939ab7"/>
+    <class color="#eed49f" italic="true"/>
+    <comment color="#939ab7" italic="true"/>
+    <constant color="#f5a97f"/>
+    <currentLine color="#2a2d41"/>
+    <deprecated color="#cad3f5" strikethrough="true"/>
+    <doc color="#939ab7" italic="true"/>
+    <docLink color="#8aadf4"/>
+    <docTag color="#c6a0f6"/>
+    <docXmlTag color="#c6a0f6" bold="true"/>
+    <enum color="#eed49f" italic="true"/>
+    <field color="#8bd5ca"/>
+    <filteredSearchResult color="#455c6d"/>
+    <findScope color="#1e2030"/>
+    <inheritedMethod color="#8aadf4" italic="true"/>
+    <interface color="#eed49f" italic="true"/>
+    <keyword color="#c6a0f6"/>
+    <lineNumber color="#8087a2"/>
+    <localVariable color="#cad3f5"/>
+    <localVariableDeclaration color="#cad3f5"/>
+    <method color="#8aadf4" italic="true"/>
+    <methodDeclaration color="#8aadf4" italic="true"/>
+    <multiLineComment color="#939ab7" italic="true"/>
+    <number color="#f5a97f"/>
+    <occurrence color="#3c4053"/>
+    <operator color="#8bd5ca"/>
+    <removedLine color="#ed8796"/>
+    <searchResult color="#604456"/>
+    <selectionBackground color="#414559"/>
+    <selectionForeground color="#cad3f5"/>
+    <sourceHoverBackground color="#1e2030"/>
+    <staticField color="#8bd5ca" italic="true"/>
+    <staticFinalField color="#f5a97f" bold="true" italic="true"/>
+    <staticMethod color="#8aadf4" italic="true"/>
+    <string color="#a6da95"/>
+    <taskTag color="#c6a0f6" bold="true"/>
+    <templateArgument color="#91d7e3"/>
+    <templateParameter color="#91d7e3"/>
+    <writeOccurrence color="#3a4467"/>
+    <xmlAttribute color="#eed49f"/>
+    <xmlComment color="#939ab7"/>
+    <xmlTag color="#8aadf4"/>
+  </editor>
+</themePackage>

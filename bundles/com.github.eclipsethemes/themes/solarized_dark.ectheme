@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.solarized-dark" name="Solarized Dark" appearance="dark" author="Eclipse Themes">
+  <editor>
+    <background color="#002b36"/>
+    <foreground color="#839496"/>
+    <annotation color="#cb4b16"/>
+    <argument color="#6c71c4"/>
+    <bracket color="#839496"/>
+    <class color="#b58900"/>
+    <comment color="#586e75"/>
+    <constant color="#cb4b16"/>
+    <currentLine color="#073642"/>
+    <deprecated color="#586e75" strikethrough="true"/>
+    <doc color="#586e75"/>
+    <docTag color="#d33682"/>
+    <docXmlTag color="#d33682"/>
+    <enum color="#859900"/>
+    <field color="#6c71c4"/>
+    <filteredSearchResult color="#094352"/>
+    <inheritedMethod color="#268bd2"/>
+    <interface color="#b58900"/>
+    <keyword color="#859900"/>
+    <lineNumber color="#586e75"/>
+    <localVariable color="#6c71c4"/>
+    <localVariableDeclaration color="#6c71c4"/>
+    <method color="#268bd2"/>
+    <methodDeclaration color="#268bd2"/>
+    <multiLineComment color="#586e75"/>
+    <number color="#d33682"/>
+    <occurrence color="#094352"/>
+    <operator color="#839496"/>
+    <removedLine color="#dc322f"/>
+    <searchResult color="#094352"/>
+    <selectionBackground color="#094450"/>
+    <selectionForeground color="#839496"/>
+    <sourceHoverBackground color="#063643"/>
+    <staticField color="#cb4b16"/>
+    <staticFinalField color="#cb4b16"/>
+    <staticMethod color="#268bd2"/>
+    <string color="#2aa198"/>
+    <taskTag color="#d33682" bold="true"/>
+    <templateArgument color="#6c71c4"/>
+    <templateParameter color="#6c71c4"/>
+    <writeOccurrence color="#094352"/>
+    <xmlAttribute color="#b58900"/>
+    <xmlComment color="#586e75"/>
+    <xmlDirective color="#6c71c4"/>
+    <xmlTag color="#268bd2"/>
+  </editor>
+</themePackage>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.vsc-light" name="Visual Studio Light" appearance="light" author="Eclipse Themes">
+  <editor>
+    <background color="#ffffff"/>
+    <foreground color="#000000"/>
+    <annotation color="#795e26"/>
+    <argument color="#001080"/>
+    <bracket color="#000000"/>
+    <class color="#267f99"/>
+    <comment color="#008000"/>
+    <constant color="#0070c1"/>
+    <currentLine color="#eeeeee"/>
+    <deprecated color="#808080" strikethrough="true"/>
+    <doc color="#008000"/>
+    <docLink color="#0000ff"/>
+    <docTag color="#0000ff"/>
+    <docXmlTag color="#0000ff"/>
+    <enum color="#267f99"/>
+    <field color="#001080"/>
+    <filteredSearchResult color="#d5d5d5"/>
+    <inheritedMethod color="#795e26"/>
+    <interface color="#267f99"/>
+    <keyword color="#0000ff"/>
+    <lineNumber color="#237893"/>
+    <localVariable color="#001080"/>
+    <localVariableDeclaration color="#001080"/>
+    <method color="#795e26"/>
+    <methodDeclaration color="#795e26"/>
+    <multiLineComment color="#008000"/>
+    <number color="#098658"/>
+    <occurrence color="#d5d5d5"/>
+    <operator color="#000000"/>
+    <removedLine color="#cd3131"/>
+    <searchResult color="#d5d5d5"/>
+    <selectionBackground color="#add6ff"/>
+    <sourceHoverBackground color="#eeeeee"/>
+    <staticField color="#001080"/>
+    <staticFinalField color="#0070c1"/>
+    <staticMethod color="#795e26"/>
+    <string color="#a31515"/>
+    <taskTag color="#008000"/>
+    <templateArgument color="#267f99"/>
+    <templateParameter color="#267f99"/>
+    <writeOccurrence color="#d5d5d5"/>
+    <xmlAttribute color="#001080"/>
+    <xmlComment color="#008000"/>
+    <xmlTag color="#0000ff"/>
+  </editor>
+</themePackage>

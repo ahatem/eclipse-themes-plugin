@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.github-light-default" name="GitHub Light Default" appearance="light" author="Eclipse Themes">
+  <editor>
+    <background color="#ffffff"/>
+    <foreground color="#1f2328"/>
+    <abstractClass color="#0969da"/>
+    <abstractMethod color="#6f42c1"/>
+    <annotation color="#bc4c00"/>
+    <argument color="#bc4c00"/>
+    <bracket color="#1f2328"/>
+    <class color="#0969da"/>
+    <comment color="#656d76" italic="true"/>
+    <constant color="#0969da"/>
+    <currentLine color="#f6f8fa"/>
+    <deprecated color="#656d76" strikethrough="true"/>
+    <doc color="#656d76" italic="true"/>
+    <docLink color="#0969da"/>
+    <docTag color="#0969da"/>
+    <docXmlTag color="#0969da"/>
+    <enum color="#1a7f37"/>
+    <field color="#1f2328"/>
+    <filteredSearchResult color="#fff8c5"/>
+    <findScope color="#fff8c5"/>
+    <inheritedMethod color="#6f42c1"/>
+    <interface color="#0969da"/>
+    <keyword color="#d73a49" bold="true"/>
+    <lineNumber color="#656d76"/>
+    <localVariable color="#1f2328"/>
+    <localVariableDeclaration color="#1f2328"/>
+    <method color="#6f42c1"/>
+    <methodDeclaration color="#6f42c1"/>
+    <multiLineComment color="#656d76" italic="true"/>
+    <number color="#0550ae"/>
+    <occurrence color="#fff8c5"/>
+    <operator color="#d73a49"/>
+    <removedLine color="#cf222e"/>
+    <searchResult color="#fff8c5"/>
+    <selectionBackground color="#d6d6d6"/>
+    <selectionForeground color="#1f2328"/>
+    <sourceHoverBackground color="#f6f8fa"/>
+    <staticField color="#bc4c00"/>
+    <staticFinalField color="#bc4c00"/>
+    <staticMethod color="#6f42c1"/>
+    <string color="#0a3069"/>
+    <taskTag color="#cf222e" bold="true"/>
+    <templateArgument color="#0969da"/>
+    <templateParameter color="#0969da"/>
+    <writeOccurrence color="#ffdf5d"/>
+    <xmlAttribute color="#bc4c00"/>
+    <xmlComment color="#656d76" italic="true"/>
+    <xmlTag color="#1a7f37"/>
+  </editor>
+</themePackage>

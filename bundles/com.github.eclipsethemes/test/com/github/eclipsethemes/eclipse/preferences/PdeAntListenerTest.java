@@ -61,6 +61,13 @@ public class PdeAntListenerTest {
 
     @Test public void unsupportedHistoricalValuesSurviveApplyAndRepeatedReset() throws Exception {
         Map<String, MemoryPreferences> nodes = new HashMap<>();
+        PreferenceStore store = new PreferenceStore() {
+            @Override public void save() {
+                // in memory only
+            }
+        };
+        EditorPreferenceOwnership ownership = new EditorPreferenceOwnership(store);
+        Map<EditorPreferenceOwnership.Key, EditorPreferenceOwnership.Owned> journal = new HashMap<>();
         for (EclipseThemeAdapter adapter : adapters()) {
             MemoryPreferences prefs = new MemoryPreferences();
             nodes.put(adapter.getPreferencesId(), prefs);
@@ -70,9 +77,15 @@ public class PdeAntListenerTest {
                 prefs.values.put(base + "_strikethrough", "preserve false");
                 prefs.values.put("unrelated", "keep");
                 adapter.apply(sparse().build(), prefs.node);
+                for (String key : adapter.getManagedKeys()) {
+                    journal.put(new EditorPreferenceOwnership.Key(adapter.getPreferencesId(), key),
+                            new EditorPreferenceOwnership.Owned(PreferenceValue.absent(),
+                                    PreferenceValue.read(prefs.node, key)));
+                }
             }
         }
-        PreferenceReset reset = new PreferenceReset(id -> nodes.get(id).node);
+        ownership.save(journal);
+        PreferenceReset reset = new PreferenceReset(id -> nodes.get(id).node, store);
         for (int i = 0; i < 2; i++) assertTrue(reset.reset().successful());
         for (String id : List.of("org.eclipse.pde.ui", "org.eclipse.ant.ui")) {
             MemoryPreferences prefs = nodes.get(id);

@@ -94,6 +94,13 @@ public class WorkbenchSectionModelTest {
 				new ThemeApplyOutcome(new EditorOutcome(List.of("JavaEditorThemeAdapter")), WorkbenchOutcome.applied("x")));
 		assertFalse(editorFailure.startsWith("✓"));
 		assertTrue(editorFailure.contains("JavaEditorThemeAdapter"));
+
+		String conflict = WorkbenchSectionModel.summary(new ThemeApplyOutcome(new EditorOutcome(List.of(),
+				List.of(new ThemeApplyOutcome.EditorConflict("TextEditorThemeAdapter", "org.eclipse.ui.editors",
+						"AbstractTextEditor.Color.Background", "kept"))), WorkbenchOutcome.notRequested("off")));
+		assertFalse(conflict.startsWith("✓"));
+		assertTrue(conflict.contains("changed outside Eclipse Themes"));
+		assertTrue(conflict.contains("1 editor preference was"));
 	}
 
 	@Test

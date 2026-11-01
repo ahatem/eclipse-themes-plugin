@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import com.github.eclipsethemes.core.Constants;
+import com.github.eclipsethemes.eclipse.ThemeApplyOutcome;
 import com.github.eclipsethemes.eclipse.ThemeRecord;
 
 /** Selected intent only, not a record of successful theme application. */
@@ -21,7 +22,7 @@ public final class ThemeSelection {
         String reference = store.getString(key);
         if (reference.isBlank()) return Optional.empty();
         var matches = themes.stream()
-                .filter(theme -> reference.equals(modern ? theme.logicalId() : theme.theme().getId())).toList();
+                .filter(theme -> reference.equals(modern ? theme.logicalId() : theme.sourceId())).toList();
         return matches.size() == 1 ? Optional.of(matches.get(0)) : Optional.empty();
     }
 
@@ -29,6 +30,18 @@ public final class ThemeSelection {
         String id = theme.logicalId();
         if (id.isBlank()) throw new IllegalArgumentException("Theme has no established logical identity");
         store.setValue(PreferenceKeys.SELECTED_THEME_LOGICAL_ID, id);
+    }
+
+    /**
+     * Persists the selected theme only when the editor half actually succeeded. A partial or conflicting apply
+     * leaves the previously applied intent untouched.
+     */
+    static boolean rememberApplied(IPreferenceStore store, ThemeRecord theme, ThemeApplyOutcome outcome) {
+        if (!outcome.editor().succeeded()) {
+            return false;
+        }
+        remember(store, theme);
+        return true;
     }
 
     static void clear(IPreferenceStore store) {

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.gruvbox-material-dark-hard" name="Gruvbox Material Dark Hard" appearance="dark" author="Eclipse Themes">
+  <editor>
+    <background color="#1d2021"/>
+    <foreground color="#d4be98"/>
+    <abstractClass color="#d8a657"/>
+    <abstractMethod color="#7daea3"/>
+    <annotation color="#d8a657"/>
+    <argument color="#e78a4e"/>
+    <bracket color="#d4be98"/>
+    <class color="#d8a657"/>
+    <comment color="#928374" italic="true"/>
+    <constant color="#d3869b"/>
+    <currentLine color="#32302f"/>
+    <deprecated color="#928374" strikethrough="true"/>
+    <doc color="#928374" italic="true"/>
+    <docLink color="#7daea3"/>
+    <docTag color="#a9b665"/>
+    <docXmlTag color="#a9b665"/>
+    <enum color="#a9b665"/>
+    <field color="#7daea3"/>
+    <filteredSearchResult color="#504945"/>
+    <findScope color="#504945"/>
+    <inheritedMethod color="#7daea3"/>
+    <interface color="#d8a657"/>
+    <keyword color="#ea6962" bold="true"/>
+    <lineNumber color="#665c54"/>
+    <localVariable color="#d4be98"/>
+    <localVariableDeclaration color="#d4be98"/>
+    <method color="#7daea3"/>
+    <methodDeclaration color="#7daea3"/>
+    <multiLineComment color="#928374" italic="true"/>
+    <number color="#d3869b"/>
+    <occurrence color="#504945"/>
+    <operator color="#d4be98"/>
+    <removedLine color="#ea6962"/>
+    <searchResult color="#504945"/>
+    <selectionBackground color="#503946"/>
+    <selectionForeground color="#d4be98"/>
+    <sourceHoverBackground color="#32302f"/>
+    <staticField color="#d8a657"/>
+    <staticFinalField color="#d8a657"/>
+    <staticMethod color="#7daea3"/>
+    <string color="#a9b665"/>
+    <taskTag color="#ea6962" bold="true"/>
+    <templateArgument color="#89b482"/>
+    <templateParameter color="#89b482"/>
+    <writeOccurrence color="#504945"/>
+    <xmlAttribute color="#d8a657"/>
+    <xmlComment color="#928374" italic="true"/>
+    <xmlTag color="#ea6962"/>
+  </editor>
+</themePackage>

@@ -4,6 +4,12 @@ public interface PreferenceKeys {
 	String ACTIVE_THEME_ID = "ACTIVE_THEME_ID";
 	String SELECTED_THEME_LOGICAL_ID = "SELECTED_THEME_LOGICAL_ID";
 
+	/**
+	 * The editor preference keys this plugin owns, with the value written and the
+	 * state that existed before ownership began. One line per {@code nodeId|key}.
+	 */
+	String EDITOR_PREFERENCES_OWNED = "EDITOR_PREFERENCES_OWNED";
+
 	/** User intent: also coordinate the Eclipse workbench theme. Off by default. */
 	String WORKBENCH_COORDINATION_ENABLED = "WORKBENCH_COORDINATION_ENABLED";
 	/** The os/ws/theme-engine combination the user opted into experimentally; empty when none. */

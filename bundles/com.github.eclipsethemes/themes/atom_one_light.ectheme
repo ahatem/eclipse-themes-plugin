@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.atom-one-light" name="Atom One Light" appearance="light" author="Eclipse Themes">
+  <editor>
+    <background color="#fafafa"/>
+    <foreground color="#383a42"/>
+    <annotation color="#e45649"/>
+    <argument color="#0184bc"/>
+    <bracket color="#383a42"/>
+    <class color="#c18401"/>
+    <comment color="#a0a1a7" italic="true"/>
+    <constant color="#986801"/>
+    <currentLine color="#f0f0f0"/>
+    <deprecated color="#696c77" strikethrough="true"/>
+    <doc color="#a0a1a7" italic="true"/>
+    <docTag color="#a626a4" italic="true"/>
+    <docXmlTag color="#a626a4" italic="true"/>
+    <enum color="#50a14f"/>
+    <field color="#e45649"/>
+    <filteredSearchResult color="#e6e6e6"/>
+    <inheritedMethod color="#4078f2"/>
+    <interface color="#c18401"/>
+    <keyword color="#a626a4"/>
+    <lineNumber color="#c2c2c3"/>
+    <localVariable color="#e45649"/>
+    <localVariableDeclaration color="#e45649"/>
+    <method color="#4078f2"/>
+    <methodDeclaration color="#4078f2"/>
+    <multiLineComment color="#a0a1a7" italic="true"/>
+    <number color="#986801"/>
+    <occurrence color="#e6e6e6"/>
+    <operator color="#383a42"/>
+    <removedLine color="#e45649"/>
+    <searchResult color="#e6e6e6"/>
+    <selectionBackground color="#e5e5e6"/>
+    <sourceHoverBackground color="#f0f0f0"/>
+    <staticField color="#986801"/>
+    <staticFinalField color="#986801"/>
+    <staticMethod color="#4078f2"/>
+    <string color="#50a14f"/>
+    <taskTag color="#e45649"/>
+    <templateArgument color="#0184bc"/>
+    <templateParameter color="#0184bc"/>
+    <writeOccurrence color="#e6e6e6"/>
+    <xmlAttribute color="#986801"/>
+    <xmlComment color="#a0a1a7" italic="true"/>
+    <xmlTag color="#e45649"/>
+  </editor>
+</themePackage>

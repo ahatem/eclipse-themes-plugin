@@ -1,27 +1,26 @@
 package com.github.eclipsethemes.eclipse;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 import org.eclipse.core.runtime.ILog;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IWorkbench;
-import org.osgi.service.prefs.BackingStoreException;
 
 import com.github.eclipsethemes.core.models.Theme;
+import com.github.eclipsethemes.eclipse.ThemeApplyOutcome.EditorOutcome;
 import com.github.eclipsethemes.eclipse.fonts.FontOutcome;
 import com.github.eclipsethemes.eclipse.fonts.ThemeFontCoordinator;
+import com.github.eclipsethemes.eclipse.preferences.EditorPreferenceOwnership;
+import com.github.eclipsethemes.eclipse.preferences.EditorPreferenceWriter;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchCoordinator;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchOutcome;
 
 public final class ThemeService {
 
-	/** Writes the editor-side preferences for a theme and returns the names of the adapters that failed. */
+	/** Writes the editor-side preferences for a theme and reports failures and preserved external changes. */
 	interface EditorWriter {
-		List<String> write(Theme theme);
+		EditorOutcome write(Theme theme);
 	}
 
 	private final EditorWriter editor;
@@ -30,8 +29,9 @@ public final class ThemeService {
 	private final ILog log;
 
 	public ThemeService(AdapterRegistry registry, WorkbenchCoordinator workbench, ThemeFontCoordinator fonts,
-			ILog log) {
-		this(theme -> writeEditorPreferences(registry, theme, log), workbench, fonts::apply, log);
+			ILog log, IPreferenceStore store) {
+		this(theme -> new EditorPreferenceWriter(registry.getAdapters(), InstanceScope.INSTANCE::getNode,
+				new EditorPreferenceOwnership(store), log).write(theme), workbench, fonts::apply, log);
 	}
 
 	ThemeService(EditorWriter editor, WorkbenchCoordinator workbench, ILog log) {
@@ -67,7 +67,11 @@ public final class ThemeService {
 		if (!workbenchOutcome.succeeded()) {
 			log.warn("Workbench theming: " + workbenchOutcome.status() + " " + workbenchOutcome.message());
 		}
-		List<String> failedAdapters = editor.write(theme);
+		EditorOutcome editorOutcome = editor.write(theme);
+		if (!editorOutcome.succeeded()) {
+			log.warn("Editor theming: " + editorOutcome.failedAdapters().size() + " adapter(s) failed, "
+					+ editorOutcome.conflicts().size() + " preference(s) changed outside Eclipse Themes were kept.");
+		}
 		FontOutcome fontOutcome;
 		try {
 			fontOutcome = fonts.apply(theme);
@@ -78,27 +82,6 @@ public final class ThemeService {
 		if (!fontOutcome.succeeded()) {
 			log.warn("Theme fonts: " + fontOutcome.status() + " " + fontOutcome.message());
 		}
-		return new ThemeApplyOutcome(new ThemeApplyOutcome.EditorOutcome(failedAdapters), workbenchOutcome,
-				fontOutcome);
-	}
-
-	private static List<String> writeEditorPreferences(AdapterRegistry registry, Theme theme, ILog log) {
-		List<String> failedAdapters = new ArrayList<>();
-		registry.getAdapters().forEach((adapter, plugin) -> {
-			// If a required plugin is declared, skip when it is not installed
-			if (plugin != null && Platform.getBundle(plugin) == null) return;
-
-			try {
-				String prefNodeId = adapter.getPreferencesId();
-				IEclipsePreferences prefs = prefNodeId != null
-						? InstanceScope.INSTANCE.getNode(prefNodeId)
-						: null;
-				adapter.apply(theme, prefs);
-			} catch (BackingStoreException e) {
-				failedAdapters.add(adapter.getClass().getSimpleName());
-				log.error("Could not apply theme via adapter " + adapter.getClass().getSimpleName(), e);
-			}
-		});
-		return failedAdapters;
+		return new ThemeApplyOutcome(editorOutcome, workbenchOutcome, fontOutcome);
 	}
 }

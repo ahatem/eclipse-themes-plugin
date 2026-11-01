@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.vitesse-dark" name="Vitesse Dark" appearance="dark" author="Eclipse Themes">
+  <editor>
+    <background color="#121212"/>
+    <foreground color="#dbd7ca"/>
+    <abstractClass color="#6872ab"/>
+    <abstractMethod color="#80a665"/>
+    <annotation color="#b8a965"/>
+    <argument color="#dbd7ca"/>
+    <bracket color="#666666"/>
+    <class color="#6872ab"/>
+    <comment color="#758575" italic="true"/>
+    <constant color="#c99076"/>
+    <currentLine color="#181818"/>
+    <deprecated color="#758575" strikethrough="true"/>
+    <doc color="#758575" italic="true"/>
+    <docLink color="#6394bf"/>
+    <docTag color="#5d99a9"/>
+    <docXmlTag color="#5d99a9"/>
+    <enum color="#c99076"/>
+    <error color="#cb7676"/>
+    <field color="#bd976a"/>
+    <filteredSearchResult color="#e6cc77"/>
+    <findScope color="#2a2a2a"/>
+    <inheritedMethod color="#80a665"/>
+    <interface color="#5d99a9"/>
+    <keyword color="#4d9375"/>
+    <lineNumber color="#959da5"/>
+    <localVariable color="#bd976a"/>
+    <localVariableDeclaration color="#bd976a"/>
+    <method color="#80a665"/>
+    <methodDeclaration color="#80a665"/>
+    <multiLineComment color="#758575" italic="true"/>
+    <number color="#4c9a91"/>
+    <occurrence color="#252525"/>
+    <operator color="#666666"/>
+    <removedLine color="#cb7676"/>
+    <searchResult color="#e6cc77"/>
+    <selectionBackground color="#2a2a2a"/>
+    <selectionForeground color="#dbd7ca"/>
+    <sourceHoverBackground color="#181818"/>
+    <staticField color="#bd976a" italic="true"/>
+    <staticFinalField color="#c99076" bold="true"/>
+    <staticMethod color="#80a665" italic="true"/>
+    <string color="#c98a7d"/>
+    <taskTag color="#4d9375" bold="true"/>
+    <templateArgument color="#5da994"/>
+    <templateParameter color="#5da994"/>
+    <writeOccurrence color="#2a2a2a"/>
+    <xmlAttribute color="#bd976a"/>
+    <xmlComment color="#758575" italic="true"/>
+    <xmlTag color="#4d9375"/>
+  </editor>
+</themePackage>

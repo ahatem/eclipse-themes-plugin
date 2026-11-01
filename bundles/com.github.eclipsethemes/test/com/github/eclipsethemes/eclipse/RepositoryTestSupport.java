@@ -64,6 +64,7 @@ final class RepositoryTestSupport {
         Bundle bundle = (Bundle) Proxy.newProxyInstance(Bundle.class.getClassLoader(), new Class<?>[] { Bundle.class },
                 (proxy, method, args) -> {
                     if (method.getName().equals("findEntries")) return Collections.enumeration(resources);
+                    if (method.getName().equals("getEntry")) return null;
                     throw new AssertionError(method);
                 });
         field.set(EclipseThemes.instance(), bundle);

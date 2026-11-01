@@ -34,7 +34,8 @@ public final class ThemeManager {
 				EclipseThemes.instance().getPreferenceStore(),
 				PluginColorWriter.create(EclipseThemes.instance().getPreferenceStore()));
 		this.fonts = new ThemeFontCoordinator(new EclipseWorkbenchFonts(), EclipseThemes.instance().getPreferenceStore());
-		this.service = new ThemeService(registry, workbench, fonts, log);
+		this.service = new ThemeService(registry, workbench, fonts, log,
+				EclipseThemes.instance().getPreferenceStore());
 
 		repository.reload();
 		registry.discover();
