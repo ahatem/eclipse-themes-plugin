@@ -196,6 +196,58 @@ public class PluginColorsTest {
 				"org.eclipse.jdt.ui|javadocElementsStyling.darkModeDefaultColors")));
 	}
 
+	/** Keys whose owners bind dark values to the stock dark theme id only, or to no sheet (extend-plugin-color-coverage). */
+	@Test
+	public void theStockDarkOnlyPluginKeysAreDeclaredWithTheirOwnerAndRole() {
+		String mylyn = "org.eclipse.mylyn.tasks.ui";
+		String boot = "org.springframework.ide.eclipse.boot.dash";
+		String commons = "org.springframework.tooling.ls.eclipse.commons";
+		String xterm = "org.springframework.ide.eclipse.xterm";
+		assertDeclared(mylyn + ".colors.foreground.past.due", mylyn, PluginColorSource.ERROR);
+		assertDeclared(mylyn + ".colors.foreground.overdue.for.others", mylyn, PluginColorSource.WARNING);
+		assertDeclared(mylyn + ".colors.incoming.background", mylyn, PluginColorSource.INFO_TINT);
+		assertDeclared(boot + ".TextDecorColor", boot, PluginColorSource.SUCCESS);
+		assertDeclared(boot + ".AltTextDecorColor", boot, PluginColorSource.INFO);
+		assertDeclared(commons + ".STS4BootMarkerIndicationColor", commons, PluginColorSource.SUCCESS_TINT);
+		assertDeclared(xterm + ".background", xterm, PluginColorSource.BACKGROUND);
+		assertDeclared(xterm + ".foreground", xterm, PluginColorSource.FOREGROUND);
+		assertDeclared(xterm + ".selection", xterm, PluginColorSource.FOREGROUND);
+		assertDeclared(xterm + ".cursor", xterm, PluginColorSource.FOREGROUND);
+		assertDeclared(xterm + ".cursorAccent", xterm, PluginColorSource.BACKGROUND);
+	}
+
+	private static void assertDeclared(String name, String bundle, PluginColorSource source) {
+		PluginColorKey expected = new PluginColorKey(PluginColorTable.WORKBENCH, name, bundle, source);
+		assertTrue("missing " + name, PluginColorTable.keys().contains(expected));
+	}
+
+	/** The terminal draws the glyph under its block cursor in the accent color; it must match the terminal background. */
+	@Test
+	public void terminalCursorAccentEqualsTerminalBackground() {
+		for (String pair : THEMES) {
+			String[] colors = pair.split(" ");
+			Map<String, String> values = PluginColors.derive(palette(ThemeType.DARK, colors[0], colors[1]));
+			String xterm = "org.eclipse.ui.workbench|org.springframework.ide.eclipse.xterm.";
+			assertEquals(pair, values.get(xterm + "background"), values.get(xterm + "cursorAccent"));
+			assertNotEquals(pair, values.get(xterm + "background"), values.get(xterm + "cursor"));
+		}
+	}
+
+	/**
+	 * Rejected candidates (evidence in extend-plugin-color-coverage): Mylyn Context and e4 tools colors have no reader,
+	 * PDE target-editor colors are syntax colors, WikiText values are CSS fragments.
+	 */
+	@Test
+	public void candidatesWithoutReaderOrOwnedByEditorsAreNotDeclared() {
+		for (PluginColorKey key : PluginColorTable.keys()) {
+			for (String prefix : List.of("org.eclipse.mylyn.context.ui.", "org.eclipse.e4.tools.emf.ui.",
+					"org.eclipse.pde.genericeditor.extension.")) {
+				assertFalse(key.id(), key.key().startsWith(prefix));
+			}
+			assertFalse(key.id(), key.node().equals("org.eclipse.mylyn.wikitext.ui"));
+		}
+	}
+
 	// ---- ownership record codec ------------------------------------------------------------------------------
 
 	@Test
