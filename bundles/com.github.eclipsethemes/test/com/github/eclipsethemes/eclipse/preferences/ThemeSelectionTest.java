@@ -10,7 +10,7 @@ import java.util.Map;
 import org.eclipse.jface.preference.PreferenceStore;
 import org.junit.Test;
 
-import com.github.eclipsethemes.core.Constants;
+import com.github.eclipsethemes.core.models.Constants;
 import com.github.eclipsethemes.core.models.Color;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.ThemeType;

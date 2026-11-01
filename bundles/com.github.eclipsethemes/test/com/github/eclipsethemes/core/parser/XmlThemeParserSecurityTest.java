@@ -8,7 +8,6 @@ import java.net.URI;
 import java.util.List;
 import org.junit.Test;
 import org.xml.sax.SAXException;
-import com.github.eclipsethemes.core.exceptions.ThemeParseException;
 
 public class XmlThemeParserSecurityTest {
     @Test public void localEntityInjectionIsRejected() throws Exception {

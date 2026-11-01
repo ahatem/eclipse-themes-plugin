@@ -1,4 +1,4 @@
-package com.github.eclipsethemes.core;
+package com.github.eclipsethemes.core.models;
 
 public interface Constants {
 	String MORE_THEMES_URL = "https://eclipse-color-themes.vercel.app/";

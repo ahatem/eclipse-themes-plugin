@@ -8,17 +8,17 @@ All code is under `com.github.eclipsethemes`:
 
 | Package | Role | Eclipse UI / OSGi dependency |
 | --- | --- | --- |
-| `core.models` | Immutable `Theme`, tokens, package metadata | none |
-| `core.parser` (+ `mapper`) | `XmlThemeParser` (legacy `.xml`) and `ThemePackageParser` (`.ectheme`); alias mapping | none |
+| `core.models` | Immutable `Theme`, tokens, package metadata, `Constants` (default theme ids, website URLs) | none |
+| `core.parser` | `XmlThemeParser` (legacy `.xml`) and `ThemePackageParser` (`.ectheme`); `ThemeParseException`; legacy alias mapping | none |
 | `core.validation` | `ThemeDiagnostic` findings reported through a caller-supplied sink | none |
 | `core.workbench` | Pure conversion of a theme into the eight-role workbench palette | none |
 | `eclipse` | Activator, `ThemeRepository` / `ThemeRecord` catalog, `ThemeService`, import/update/remove | yes |
-| `eclipse.adapters` | Editor adapters (`editor.*`: text, JDT, CDT, PDE, Ant, debug) and UI adapters, discovered through the `com.github.eclipsethemes.theme.adapters` extension point | yes |
+| `eclipse.adapters` | Editor adapters (`editor.*`: text, JDT, CDT, PDE, Ant) and the debug console adapter, discovered through the `com.github.eclipsethemes.theme.adapters` extension point | yes |
 | `eclipse.workbench` | Workbench coordination: palette registry sink, `IThemeEngine` switching, plug-in color keys | yes |
 | `eclipse.fonts` | Theme font coordination | yes |
 | `eclipse.preferences` | The Theme Manager preference page | yes |
 
-Rule: `core.*` must not import SWT, JFace, the activator or Eclipse preference APIs. Everything that talks to Eclipse lives in `eclipse.*`. Do not split the bundle unless an optional dependency, a public API or a lifecycle difference requires it.
+Rule: `core.*` must not import SWT, JFace, the activator or Eclipse preference APIs (`CoreLayeringTest` enforces the SWT / JFace / `org.eclipse.ui` part). Everything that talks to Eclipse lives in `eclipse.*`. Do not split the bundle unless an optional dependency, a public API or a lifecycle difference requires it.
 
 ## How a theme flows
 

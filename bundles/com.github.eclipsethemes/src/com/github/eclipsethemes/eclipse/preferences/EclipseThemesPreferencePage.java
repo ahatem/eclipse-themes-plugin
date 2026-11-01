@@ -56,7 +56,7 @@ import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import com.github.eclipsethemes.EclipseThemes;
-import com.github.eclipsethemes.core.Constants;
+import com.github.eclipsethemes.core.models.Constants;
 import com.github.eclipsethemes.core.models.PackageMetadata;
 import com.github.eclipsethemes.core.models.ThemeFonts;
 import com.github.eclipsethemes.core.parser.ParserFactory;

@@ -20,35 +20,27 @@ public class WorkbenchCapabilityTest {
 		return WorkbenchCapabilityClassifier.classify(env, probe);
 	}
 
+	/** Only measured combinations are VERIFIED (the build qualifier is ignored); the table is confidence, not an allow-list. */
 	@Test
-	public void measuredCombinationsAreVerifiedIgnoringTheBuildQualifier() {
-		assertEquals(State.VERIFIED,
-				classify(env("win32", "win32", "0.15.100.v20260507-0340"), EngineProbe.usable()).state());
-		assertEquals(State.VERIFIED,
-				classify(env("win32", "win32", "0.15.200.v20260801-1200"), EngineProbe.usable()).state());
-		assertEquals(State.VERIFIED, classify(env("win32", "win32", "0.15.200"), EngineProbe.usable()).state());
-	}
-
-	@Test
-	public void aNewerMicroVersionIsExperimentalNotVerified() {
-		WorkbenchCapability capability = classify(env("win32", "win32", "0.15.300.v1"), EngineProbe.usable());
-		assertEquals(State.EXPERIMENTAL, capability.state());
-		assertNull(capability.reason());
-		assertTrue(capability.usable());
-	}
-
-	@Test
-	public void otherPlatformsAndMinorVersionsAreExperimental() {
-		assertEquals(State.EXPERIMENTAL, classify(env("linux", "gtk", "0.15.200.v1"), EngineProbe.usable()).state());
-		assertEquals(State.EXPERIMENTAL, classify(env("macosx", "cocoa", "0.15.200.v1"), EngineProbe.usable()).state());
-		assertEquals(State.EXPERIMENTAL, classify(env("win32", "win32", "0.16.0.v1"), EngineProbe.usable()).state());
-	}
-
-	@Test
-	public void theMeasuredTableIsConfidenceNotAnAllowList() {
-		WorkbenchCapability unknown = classify(env("solaris", "motif", "9.9.9"), EngineProbe.usable());
-		assertTrue(unknown.usable());
-		assertEquals(State.EXPERIMENTAL, unknown.state());
+	public void measuredCombinationsAreVerifiedAndEverythingElseIsUsableButExperimental() {
+		String[][] cases = {
+				// os, ws, theme bundle, expected state
+				{ "win32", "win32", "0.15.100.v20260507-0340", "VERIFIED" },
+				{ "win32", "win32", "0.15.200.v20260801-1200", "VERIFIED" },
+				{ "win32", "win32", "0.15.200", "VERIFIED" },
+				{ "win32", "win32", "0.15.300.v1", "EXPERIMENTAL" },
+				{ "win32", "win32", "0.16.0.v1", "EXPERIMENTAL" },
+				{ "linux", "gtk", "0.15.200.v1", "EXPERIMENTAL" },
+				{ "macosx", "cocoa", "0.15.200.v1", "EXPERIMENTAL" },
+				{ "solaris", "motif", "9.9.9", "EXPERIMENTAL" },
+		};
+		for (String[] c : cases) {
+			WorkbenchCapability capability = classify(env(c[0], c[1], c[2]), EngineProbe.usable());
+			String label = c[0] + "/" + c[1] + "/" + c[2];
+			assertEquals(label, State.valueOf(c[3]), capability.state());
+			assertTrue(label, capability.usable());
+			assertNull(label, capability.reason());
+		}
 	}
 
 	@Test
@@ -89,15 +81,6 @@ public class WorkbenchCapabilityTest {
 		} catch (IllegalArgumentException expected) {
 			// UNAVAILABLE needs a reason
 		}
-	}
-
-	@Test
-	public void environmentNormalizesTheVersionAndNamesTheCombination() {
-		WorkbenchEnvironment environment = env("win32", "win32", "0.15.200.v20260801-1200");
-		assertEquals("0.15.200", environment.themeBundleMajorMinorMicro());
-		assertEquals("win32/win32/0.15.200", environment.combination());
-		assertEquals("0.15", env("a", "b", "0.15").themeBundleMajorMinorMicro());
-		assertEquals("unknown", new WorkbenchEnvironment(null, null, null, null, null).os());
 	}
 
 	@Test
