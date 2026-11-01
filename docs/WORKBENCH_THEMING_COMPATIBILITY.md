@@ -1,8 +1,6 @@
-# Workbench theming (R8) — compatibility and coverage
+# Workbench theming — compatibility and coverage
 
-Status: implemented by the `dynamic-workbench-theming` change (workbench coordination) and the `plugin-color-coordination` change
-(colors of other plug-ins). The behavioral contracts are `openspec/specs/workbench-theming/spec.md`, `plugin-color-coordination` and
-`preference-ownership`; runtime evidence is in the `evidence/` folders of the archived changes under `openspec/changes/archive/`.
+Status: implemented (workbench coordination and coordinated colors of other plug-ins). The behavior rules are summarized in [ARCHITECTURE.md](ARCHITECTURE.md#behavior-rules).
 
 ## What it does
 
@@ -132,7 +130,7 @@ theme's foreground stays readable on top. Nothing depends on a theme's name.
 
 Not coordinated, by design: syntax and editor-surface colors (owned by the editor integrations), operating-system colors (for example
 the range indicator, which defaults to the system list-selection color), and colors whose Eclipse default is already readable on a
-dark workbench. `evidence/key-classification.md` in the archived `plugin-color-coordination` change lists every stock-Dark key with its class.
+dark workbench. Every stock-Dark key was classified when this feature was built; the declared key table is in the `eclipse.workbench` package.
 
 If the plugin is uninstalled while a dark theme is active, its colors stay in place (the plugin has no uninstall hook; stock Dark has
 the same exposure). To remove them, untick **Also theme the Eclipse workbench** and apply before uninstalling, or reset the colors
