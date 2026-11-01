@@ -47,11 +47,13 @@ public class WorkbenchContributionConsistencyTest {
 	public void pluginXmlDeclaresTheFourThemesWithTheirFamilyStylesheet() throws Exception {
 		Document plugin = pluginXml();
 		Map<String, String> themes = new LinkedHashMap<>();
+		Map<String, String> dark = new LinkedHashMap<>();
 		for (Element ext : extensions(plugin, "org.eclipse.e4.ui.css.swt.theme")) {
 			NodeList list = ext.getElementsByTagName("theme");
 			for (int i = 0; i < list.getLength(); i++) {
 				Element theme = (Element) list.item(i);
 				themes.put(theme.getAttribute("id"), theme.getAttribute("basestylesheeturi"));
+				dark.put(theme.getAttribute("id"), theme.getAttribute("isDarkTheme"));
 			}
 			// Only the two family sheets: any other sheet bound to our ids escapes the checks below.
 			assertEquals(0, ext.getElementsByTagName("stylesheet").getLength());
@@ -62,6 +64,11 @@ public class WorkbenchContributionConsistencyTest {
 			assertEquals(css, themes.get(family.themeId()));
 			assertEquals(css, themes.get(family.alternateThemeId()));
 			assertTrue(css, Files.isRegularFile(BUNDLE.resolve(css)));
+			// Explicit appearance for releases that read it (eclipse.platform.ui#4354); the ids keep "dark" for older ones.
+			String isDark = Boolean.toString(family == WorkbenchFamily.DARK);
+			assertEquals(family.themeId(), isDark, dark.get(family.themeId()));
+			assertEquals(family.alternateThemeId(), isDark, dark.get(family.alternateThemeId()));
+			assertEquals(family.themeId(), family == WorkbenchFamily.DARK, family.themeId().contains("dark"));
 		}
 	}
 

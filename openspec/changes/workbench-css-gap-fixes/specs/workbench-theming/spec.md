@@ -17,21 +17,27 @@ Each coordinated workbench theme the plugin contributes SHALL declare its appear
 - **THEN** all four coordinated themes are registered and selectable as before
 - **AND** the dark family is still treated as dark because its ids contain `dark`
 
-### Requirement: Measured progress-bar and separator surfaces follow the palette
-Where a runtime measurement on a verified combination shows that Eclipse CSS can recolor them, progress bars (including those nested in progress indicators) and separator labels in coordinated dialogs, wizards and views SHALL take colors from the published palette roles only. Surfaces without such a measurement SHALL remain classified SYSTEM/NATIVE in the coverage documentation.
+### Requirement: Progress bars follow the palette where the platform honors it
+Every progress bar in coordinated dialogs, wizards and views, including bars nested inside progress indicators, SHALL take its track color from the background role and its bar color from a palette role (accent, or the part foreground inside views), using palette role ids only. Where the platform draws the bar natively and ignores those colors, the coverage documentation SHALL classify it SYSTEM/NATIVE.
 
 #### Scenario: Wizard progress bar on a dark coordinated theme
-- **GIVEN** a dark coordinated theme active on a verified combination where the measurement succeeded
-- **WHEN** a wizard shows its progress monitor
-- **THEN** the progress bar's track uses a palette role color instead of the operating-system default light fill
+- **GIVEN** a dark coordinated theme active on Windows with Eclipse 4.40 or 4.41
+- **WHEN** a wizard or dialog shows its progress monitor
+- **THEN** the progress bar track is drawn in the background role color instead of the operating-system light fill
+- **AND** the bar is drawn in the accent role color
 
-#### Scenario: Surface the engine cannot recolor
-- **GIVEN** a surface whose measurement showed no change from the platform default
-- **WHEN** the coverage documentation is read
-- **THEN** that surface is listed as SYSTEM/NATIVE
-- **AND** the stylesheets contain no rule claiming to style it
+#### Scenario: Light coordinated theme on Windows
+- **GIVEN** a light coordinated theme active on Windows with visual styles
+- **WHEN** a progress bar is shown
+- **THEN** it keeps the native Windows look
+- **AND** the coverage documentation lists the light-family progress bar as SYSTEM/NATIVE
+
+#### Scenario: Separator lines stay native
+- **WHEN** the coverage documentation and stylesheets are inspected after this change
+- **THEN** separator labels are listed as SYSTEM/NATIVE
+- **AND** the stylesheets contain no rule targeting separator labels
 
 #### Scenario: No literal colors and no preference writes
 - **WHEN** the stylesheets are inspected after this change
-- **THEN** the new rules reference only the family's published palette role ids
-- **AND** they contain no `IEclipsePreferences` or `ColorDefinition` rules
+- **THEN** the progress bar rule references only the family's published palette role ids
+- **AND** the stylesheets contain no `IEclipsePreferences` or `ColorDefinition` rules

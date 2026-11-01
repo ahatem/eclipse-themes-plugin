@@ -63,7 +63,8 @@ the workbench-chrome contract) and **THIRD-PARTY** (colors owned by another plug
 | Push, check and radio buttons | THEMED (labels, background) / SYSTEM-NATIVE (frame, check mark) | the native frame and focus ring stay light on dark, as in stock Dark |
 | Dialog-level `CTabFolder` | THEMED | selected fill, outline and text |
 | Group frame lines | SYSTEM/NATIVE | not exposed to CSS; light frame on dark as in stock Dark |
-| Native `TabFolder` tab strip, progress bar, scale | SYSTEM/NATIVE | white-ish in stock Dark too |
+| Native `TabFolder` tab strip, scale, separator lines | SYSTEM/NATIVE | white-ish in stock Dark too; separator lines measured unchanged by CSS |
+| Progress bars (wizards, dialogs, views), including bars nested in progress indicators | THEMED (dark family) / SYSTEM/NATIVE (light family) | dark family: background-role track and accent-role bar, measured on 4.40 and 4.41; light family: Windows keeps its native visual style and ignores the colors |
 | Combo (non-CCombo) drop-down arrow and popup list | SYSTEM/NATIVE | the field itself is themed |
 | Scroll bars | SYSTEM/NATIVE | follow the operating-system theme; after switching to a light theme they stay dark on a dark Windows, identically to stock Dark to Light |
 | Menu bar, menus, title bar, window frame, tooltips | SYSTEM/NATIVE | |

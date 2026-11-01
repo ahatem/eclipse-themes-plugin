@@ -10,7 +10,7 @@ A review of vogellacompany/eclipse-themes (`docs/platform-styling-bugs.md`) turn
 ## What Changes
 
 - Declare `isDarkTheme="true"` on the two dark-family `<theme>` elements and `isDarkTheme="false"` on the two light-family ones. The ids keep containing `dark` / not containing it, so Eclipse releases before 2026-12 behave as today.
-- Add leaf selectors for `ProgressBar`, `ProgressIndicator > *` and `Label[style~='SWT.SEPARATOR']` to both family stylesheets, using only the existing palette role ids. **This is conditional on runtime evidence:** each selector ships only if a probe on Windows with Eclipse 4.40 and 4.41 shows the widget actually takes the palette color. A selector that has no visible effect is dropped, and its coverage row stays SYSTEM/NATIVE.
+- Add a `ProgressBar` leaf selector to both family stylesheets, using only the existing palette role ids. This was measured on Windows with Eclipse 4.40 and 4.41: it fixes the light wizard/dialog bar on the dark family and is inert on the light family, where Windows draws the bar natively. The candidate separator and `ProgressIndicator > *` selectors had no additional effect and are not shipped (`evidence/progress-separator-measurement.md`).
 - Update the coverage table in `docs/WORKBENCH_THEMING_COMPATIBILITY.md` to match what was measured.
 
 No preference writes, no new palette roles, no change to opt-in, ownership or capability gating.
