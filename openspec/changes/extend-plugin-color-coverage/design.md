@@ -23,7 +23,7 @@ Non-goals:
 - new preference nodes;
 - syntax colors (PDE target editor);
 - keys without readers (Mylyn Context, e4 tools);
-- runtime verification of Spring Tools, unless decision 1C is chosen.
+- runtime verification of Spring Tools (decision 1A: source-verified only).
 
 ## Decisions
 

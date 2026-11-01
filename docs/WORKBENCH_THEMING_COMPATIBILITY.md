@@ -72,7 +72,7 @@ the workbench-chrome contract) and **THIRD-PARTY** (colors owned by another plug
 | Forms (sections, form text, read-only form fields, form heading error/warning/info text), Properties view tab list and title, compare and progress panes, Marketplace items | THEMED | same selectors as stock Dark/Light; form heading message colors read the platform `FORM_HEADING_*` definitions |
 | Fonts of part tabs and tree/table views | THEMED (platform fonts) | read the platform *Tab text* and *Tree and Table* font definitions, as stock does, so a font chosen under Colors and Fonts applies; a font is changed only when the user chooses *Use theme font* or *Custom font* for it (see the [package format](THEME_PACKAGE_FORMAT.md)) |
 | Widgets of other plug-ins that the stock sheets style by class (EGit, Marketplace, JDT, PDE, Debug, Mylyn, Buildship, WTP wizard and dialog pages, breadcrumbs) | THEMED | styled in the same sheets by palette role, selector for selector with stock; selectors that would also match an editor's text control are left out |
-| Preference-based colors of other plug-ins that stock Dark re-tunes (popups, hyperlinks, error and form-heading text, Compare, EGit diff and label colors, search/revision/coverage/breakpoint annotations, JDT/Debug/Ant/Mylyn colors) | THEMED in dark coordinated themes, ownership-checked (see below); THIRD-PARTY otherwise | 68 declared keys; written only while a dark coordinated theme is active and only where the user has no value of their own. Light themes and editor-only mode write none |
+| Preference-based colors of other plug-ins that are unreadable on a dark workbench (popups, hyperlinks, error and form-heading text, Compare, EGit diff and label colors, search/revision/coverage/breakpoint annotations, JDT/Debug/Ant/Mylyn colors, Spring Tools Boot Dashboard, Boot marker and terminal colors) | THEMED in dark coordinated themes, ownership-checked (see below); THIRD-PARTY otherwise | 79 declared keys; the 8 Spring Tools keys are verified from source, not at runtime; written only while a dark coordinated theme is active and only where the user has no value of their own. Light themes and editor-only mode write none |
 
 Selectors are plain type, class and descendant selectors, almost all of them identical to the stock Eclipse Dark/Light sheets, whose
 widget, class and id selectors were compared one by one against ours (the missing ones were added). Those that are not identical (`.MPart`-scoped Text/Combo/List/Canvas, `SashForm`, `ScrolledForm`, `.MCompositePart`, `.MToolBar`) are ordinary
@@ -84,9 +84,9 @@ overridden.
 
 ## Plug-in colors and the ownership rule
 
-Colors that other plug-ins keep in their own preferences (popups, hyperlinks, diff and status colors, annotation colors, Mylyn and
-Debug colors) cannot be set through the static CSS without overwriting and later deleting the user's own values, which is what stock
-Dark does. The plugin coordinates a fixed, declared table of such keys (`PluginColorTable`, 68 keys, four of them inert on 4.40,
+Colors that other plug-ins keep in their own preferences (popups, hyperlinks, diff and status colors, annotation colors, Mylyn,
+Debug and Spring Tools colors) cannot be set through the static CSS without overwriting and later deleting the user's own values, which is what stock
+Dark does. The plugin coordinates a fixed, declared table of such keys (`PluginColorTable`, 79 keys, four of them inert on 4.40,
 each with the owning bundle and a palette role; the hyperlink keys include the editor's `org.eclipse.ui.editors/hyperlinkColor`) by
 this rule:
 

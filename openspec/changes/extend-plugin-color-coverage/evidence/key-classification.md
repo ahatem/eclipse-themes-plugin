@@ -42,7 +42,7 @@ All in node `org.eclipse.ui.workbench` (theme color definitions).
 | `org.springframework.ide.eclipse.xterm.cursor` | `org.springframework.ide.eclipse.xterm` | 0,0,0 | invisible on dark | same | same | FOREGROUND |
 | `org.springframework.ide.eclipse.xterm.cursorAccent` | `org.springframework.ide.eclipse.xterm` | 0,0,0 | glyph under the block cursor | same | same (sets 255,255,255, equal to its cursor, which hides the glyph) | BACKGROUND |
 
-The Spring rows depend on Decision Gate 1.
+The Spring rows are included under decision 1A: verified from source, not at runtime.
 
 The terminal cursor accent is the glyph drawn under the block cursor. It must equal the terminal background, so it uses the same role.
 

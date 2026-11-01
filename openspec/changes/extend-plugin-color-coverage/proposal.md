@@ -18,12 +18,12 @@ code that reads them (`evidence/key-classification.md`). Only keys with a live r
   - Mylyn Tasks, the three task-list colors no dark sheet re-tunes (Mylyn's own `e4-dark_mylyn_prefstyle.css` sets 7 of 12):
     `foreground.past.due` (ERROR), `foreground.overdue.for.others` (WARNING), `incoming.background` (INFO_TINT). Verified in the
     4.40 and 4.41 packages.
-  - Spring Tools, eight keys whose dark values Spring binds to `e4_dark` alone (verified from source, see Decision Gate): Boot
+  - Spring Tools, eight keys whose dark values Spring binds to `e4_dark` alone (verified from source, decision 1A): Boot
     Dashboard `TextDecorColor` (SUCCESS) and `AltTextDecorColor` (INFO), `STS4BootMarkerIndicationColor` (SUCCESS_TINT), and the
     embedded terminal `xterm.background` (BACKGROUND), `foreground`, `selection` and `cursor` (FOREGROUND), `cursorAccent` (BACKGROUND,
     always equal to the terminal background).
 - Reuse the existing ownership, gating and release rules and the existing palette roles. No new mechanism, role or preference node.
-- Broaden the capability's inclusion criterion (see Decision Gate 2). Today a key qualifies only when stock Eclipse Dark re-tunes it.
+- Broaden the capability's inclusion criterion (decision 2A). Today a key qualifies only when stock Eclipse Dark re-tunes it.
   It would qualify when its default is unreadable on a dark workbench and a live reader exists. The re-tuning may come from stock Dark,
   from the owning plug-in's dark sheet bound to the stock dark id alone, or from no sheet at all.
 - Not added, with evidence:
@@ -62,9 +62,10 @@ None.
 
 ## Decision Gate
 
-Implementation is not authorized until the maintainer resolves decisions 1 and 2.
+The maintainer resolved both blocking decisions on 2026-11-01: **1A** (include Spring Tools, source-verified) and **2A** (broaden the
+criterion). Implementation is authorized for those options. The spec delta, design and evidence already describe them.
 
-### Product / Maintainer decisions (blocking)
+### Product / Maintainer decisions (resolved)
 
 1. **Coordinate plug-ins outside the verified install (Spring Tools)?** Spring Tools is not part of the Eclipse 4.40/4.41 packages R8
    verified. Its keys and readers were checked from source only. The e4 tools candidates need no decision: they have no reader and are
