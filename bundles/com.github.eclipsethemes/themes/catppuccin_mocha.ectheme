@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.catppuccin-mocha" name="Catppuccin Mocha" appearance="dark" author="Eclipse Themes">
+  <editor>
+    <background color="#1e1e2e"/>
+    <foreground color="#cdd6f4"/>
+    <abstractClass color="#f9e2af" italic="true"/>
+    <abstractMethod color="#89b4fa" italic="true"/>
+    <annotation color="#fab387"/>
+    <argument color="#eba0ac" italic="true"/>
+    <bracket color="#9399b2"/>
+    <class color="#f9e2af" italic="true"/>
+    <comment color="#9399b2" italic="true"/>
+    <constant color="#fab387"/>
+    <currentLine color="#28283d"/>
+    <deprecated color="#cdd6f4" strikethrough="true"/>
+    <doc color="#9399b2" italic="true"/>
+    <docLink color="#89b4fa"/>
+    <docTag color="#cba6f7"/>
+    <docXmlTag color="#cba6f7" bold="true"/>
+    <enum color="#f9e2af" italic="true"/>
+    <field color="#94e2d5"/>
+    <filteredSearchResult color="#3e5767"/>
+    <findScope color="#181825"/>
+    <inheritedMethod color="#89b4fa" italic="true"/>
+    <interface color="#f9e2af" italic="true"/>
+    <keyword color="#cba6f7"/>
+    <lineNumber color="#7f849c"/>
+    <localVariable color="#cdd6f4"/>
+    <localVariableDeclaration color="#cdd6f4"/>
+    <method color="#89b4fa" italic="true"/>
+    <methodDeclaration color="#89b4fa" italic="true"/>
+    <multiLineComment color="#9399b2" italic="true"/>
+    <number color="#fab387"/>
+    <occurrence color="#37394c"/>
+    <operator color="#94e2d5"/>
+    <removedLine color="#f38ba8"/>
+    <searchResult color="#5e3f53"/>
+    <selectionBackground color="#3e4056"/>
+    <selectionForeground color="#cdd6f4"/>
+    <sourceHoverBackground color="#181825"/>
+    <staticField color="#94e2d5" italic="true"/>
+    <staticFinalField color="#fab387" bold="true" italic="true"/>
+    <staticMethod color="#89b4fa" italic="true"/>
+    <string color="#a6e3a1"/>
+    <taskTag color="#cba6f7" bold="true"/>
+    <templateArgument color="#89dceb"/>
+    <templateParameter color="#89dceb"/>
+    <writeOccurrence color="#36415a"/>
+    <xmlAttribute color="#f9e2af"/>
+    <xmlComment color="#9399b2"/>
+    <xmlTag color="#89b4fa"/>
+  </editor>
+</themePackage>

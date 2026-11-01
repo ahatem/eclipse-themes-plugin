@@ -19,6 +19,8 @@ public class ThemeRepositoryValidationTest {
 
 	private static final String VALID =
 			"<colorTheme name='Valid' ect-id='valid'><background color='#112233'/></colorTheme>";
+	private static final String MISSING_PACKAGE_NAME = "<themePackage schemaVersion='1' id='io.test.broken' appearance='dark'>"
+			+ "<editor><background color='#112233'/><foreground color='#ffffff'/></editor></themePackage>";
 	private static final String MISSING_NAME =
 			"<colorTheme ect-id='broken'><background color='#112233'/></colorTheme>";
 	private static final String WARNING_ONLY = "<colorTheme name='Warned' ect-id='warned' type='midnight'>"
@@ -138,7 +140,7 @@ public class ThemeRepositoryValidationTest {
 		Path installed = Files.createDirectory(directory.resolve("installed_themes"));
 		Files.writeString(installed.resolve("broken.xml"), MISSING_NAME);
 		Path bundledDirectory = temporary.newFolder().toPath();
-		var bundled = Files.writeString(bundledDirectory.resolve("broken.xml"), MISSING_NAME).toUri().toURL();
+		var bundled = Files.writeString(bundledDirectory.resolve("broken.ectheme"), MISSING_PACKAGE_NAME).toUri().toURL();
 		List<String> log = new ArrayList<>();
 
 		try (var activator = RepositoryTestSupport.installActivator()) {

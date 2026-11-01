@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.starry-code" name="Starry Code" appearance="dark" author="Ahmed Hatem" website="https://github.com/ahatem">
+  <editor>
+    <background color="#1a1a1a"/>
+    <foreground color="#e6e6e6"/>
+    <abstractClass color="#ffd700"/>
+    <abstractMethod color="#87ceeb"/>
+    <annotation color="#ffa500"/>
+    <argument color="#f5deb3"/>
+    <bracket color="#d4af37"/>
+    <class color="#f0e68c"/>
+    <comment color="#7c7c7c" italic="true"/>
+    <constant color="#ffa500"/>
+    <currentLine color="#2d2d2d"/>
+    <deprecated color="#696969" strikethrough="true"/>
+    <doc color="#7c7c7c" italic="true"/>
+    <docLink color="#87ceeb"/>
+    <docTag color="#d4af37"/>
+    <docXmlTag color="#d4af37"/>
+    <enum color="#9acd32"/>
+    <field color="#dda0dd"/>
+    <filteredSearchResult color="#4a4a4a"/>
+    <findScope color="#4a4a4a"/>
+    <inheritedMethod color="#b0c4de"/>
+    <interface color="#daa520"/>
+    <keyword color="#da70d6" bold="true"/>
+    <lineNumber color="#6b6b6b"/>
+    <localVariable color="#e6e6e6"/>
+    <localVariableDeclaration color="#e6e6e6"/>
+    <method color="#87ceeb"/>
+    <methodDeclaration color="#87ceeb"/>
+    <multiLineComment color="#7c7c7c" italic="true"/>
+    <number color="#ff6347"/>
+    <occurrence color="#4a4a4a"/>
+    <operator color="#e6e6e6"/>
+    <removedLine color="#dc143c"/>
+    <searchResult color="#4a4a4a"/>
+    <selectionBackground color="#3d4c5f"/>
+    <selectionForeground color="#e6e6e6"/>
+    <sourceHoverBackground color="#2d2d2d"/>
+    <staticField color="#d4af37"/>
+    <staticFinalField color="#ffd700"/>
+    <staticMethod color="#6495ed"/>
+    <string color="#98fb98"/>
+    <taskTag color="#ffa500" bold="true"/>
+    <templateArgument color="#20b2aa"/>
+    <templateParameter color="#20b2aa"/>
+    <writeOccurrence color="#5a5a5a"/>
+    <xmlAttribute color="#d4af37"/>
+    <xmlComment color="#7c7c7c" italic="true"/>
+    <xmlTag color="#da70d6"/>
+  </editor>
+</themePackage>

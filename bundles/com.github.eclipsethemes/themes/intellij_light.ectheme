@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.intellij-light" name="IntelliJ Light" appearance="light" author="Eclipse Themes">
+  <editor>
+    <background color="#ffffff"/>
+    <foreground color="#080808"/>
+    <abstractClass color="#080808"/>
+    <abstractMethod color="#006279"/>
+    <annotation color="#9e880d"/>
+    <argument color="#080808"/>
+    <bracket color="#080808"/>
+    <class color="#080808"/>
+    <comment color="#8c8c8c" italic="true"/>
+    <constant color="#861194"/>
+    <currentLine color="#f4f8fe"/>
+    <deprecated color="#080808" strikethrough="true"/>
+    <doc color="#8c8c8c"/>
+    <docLink color="#016dcc" underline="true"/>
+    <docTag color="#0133b3"/>
+    <docXmlTag color="#080808" bold="true"/>
+    <enum color="#861194"/>
+    <field color="#861194"/>
+    <filteredSearchResult color="#fee1a3"/>
+    <findScope color="#ebecf0"/>
+    <inheritedMethod color="#006279"/>
+    <interface color="#080808"/>
+    <keyword color="#0133b3"/>
+    <lineNumber color="#aeb3c1"/>
+    <localVariable color="#238f8f"/>
+    <localVariableDeclaration color="#238f8f"/>
+    <method color="#006279"/>
+    <methodDeclaration color="#006279"/>
+    <multiLineComment color="#8c8c8c" italic="true"/>
+    <number color="#1750eb"/>
+    <occurrence color="#e2e2fd"/>
+    <operator color="#080808"/>
+    <removedLine color="#767a8a"/>
+    <searchResult color="#a6d2ff"/>
+    <selectionBackground color="#a6d2ff"/>
+    <selectionForeground color="#080808"/>
+    <sourceHoverBackground color="#ffffff"/>
+    <staticField color="#861194" italic="true"/>
+    <staticFinalField color="#861194" bold="true" italic="true"/>
+    <staticMethod color="#006279" italic="true"/>
+    <string color="#077d18"/>
+    <taskTag color="#0133b3" bold="true"/>
+    <templateArgument color="#238f8f"/>
+    <templateParameter color="#238f8f"/>
+    <writeOccurrence color="#ffe6ff"/>
+    <xmlAttribute color="#174ad4"/>
+    <xmlComment color="#8c8c8c"/>
+    <xmlTag color="#0133b3"/>
+  </editor>
+</themePackage>

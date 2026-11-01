@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.TreeMap;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -382,10 +383,13 @@ public class ThemeRepository {
 	}
 
 
+	private static final String BUNDLED_IDENTITIES = "themes/bundled-identities.properties";
+
 	private void loadPackedThemes() {
 		var bundle = EclipseThemes.instance().getBundle();
-		var entries = bundle.findEntries("themes", "*.xml", false);
-		if (entries == null) return;
+		var entries = bundle.findEntries("themes", "*" + ParserFactory.PACKAGE_EXTENSION, false);
+		if (entries == null || !entries.hasMoreElements()) return;
+		Properties identities = loadBundledIdentities(bundle.getEntry(BUNDLED_IDENTITIES));
 
 		while (entries.hasMoreElements()) {
 			URL res = entries.nextElement();
@@ -399,11 +403,13 @@ public class ThemeRepository {
 				}
 
 				Theme theme = parserOpt.get().parse(in);
-				if (theme.getId() == null || theme.getId().isBlank()) {
+				String sourceId = theme.getPackageMetadata()
+						.map(metadata -> identities.getProperty(metadata.packageId())).orElse(null);
+				if (sourceId == null || sourceId.isBlank()) {
 					log.warn("Bundled theme without curated identity: " + path);
 					continue;
 				}
-				ThemeRecord record = ThemeRecord.bundled("bundled:" + theme.getId(), theme);
+				ThemeRecord record = ThemeRecord.bundled(ThemeRecord.BUNDLED_PREFIX + sourceId.trim(), theme);
 				if (themes.putIfAbsent(record.logicalId(), record) != null) {
 					log.warn("Duplicate bundled theme identity: " + path);
 				}
@@ -413,6 +419,21 @@ public class ThemeRepository {
 				log.error("Failed to load theme: " + path, e);
 			}
 		}
+	}
+
+	/** The curated package id to source id map; a missing or unreadable map leaves every bundled package unadmitted. */
+	private Properties loadBundledIdentities(URL resource) {
+		Properties identities = new Properties();
+		if (resource == null) {
+			log.error("Bundled theme identity map is missing: " + BUNDLED_IDENTITIES);
+			return identities;
+		}
+		try (var in = resource.openStream()) {
+			identities.load(in);
+		} catch (IOException e) {
+			log.error("Bundled theme identity map is unreadable: " + BUNDLED_IDENTITIES, e);
+		}
+		return identities;
 	}
 
 	private void loadInstalledThemes() {

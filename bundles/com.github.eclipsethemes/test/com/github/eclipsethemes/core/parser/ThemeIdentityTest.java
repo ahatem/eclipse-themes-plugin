@@ -7,7 +7,9 @@ import java.lang.reflect.Proxy;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.List;
 import java.net.URL;
 
@@ -18,6 +20,9 @@ import org.junit.rules.TemporaryFolder;
 import org.osgi.framework.Bundle;
 
 import com.github.eclipsethemes.EclipseThemes;
+import com.github.eclipsethemes.core.Constants;
+import com.github.eclipsethemes.core.models.Theme;
+import com.github.eclipsethemes.eclipse.ThemeOrigin;
 import com.github.eclipsethemes.eclipse.ThemeRecord;
 import com.github.eclipsethemes.eclipse.ThemeRepository;
 import com.github.eclipsethemes.core.models.TokenKey;
@@ -91,19 +96,23 @@ public class ThemeIdentityTest {
     @Test public void bundledAndInstalledClaimsUseSeparateAuthorityAndRetainCuratedIds() throws Exception {
         var directory = temporary.newFolder().toPath();
         var installed = Files.createDirectory(directory.resolve("installed_themes"));
-        var resource = directory.resolve("bundled.xml");
-        String xml = "<colorTheme name='Same' ect-id='curated'/>";
+        var resource = directory.resolve("bundled.ectheme");
+        String xml = "<themePackage schemaVersion='1' id='io.test.same' name='Same' appearance='dark'><editor>"
+                + "<background color='#112233'/><foreground color='#ffffff'/></editor></themePackage>";
         Files.writeString(resource, xml);
-        Files.writeString(installed.resolve("copy.xml"), xml);
+        Files.writeString(installed.resolve("copy.ectheme"), xml);
+        var identities = directory.resolve("bundled-identities.properties");
+        Files.writeString(identities, "io.test.same=curated\n");
         try (var logger = ParserTestSupport.installLogger(ParserTestSupport.quietLog())) {
-            bundled(List.of(resource.toUri().toURL()));
+            bundled(List.of(resource.toUri().toURL()), identities.toUri().toURL());
             var repository = new ThemeRepository(directory.toFile(), ParserTestSupport.quietLog());
             repository.reload();
             assertEquals(2, repository.getAllThemes().size());
             ThemeRecord packed = repository.getAllThemes().stream().filter(t -> t.locator().isEmpty()).findFirst().orElseThrow();
             assertEquals("bundled:curated", packed.logicalId());
-            assertEquals("curated", packed.theme().getId());
-            Files.writeString(resource, "<colorTheme name='Renamed' ect-id='curated'><background color='#abcdef'/></colorTheme>");
+            assertEquals("curated", packed.sourceId());
+            Files.writeString(resource, "<themePackage schemaVersion='1' id='io.test.same' name='Renamed' appearance='dark'><editor>"
+                + "<background color='#abcdef'/><foreground color='#ffffff'/></editor></themePackage>");
             repository.reload();
             assertEquals(packed, repository.getAllThemes().stream().filter(t -> t.locator().isEmpty()).findFirst().orElseThrow());
         }
@@ -138,21 +147,35 @@ public class ThemeIdentityTest {
         var directory = temporary.newFolder().toPath();
         List<URL> resources;
         try (var files = Files.list(ParserTestSupport.themes())) {
-            resources = files.filter(p -> p.toString().endsWith(".xml")).sorted()
+            resources = files.filter(p -> p.toString().endsWith(".ectheme")).sorted()
                     .map(path -> {
                         try { return path.toUri().toURL(); }
                         catch (java.net.MalformedURLException e) { throw new AssertionError(e); }
                     }).toList();
         }
         try (var logger = ParserTestSupport.installLogger(ParserTestSupport.quietLog())) {
-            bundled(resources);
+            bundled(resources, ParserTestSupport.themes().resolve("bundled-identities.properties").toUri().toURL());
             var repository = new ThemeRepository(directory.toFile(), ParserTestSupport.quietLog());
             repository.reload();
             assertEquals(33, repository.getAllThemes().size());
             assertEquals(33, new HashSet<>(repository.getAllThemes()).size());
-            for (ThemeRecord theme : repository.getAllThemes()) {
-                assertEquals("bundled:" + theme.theme().getId(), theme.logicalId());
+            // The identities the same themes had as legacy documents: bundled:<ect-id>, by theme name.
+            Map<String, String> legacy = new HashMap<>();
+            try (var files = Files.list(ParserTestSupport.legacyThemes())) {
+                for (Path file : files.toList()) {
+                    Theme theme = new XmlThemeParser().parse(file.toFile());
+                    assertNull(legacy.put(theme.getName(), "bundled:" + theme.getId()));
+                }
             }
+            assertEquals(33, legacy.size());
+            for (ThemeRecord theme : repository.getAllThemes()) {
+                assertEquals(theme.theme().getName(), legacy.get(theme.theme().getName()), theme.logicalId());
+                assertEquals(ThemeOrigin.BUNDLED, theme.origin());
+            }
+            var logical = repository.getAllThemes().stream().map(ThemeRecord::logicalId)
+                    .collect(java.util.stream.Collectors.toSet());
+            assertTrue(logical.contains(Constants.DEFAULT_LIGHT_THEME_ID));
+            assertTrue(logical.contains(Constants.DEFAULT_DARK_THEME_ID));
             var source = directory.resolve("external.xml");
             Files.writeString(source, "<colorTheme name='Darcula' ect-id='63d6a50b-371f-4211-9025-9bfea76cc850'/>");
             ThemeRecord imported = repository.importTheme(source.toFile()).record();
@@ -167,12 +190,43 @@ public class ThemeIdentityTest {
         }
     }
 
+    @Test public void bundledPackageWithoutCuratedIdentityIsSkippedAndOthersRemain() throws Exception {
+        var directory = temporary.newFolder().toPath();
+        Files.createDirectory(directory.resolve("installed_themes"));
+        var known = directory.resolve("known.ectheme");
+        var unknown = directory.resolve("unknown.ectheme");
+        Files.writeString(known, "<themePackage schemaVersion='1' id='io.test.same' name='Same' appearance='dark'><editor>"
+                + "<background color='#112233'/><foreground color='#ffffff'/></editor></themePackage>");
+        Files.writeString(unknown, "<themePackage schemaVersion='1' id='io.test.other' name='Same' appearance='dark'><editor>"
+                + "<background color='#112233'/><foreground color='#ffffff'/></editor></themePackage>");
+        var identities = directory.resolve("bundled-identities.properties");
+        Files.writeString(identities, "io.test.same=curated\n");
+        List<String> warnings = new java.util.ArrayList<>();
+        var log = (org.eclipse.core.runtime.ILog) Proxy.newProxyInstance(
+                org.eclipse.core.runtime.ILog.class.getClassLoader(), new Class<?>[] {org.eclipse.core.runtime.ILog.class},
+                (proxy, method, args) -> { if (method.getName().equals("warn")) warnings.add((String) args[0]); return null; });
+        try (var logger = ParserTestSupport.installLogger(ParserTestSupport.quietLog())) {
+            bundled(List.of(known.toUri().toURL(), unknown.toUri().toURL()), identities.toUri().toURL());
+            var repository = new ThemeRepository(directory.toFile(), log);
+            repository.reload();
+            assertEquals(List.of("bundled:curated"),
+                    repository.getAllThemes().stream().map(ThemeRecord::logicalId).toList());
+            assertEquals(1, warnings.stream().filter(w -> w.startsWith("Bundled theme without curated identity")
+                    && w.contains("unknown.ectheme")).count());
+        }
+    }
+
     private void bundled(List<URL> resources) throws Exception {
+        bundled(resources, null);
+    }
+
+    private void bundled(List<URL> resources, URL identities) throws Exception {
         Field field = Plugin.class.getDeclaredField("bundle");
         field.setAccessible(true);
         var bundle = (Bundle) Proxy.newProxyInstance(Bundle.class.getClassLoader(), new Class<?>[] {Bundle.class},
                 (proxy, method, args) -> {
                     if (method.getName().equals("findEntries")) return Collections.enumeration(resources);
+                    if (method.getName().equals("getEntry")) return identities;
                     throw new AssertionError(method);
                 });
         field.set(EclipseThemes.instance(), bundle);

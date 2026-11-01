@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.kintsugi-dark-flared" name="Kintsugi Dark Flared" appearance="dark" author="Ahmed Hatem" website="https://github.com/ahatem">
+  <editor>
+    <background color="#161618"/>
+    <foreground color="#bcac8f"/>
+    <abstractClass color="#798283"/>
+    <abstractMethod color="#798283"/>
+    <annotation color="#678e87"/>
+    <argument color="#bcac8f"/>
+    <bracket color="#7f7b66"/>
+    <class color="#798283"/>
+    <comment color="#5f5f5f"/>
+    <constant color="#db9833"/>
+    <currentLine color="#1d1d1c"/>
+    <deprecated color="#b38f8f" bold="true" italic="true"/>
+    <doc color="#5f5f5f"/>
+    <docLink color="#8a8970"/>
+    <docTag color="#8a8970"/>
+    <docXmlTag color="#8a8970"/>
+    <enum color="#798283"/>
+    <field color="#bcac8f"/>
+    <filteredSearchResult color="#212326"/>
+    <findScope color="#1b1c1f"/>
+    <inheritedMethod color="#798283"/>
+    <interface color="#798283"/>
+    <keyword color="#d66848" bold="true"/>
+    <lineNumber color="#444444"/>
+    <localVariable color="#bcac8f"/>
+    <localVariableDeclaration color="#bcac8f"/>
+    <method color="#798283"/>
+    <methodDeclaration color="#798283"/>
+    <multiLineComment color="#5f5f5f"/>
+    <number color="#db9833"/>
+    <occurrence color="#26292d"/>
+    <operator color="#e08542"/>
+    <removedLine color="#b38f8f"/>
+    <searchResult color="#2c2f35"/>
+    <selectionBackground color="#26292d"/>
+    <selectionForeground color="#dddddd"/>
+    <sourceHoverBackground color="#1c1c1c"/>
+    <staticField color="#798283"/>
+    <staticFinalField color="#db9833"/>
+    <staticMethod color="#798283"/>
+    <string color="#cc7f66"/>
+    <taskTag color="#5f5f5f"/>
+    <templateArgument color="#e08542"/>
+    <templateParameter color="#e08542"/>
+    <writeOccurrence color="#31353c"/>
+    <xmlAttribute color="#798283"/>
+    <xmlComment color="#5f5f5f"/>
+    <xmlTag color="#dbad49" bold="true"/>
+  </editor>
+</themePackage>

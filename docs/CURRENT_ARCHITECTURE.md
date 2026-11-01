@@ -20,7 +20,7 @@ The repository is not currently a multi-runtime-bundle architecture. Future logi
 Preference page
   -> EclipseThemes activator / ThemeManager
   -> ThemeRepository.reload()
-      -> bundled XML themes (themes/*.xml only)
+      -> bundled theme packages (themes/*.ectheme + themes/bundled-identities.properties)
       -> workspace-installed themes (*.xml and *.ectheme)
       -> ParserFactory (by final extension, never by content)
            *.xml     -> XmlThemeParser      -> immutable Theme/Token model

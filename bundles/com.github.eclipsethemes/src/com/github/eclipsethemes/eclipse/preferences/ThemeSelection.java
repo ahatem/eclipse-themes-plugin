@@ -22,7 +22,7 @@ public final class ThemeSelection {
         String reference = store.getString(key);
         if (reference.isBlank()) return Optional.empty();
         var matches = themes.stream()
-                .filter(theme -> reference.equals(modern ? theme.logicalId() : theme.theme().getId())).toList();
+                .filter(theme -> reference.equals(modern ? theme.logicalId() : theme.sourceId())).toList();
         return matches.size() == 1 ? Optional.of(matches.get(0)) : Optional.empty();
     }
 

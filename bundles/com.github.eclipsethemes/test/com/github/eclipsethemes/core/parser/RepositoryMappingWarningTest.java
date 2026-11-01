@@ -32,15 +32,22 @@ public class RepositoryMappingWarningTest {
             var repository = new ThemeRepository(directory.toFile(), log);
             assertTrue(repository.importTheme(source.toFile()).successful());
             assertEquals(1, warnings.size());
+            var packaged = directory.resolve("source.ectheme");
+            Files.writeString(packaged, "<themePackage schemaVersion='1' id='io.test.conflict' name='Conflict' appearance='dark'>"
+                    + "<editor><deprecated color='#123456'/>"
+                    + "<deprecatedMember color='#abcdef' bold='true'/><background color='#112233'/><foreground color='#ffffff'/></editor></themePackage>");
+            var identities = directory.resolve("bundled-identities.properties");
+            Files.writeString(identities, "io.test.conflict=conflict-source\n");
             var bundle = (Bundle) Proxy.newProxyInstance(Bundle.class.getClassLoader(), new Class<?>[] {Bundle.class},
                     (proxy, method, args) -> {
-                        if (method.getName().equals("findEntries")) return Collections.enumeration(List.of(source.toUri().toURL()));
+                        if (method.getName().equals("findEntries")) return Collections.enumeration(List.of(packaged.toUri().toURL()));
+                        if (method.getName().equals("getEntry")) return identities.toUri().toURL();
                         throw new AssertionError(method);
                     });
             bundleField.set(EclipseThemes.instance(), bundle);
             warnings.clear();
             repository.reload();
-            assertEquals(1, repository.getAllThemes().size());
+            assertEquals(2, repository.getAllThemes().size());
             assertEquals(2, warnings.stream().filter(w -> w.startsWith("Theme mapping conflict")).count());
             for (String warning : warnings.stream().filter(w -> w.startsWith("Theme mapping conflict")).toList()) {
                 assertTrue(warning.contains("deprecatedMember#2"));

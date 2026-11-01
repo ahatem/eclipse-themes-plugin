@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.cursor-dark-midnight" name="Cursor Dark Midnight" appearance="dark" author="Eclipse Themes">
+  <editor>
+    <background color="#1e2127"/>
+    <foreground color="#7b88a1"/>
+    <abstractClass color="#8fbcbb"/>
+    <abstractMethod color="#88c0d0"/>
+    <annotation color="#d08770"/>
+    <argument color="#d8dee9"/>
+    <bracket color="#eceff4"/>
+    <class color="#8fbcbb"/>
+    <comment color="#636e85" italic="true"/>
+    <constant color="#81a1c1"/>
+    <currentLine color="#252a32"/>
+    <deprecated color="#ebcb8b" strikethrough="true"/>
+    <doc color="#636e85" italic="true"/>
+    <docLink color="#8fbcbb"/>
+    <docTag color="#81a1c1"/>
+    <docXmlTag color="#8fbcbb" bold="true"/>
+    <enum color="#8fbcbb"/>
+    <field color="#d8dee9"/>
+    <filteredSearchResult color="#334149"/>
+    <findScope color="#20242c"/>
+    <inheritedMethod color="#88c0d0"/>
+    <interface color="#8fbcbb"/>
+    <keyword color="#81a1c1"/>
+    <lineNumber color="#4c566a"/>
+    <localVariable color="#d8dee9"/>
+    <localVariableDeclaration color="#d8dee9"/>
+    <method color="#88c0d0"/>
+    <methodDeclaration color="#88c0d0"/>
+    <multiLineComment color="#636e85" italic="true"/>
+    <number color="#b48ead"/>
+    <occurrence color="#465465"/>
+    <operator color="#81a1c1"/>
+    <removedLine color="#bf616a"/>
+    <searchResult color="#48616b"/>
+    <selectionBackground color="#343b48"/>
+    <selectionForeground color="#eceff4"/>
+    <sourceHoverBackground color="#20242c"/>
+    <staticField color="#d8dee9" italic="true"/>
+    <staticFinalField color="#d8dee9" bold="true" italic="true"/>
+    <staticMethod color="#88c0d0" italic="true"/>
+    <string color="#a3be8c"/>
+    <taskTag color="#a3be8c" bold="true"/>
+    <templateArgument color="#8fbcbb"/>
+    <templateParameter color="#8fbcbb"/>
+    <writeOccurrence color="#596e83"/>
+    <xmlAttribute color="#8fbcbb" italic="true"/>
+    <xmlComment color="#636e85"/>
+    <xmlTag color="#81a1c1"/>
+  </editor>
+</themePackage>

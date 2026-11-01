@@ -954,11 +954,12 @@ public class EclipseThemesPreferencePage extends PreferencePage implements IWork
 	}
 
 	/**
-	 * The remote preview exists only for themes with a legacy source id. Packages have none, so neither their package
-	 * id nor any of their metadata is ever sent to the preview server.
+	 * The remote preview exists only for themes with a legacy source id: legacy themes and bundled themes (curated id).
+	 * Imported packages have none, so neither their package id nor any of their metadata is ever sent to the preview
+	 * server.
 	 */
 	static Optional<String> previewUrl(ThemeRecord theme) {
-		String id = theme.theme().getId();
+		String id = theme.sourceId();
 		return id == null || id.isBlank() ? Optional.empty() : Optional.of(Constants.PREVIEW_SERVER_URL + id);
 	}
 

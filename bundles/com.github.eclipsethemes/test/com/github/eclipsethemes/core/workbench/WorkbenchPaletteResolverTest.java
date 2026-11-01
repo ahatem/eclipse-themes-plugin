@@ -239,8 +239,8 @@ public class WorkbenchPaletteResolverTest {
 	@Test
 	public void everyBundledLegacyThemeResolvesToTheSamePaletteAsBefore() throws Exception {
 		MessageDigest digest = MessageDigest.getInstance("SHA-256");
-		Path local = Path.of("themes");
-		Path themes = Files.isDirectory(local) ? local : Path.of("bundles/com.github.eclipsethemes/themes");
+		Path local = Path.of("test-data/legacy-bundled");
+		Path themes = Files.isDirectory(local) ? local : Path.of("bundles/com.github.eclipsethemes/test-data/legacy-bundled");
 		try (var paths = Files.list(themes)) {
 			for (Path file : paths.filter(p -> p.toString().endsWith(".xml"))
 					.sorted(Comparator.comparing(p -> p.getFileName().toString())).toList()) {

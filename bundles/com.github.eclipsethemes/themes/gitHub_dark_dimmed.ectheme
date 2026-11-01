@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.github-dark-dimmed" name="GitHub Dark Dimmed" appearance="dark" author="Eclipse Themes">
+  <editor>
+    <background color="#22272e"/>
+    <foreground color="#adbac7"/>
+    <abstractClass color="#6cb6ff"/>
+    <abstractMethod color="#dcbdfb"/>
+    <annotation color="#e0823d"/>
+    <argument color="#e0823d"/>
+    <bracket color="#adbac7"/>
+    <class color="#6cb6ff"/>
+    <comment color="#768390" italic="true"/>
+    <constant color="#6cb6ff"/>
+    <currentLine color="#2d333b"/>
+    <deprecated color="#768390" strikethrough="true"/>
+    <doc color="#768390" italic="true"/>
+    <docLink color="#6cb6ff"/>
+    <docTag color="#6cb6ff"/>
+    <docXmlTag color="#6cb6ff"/>
+    <enum color="#57ab5a"/>
+    <field color="#adbac7"/>
+    <filteredSearchResult color="#444c56"/>
+    <findScope color="#444c56"/>
+    <inheritedMethod color="#dcbdfb"/>
+    <interface color="#6cb6ff"/>
+    <keyword color="#f47067" bold="true"/>
+    <lineNumber color="#768390"/>
+    <localVariable color="#adbac7"/>
+    <localVariableDeclaration color="#adbac7"/>
+    <method color="#dcbdfb"/>
+    <methodDeclaration color="#dcbdfb"/>
+    <multiLineComment color="#768390" italic="true"/>
+    <number color="#96d0ff"/>
+    <occurrence color="#444c56"/>
+    <operator color="#f47067"/>
+    <removedLine color="#f47067"/>
+    <searchResult color="#444c56"/>
+    <selectionBackground color="#3d4149"/>
+    <selectionForeground color="#adbac7"/>
+    <sourceHoverBackground color="#2d333b"/>
+    <staticField color="#e0823d"/>
+    <staticFinalField color="#e0823d"/>
+    <staticMethod color="#dcbdfb"/>
+    <string color="#96d0ff"/>
+    <taskTag color="#f47067" bold="true"/>
+    <templateArgument color="#6cb6ff"/>
+    <templateParameter color="#6cb6ff"/>
+    <writeOccurrence color="#545d68"/>
+    <xmlAttribute color="#e0823d"/>
+    <xmlComment color="#768390" italic="true"/>
+    <xmlTag color="#57ab5a"/>
+  </editor>
+</themePackage>

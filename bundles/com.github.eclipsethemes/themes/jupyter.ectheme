@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.jupyter" name="Jupyter" appearance="light" author="Eclipse Themes">
+  <editor>
+    <background color="#ffffff"/>
+    <foreground color="#212121"/>
+    <abstractClass color="#0000ff"/>
+    <abstractMethod color="#0000ff"/>
+    <annotation color="#aa22ff"/>
+    <argument color="#212121"/>
+    <bracket color="#212121"/>
+    <class color="#0000ff"/>
+    <comment color="#408080" italic="true"/>
+    <constant color="#bc7a00"/>
+    <currentLine color="#fdf0e2"/>
+    <deprecated color="#212121" strikethrough="true"/>
+    <doc color="#408080"/>
+    <docLink color="#0000ff"/>
+    <docTag color="#008000"/>
+    <docXmlTag color="#008000" bold="true"/>
+    <enum color="#0000ff"/>
+    <field color="#212121"/>
+    <filteredSearchResult color="#fdf0e2"/>
+    <findScope color="#fdf0e2"/>
+    <inheritedMethod color="#0000ff"/>
+    <interface color="#0000ff"/>
+    <keyword color="#008000" bold="true"/>
+    <lineNumber color="#aaaaaa"/>
+    <localVariable color="#212121"/>
+    <localVariableDeclaration color="#212121"/>
+    <method color="#0000ff"/>
+    <methodDeclaration color="#0000ff"/>
+    <multiLineComment color="#408080" italic="true"/>
+    <number color="#bc7a00"/>
+    <occurrence color="#fdf0e2"/>
+    <operator color="#aa22ff"/>
+    <removedLine color="#c7254e"/>
+    <searchResult color="#fdf0e2"/>
+    <selectionBackground color="#fdf0e2"/>
+    <selectionForeground color="#212121"/>
+    <sourceHoverBackground color="#ffffff"/>
+    <staticField color="#212121" italic="true"/>
+    <staticFinalField color="#bc7a00" bold="true" italic="true"/>
+    <staticMethod color="#0000ff" italic="true"/>
+    <string color="#ba2121"/>
+    <taskTag color="#008000" bold="true"/>
+    <templateArgument color="#0000ff"/>
+    <templateParameter color="#0000ff"/>
+    <writeOccurrence color="#fdf0e2"/>
+    <xmlAttribute color="#7d9029"/>
+    <xmlComment color="#408080"/>
+    <xmlTag color="#008000" bold="true"/>
+  </editor>
+</themePackage>

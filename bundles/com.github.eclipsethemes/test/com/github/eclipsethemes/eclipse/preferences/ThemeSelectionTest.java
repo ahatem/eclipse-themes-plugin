@@ -124,6 +124,17 @@ public class ThemeSelectionTest {
                 theme("local:other", "website-source", "Other", "#334455"));
     }
 
+    @Test public void bundledPackageKeepsLegacySelectionAndPreviewThroughItsCuratedSourceId() {
+        // A package carries no source id of its own; the bundled record supplies the curated one.
+        ThemeRecord bundled = ThemeRecord.bundled("bundled:curated-source", model(null, "Packaged", "#112233"));
+        ThemeRecord importedPackage = ThemeRecord.installed("local:package", "p.ectheme", model(null, "Imported", "#334455"));
+        var store = new PreferenceStore();
+        store.setValue(PreferenceKeys.ACTIVE_THEME_ID, "curated-source");
+        assertSame(bundled, ThemeSelection.resolve(store, List.of(bundled, importedPackage)).orElseThrow());
+        assertEquals(Constants.PREVIEW_SERVER_URL + "curated-source", EclipseThemesPreferencePage.previewUrl(bundled).orElseThrow());
+        assertTrue(EclipseThemesPreferencePage.previewUrl(importedPackage).isEmpty());
+    }
+
     @Test public void partialOrConflictingEditorApplyDoesNotPersistTheSelectedTheme() {
         var store = new PreferenceStore();
         ThemeRecord applied = theme("local:applied", "applied", "Applied", "#112233");

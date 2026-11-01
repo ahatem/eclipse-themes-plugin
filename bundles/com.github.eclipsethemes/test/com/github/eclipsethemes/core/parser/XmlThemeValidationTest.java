@@ -278,7 +278,7 @@ public class XmlThemeValidationTest {
 	// --- The bundled corpus must stay loadable ---
 
 	@Test public void bundledThemesNeverProduceErrors() throws Exception {
-		Path themes = ParserTestSupport.themes();
+		Path themes = ParserTestSupport.legacyThemes();
 		List<String> warned = new ArrayList<>();
 		int checked = 0;
 

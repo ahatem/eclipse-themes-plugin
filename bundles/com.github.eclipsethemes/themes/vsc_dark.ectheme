@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.vsc-dark" name="Visual Studio Dark" appearance="dark" author="Eclipse Themes">
+  <editor>
+    <background color="#1e1e1e"/>
+    <foreground color="#d4d4d4"/>
+    <annotation color="#dcdcaa"/>
+    <argument color="#9cdcfe"/>
+    <bracket color="#d4d4d4"/>
+    <class color="#4ec9b0"/>
+    <comment color="#608b4e"/>
+    <constant color="#4fc1ff"/>
+    <currentLine color="#282828"/>
+    <deprecated color="#808080" strikethrough="true"/>
+    <doc color="#608b4e"/>
+    <docLink color="#569cd6"/>
+    <docTag color="#569cd6"/>
+    <docXmlTag color="#569cd6"/>
+    <enum color="#4ec9b0"/>
+    <field color="#9cdcfe"/>
+    <filteredSearchResult color="#083d5a"/>
+    <inheritedMethod color="#dcdcaa"/>
+    <interface color="#4ec9b0"/>
+    <keyword color="#569cd6"/>
+    <lineNumber color="#858585"/>
+    <localVariable color="#9cdcfe"/>
+    <localVariableDeclaration color="#9cdcfe"/>
+    <method color="#dcdcaa"/>
+    <methodDeclaration color="#dcdcaa"/>
+    <multiLineComment color="#608b4e"/>
+    <number color="#b5cea8"/>
+    <occurrence color="#083d5a"/>
+    <operator color="#d4d4d4"/>
+    <removedLine color="#f44747"/>
+    <searchResult color="#083d5a"/>
+    <selectionBackground color="#264f78"/>
+    <sourceHoverBackground color="#1e1e1e"/>
+    <staticField color="#9cdcfe"/>
+    <staticFinalField color="#4fc1ff"/>
+    <staticMethod color="#dcdcaa"/>
+    <string color="#ce9178"/>
+    <taskTag color="#608b4e"/>
+    <templateArgument color="#4ec9b0"/>
+    <templateParameter color="#4ec9b0"/>
+    <writeOccurrence color="#083d5a"/>
+    <xmlAttribute color="#9cdcfe"/>
+    <xmlComment color="#608b4e"/>
+    <xmlTag color="#569cd6"/>
+  </editor>
+</themePackage>
