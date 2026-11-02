@@ -1,53 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.jetbrains-darcula" name="Darcula" appearance="dark" author="Eclipse Themes">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.jetbrains-darcula" name="Darcula" appearance="dark" author="JetBrains" website="https://github.com/JetBrains/intellij-community" version="intellij-community 536da82">
+  <provenance license="Apache-2.0" copyright="JetBrains s.r.o." source="https://github.com/JetBrains/intellij-community/tree/536da82a2cbce90820cbb0c158d91e78cda75d82/platform/platform-resources/src"/>
   <editor>
     <background color="#2b2b2b"/>
     <foreground color="#a9b7c6"/>
-    <abstractClass color="#ffc66d"/>
-    <abstractMethod color="#ffc66d" italic="true"/>
+    <abstractClass color="#a9b7c6"/>
+    <abstractMethod color="#a9b7c6"/>
     <annotation color="#bbb529"/>
     <argument color="#a9b7c6"/>
     <bracket color="#a9b7c6"/>
-    <class color="#ffc66d"/>
-    <comment color="#808080" italic="true"/>
-    <constant color="#9876aa" bold="true"/>
+    <class color="#a9b7c6"/>
+    <comment color="#808080"/>
+    <constant color="#9876aa" italic="true"/>
     <currentLine color="#323232"/>
     <deprecated color="#a9b7c6" strikethrough="true"/>
     <doc color="#629755" italic="true"/>
-    <docLink color="#287bde"/>
-    <docTag color="#629755" bold="true"/>
-    <docXmlTag color="#629755" bold="true"/>
-    <enum color="#ffc66d"/>
+    <docLink color="#8a653b"/>
+    <docTag color="#629755" bold="true" italic="true"/>
+    <docXmlTag color="#77b767"/>
+    <enum color="#a9b7c6"/>
     <field color="#9876aa"/>
     <filteredSearchResult color="#32593d"/>
-    <findScope color="#32593d"/>
-    <inheritedMethod color="#ffc66d"/>
-    <interface color="#ffc66d"/>
-    <keyword color="#cc7832" bold="true"/>
+    <inheritedMethod color="#a9b7c6"/>
+    <interface color="#a9b7c6"/>
+    <keyword color="#cc7832"/>
     <lineNumber color="#606366"/>
     <localVariable color="#a9b7c6"/>
     <localVariableDeclaration color="#a9b7c6"/>
-    <method color="#ffc66d"/>
+    <method color="#a9b7c6"/>
     <methodDeclaration color="#ffc66d"/>
-    <multiLineComment color="#808080" italic="true"/>
+    <multiLineComment color="#808080"/>
     <number color="#6897bb"/>
     <occurrence color="#344134"/>
     <operator color="#a9b7c6"/>
-    <removedLine color="#f50000"/>
-    <searchResult color="#32593d"/>
+    <removedLine color="#656e76"/>
+    <searchResult color="#155221"/>
     <selectionBackground color="#214283"/>
     <selectionForeground color="#a9b7c6"/>
-    <sourceHoverBackground color="#323232"/>
+    <sourceHoverBackground color="#46484a"/>
     <staticField color="#9876aa" italic="true"/>
-    <staticFinalField color="#9876aa" bold="true" italic="true"/>
+    <staticFinalField color="#9876aa" italic="true"/>
     <staticMethod color="#ffc66d" italic="true"/>
     <string color="#6a8759"/>
-    <taskTag color="#629755" bold="true"/>
-    <templateArgument color="#20999d"/>
-    <templateParameter color="#20999d"/>
+    <taskTag color="#a8c023" italic="true"/>
+    <templateArgument color="#507874"/>
+    <templateParameter color="#507874"/>
     <writeOccurrence color="#40332b"/>
     <xmlAttribute color="#bababa"/>
-    <xmlComment color="#808080" italic="true"/>
+    <xmlComment color="#808080"/>
     <xmlTag color="#e8bf6a"/>
   </editor>
+  <workbench>
+    <background color="#2b2b2b"/>
+    <foreground color="#c5c5c5"/>
+    <surface color="#3c3f41"/>
+    <surfaceRaised color="#4e5254"/>
+    <border color="#646464"/>
+    <mutedForeground color="#ababab"/>
+    <selection color="#2f65ca"/>
+    <accent color="#a0c7f6"/>
+  </workbench>
 </themePackage>

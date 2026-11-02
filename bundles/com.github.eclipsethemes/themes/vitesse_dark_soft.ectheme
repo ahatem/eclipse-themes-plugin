@@ -1,54 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.vitesse-dark-soft" name="Vitesse Dark Soft" appearance="dark" author="Eclipse Themes">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.vitesse-dark-soft" name="Vitesse Dark Soft" appearance="dark" author="Anthony Fu" website="https://github.com/antfu/vscode-theme-vitesse" version="1.0.1">
+  <provenance license="MIT" copyright="Primer; Anthony Fu" source="https://github.com/antfu/vscode-theme-vitesse"/>
   <editor>
     <background color="#222222"/>
-    <foreground color="#dbd7ca"/>
+    <foreground color="#cfcbbf"/>
     <abstractClass color="#6872ab"/>
     <abstractMethod color="#80a665"/>
-    <annotation color="#b8a965"/>
-    <argument color="#dbd7ca"/>
+    <annotation color="#80a665"/>
+    <argument color="#bd976a"/>
     <bracket color="#666666"/>
     <class color="#6872ab"/>
-    <comment color="#758575" italic="true"/>
-    <constant color="#c99076"/>
+    <comment color="#6a786a"/>
+    <constant color="#b8a965"/>
     <currentLine color="#292929"/>
-    <deprecated color="#758575" strikethrough="true"/>
-    <doc color="#758575" italic="true"/>
-    <docLink color="#6394bf"/>
-    <docTag color="#5d99a9"/>
-    <docXmlTag color="#5d99a9"/>
-    <enum color="#c99076"/>
-    <error color="#cb7676"/>
-    <field color="#bd976a"/>
-    <filteredSearchResult color="#e6cc77"/>
-    <findScope color="#353535"/>
+    <deprecated color="#cfcbbf" strikethrough="true"/>
+    <doc color="#6a786a"/>
+    <docLink color="#cfcbbf"/>
+    <docTag color="#4d9375"/>
+    <docXmlTag color="#4d9375"/>
+    <enum color="#5da994"/>
+    <field color="#b8a965"/>
+    <filteredSearchResult color="#564f39"/>
+    <findScope color="#2c2d2e"/>
     <inheritedMethod color="#80a665"/>
     <interface color="#5d99a9"/>
     <keyword color="#4d9375"/>
-    <lineNumber color="#959da5"/>
+    <lineNumber color="#5d5c5a"/>
     <localVariable color="#bd976a"/>
     <localVariableDeclaration color="#bd976a"/>
     <method color="#80a665"/>
     <methodDeclaration color="#80a665"/>
-    <multiLineComment color="#758575" italic="true"/>
+    <multiLineComment color="#6a786a"/>
     <number color="#4c9a91"/>
-    <occurrence color="#2f2f2f"/>
-    <operator color="#666666"/>
+    <occurrence color="#222323"/>
+    <operator color="#cb7676"/>
     <removedLine color="#cb7676"/>
-    <searchResult color="#e6cc77"/>
+    <searchResult color="#3c392d"/>
     <selectionBackground color="#353535"/>
-    <selectionForeground color="#dbd7ca"/>
-    <sourceHoverBackground color="#292929"/>
-    <staticField color="#bd976a" italic="true"/>
-    <staticFinalField color="#c99076" bold="true"/>
-    <staticMethod color="#80a665" italic="true"/>
+    <selectionForeground color="#cfcbbf"/>
+    <sourceHoverBackground color="#222222"/>
+    <staticField color="#b8a965"/>
+    <staticFinalField color="#b8a965"/>
+    <staticMethod color="#80a665"/>
     <string color="#c98a7d"/>
-    <taskTag color="#4d9375" bold="true"/>
+    <taskTag color="#6a786a" bold="true"/>
     <templateArgument color="#5da994"/>
     <templateParameter color="#5da994"/>
-    <writeOccurrence color="#3a3a3a"/>
+    <writeOccurrence color="#222724"/>
     <xmlAttribute color="#bd976a"/>
-    <xmlComment color="#758575" italic="true"/>
+    <xmlComment color="#6a786a"/>
     <xmlTag color="#4d9375"/>
   </editor>
+  <workbench>
+    <background color="#222222"/>
+    <foreground color="#cfcbbf"/>
+    <surface color="#222222"/>
+    <surfaceRaised color="#222222"/>
+    <border color="#252525"/>
+    <mutedForeground color="#8c8b87"/>
+    <selection color="#292929"/>
+    <accent color="#54977b"/>
+  </workbench>
 </themePackage>

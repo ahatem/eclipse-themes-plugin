@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.kintsugi-dark-flared" name="Kintsugi Dark Flared" appearance="dark" author="Ahmed Hatem" website="https://github.com/ahatem">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.kintsugi-dark-flared" name="Kintsugi Dark Flared" appearance="dark" author="Ahmed Hatem" website="https://github.com/ahatem/vscode-kintsugi" version="0.3.1">
+  <provenance license="MIT" copyright="Ahmed Hatem" source="https://github.com/ahatem/vscode-kintsugi"/>
   <editor>
     <background color="#161618"/>
     <foreground color="#bcac8f"/>
@@ -7,16 +8,16 @@
     <abstractMethod color="#798283"/>
     <annotation color="#678e87"/>
     <argument color="#bcac8f"/>
-    <bracket color="#7f7b66"/>
+    <bracket color="#85806b"/>
     <class color="#798283"/>
-    <comment color="#5f5f5f"/>
-    <constant color="#db9833"/>
+    <comment color="#636363"/>
+    <constant color="#bcac8f"/>
     <currentLine color="#1d1d1c"/>
-    <deprecated color="#b38f8f" bold="true" italic="true"/>
-    <doc color="#5f5f5f"/>
-    <docLink color="#8a8970"/>
-    <docTag color="#8a8970"/>
-    <docXmlTag color="#8a8970"/>
+    <deprecated color="#bcac8f" strikethrough="true"/>
+    <doc color="#636363"/>
+    <docLink color="#bcac8f"/>
+    <docTag color="#d66848" bold="true"/>
+    <docXmlTag color="#dbad49" bold="true"/>
     <enum color="#798283"/>
     <field color="#bcac8f"/>
     <filteredSearchResult color="#212326"/>
@@ -29,7 +30,7 @@
     <localVariableDeclaration color="#bcac8f"/>
     <method color="#798283"/>
     <methodDeclaration color="#798283"/>
-    <multiLineComment color="#5f5f5f"/>
+    <multiLineComment color="#636363"/>
     <number color="#db9833"/>
     <occurrence color="#26292d"/>
     <operator color="#e08542"/>
@@ -38,16 +39,26 @@
     <selectionBackground color="#26292d"/>
     <selectionForeground color="#dddddd"/>
     <sourceHoverBackground color="#1c1c1c"/>
-    <staticField color="#798283"/>
-    <staticFinalField color="#db9833"/>
+    <staticField color="#bcac8f"/>
+    <staticFinalField color="#bcac8f"/>
     <staticMethod color="#798283"/>
     <string color="#cc7f66"/>
-    <taskTag color="#5f5f5f"/>
-    <templateArgument color="#e08542"/>
-    <templateParameter color="#e08542"/>
+    <taskTag color="#636363" bold="true"/>
+    <templateArgument color="#798283"/>
+    <templateParameter color="#798283"/>
     <writeOccurrence color="#31353c"/>
     <xmlAttribute color="#798283"/>
-    <xmlComment color="#5f5f5f"/>
+    <xmlComment color="#636363"/>
     <xmlTag color="#dbad49" bold="true"/>
   </editor>
+  <workbench>
+    <background color="#161618"/>
+    <foreground color="#bcac8f"/>
+    <surface color="#131314"/>
+    <surfaceRaised color="#161618"/>
+    <border color="#2a2a28"/>
+    <mutedForeground color="#ccccc7"/>
+    <selection color="#393b31"/>
+    <accent color="#b8943a"/>
+  </workbench>
 </themePackage>

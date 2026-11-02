@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.darkest-dark" name="Darkest Dark" appearance="dark" author="Eclipse Themes">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.darkest-dark" name="Darkest Dark" appearance="dark" author="Eclipse Themes" description="Best-effort theme in the spirit of the Darkest Dark theme of the commercial DevStyle plug-in, which publishes no source or license. The editor colors are kept and the workbench colors are derived from them.">
+  <provenance/>
   <editor>
     <background color="#191d1f"/>
     <foreground color="#d8d8d8"/>
@@ -47,4 +48,14 @@
     <xmlComment color="#c7dd0c"/>
     <xmlTag color="#bed6ff"/>
   </editor>
+  <workbench>
+    <background color="#191d1f"/>
+    <foreground color="#d8d8d8"/>
+    <surface color="#212426"/>
+    <surfaceRaised color="#2a2e30"/>
+    <border color="#383b3d"/>
+    <mutedForeground color="#d0d0d0"/>
+    <selection color="#1a5f8c"/>
+    <accent color="#8dcbe2"/>
+  </workbench>
 </themePackage>

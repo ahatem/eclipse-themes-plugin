@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.quietlight" name="Quiet Light" appearance="light" author="Eclipse Themes">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.quietlight" name="Quiet Light" appearance="light" author="Microsoft" website="https://github.com/microsoft/vscode" version="VS Code 1.144.0">
+  <provenance license="MIT" copyright="Microsoft Corporation" source="https://github.com/microsoft/vscode/tree/1.144.0/extensions"/>
   <editor>
     <background color="#f5f5f5"/>
     <foreground color="#333333"/>
     <abstractClass color="#7a3e9d" bold="true"/>
     <abstractMethod color="#aa3731" bold="true"/>
     <annotation color="#7a3e9d"/>
-    <argument color="#333333"/>
+    <argument color="#7a3e9d"/>
     <bracket color="#777777"/>
     <class color="#7a3e9d" bold="true"/>
     <comment color="#aaaaaa" italic="true"/>
-    <constant color="#9c5d27"/>
+    <constant color="#7a3e9d"/>
     <currentLine color="#e4f6d4"/>
     <deprecated color="#333333" strikethrough="true"/>
-    <doc color="#448c27"/>
-    <docLink color="#4b69c6"/>
+    <doc color="#aaaaaa" italic="true"/>
+    <docLink color="#333333" underline="true"/>
     <docTag color="#4b69c6"/>
-    <docXmlTag color="#7a3e9d" bold="true"/>
+    <docXmlTag color="#4b69c6"/>
     <enum color="#7a3e9d" bold="true"/>
     <field color="#7a3e9d"/>
-    <filteredSearchResult color="#e3d7dc"/>
-    <findScope color="#e4f6d4"/>
+    <filteredSearchResult color="#f0dbe4"/>
+    <findScope color="#e1e1e1"/>
     <inheritedMethod color="#aa3731" bold="true"/>
     <interface color="#7a3e9d" bold="true"/>
     <keyword color="#4b69c6"/>
@@ -31,23 +32,33 @@
     <methodDeclaration color="#aa3731" bold="true"/>
     <multiLineComment color="#aaaaaa" italic="true"/>
     <number color="#9c5d27"/>
-    <occurrence color="#c9d0d9"/>
+    <occurrence color="#cdcdcd"/>
     <operator color="#777777"/>
-    <removedLine color="#c73d20"/>
+    <removedLine color="#e51400"/>
     <searchResult color="#bf9cac"/>
     <selectionBackground color="#c9d0d9"/>
     <selectionForeground color="#333333"/>
-    <sourceHoverBackground color="#f5f5f5"/>
-    <staticField color="#7a3e9d" italic="true"/>
-    <staticFinalField color="#9c5d27" bold="true" italic="true"/>
-    <staticMethod color="#aa3731" bold="true" italic="true"/>
+    <sourceHoverBackground color="#f3f3f3"/>
+    <staticField color="#7a3e9d"/>
+    <staticFinalField color="#7a3e9d"/>
+    <staticMethod color="#aa3731" bold="true"/>
     <string color="#448c27"/>
-    <taskTag color="#448c27" bold="true"/>
-    <templateArgument color="#7a3e9d"/>
-    <templateParameter color="#7a3e9d"/>
-    <writeOccurrence color="#c9d0d9"/>
+    <taskTag color="#aaaaaa" bold="true"/>
+    <templateArgument color="#7a3e9d" bold="true"/>
+    <templateParameter color="#7a3e9d" bold="true"/>
+    <writeOccurrence color="#bbd0df"/>
     <xmlAttribute color="#8190a0" italic="true"/>
-    <xmlComment color="#aaaaaa"/>
+    <xmlComment color="#aaaaaa" italic="true"/>
     <xmlTag color="#4b69c6"/>
   </editor>
+  <workbench>
+    <background color="#f5f5f5"/>
+    <foreground color="#333333"/>
+    <surface color="#f2f2f2"/>
+    <surfaceRaised color="#f5f5f5"/>
+    <border color="#d5d5d5"/>
+    <mutedForeground color="#54494b"/>
+    <selection color="#c4d9b1"/>
+    <accent color="#8059bb"/>
+  </workbench>
 </themePackage>

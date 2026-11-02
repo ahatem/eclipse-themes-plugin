@@ -1,53 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.jupyter" name="Jupyter" appearance="light" author="Eclipse Themes">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.jupyter" name="Jupyter" appearance="light" author="Project Jupyter" website="https://github.com/jupyterlab/jupyterlab" version="JupyterLab 4.6.5">
+  <provenance license="BSD-3-Clause" copyright="Project Jupyter Contributors" source="https://github.com/jupyterlab/jupyterlab/blob/v4.6.5/packages/theme-light-extension/style/variables.css"/>
   <editor>
     <background color="#ffffff"/>
     <foreground color="#212121"/>
     <abstractClass color="#0000ff"/>
-    <abstractMethod color="#0000ff"/>
+    <abstractMethod color="#212121"/>
     <annotation color="#aa22ff"/>
     <argument color="#212121"/>
-    <bracket color="#212121"/>
+    <bracket color="#999977"/>
     <class color="#0000ff"/>
     <comment color="#408080" italic="true"/>
-    <constant color="#bc7a00"/>
-    <currentLine color="#fdf0e2"/>
+    <constant color="#00366d"/>
+    <currentLine color="#f6f6f6"/>
     <deprecated color="#212121" strikethrough="true"/>
-    <doc color="#408080"/>
-    <docLink color="#0000ff"/>
-    <docTag color="#008000"/>
-    <docXmlTag color="#008000" bold="true"/>
+    <doc color="#408080" italic="true"/>
+    <docLink color="#0000cc"/>
+    <docTag color="#aa22ff"/>
+    <docXmlTag color="#117700"/>
     <enum color="#0000ff"/>
-    <field color="#212121"/>
-    <filteredSearchResult color="#fdf0e2"/>
-    <findScope color="#fdf0e2"/>
-    <inheritedMethod color="#0000ff"/>
+    <field color="#0055aa"/>
+    <inheritedMethod color="#212121"/>
     <interface color="#0000ff"/>
     <keyword color="#008000" bold="true"/>
-    <lineNumber color="#aaaaaa"/>
+    <lineNumber color="#757575"/>
     <localVariable color="#212121"/>
     <localVariableDeclaration color="#212121"/>
-    <method color="#0000ff"/>
+    <method color="#212121"/>
     <methodDeclaration color="#0000ff"/>
     <multiLineComment color="#408080" italic="true"/>
-    <number color="#bc7a00"/>
-    <occurrence color="#fdf0e2"/>
-    <operator color="#aa22ff"/>
-    <removedLine color="#c7254e"/>
-    <searchResult color="#fdf0e2"/>
-    <selectionBackground color="#fdf0e2"/>
+    <number color="#008800"/>
+    <operator color="#7800c2" bold="true"/>
+    <searchResult color="#f5c800"/>
+    <selectionBackground color="#d7d4f0"/>
     <selectionForeground color="#212121"/>
     <sourceHoverBackground color="#ffffff"/>
-    <staticField color="#212121" italic="true"/>
-    <staticFinalField color="#bc7a00" bold="true" italic="true"/>
-    <staticMethod color="#0000ff" italic="true"/>
+    <staticField color="#0055aa"/>
+    <staticFinalField color="#00366d"/>
+    <staticMethod color="#212121"/>
     <string color="#ba2121"/>
-    <taskTag color="#008000" bold="true"/>
-    <templateArgument color="#0000ff"/>
-    <templateParameter color="#0000ff"/>
-    <writeOccurrence color="#fdf0e2"/>
-    <xmlAttribute color="#7d9029"/>
-    <xmlComment color="#408080"/>
-    <xmlTag color="#008000" bold="true"/>
+    <taskTag color="#408080" bold="true"/>
+    <templateArgument color="#008855"/>
+    <templateParameter color="#008855"/>
+    <xmlAttribute color="#0000cc"/>
+    <xmlComment color="#408080" italic="true"/>
+    <xmlTag color="#117700" bold="true"/>
   </editor>
+  <workbench>
+    <background color="#ffffff"/>
+    <foreground color="#1f1f1f"/>
+    <surface color="#eeeeee"/>
+    <surfaceRaised color="#ffffff"/>
+    <border color="#e0e0e0"/>
+    <mutedForeground color="#696969"/>
+    <selection color="#e3f2fd"/>
+    <accent color="#176cc2"/>
+  </workbench>
 </themePackage>

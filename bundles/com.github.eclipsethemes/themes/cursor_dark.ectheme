@@ -1,53 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.cursor-dark" name="Cursor Dark" appearance="dark" author="Eclipse Themes">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.cursor-dark" name="Cursor Dark" appearance="dark" author="Anysphere" description="Colors read from the theme built into the Cursor 2.6.20 app. Cursor publishes no source or license for its themes, so no license is claimed." website="https://cursor.com" version="Cursor 2.6.20">
+  <provenance copyright="Anysphere"/>
   <editor>
-    <background color="#1a1a1a"/>
-    <foreground color="#d8dee9"/>
+    <background color="#181818"/>
+    <foreground color="#d6d6dd"/>
     <abstractClass color="#87c3ff"/>
     <abstractMethod color="#efb080"/>
     <annotation color="#efb080"/>
-    <argument color="#d6d6dd"/>
+    <argument color="#d6d6dd" italic="true"/>
     <bracket color="#d6d6dd"/>
     <class color="#87c3ff"/>
-    <comment color="#6d6d6d" italic="true"/>
-    <constant color="#efb080"/>
-    <currentLine color="#292929"/>
+    <comment color="#636363" italic="true"/>
+    <constant color="#aaa0fa"/>
+    <currentLine color="#262626"/>
     <deprecated color="#d6d6dd" strikethrough="true"/>
-    <doc color="#6d6d6d" italic="true"/>
-    <docLink color="#4c9df3"/>
+    <doc color="#636363" italic="true"/>
+    <docLink color="#d6d6dd"/>
     <docTag color="#82d2ce"/>
-    <docXmlTag color="#d6d6dd" bold="true"/>
+    <docXmlTag color="#d6d6dd"/>
     <enum color="#efb080"/>
-    <field color="#aa9bf5"/>
-    <filteredSearchResult color="#37464a"/>
-    <findScope color="#292929"/>
+    <field color="#aaa0fa"/>
+    <filteredSearchResult color="#364549"/>
+    <findScope color="#262626"/>
     <inheritedMethod color="#efb080"/>
     <interface color="#efb080"/>
-    <keyword color="#83d6c5"/>
-    <lineNumber color="#505050"/>
-    <localVariable color="#94c1fa"/>
-    <localVariableDeclaration color="#94c1fa"/>
+    <keyword color="#82d2ce"/>
+    <lineNumber color="#4d4d4d"/>
+    <localVariable color="#87c3ff"/>
+    <localVariableDeclaration color="#87c3ff"/>
     <method color="#efb080"/>
-    <methodDeclaration color="#efb080"/>
-    <multiLineComment color="#6d6d6d" italic="true"/>
+    <methodDeclaration color="#efb080" bold="true"/>
+    <multiLineComment color="#636363" italic="true"/>
     <number color="#ebc88d"/>
-    <occurrence color="#383838"/>
+    <occurrence color="#303030"/>
     <operator color="#d6d6dd"/>
-    <removedLine color="#bf616a"/>
-    <searchResult color="#465c63"/>
-    <selectionBackground color="#313131"/>
-    <selectionForeground color="#d8dee9"/>
-    <sourceHoverBackground color="#1a1a1a"/>
-    <staticField color="#aa9bf5" italic="true"/>
-    <staticFinalField color="#efb080" bold="true" italic="true"/>
-    <staticMethod color="#efb080" italic="true"/>
+    <removedLine color="#e34671"/>
+    <searchResult color="#455b62"/>
+    <selectionBackground color="#303030"/>
+    <selectionForeground color="#d6d6dd"/>
+    <sourceHoverBackground color="#141414"/>
+    <staticField color="#aaa0fa"/>
+    <staticFinalField color="#aaa0fa"/>
+    <staticMethod color="#efb080"/>
     <string color="#e394dc"/>
-    <taskTag color="#a8cc7c" bold="true"/>
+    <taskTag color="#636363" bold="true"/>
     <templateArgument color="#efb080"/>
     <templateParameter color="#efb080"/>
-    <writeOccurrence color="#424242"/>
+    <writeOccurrence color="#3e3e3e"/>
     <xmlAttribute color="#aaa0fa"/>
-    <xmlComment color="#6d6d6d"/>
-    <xmlTag color="#87c3ff"/>
+    <xmlComment color="#636363" italic="true"/>
+    <xmlTag color="#d6d6dd"/>
   </editor>
+  <workbench>
+    <background color="#181818"/>
+    <foreground color="#d4d4d4"/>
+    <surface color="#141414"/>
+    <surfaceRaised color="#181818"/>
+    <border color="#232323"/>
+    <mutedForeground color="#818181"/>
+    <selection color="#2c2c2c"/>
+    <accent color="#828282"/>
+  </workbench>
 </themePackage>

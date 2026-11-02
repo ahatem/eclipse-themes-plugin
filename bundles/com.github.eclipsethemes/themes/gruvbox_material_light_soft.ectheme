@@ -1,53 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.gruvbox-material-light-soft" name="Gruvbox Material Light Soft" appearance="light" author="Eclipse Themes">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.gruvbox-material-light-soft" name="Gruvbox Material Light Soft" appearance="light" author="sainnhe" website="https://github.com/sainnhe/gruvbox-material-vscode" version="6.5.2">
+  <provenance license="MIT" copyright="sainnhe" source="https://github.com/sainnhe/gruvbox-material-vscode"/>
   <editor>
     <background color="#f2e5bc"/>
     <foreground color="#654735"/>
-    <abstractClass color="#b47109"/>
-    <abstractMethod color="#4c7a5d"/>
-    <annotation color="#b47109"/>
-    <argument color="#c35e0a"/>
+    <abstractClass color="#45707a"/>
+    <abstractMethod color="#6c782e"/>
+    <annotation color="#945e80"/>
+    <argument color="#654735"/>
     <bracket color="#654735"/>
-    <class color="#b47109"/>
+    <class color="#45707a"/>
     <comment color="#928374" italic="true"/>
-    <constant color="#945e80"/>
-    <currentLine color="#ebdbb2"/>
-    <deprecated color="#928374" strikethrough="true"/>
+    <constant color="#654735"/>
+    <currentLine color="#eddeb6"/>
+    <deprecated color="#654735" strikethrough="true"/>
     <doc color="#928374" italic="true"/>
-    <docLink color="#4c7a5d"/>
-    <docTag color="#6f8352"/>
-    <docXmlTag color="#6f8352"/>
-    <enum color="#6f8352"/>
-    <field color="#4c7a5d"/>
-    <filteredSearchResult color="#d5c4a1"/>
-    <findScope color="#d5c4a1"/>
-    <inheritedMethod color="#4c7a5d"/>
-    <interface color="#b47109"/>
-    <keyword color="#c14a4a" bold="true"/>
+    <docLink color="#654735"/>
+    <docTag color="#c14a4a"/>
+    <docXmlTag color="#c35e0a"/>
+    <enum color="#45707a"/>
+    <field color="#654735"/>
+    <filteredSearchResult color="#e0d9a6"/>
+    <findScope color="#e6d9b2"/>
+    <inheritedMethod color="#6c782e"/>
+    <interface color="#45707a"/>
+    <keyword color="#c14a4a"/>
     <lineNumber color="#a89984"/>
     <localVariable color="#654735"/>
     <localVariableDeclaration color="#654735"/>
-    <method color="#4c7a5d"/>
-    <methodDeclaration color="#4c7a5d"/>
+    <method color="#6c782e"/>
+    <methodDeclaration color="#6c782e"/>
     <multiLineComment color="#928374" italic="true"/>
     <number color="#945e80"/>
-    <occurrence color="#d5c4a1"/>
-    <operator color="#654735"/>
-    <removedLine color="#c14a4a"/>
-    <searchResult color="#d5c4a1"/>
-    <selectionBackground color="#c9b99a"/>
+    <occurrence color="#e6d9b2"/>
+    <operator color="#c35e0a"/>
+    <removedLine color="#ed9784"/>
+    <searchResult color="#efcea0"/>
+    <selectionBackground color="#dbcca9"/>
     <selectionForeground color="#654735"/>
     <sourceHoverBackground color="#ebdbb2"/>
-    <staticField color="#b47109"/>
-    <staticFinalField color="#b47109"/>
-    <staticMethod color="#4c7a5d"/>
-    <string color="#6f8352"/>
-    <taskTag color="#c14a4a" bold="true"/>
-    <templateArgument color="#5a7785"/>
-    <templateParameter color="#5a7785"/>
-    <writeOccurrence color="#d5c4a1"/>
+    <staticField color="#654735"/>
+    <staticFinalField color="#654735"/>
+    <staticMethod color="#6c782e"/>
+    <string color="#b47109"/>
+    <taskTag color="#928374" bold="true"/>
+    <templateArgument color="#45707a"/>
+    <templateParameter color="#45707a"/>
+    <writeOccurrence color="#dbcca9"/>
     <xmlAttribute color="#b47109"/>
     <xmlComment color="#928374" italic="true"/>
-    <xmlTag color="#c14a4a"/>
+    <xmlTag color="#c35e0a"/>
   </editor>
+  <workbench>
+    <background color="#f2e5bc"/>
+    <foreground color="#6d6358"/>
+    <surface color="#f2e5bc"/>
+    <surfaceRaised color="#f2e5bc"/>
+    <border color="#f2e5bc"/>
+    <mutedForeground color="#6d6357"/>
+    <selection color="#e7d9b2"/>
+    <accent color="#6d6358"/>
+  </workbench>
 </themePackage>

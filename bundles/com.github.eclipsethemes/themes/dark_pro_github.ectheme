@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.dark-pro-github" name="Dark Pro Github" appearance="dark" author="Eclipse Themes">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.dark-pro-github" name="Dark Pro Github" appearance="dark" author="Eclipse Themes" description="Best-effort port: no public upstream source was found, so the editor colors are kept and the workbench colors are derived from them.">
+  <provenance/>
   <editor>
     <background color="#111111"/>
     <foreground color="#e6edf3"/>
@@ -50,4 +51,14 @@
     <xmlComment color="#8b949e"/>
     <xmlTag color="#7ee787"/>
   </editor>
+  <workbench>
+    <background color="#111111"/>
+    <foreground color="#e6edf3"/>
+    <surface color="#1a1a1a"/>
+    <surfaceRaised color="#242525"/>
+    <border color="#333435"/>
+    <mutedForeground color="#838383"/>
+    <selection color="#244b6d"/>
+    <accent color="#ff7b72"/>
+  </workbench>
 </themePackage>
