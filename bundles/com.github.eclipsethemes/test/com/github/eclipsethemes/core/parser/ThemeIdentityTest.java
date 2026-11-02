@@ -157,8 +157,8 @@ public class ThemeIdentityTest {
             bundled(resources, ParserTestSupport.themes().resolve("bundled-identities.properties").toUri().toURL());
             var repository = new ThemeRepository(directory.toFile(), ParserTestSupport.quietLog());
             repository.reload();
-            assertEquals(33, repository.getAllThemes().size());
-            assertEquals(33, new HashSet<>(repository.getAllThemes()).size());
+            assertEquals(56, repository.getAllThemes().size());
+            assertEquals(56, new HashSet<>(repository.getAllThemes()).size());
             // The identities the same themes had as legacy documents: bundled:<ect-id>, by theme name.
             Map<String, String> legacy = new HashMap<>();
             try (var files = Files.list(ParserTestSupport.legacyThemes())) {
@@ -168,14 +168,17 @@ public class ThemeIdentityTest {
                 }
             }
             assertEquals(33, legacy.size());
+            var names = new HashMap<String, String>();
             for (ThemeRecord theme : repository.getAllThemes()) {
-                assertEquals(theme.theme().getName(), legacy.get(theme.theme().getName()), theme.logicalId());
+                // Themes added after the legacy corpus have no earlier identity to keep.
+                String earlier = legacy.get(theme.theme().getName());
+                if (earlier != null) assertEquals(theme.theme().getName(), earlier, theme.logicalId());
                 assertEquals(ThemeOrigin.BUNDLED, theme.origin());
+                names.put(theme.logicalId(), theme.theme().getName());
             }
-            var logical = repository.getAllThemes().stream().map(ThemeRecord::logicalId)
-                    .collect(java.util.stream.Collectors.toSet());
-            assertTrue(logical.contains(Constants.DEFAULT_LIGHT_THEME_ID));
-            assertTrue(logical.contains(Constants.DEFAULT_DARK_THEME_ID));
+            assertTrue(names.values().containsAll(legacy.keySet()));
+            assertEquals(Constants.DEFAULT_LIGHT_THEME_NAME, names.get(Constants.DEFAULT_LIGHT_THEME_ID));
+            assertEquals(Constants.DEFAULT_DARK_THEME_NAME, names.get(Constants.DEFAULT_DARK_THEME_ID));
             var source = directory.resolve("external.xml");
             Files.writeString(source, "<colorTheme name='Darcula' ect-id='63d6a50b-371f-4211-9025-9bfea76cc850'/>");
             ThemeRecord imported = repository.importTheme(source.toFile()).record();
@@ -184,7 +187,7 @@ public class ThemeIdentityTest {
             // Moving the external origin leaves the installed record and its identity untouched.
             Files.move(source, directory.resolve("moved-origin.xml"));
             repository.reload();
-            assertEquals(34, repository.getAllThemes().size());
+            assertEquals(57, repository.getAllThemes().size());
             assertEquals(1, repository.getAllThemes().stream().filter(imported::equals).count());
             assertEquals(2, repository.getAllThemes().stream().filter(t -> t.theme().getName().equals("Darcula")).count());
         }

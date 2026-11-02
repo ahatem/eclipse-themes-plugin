@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.synthwave-84" name="SynthWave '84" appearance="dark" author="Robb Owen" website="https://github.com/robb0wen/synthwave-vscode" version="0.1.20">
+  <provenance license="MIT" copyright="Robb Owen" source="https://github.com/robb0wen/synthwave-vscode"/>
+  <editor>
+    <background color="#262335"/>
+    <foreground color="#d4d4d4"/>
+    <abstractClass color="#fe4450"/>
+    <abstractMethod color="#36f9f6"/>
+    <annotation color="#fe4450"/>
+    <argument color="#ff7edb" italic="true"/>
+    <bracket color="#d4d4d4"/>
+    <class color="#fe4450"/>
+    <comment color="#848bbd" italic="true"/>
+    <constant color="#ff7edb"/>
+    <currentLine color="#2f2c3d"/>
+    <deprecated color="#d4d4d4" strikethrough="true"/>
+    <doc color="#848bbd" italic="true"/>
+    <docLink color="#dd5500"/>
+    <docTag color="#fede5d"/>
+    <docXmlTag color="#72f1b8"/>
+    <enum color="#fe4450"/>
+    <field color="#ff7edb"/>
+    <filteredSearchResult color="#5f442b"/>
+    <findScope color="#272438"/>
+    <inheritedMethod color="#36f9f6"/>
+    <interface color="#fe4450"/>
+    <keyword color="#fede5d"/>
+    <lineNumber color="#888690"/>
+    <localVariable color="#ff7edb"/>
+    <localVariableDeclaration color="#ff7edb"/>
+    <method color="#36f9f6"/>
+    <methodDeclaration color="#36f9f6"/>
+    <multiLineComment color="#848bbd" italic="true"/>
+    <number color="#f97e72"/>
+    <occurrence color="#2d2643"/>
+    <operator color="#fede5d"/>
+    <removedLine color="#ae2a40"/>
+    <searchResult color="#a36c1e"/>
+    <selectionBackground color="#413f4e"/>
+    <selectionForeground color="#d4d4d4"/>
+    <sourceHoverBackground color="#191723"/>
+    <staticField color="#ff7edb"/>
+    <staticFinalField color="#ff7edb"/>
+    <staticMethod color="#36f9f6"/>
+    <string color="#ff8b39"/>
+    <taskTag color="#848bbd" bold="true"/>
+    <templateArgument color="#fe4450"/>
+    <templateParameter color="#fe4450"/>
+    <writeOccurrence color="#2d2643"/>
+    <xmlAttribute color="#fede5d"/>
+    <xmlComment color="#848bbd" italic="true"/>
+    <xmlTag color="#72f1b8"/>
+  </editor>
+  <workbench>
+    <background color="#262335"/>
+    <foreground color="#ffffff"/>
+    <surface color="#241b2f"/>
+    <surfaceRaised color="#262335"/>
+    <border color="#495495"/>
+    <mutedForeground color="#918c96"/>
+    <selection color="#3f3849"/>
+    <accent color="#f97e72"/>
+  </workbench>
+</themePackage>

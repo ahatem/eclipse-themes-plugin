@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.kintsugi-light-clay" name="Kintsugi Light Clay" appearance="light" author="Ahmed Hatem" website="https://github.com/ahatem/vscode-kintsugi" version="0.3.1">
+  <provenance license="MIT" copyright="Ahmed Hatem" source="https://github.com/ahatem/vscode-kintsugi"/>
+  <editor>
+    <background color="#f6f2e9"/>
+    <foreground color="#2a2818"/>
+    <abstractClass color="#5a6060"/>
+    <abstractMethod color="#2a2818"/>
+    <annotation color="#47766f"/>
+    <argument color="#2a2818"/>
+    <bracket color="#746f58"/>
+    <class color="#5a6060"/>
+    <comment color="#9a8858"/>
+    <constant color="#2a2818"/>
+    <currentLine color="#eee6d0"/>
+    <deprecated color="#2a2818" strikethrough="true"/>
+    <doc color="#9a8858"/>
+    <docLink color="#2a2818"/>
+    <docTag color="#87691c" bold="true"/>
+    <docXmlTag color="#5a6060"/>
+    <enum color="#5a6060"/>
+    <field color="#2a2818"/>
+    <filteredSearchResult color="#eae3d0"/>
+    <findScope color="#f0eadc"/>
+    <inheritedMethod color="#2a2818"/>
+    <interface color="#5a6060"/>
+    <keyword color="#87691c" bold="true"/>
+    <lineNumber color="#b6b4ac"/>
+    <localVariable color="#2a2818"/>
+    <localVariableDeclaration color="#2a2818"/>
+    <method color="#2a2818"/>
+    <methodDeclaration color="#2a2818"/>
+    <multiLineComment color="#9a8858"/>
+    <number color="#3848a8"/>
+    <occurrence color="#e9e0cc"/>
+    <operator color="#2a2818" bold="true"/>
+    <removedLine color="#8a4040"/>
+    <searchResult color="#dfd3b7"/>
+    <selectionBackground color="#e5dbc3"/>
+    <selectionForeground color="#1e1d1a"/>
+    <sourceHoverBackground color="#fbf8f1"/>
+    <staticField color="#2a2818"/>
+    <staticFinalField color="#2a2818"/>
+    <staticMethod color="#2a2818"/>
+    <string color="#3a6820"/>
+    <taskTag color="#9a8858" bold="true"/>
+    <templateArgument color="#5a6060"/>
+    <templateParameter color="#5a6060"/>
+    <writeOccurrence color="#dfd3b7"/>
+    <xmlAttribute color="#2a2818"/>
+    <xmlComment color="#9a8858"/>
+    <xmlTag color="#5a6060"/>
+  </editor>
+  <workbench>
+    <background color="#f6f2e9"/>
+    <foreground color="#2a2818"/>
+    <surface color="#fbf8f1"/>
+    <surfaceRaised color="#f6f2e9"/>
+    <border color="#ddd6c5"/>
+    <mutedForeground color="#706e60"/>
+    <selection color="#eadfbf"/>
+    <accent color="#886a1d"/>
+  </workbench>
+</themePackage>
