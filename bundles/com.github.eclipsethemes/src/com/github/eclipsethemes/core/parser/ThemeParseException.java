@@ -1,4 +1,4 @@
-package com.github.eclipsethemes.core.exceptions;
+package com.github.eclipsethemes.core.parser;
 
 import java.util.List;
 

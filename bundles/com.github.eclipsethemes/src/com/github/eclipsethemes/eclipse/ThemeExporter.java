@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import com.github.eclipsethemes.core.exceptions.ThemeParseException;
+import com.github.eclipsethemes.core.parser.ThemeParseException;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.parser.ThemePackageParser;
 import com.github.eclipsethemes.core.parser.ThemePackageWriter;

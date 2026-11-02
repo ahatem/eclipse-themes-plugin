@@ -20,7 +20,7 @@
 		<adapter
             class="com.github.eclipsethemes.eclipse.adapters.editor.TextEditorThemeAdapter" plugin="org.eclipse.ui.editors"></adapter>
 		<adapter
-            class="com.github.eclipsethemes.eclipse.adapters.ui.DebugConsoleThemeAdapter"
+            class="com.github.eclipsethemes.eclipse.adapters.DebugConsoleThemeAdapter"
             plugin="org.eclipse.debug.ui"></adapter>
 		<adapter
             class="com.github.eclipsethemes.eclipse.adapters.editor.CppEditorThemeAdapter"

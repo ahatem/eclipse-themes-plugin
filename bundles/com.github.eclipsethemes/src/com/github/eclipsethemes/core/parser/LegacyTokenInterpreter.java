@@ -15,7 +15,6 @@ import com.github.eclipsethemes.core.models.Token;
 import com.github.eclipsethemes.core.models.TokenBuilder;
 import com.github.eclipsethemes.core.models.TokenKey;
 import com.github.eclipsethemes.core.models.TokenOptions;
-import com.github.eclipsethemes.core.parser.mapper.LegacyEclipsePropertyMapper;
 import com.github.eclipsethemes.core.validation.ThemeDiagnostic;
 
 /**

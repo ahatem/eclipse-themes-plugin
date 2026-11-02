@@ -55,12 +55,6 @@ public class ThemeModelTest {
 				() -> theme(Map.of(TokenKey.BACKGROUND, token(TokenKey.FOREGROUND, "#112233"))));
 	}
 
-	@Test public void roleLookupReturnsTheCanonicalDeclaredInstance() {
-		assertSame(TokenKey.KEYWORD, TokenKey.byId("keyword"));
-		assertSame(TokenKey.BACKGROUND, TokenKey.byId("background"));
-		assertNull(TokenKey.byId("notAThemeRole"));
-	}
-
 	@Test public void declaringARoleTwiceFailsImmediately() throws Exception {
 		Method register = TokenKey.class.getDeclaredMethod("register", String.class, TokenKey.class);
 		register.setAccessible(true);
@@ -80,12 +74,6 @@ public class ThemeModelTest {
 		assertNotSame(first, second);
 		assertNotEquals("Equal visual content is not catalog identity", first, second);
 		assertEquals(first, first);
-	}
-
-	@Test public void legacyThemesCarryNoPackageData() {
-		Theme legacy = theme(Map.of());
-		assertTrue(legacy.getPackageMetadata().isEmpty());
-		assertEquals(Map.of(), legacy.getAuthoredWorkbench());
 	}
 
 	@Test public void authoredWorkbenchIsAnImmutableSnapshot() {

@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
-import com.github.eclipsethemes.core.exceptions.ThemeParseException;
 import com.github.eclipsethemes.core.models.Color;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.ThemeType;
@@ -88,20 +87,14 @@ public class XmlThemeValidationTest {
 		assertEquals("The refusal message is the finding message", finding.message(), failure.getMessage());
 	}
 
-	@Test public void missingNameIsRefused() {
-		ThemeParseException failure = refused("<colorTheme><background color='#112233'/></colorTheme>");
+	@Test public void missingOrBlankNameIsRefused() {
+		for (String name : new String[] { "", " name='   '" }) {
+			ThemeParseException failure = refused("<colorTheme" + name + "><background color='#112233'/></colorTheme>");
 
-		ThemeDiagnostic finding = single(failure.diagnostics(), ThemeDiagnostic.NAME, "colorTheme", "name");
-		assertTrue(finding.error());
-		assertTrue(finding.message(), finding.message().contains("'name'"));
-	}
-
-	@Test public void blankNameIsRefused() {
-		ThemeParseException failure = refused("<colorTheme name='   '><background color='#112233'/></colorTheme>");
-
-		ThemeDiagnostic finding = only(failure.diagnostics());
-		assertTrue(finding.error());
-		assertEquals(ThemeDiagnostic.NAME, finding.kind());
+			ThemeDiagnostic finding = single(failure.diagnostics(), ThemeDiagnostic.NAME, "colorTheme", "name");
+			assertTrue(finding.error());
+			assertTrue(finding.message(), finding.message().contains("'name'"));
+		}
 	}
 
 	// --- Metadata: admitted with a warning, or silent ---
@@ -115,21 +108,20 @@ public class XmlThemeValidationTest {
 		assertEquals(Color.ofHex("#112233"), parsed.theme().get(TokenKey.BACKGROUND).getColor());
 	}
 
-	@Test public void presentBlankTypeWarnsAndKeepsTheLightClassification() throws Exception {
-		Parsed parsed = parse("<colorTheme name='Validation' type=''/>");
+	@Test public void blankOrUnrecognisedTypeWarnsAndKeepsTheLightClassification() throws Exception {
+		String[][] cases = {
+				// type attribute, expected message fragment
+				{ "", "classified as light" },
+				{ "Midnight", "'Midnight'" },
+		};
+		for (String[] c : cases) {
+			Parsed parsed = parse("<colorTheme name='Validation' type='" + c[0] + "'/>");
 
-		ThemeDiagnostic finding = single(parsed.findings(), ThemeDiagnostic.TYPE, "colorTheme", "type");
-		assertFalse(finding.error());
-		assertTrue(finding.message(), finding.message().contains("classified as light"));
-		assertEquals(ThemeType.LIGHT, parsed.theme().getType());
-	}
-
-	@Test public void unrecognisedTypeWarnsAndKeepsTheLightClassification() throws Exception {
-		Parsed parsed = parse("<colorTheme name='Validation' type='Midnight'/>");
-
-		ThemeDiagnostic finding = single(parsed.findings(), ThemeDiagnostic.TYPE, "colorTheme", "type");
-		assertTrue(finding.message(), finding.message().contains("'Midnight'"));
-		assertEquals(ThemeType.LIGHT, parsed.theme().getType());
+			ThemeDiagnostic finding = single(parsed.findings(), ThemeDiagnostic.TYPE, "colorTheme", "type");
+			assertFalse(finding.error());
+			assertTrue(finding.message(), finding.message().contains(c[1]));
+			assertEquals(ThemeType.LIGHT, parsed.theme().getType());
+		}
 	}
 
 	@Test public void recognisedTypesAreAcceptedInAnyCase() throws Exception {

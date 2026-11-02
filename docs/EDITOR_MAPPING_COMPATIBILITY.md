@@ -28,7 +28,7 @@ style flags are never merged. Accepted conflicting colors or effective flags
 produce a warning with the role, source names/occurrences and selected winner.
 Equivalent candidates produce no conflict warning. Invalid/missing colors retain
 the existing skip behavior. This does not define a new XML format or relax XML
-security. The alias table lives in `core.parser.mapper`.
+security. The alias table lives in `core.parser`.
 
 JDT uses static-final fields, CDT enumerators use constants, JDT/CDT use generic
 comments, and PDE/Ant use XML comments. Explicit source-hover background controls

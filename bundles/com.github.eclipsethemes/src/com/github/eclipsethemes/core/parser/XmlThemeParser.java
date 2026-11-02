@@ -1,6 +1,5 @@
 package com.github.eclipsethemes.core.parser;
 
-import com.github.eclipsethemes.core.exceptions.ThemeParseException;
 import com.github.eclipsethemes.core.models.Color;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.ThemeType;

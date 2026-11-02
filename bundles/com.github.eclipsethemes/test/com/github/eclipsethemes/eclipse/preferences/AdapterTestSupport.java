@@ -4,7 +4,7 @@ import java.util.*;
 import com.github.eclipsethemes.core.models.*;
 import com.github.eclipsethemes.eclipse.adapters.EclipseThemeAdapter;
 import com.github.eclipsethemes.eclipse.adapters.editor.*;
-import com.github.eclipsethemes.eclipse.adapters.ui.DebugConsoleThemeAdapter;
+import com.github.eclipsethemes.eclipse.adapters.DebugConsoleThemeAdapter;
 
 /** Test-owned fixtures. Stable assignments preserve the reviewed characterization hashes. */
 final class AdapterTestSupport {

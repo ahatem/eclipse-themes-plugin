@@ -19,7 +19,7 @@ import com.github.eclipsethemes.eclipse.adapters.editor.CppEditorThemeAdapter;
 import com.github.eclipsethemes.eclipse.adapters.editor.JavaEditorThemeAdapter;
 import com.github.eclipsethemes.eclipse.adapters.editor.PluginEditorThemeAdapter;
 import com.github.eclipsethemes.eclipse.adapters.editor.TextEditorThemeAdapter;
-import com.github.eclipsethemes.eclipse.adapters.ui.DebugConsoleThemeAdapter;
+import com.github.eclipsethemes.eclipse.adapters.DebugConsoleThemeAdapter;
 import com.github.eclipsethemes.eclipse.preferences.EditorPreferenceOwnership.Key;
 import com.github.eclipsethemes.eclipse.preferences.EditorPreferenceOwnership.Owned;
 

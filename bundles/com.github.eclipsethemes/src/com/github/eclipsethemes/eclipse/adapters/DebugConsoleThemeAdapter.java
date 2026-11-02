@@ -1,4 +1,4 @@
-package com.github.eclipsethemes.eclipse.adapters.ui;
+package com.github.eclipsethemes.eclipse.adapters;
 
 import java.util.List;
 import java.util.Set;
@@ -10,8 +10,6 @@ import org.osgi.service.prefs.BackingStoreException;
 
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.TokenKey;
-import com.github.eclipsethemes.eclipse.adapters.EclipseThemeAdapter;
-import com.github.eclipsethemes.eclipse.adapters.ManagedPreference;
 
 public final class DebugConsoleThemeAdapter extends EclipseThemeAdapter {
 

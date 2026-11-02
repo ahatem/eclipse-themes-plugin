@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import com.github.eclipsethemes.core.exceptions.ThemeParseException;
 import com.github.eclipsethemes.core.models.Theme;
 
 

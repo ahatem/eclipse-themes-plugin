@@ -14,31 +14,22 @@ import com.github.eclipsethemes.eclipse.ThemeRecord;
 /** The details pane never turns theme metadata into link markup, a launch or a preview request. */
 public class ThemeWebsitePresentationTest {
 
-	@Test public void launchableValuesBecomeLinkMarkup() {
-		assertEquals("<a>https://example.com</a>",
-				EclipseThemesPreferencePage.websiteText("https://example.com"));
-		assertEquals("Surrounding whitespace is removed from the visible link",
-				"<a>https://example.com</a>",
-				EclipseThemesPreferencePage.websiteText("  https://example.com  "));
-	}
-
-	@Test public void unusableValuesStayInertLiteralText() {
-		assertEquals("ftp://example.com", EclipseThemesPreferencePage.websiteText("ftp://example.com"));
-		assertEquals("javascript:alert(1)", EclipseThemesPreferencePage.websiteText("javascript:alert(1)"));
-		assertEquals("example.com", EclipseThemesPreferencePage.websiteText("example.com"));
-	}
-
-	@Test public void markupInsideMetadataIsEscapedInsteadOfRendered() {
-		String text = EclipseThemesPreferencePage.websiteText("https://example.com/<script>");
-
-		assertEquals("https://example.com/&lt;script&gt;", text);
-		assertFalse("Metadata never becomes link markup: " + text, text.contains("<a>"));
-	}
-
-	@Test public void absentOrBlankValuesShowThePlaceholder() {
-		assertEquals("N/A", EclipseThemesPreferencePage.websiteText(null));
-		assertEquals("N/A", EclipseThemesPreferencePage.websiteText(""));
-		assertEquals("N/A", EclipseThemesPreferencePage.websiteText("   "));
+	@Test public void websiteTextLinksOnlyLaunchableValuesAndKeepsEverythingElseInert() {
+		String[][] cases = {
+				// metadata value, displayed text
+				{ "https://example.com", "<a>https://example.com</a>" },
+				{ "  https://example.com  ", "<a>https://example.com</a>" },
+				{ "ftp://example.com", "ftp://example.com" },
+				{ "javascript:alert(1)", "javascript:alert(1)" },
+				{ "example.com", "example.com" },
+				{ "https://example.com/<script>", "https://example.com/&lt;script&gt;" },
+				{ null, "N/A" },
+				{ "", "N/A" },
+				{ "   ", "N/A" },
+		};
+		for (String[] c : cases) {
+			assertEquals("website '" + c[0] + "'", c[1], EclipseThemesPreferencePage.websiteText(c[0]));
+		}
 	}
 
 	@Test public void packageSourceFollowsTheWebsiteLinkPolicy() {

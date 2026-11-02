@@ -1,4 +1,4 @@
-package com.github.eclipsethemes.core.parser.mapper;
+package com.github.eclipsethemes.core.parser;
 
 import java.util.HashMap;
 import java.util.Map;

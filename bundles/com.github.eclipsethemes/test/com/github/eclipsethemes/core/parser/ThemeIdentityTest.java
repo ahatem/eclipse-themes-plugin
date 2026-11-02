@@ -20,7 +20,7 @@ import org.junit.rules.TemporaryFolder;
 import org.osgi.framework.Bundle;
 
 import com.github.eclipsethemes.EclipseThemes;
-import com.github.eclipsethemes.core.Constants;
+import com.github.eclipsethemes.core.models.Constants;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.eclipse.ThemeOrigin;
 import com.github.eclipsethemes.eclipse.ThemeRecord;

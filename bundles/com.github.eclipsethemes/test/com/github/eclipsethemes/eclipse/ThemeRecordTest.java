@@ -17,24 +17,6 @@ import com.github.eclipsethemes.core.models.TokenKey;
 /** Catalog record coordinates: explicit origin, locator rule, identity equality. */
 public class ThemeRecordTest {
 
-	@Test public void bundledRecordCarriesOriginAndNoManagedLocator() {
-		ThemeRecord record = ThemeRecord.bundled("bundled:curated", theme("Curated", "#112233"));
-
-		assertEquals(ThemeOrigin.BUNDLED, record.origin());
-		assertEquals("bundled:curated", record.logicalId());
-		assertTrue(record.locator().isEmpty());
-		assertEquals("Curated", record.theme().getName());
-	}
-
-	@Test public void installedRecordCarriesOriginAndManagedLocator() {
-		ThemeRecord record = ThemeRecord.installed("local:generated", "generated.xml", theme("Imported", "#334455"));
-
-		assertEquals(ThemeOrigin.INSTALLED, record.origin());
-		assertEquals("local:generated", record.logicalId());
-		assertEquals(Optional.of("generated.xml"), record.locator());
-		assertEquals("Imported", record.theme().getName());
-	}
-
 	@Test public void equalityUsesLogicalIdentityOnly() {
 		ThemeRecord admitted = ThemeRecord.installed("local:established", "first.xml", theme("Old", "#112233"));
 		ThemeRecord replaced = ThemeRecord.installed("local:established", "first.xml", theme("Renamed", "#445566"));

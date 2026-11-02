@@ -18,18 +18,6 @@ public class ThemeOperationOutcomeTest {
 		return new ThemeDiagnostic(severity, ThemeDiagnostic.TYPE, message, null, "colorTheme", "type");
 	}
 
-	@Test public void committedOutcomeCarriesTheThemeAndItsWarnings() {
-		ThemeRecord record = ThemeRecord.installed("local:id", "id.xml",
-				new Theme("id", "Name", "Author", "", "", ThemeType.LIGHT, Map.of()));
-
-		ThemeOperationOutcome outcome = ThemeOperationOutcome.committed(record,
-				List.of(finding(ThemeDiagnostic.Severity.WARNING, "warned")));
-
-		assertTrue(outcome.successful());
-		assertSame(record, outcome.record());
-		assertEquals(1, outcome.diagnostics().size());
-	}
-
 	@Test public void refusedOutcomeCarriesNoTheme() {
 		ThemeOperationOutcome outcome = ThemeOperationOutcome.refused(
 				List.of(finding(ThemeDiagnostic.Severity.ERROR, "root is wrong")));

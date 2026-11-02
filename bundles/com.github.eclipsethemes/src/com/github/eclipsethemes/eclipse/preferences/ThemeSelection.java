@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import com.github.eclipsethemes.core.Constants;
+import com.github.eclipsethemes.core.models.Constants;
 import com.github.eclipsethemes.eclipse.ThemeApplyOutcome;
 import com.github.eclipsethemes.eclipse.ThemeRecord;
 
