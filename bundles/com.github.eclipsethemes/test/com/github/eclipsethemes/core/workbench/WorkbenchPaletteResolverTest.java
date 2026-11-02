@@ -115,12 +115,8 @@ public class WorkbenchPaletteResolverTest {
 	// ---- perceptual derivation ---------------------------------------------------------------------------------
 
 	@Test
-	public void coolDarkThemeKeepsCoolChrome() {
+	public void coolAndWarmDarkThemesKeepTheirChromeHue() {
 		assertChromeKeepsHue(resolve(ThemeType.DARK, "#1b2535", "#c5d0e0"), "#1b2535");
-	}
-
-	@Test
-	public void warmDarkThemeKeepsWarmChrome() {
 		assertChromeKeepsHue(resolve(ThemeType.DARK, "#2d2118", "#e6d5c0"), "#2d2118");
 	}
 
@@ -144,17 +140,14 @@ public class WorkbenchPaletteResolverTest {
 	// ---- readability correction --------------------------------------------------------------------------------
 
 	@Test
-	public void blackForegroundOnDarkBackgroundIsCorrectedToReadable() {
-		WorkbenchPalette palette = resolve(ThemeType.DARK, "#202020", "#000000");
-		assertReadable(palette);
-		assertTrue(lightness(palette, WorkbenchColor.FOREGROUND) > lightness(palette, WorkbenchColor.BACKGROUND));
-	}
+	public void blackOnDarkAndWhiteOnLightForegroundsAreCorrectedToReadable() {
+		WorkbenchPalette blackOnDark = resolve(ThemeType.DARK, "#202020", "#000000");
+		assertReadable(blackOnDark);
+		assertTrue(lightness(blackOnDark, WorkbenchColor.FOREGROUND) > lightness(blackOnDark, WorkbenchColor.BACKGROUND));
 
-	@Test
-	public void whiteForegroundOnLightBackgroundIsCorrectedToReadable() {
-		WorkbenchPalette palette = resolve(ThemeType.LIGHT, "#f5f5f5", "#ffffff");
-		assertReadable(palette);
-		assertTrue(lightness(palette, WorkbenchColor.FOREGROUND) < lightness(palette, WorkbenchColor.BACKGROUND));
+		WorkbenchPalette whiteOnLight = resolve(ThemeType.LIGHT, "#f5f5f5", "#ffffff");
+		assertReadable(whiteOnLight);
+		assertTrue(lightness(whiteOnLight, WorkbenchColor.FOREGROUND) < lightness(whiteOnLight, WorkbenchColor.BACKGROUND));
 	}
 
 	@Test
@@ -239,8 +232,8 @@ public class WorkbenchPaletteResolverTest {
 	@Test
 	public void everyBundledLegacyThemeResolvesToTheSamePaletteAsBefore() throws Exception {
 		MessageDigest digest = MessageDigest.getInstance("SHA-256");
-		Path local = Path.of("themes");
-		Path themes = Files.isDirectory(local) ? local : Path.of("bundles/com.github.eclipsethemes/themes");
+		Path local = Path.of("test-data/legacy-bundled");
+		Path themes = Files.isDirectory(local) ? local : Path.of("bundles/com.github.eclipsethemes/test-data/legacy-bundled");
 		try (var paths = Files.list(themes)) {
 			for (Path file : paths.filter(p -> p.toString().endsWith(".xml"))
 					.sorted(Comparator.comparing(p -> p.getFileName().toString())).toList()) {

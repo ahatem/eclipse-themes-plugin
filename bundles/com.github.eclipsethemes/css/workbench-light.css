@@ -12,9 +12,9 @@
  *
  * Coverage is bounded to what Eclipse CSS can style and matches the stock dark and light themes selector for
  * selector where they style a surface. Editor text content follows the editor colors; native menus, title bars,
- * scroll bars, native tab strips, progress bars, Browser content and icons are not styled here. On Windows the
- * native scroll bar mode follows the theme id (ids containing "dark") and is fixed when a control is created,
- * exactly as with the stock themes.
+ * scroll bars, native tab strips, separator lines, Browser content and icons are not styled here; on Windows the light
+ * family keeps native progress bars. On Windows the native scroll bar mode follows the theme id (ids containing
+ * "dark") and is fixed when a control is created, exactly as with the stock themes.
  *
  * Structure follows the stock Eclipse dark and light themes (org.eclipse.ui.themes): a global layer that
  * styles every shell, including dialogs, then inputs, then the part and tab layers.
@@ -240,6 +240,14 @@ HeapStatus {
 
 ProgressIndicator {
 	background-color: '#com-github-eclipsethemes-workbench-light-raised';
+	color: '#com-github-eclipsethemes-workbench-light-accent';
+}
+
+/* Every progress bar, including those nested in a ProgressIndicator (wizards, dialogs): element selectors match the
+ * exact class name, so the Composite rules above miss bars inside Composite subclasses. Windows honors the colors
+ * only for the dark family (the light family keeps its native visual style). */
+ProgressBar {
+	background-color: '#com-github-eclipsethemes-workbench-light-background';
 	color: '#com-github-eclipsethemes-workbench-light-accent';
 }
 

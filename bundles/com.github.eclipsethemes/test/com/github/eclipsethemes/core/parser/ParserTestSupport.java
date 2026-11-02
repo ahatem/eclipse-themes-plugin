@@ -20,13 +20,23 @@ final class ParserTestSupport {
         return new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
     }
 
+    /** The shipped bundled packages. */
     static Path themes() {
-        Path local = Path.of("themes");
-        return Files.isDirectory(local) ? local : Path.of("bundles/com.github.eclipsethemes/themes");
+        return bundleDirectory("themes");
+    }
+
+    /** The pre-package XML of the bundled themes, kept as the reference for their names, appearances and identities. */
+    static Path legacyThemes() {
+        return bundleDirectory("test-data/legacy-bundled");
+    }
+
+    private static Path bundleDirectory(String relative) {
+        Path local = Path.of(relative);
+        return Files.isDirectory(local) ? local : Path.of("bundles/com.github.eclipsethemes").resolve(relative);
     }
 
     static Theme bundled(String name) throws Exception {
-        try (var files = Files.list(themes())) {
+        try (var files = Files.list(legacyThemes())) {
             for (Path file : files.sorted().toList()) {
                 Theme theme = new XmlThemeParser().parse(file.toFile());
                 if (theme.getName().equals(name)) return theme;

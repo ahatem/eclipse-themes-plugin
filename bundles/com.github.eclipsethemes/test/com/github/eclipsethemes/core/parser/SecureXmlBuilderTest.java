@@ -13,7 +13,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import org.junit.Test;
 import org.xml.sax.SAXException;
-import com.github.eclipsethemes.core.exceptions.ThemeParseException;
 
 public class SecureXmlBuilderTest {
     private static final List<String> FACTORY_CONTROLS = List.of(

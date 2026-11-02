@@ -28,13 +28,16 @@ import java.util.List;
  * how each is derived. Nothing outside this table is ever written to a foreign node.
  *
  * <p>
- * Provenance (Eclipse 4.40 and 4.41): every key is one that stock Eclipse Dark sets through an
- * {@code IEclipsePreferences} stylesheet bound to its own theme id (inventory in
- * {@code openspec/changes/archive/2026-10-19-plugin-color-coordination/evidence/key-classification.md}), and whose Eclipse default is
- * unreadable or clashing on a dark workbench (default colors black, blue, light pastel; checked against the owning
- * plug-in's color definition or preference initializer). These are other plug-ins' preference names, not API, and
- * are re-checked on each supported Eclipse release. Syntax and editor-surface keys are owned by the editor
- * integrations and must not appear here (a test enforces that).
+ * Provenance: every key has a default that is unreadable or clashing on a dark workbench (default colors black, blue,
+ * light pastel; checked against the owning plug-in's color definition or preference initializer) and is read by the
+ * owning plug-in. Sections 1 to 5 hold the keys stock Eclipse Dark sets through {@code IEclipsePreferences} stylesheets
+ * bound to its own theme id (Eclipse 4.40 and 4.41, inventory in
+ * {@code openspec/changes/archive/2026-10-19-plugin-color-coordination/evidence/key-classification.md}), plus Mylyn task
+ * colors that no dark sheet sets. Section 6 holds Spring Tools colors whose dark values Spring binds to the stock dark
+ * theme id only, verified from source at spring-projects/spring-tools 83e669e and not at runtime (inventory in
+ * {@code openspec/changes/extend-plugin-color-coverage/evidence/key-classification.md}). These are other plug-ins'
+ * preference names, not API, and are re-checked on each supported Eclipse release. Syntax and editor-surface keys are
+ * owned by the editor integrations and must not appear here (a test enforces that).
  */
 public final class PluginColorTable {
 
@@ -49,6 +52,9 @@ public final class PluginColorTable {
 	static final String ECLEMMA = "org.eclipse.eclemma.ui";
 	static final String MYLYN_TASKS = "org.eclipse.mylyn.tasks.ui";
 	static final String MPC = "org.eclipse.epp.mpc.ui";
+	static final String SPRING_BOOT_DASH = "org.springframework.ide.eclipse.boot.dash";
+	static final String SPRING_LS_COMMONS = "org.springframework.tooling.ls.eclipse.commons";
+	static final String SPRING_XTERM = "org.springframework.ide.eclipse.xterm";
 
 	private static final List<PluginColorKey> KEYS = List.of(
 			// 1. Popups: hover, information, content assist (workbench definitions).
@@ -133,7 +139,24 @@ public final class PluginColorTable {
 			key(WORKBENCH, "org.eclipse.mylyn.tasks.ui.colors.category.gradient.start", MYLYN_TASKS, RAISED),
 			key(WORKBENCH, "org.eclipse.mylyn.tasks.ui.colors.category.gradient.end", MYLYN_TASKS, RAISED),
 			key(WORKBENCH, "org.eclipse.mylyn.tasks.ui.color.text.quoted", MYLYN_TASKS, INFO),
-			key(MPC, "native-borders", MPC, OFF_FLAG));
+			// Mylyn's own dark sheet leaves these on their light defaults.
+			key(WORKBENCH, "org.eclipse.mylyn.tasks.ui.colors.foreground.past.due", MYLYN_TASKS, ERROR),
+			key(WORKBENCH, "org.eclipse.mylyn.tasks.ui.colors.foreground.overdue.for.others", MYLYN_TASKS, WARNING),
+			key(WORKBENCH, "org.eclipse.mylyn.tasks.ui.colors.incoming.background", MYLYN_TASKS, INFO_TINT),
+			key(MPC, "native-borders", MPC, OFF_FLAG),
+
+			// 6. Spring Tools: Boot Dashboard, Boot marker highlight and the embedded terminal.
+			key(WORKBENCH, "org.springframework.ide.eclipse.boot.dash.TextDecorColor", SPRING_BOOT_DASH, SUCCESS),
+			key(WORKBENCH, "org.springframework.ide.eclipse.boot.dash.AltTextDecorColor", SPRING_BOOT_DASH, INFO),
+			key(WORKBENCH, "org.springframework.tooling.ls.eclipse.commons.STS4BootMarkerIndicationColor",
+					SPRING_LS_COMMONS, SUCCESS_TINT),
+			key(WORKBENCH, "org.springframework.ide.eclipse.xterm.background", SPRING_XTERM, BACKGROUND),
+			key(WORKBENCH, "org.springframework.ide.eclipse.xterm.foreground", SPRING_XTERM, FOREGROUND),
+			// Drawn at 20% alpha, so the foreground gives a light veil.
+			key(WORKBENCH, "org.springframework.ide.eclipse.xterm.selection", SPRING_XTERM, FOREGROUND),
+			key(WORKBENCH, "org.springframework.ide.eclipse.xterm.cursor", SPRING_XTERM, FOREGROUND),
+			// The glyph under the block cursor: must equal the terminal background.
+			key(WORKBENCH, "org.springframework.ide.eclipse.xterm.cursorAccent", SPRING_XTERM, BACKGROUND));
 
 	private PluginColorTable() {
 	}

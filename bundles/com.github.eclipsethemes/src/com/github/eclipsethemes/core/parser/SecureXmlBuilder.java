@@ -11,7 +11,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.ext.EntityResolver2;
 import org.xml.sax.helpers.DefaultHandler;
-import com.github.eclipsethemes.core.exceptions.ThemeParseException;
 
 /** Parser-local JAXP policy. Never retry with fewer controls or change provider discovery. */
 final class SecureXmlBuilder {

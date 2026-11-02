@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.catppuccin-frappe" name="Catppuccin Frappé" appearance="dark" author="Catppuccin" website="https://github.com/catppuccin/vscode" version="3.18.1">
+  <provenance license="MIT" copyright="Catppuccin" source="https://github.com/catppuccin/vscode"/>
+  <editor>
+    <background color="#303446"/>
+    <foreground color="#c6d0f5"/>
+    <abstractClass color="#e5c890" italic="true"/>
+    <abstractMethod color="#8caaee" italic="true"/>
+    <annotation color="#ef9f76"/>
+    <argument color="#ea999c" italic="true"/>
+    <bracket color="#949cbb"/>
+    <class color="#e5c890" italic="true"/>
+    <comment color="#949cbb" italic="true"/>
+    <constant color="#ef9f76"/>
+    <currentLine color="#3b3f52"/>
+    <deprecated color="#c6d0f5" strikethrough="true"/>
+    <doc color="#949cbb" italic="true"/>
+    <docLink color="#8caaee"/>
+    <docTag color="#ca9ee6"/>
+    <docXmlTag color="#8caaee"/>
+    <enum color="#e5c890" italic="true"/>
+    <field color="#c6d0f5"/>
+    <filteredSearchResult color="#506373"/>
+    <findScope color="#506373"/>
+    <inheritedMethod color="#8caaee" italic="true"/>
+    <interface color="#e5c890" italic="true"/>
+    <keyword color="#ca9ee6"/>
+    <lineNumber color="#838ba7"/>
+    <localVariable color="#c6d0f5"/>
+    <localVariableDeclaration color="#c6d0f5"/>
+    <method color="#8caaee" italic="true"/>
+    <methodDeclaration color="#8caaee" italic="true"/>
+    <multiLineComment color="#949cbb" italic="true"/>
+    <number color="#ef9f76"/>
+    <occurrence color="#44495d"/>
+    <operator color="#81c8be"/>
+    <removedLine color="#e78284"/>
+    <searchResult color="#674b59"/>
+    <selectionBackground color="#494e63"/>
+    <selectionForeground color="#c6d0f5"/>
+    <sourceHoverBackground color="#292c3c"/>
+    <staticField color="#c6d0f5"/>
+    <staticFinalField color="#ef9f76"/>
+    <staticMethod color="#8caaee" italic="true"/>
+    <string color="#a6d189"/>
+    <taskTag color="#949cbb" bold="true"/>
+    <templateArgument color="#e5c890" italic="true"/>
+    <templateParameter color="#e5c890" italic="true"/>
+    <writeOccurrence color="#424c68"/>
+    <xmlAttribute color="#e5c890"/>
+    <xmlComment color="#949cbb" italic="true"/>
+    <xmlTag color="#8caaee"/>
+  </editor>
+  <workbench>
+    <background color="#303446"/>
+    <foreground color="#c6d0f5"/>
+    <surface color="#292c3c"/>
+    <surfaceRaised color="#303446"/>
+    <border color="#626880"/>
+    <mutedForeground color="#c6d0f5"/>
+    <selection color="#414559"/>
+    <accent color="#ca9ee6"/>
+  </workbench>
+</themePackage>

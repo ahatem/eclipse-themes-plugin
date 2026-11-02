@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.palenight" name="Palenight" appearance="dark" author="Olaolu Olawuyi" website="https://github.com/whizkydee/vscode-palenight-theme" version="2.0.5">
+  <provenance license="MIT" copyright="Olaolu Olawuyi" source="https://github.com/whizkydee/vscode-palenight-theme/tree/63949af027921fd09466c1e6003bd2b994e14a9e"/>
+  <editor>
+    <background color="#292d3e"/>
+    <foreground color="#bfc7d5"/>
+    <abstractClass color="#bfc7d5"/>
+    <abstractMethod color="#82aaff"/>
+    <annotation color="#c792ea"/>
+    <argument color="#7986e7"/>
+    <bracket color="#bfc7d5"/>
+    <class color="#bfc7d5"/>
+    <comment color="#697098" italic="true"/>
+    <constant color="#82aaff"/>
+    <currentLine color="#212432"/>
+    <deprecated color="#bfc7d5" strikethrough="true"/>
+    <doc color="#697098" italic="true"/>
+    <docLink color="#ff869a"/>
+    <docTag color="#c792ea"/>
+    <docXmlTag color="#ff5572"/>
+    <enum color="#bfc7d5"/>
+    <field color="#89ddff"/>
+    <filteredSearchResult color="#3a3558"/>
+    <findScope color="#30333f"/>
+    <inheritedMethod color="#82aaff"/>
+    <interface color="#bfc7d5"/>
+    <keyword color="#c792ea"/>
+    <lineNumber color="#4c5374"/>
+    <localVariable color="#ffcb6b"/>
+    <localVariableDeclaration color="#ffcb6b"/>
+    <method color="#82aaff"/>
+    <methodDeclaration color="#82aaff"/>
+    <multiLineComment color="#697098" italic="true"/>
+    <number color="#f78c6c"/>
+    <occurrence color="#32374d"/>
+    <operator color="#89ddff"/>
+    <removedLine color="#ef5350"/>
+    <searchResult color="#2e3248"/>
+    <selectionBackground color="#414764"/>
+    <selectionForeground color="#bfc7d5"/>
+    <sourceHoverBackground color="#292d3e"/>
+    <staticField color="#89ddff"/>
+    <staticFinalField color="#82aaff"/>
+    <staticMethod color="#82aaff"/>
+    <string color="#c3e88d"/>
+    <taskTag color="#697098" bold="true"/>
+    <templateArgument color="#bfc7d5"/>
+    <templateParameter color="#bfc7d5"/>
+    <writeOccurrence color="#2e3250"/>
+    <xmlAttribute color="#ffcb6b"/>
+    <xmlComment color="#697098" italic="true"/>
+    <xmlTag color="#ff5572"/>
+  </editor>
+  <workbench>
+    <background color="#292d3e"/>
+    <foreground color="#ffffff"/>
+    <surface color="#292d3e"/>
+    <surfaceRaised color="#292d3e"/>
+    <border color="#282b3c"/>
+    <mutedForeground color="#929ac9"/>
+    <selection color="#7e57c2"/>
+    <accent color="#c792ea"/>
+  </workbench>
+</themePackage>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.night-owl" name="Night Owl" appearance="dark" author="Sarah Drasner" website="https://github.com/sdras/night-owl-vscode-theme" version="2.1.1">
+  <provenance license="MIT" copyright="Sarah Drasner" source="https://github.com/sdras/night-owl-vscode-theme"/>
+  <editor>
+    <background color="#011627"/>
+    <foreground color="#d6deeb"/>
+    <abstractClass color="#d6deeb"/>
+    <abstractMethod color="#82aaff" italic="true"/>
+    <annotation color="#c792ea"/>
+    <argument color="#d7dbe0"/>
+    <bracket color="#d6deeb"/>
+    <class color="#d6deeb"/>
+    <comment color="#637777" italic="true"/>
+    <constant color="#82aaff"/>
+    <currentLine color="#072435"/>
+    <deprecated color="#d6deeb" strikethrough="true"/>
+    <doc color="#637777" italic="true"/>
+    <docLink color="#ff869a" underline="true"/>
+    <docTag color="#c792ea"/>
+    <docXmlTag color="#caece6"/>
+    <enum color="#d6deeb"/>
+    <field color="#faf39f" italic="true"/>
+    <filteredSearchResult color="#063e5d"/>
+    <findScope color="#182631"/>
+    <inheritedMethod color="#82aaff" italic="true"/>
+    <interface color="#d6deeb"/>
+    <keyword color="#c792ea"/>
+    <lineNumber color="#4b6479"/>
+    <localVariable color="#c5e478"/>
+    <localVariableDeclaration color="#c5e478"/>
+    <method color="#82aaff" italic="true"/>
+    <methodDeclaration color="#82aaff" italic="true"/>
+    <multiLineComment color="#637777" italic="true"/>
+    <number color="#f78c6c"/>
+    <occurrence color="#32374d"/>
+    <operator color="#c792ea"/>
+    <removedLine color="#ef5350"/>
+    <searchResult color="#2e475c"/>
+    <selectionBackground color="#1d3b53"/>
+    <selectionForeground color="#d6deeb"/>
+    <sourceHoverBackground color="#011627"/>
+    <staticField color="#faf39f" italic="true"/>
+    <staticFinalField color="#82aaff"/>
+    <staticMethod color="#82aaff" italic="true"/>
+    <string color="#ecc48d"/>
+    <taskTag color="#637777" bold="true"/>
+    <templateArgument color="#d6deeb"/>
+    <templateParameter color="#d6deeb"/>
+    <writeOccurrence color="#2e3250"/>
+    <xmlAttribute color="#c5e478" italic="true"/>
+    <xmlComment color="#637777" italic="true"/>
+    <xmlTag color="#caece6"/>
+  </editor>
+  <workbench>
+    <background color="#011627"/>
+    <foreground color="#d6deeb"/>
+    <surface color="#011627"/>
+    <surfaceRaised color="#0b2942"/>
+    <border color="#011627"/>
+    <mutedForeground color="#65839b"/>
+    <selection color="#14344f"/>
+    <accent color="#c792ea"/>
+  </workbench>
+</themePackage>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.github-light-default" name="GitHub Light Default" appearance="light" author="GitHub" website="https://github.com/primer/github-vscode-theme" version="6.3.5">
+  <provenance license="MIT" copyright="Primer" source="https://github.com/primer/github-vscode-theme"/>
+  <editor>
+    <background color="#ffffff"/>
+    <foreground color="#1f2328"/>
+    <abstractClass color="#953800"/>
+    <abstractMethod color="#8250df"/>
+    <annotation color="#953800"/>
+    <argument color="#953800"/>
+    <bracket color="#1f2328"/>
+    <class color="#953800"/>
+    <comment color="#6e7781"/>
+    <constant color="#0550ae"/>
+    <currentLine color="#f4f6f8"/>
+    <deprecated color="#1f2328" strikethrough="true"/>
+    <doc color="#6e7781"/>
+    <docLink color="#1f2328" underline="true"/>
+    <docTag color="#cf222e"/>
+    <docXmlTag color="#116329"/>
+    <enum color="#953800"/>
+    <field color="#1f2328"/>
+    <filteredSearchResult color="#fcf0be"/>
+    <findScope color="#e8e8e8"/>
+    <inheritedMethod color="#8250df"/>
+    <interface color="#953800"/>
+    <keyword color="#cf222e"/>
+    <lineNumber color="#8c959f"/>
+    <localVariable color="#1f2328"/>
+    <localVariableDeclaration color="#1f2328"/>
+    <method color="#8250df"/>
+    <methodDeclaration color="#8250df"/>
+    <multiLineComment color="#6e7781"/>
+    <number color="#0550ae"/>
+    <occurrence color="#f4f6f8"/>
+    <operator color="#cf222e"/>
+    <removedLine color="#ffcdcd"/>
+    <searchResult color="#bf8700"/>
+    <selectionBackground color="#add6ff"/>
+    <selectionForeground color="#1f2328"/>
+    <sourceHoverBackground color="#ffffff"/>
+    <staticField color="#1f2328"/>
+    <staticFinalField color="#0550ae"/>
+    <staticMethod color="#8250df"/>
+    <string color="#0a3069"/>
+    <taskTag color="#6e7781" bold="true"/>
+    <templateArgument color="#953800"/>
+    <templateParameter color="#953800"/>
+    <writeOccurrence color="#e7eaec"/>
+    <xmlAttribute color="#0550ae"/>
+    <xmlComment color="#6e7781"/>
+    <xmlTag color="#116329"/>
+  </editor>
+  <workbench>
+    <background color="#ffffff"/>
+    <foreground color="#1f2328"/>
+    <surface color="#f6f8fa"/>
+    <surfaceRaised color="#ffffff"/>
+    <border color="#d0d7de"/>
+    <mutedForeground color="#656d76"/>
+    <selection color="#e8ebef"/>
+    <accent color="#0969da"/>
+  </workbench>
+</themePackage>

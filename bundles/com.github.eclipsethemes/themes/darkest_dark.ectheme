@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.darkest-dark" name="Darkest Dark" appearance="dark" author="Eclipse Themes" description="Best-effort theme in the spirit of the Darkest Dark theme of the commercial DevStyle plug-in, which publishes no source or license. The editor colors are kept and the workbench colors are derived from them.">
+  <provenance/>
+  <editor>
+    <background color="#191d1f"/>
+    <foreground color="#d8d8d8"/>
+    <abstractClass color="#3eabe6"/>
+    <annotation color="#ffffff"/>
+    <argument color="#79abff"/>
+    <bracket color="#d8d8d8"/>
+    <class color="#d25252"/>
+    <comment color="#c7dd0c"/>
+    <constant color="#efc090"/>
+    <currentLine color="#2f3436"/>
+    <deprecated color="#d25252" strikethrough="true"/>
+    <doc color="#ccdf32"/>
+    <docLink color="#d9e577"/>
+    <docTag color="#d9e577"/>
+    <docXmlTag color="#d9e577"/>
+    <enum color="#7fb347"/>
+    <field color="#bed6ff"/>
+    <filteredSearchResult color="#414104"/>
+    <inheritedMethod color="#bed6ff"/>
+    <interface color="#d197d9"/>
+    <keyword color="#8dcbe2"/>
+    <lineNumber color="#d0d0d0"/>
+    <localVariable color="#79abff"/>
+    <localVariableDeclaration color="#bed6ff"/>
+    <method color="#ffffff"/>
+    <methodDeclaration color="#bed6ff"/>
+    <multiLineComment color="#c7dd0c"/>
+    <number color="#7fb347"/>
+    <occurrence color="#414104"/>
+    <operator color="#d8d8d8"/>
+    <removedLine color="#d25252"/>
+    <searchResult color="#414104"/>
+    <selectionBackground color="#1a5f8c"/>
+    <selectionForeground color="#929da5"/>
+    <sourceHoverBackground color="#2f3436"/>
+    <staticField color="#efc090"/>
+    <staticFinalField color="#efc090"/>
+    <staticMethod color="#bed6ff"/>
+    <string color="#ffc600"/>
+    <taskTag color="#ccdf32"/>
+    <templateArgument color="#bfa4a4"/>
+    <templateParameter color="#bfa4a4"/>
+    <writeOccurrence color="#1b6291"/>
+    <xmlComment color="#c7dd0c"/>
+    <xmlTag color="#bed6ff"/>
+  </editor>
+  <workbench>
+    <background color="#191d1f"/>
+    <foreground color="#d8d8d8"/>
+    <surface color="#212426"/>
+    <surfaceRaised color="#2a2e30"/>
+    <border color="#383b3d"/>
+    <mutedForeground color="#d0d0d0"/>
+    <selection color="#1a5f8c"/>
+    <accent color="#8dcbe2"/>
+  </workbench>
+</themePackage>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.atom-one-light" name="Atom One Light" appearance="light" author="Mahmoud Ali" website="https://github.com/akamud/vscode-theme-onelight" version="2.3.0">
+  <provenance license="MIT" copyright="Mahmoud Ali" source="https://github.com/akamud/vscode-theme-onelight"/>
+  <editor>
+    <background color="#fafafa"/>
+    <foreground color="#383a42"/>
+    <abstractClass color="#c18401"/>
+    <abstractMethod color="#4078f2"/>
+    <annotation color="#a626a4"/>
+    <argument color="#383a42"/>
+    <bracket color="#383a42"/>
+    <class color="#c18401"/>
+    <comment color="#a0a1a7" italic="true"/>
+    <constant color="#e45649"/>
+    <currentLine color="#f1f1f1"/>
+    <deprecated color="#383a42" strikethrough="true"/>
+    <doc color="#a0a1a7" italic="true"/>
+    <docLink color="#383a42"/>
+    <docTag color="#a626a4"/>
+    <docXmlTag color="#e45649"/>
+    <enum color="#c18401"/>
+    <field color="#e45649"/>
+    <filteredSearchResult color="#d8defb"/>
+    <findScope color="#e5e5e5"/>
+    <inheritedMethod color="#4078f2"/>
+    <interface color="#c18401"/>
+    <keyword color="#a626a4"/>
+    <lineNumber color="#9d9d9f"/>
+    <localVariable color="#e45649"/>
+    <localVariableDeclaration color="#e45649"/>
+    <method color="#4078f2"/>
+    <methodDeclaration color="#4078f2"/>
+    <multiLineComment color="#a0a1a7" italic="true"/>
+    <number color="#986801"/>
+    <occurrence color="#d1d1d1"/>
+    <operator color="#383a42"/>
+    <removedLine color="#e51400"/>
+    <searchResult color="#a8ac94"/>
+    <selectionBackground color="#e5e5e6"/>
+    <selectionForeground color="#383a42"/>
+    <sourceHoverBackground color="#eaeaeb"/>
+    <staticField color="#e45649"/>
+    <staticFinalField color="#e45649"/>
+    <staticMethod color="#4078f2"/>
+    <string color="#50a14f"/>
+    <taskTag color="#a0a1a7" bold="true"/>
+    <templateArgument color="#c18401"/>
+    <templateParameter color="#c18401"/>
+    <writeOccurrence color="#bfd4e2"/>
+    <xmlAttribute color="#986801"/>
+    <xmlComment color="#a0a1a7" italic="true"/>
+    <xmlTag color="#e45649"/>
+  </editor>
+  <workbench>
+    <background color="#fafafa"/>
+    <foreground color="#383a42"/>
+    <surface color="#eaeaeb"/>
+    <surfaceRaised color="#fafafa"/>
+    <border color="#dbdbdc"/>
+    <mutedForeground color="#68686a"/>
+    <selection color="#dbdbdc"/>
+    <accent color="#435bd0"/>
+  </workbench>
+</themePackage>

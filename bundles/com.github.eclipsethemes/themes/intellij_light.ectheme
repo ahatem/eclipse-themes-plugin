@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.intellij-light" name="IntelliJ Light" appearance="light" author="JetBrains" website="https://github.com/JetBrains/intellij-community" version="intellij-community 536da82">
+  <provenance license="Apache-2.0" copyright="JetBrains s.r.o." source="https://github.com/JetBrains/intellij-community/tree/536da82a2cbce90820cbb0c158d91e78cda75d82/platform/platform-resources/src"/>
+  <editor>
+    <background color="#ffffff"/>
+    <foreground color="#080808"/>
+    <abstractClass color="#080808"/>
+    <abstractMethod color="#080808"/>
+    <annotation color="#9e880d"/>
+    <argument color="#080808"/>
+    <bracket color="#080808"/>
+    <class color="#080808"/>
+    <comment color="#8c8c8c" italic="true"/>
+    <constant color="#871094" italic="true"/>
+    <currentLine color="#fcfaed"/>
+    <deprecated color="#080808" strikethrough="true"/>
+    <doc color="#8c8c8c" italic="true"/>
+    <docLink color="#3d3d3d" italic="true"/>
+    <docTag color="#080808"/>
+    <docXmlTag color="#080808"/>
+    <enum color="#080808"/>
+    <field color="#871094"/>
+    <filteredSearchResult color="#ffe959"/>
+    <inheritedMethod color="#080808"/>
+    <interface color="#080808"/>
+    <keyword color="#0033b3"/>
+    <lineNumber color="#adadad"/>
+    <localVariable color="#080808"/>
+    <localVariableDeclaration color="#080808"/>
+    <method color="#080808"/>
+    <methodDeclaration color="#00627a"/>
+    <multiLineComment color="#8c8c8c" italic="true"/>
+    <number color="#1750eb"/>
+    <occurrence color="#edebfc"/>
+    <operator color="#080808"/>
+    <removedLine color="#9f9f9f"/>
+    <searchResult color="#ccccff"/>
+    <selectionBackground color="#a6d2ff"/>
+    <selectionForeground color="#080808"/>
+    <sourceHoverBackground color="#f7f7f7"/>
+    <staticField color="#871094" italic="true"/>
+    <staticFinalField color="#871094" italic="true"/>
+    <staticMethod color="#00627a" italic="true"/>
+    <string color="#067d17"/>
+    <taskTag color="#008dde" italic="true"/>
+    <templateArgument color="#007e8a"/>
+    <templateParameter color="#007e8a"/>
+    <writeOccurrence color="#fce8f4"/>
+    <xmlAttribute color="#174ad4"/>
+    <xmlComment color="#8c8c8c" italic="true"/>
+    <xmlTag color="#0033b3"/>
+  </editor>
+  <workbench>
+    <background color="#ffffff"/>
+    <foreground color="#000000"/>
+    <surface color="#f2f2f2"/>
+    <surfaceRaised color="#ffffff"/>
+    <border color="#d1d1d1"/>
+    <mutedForeground color="#6c6c6c"/>
+    <selection color="#2675bf"/>
+    <accent color="#2470b3"/>
+  </workbench>
+</themePackage>

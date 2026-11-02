@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.shades-of-purple" name="Shades of Purple" appearance="dark" author="Ahmad Awais" website="https://github.com/ahmadawais/shades-of-purple-vscode" version="7.3.6">
+  <provenance license="MIT" copyright="Ahmad Awais" source="https://github.com/ahmadawais/shades-of-purple-vscode"/>
+  <editor>
+    <background color="#2d2b55"/>
+    <foreground color="#ffffff"/>
+    <abstractClass color="#fad000"/>
+    <abstractMethod color="#fad000"/>
+    <annotation color="#ff9d00"/>
+    <argument color="#9effff"/>
+    <bracket color="#e1efff"/>
+    <class color="#fad000"/>
+    <comment color="#b362ff" italic="true"/>
+    <constant color="#9effff"/>
+    <currentLine color="#1f1f41"/>
+    <deprecated color="#ffffff" strikethrough="true"/>
+    <doc color="#b362ff" italic="true"/>
+    <docLink color="#ffffff" underline="true"/>
+    <docTag color="#ff9d00"/>
+    <docXmlTag color="#9effff"/>
+    <enum color="#fad000"/>
+    <field color="#ffee80"/>
+    <filteredSearchResult color="#595844"/>
+    <findScope color="#595844"/>
+    <inheritedMethod color="#fad000"/>
+    <interface color="#fad000"/>
+    <keyword color="#ffffff"/>
+    <lineNumber color="#a599e9"/>
+    <localVariable color="#9effff"/>
+    <localVariableDeclaration color="#e1efff"/>
+    <method color="#fad000"/>
+    <methodDeclaration color="#fad000"/>
+    <multiLineComment color="#b362ff" italic="true"/>
+    <number color="#ff628c"/>
+    <occurrence color="#38365e"/>
+    <operator color="#ff9d00"/>
+    <removedLine color="#e53938"/>
+    <searchResult color="#ba5b1c"/>
+    <selectionBackground color="#7448b0"/>
+    <selectionForeground color="#ffffff"/>
+    <sourceHoverBackground color="#161633"/>
+    <staticField color="#ffee80"/>
+    <staticFinalField color="#9effff"/>
+    <staticMethod color="#fad000"/>
+    <string color="#a5ff90"/>
+    <taskTag color="#b362ff" bold="true"/>
+    <templateArgument color="#fad000"/>
+    <templateParameter color="#fad000"/>
+    <writeOccurrence color="#38365e"/>
+    <xmlAttribute color="#fad000" italic="true"/>
+    <xmlComment color="#b362ff" italic="true"/>
+    <xmlTag color="#9effff"/>
+  </editor>
+  <workbench>
+    <background color="#2d2b55"/>
+    <foreground color="#a599e9"/>
+    <surface color="#222244"/>
+    <surfaceRaised color="#222244"/>
+    <border color="#25254b"/>
+    <mutedForeground color="#a599e9"/>
+    <selection color="#2d2b55"/>
+    <accent color="#ddb909"/>
+  </workbench>
+</themePackage>

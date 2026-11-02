@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.vitesse-dark" name="Vitesse Dark" appearance="dark" author="Anthony Fu" website="https://github.com/antfu/vscode-theme-vitesse" version="1.0.1">
+  <provenance license="MIT" copyright="Primer; Anthony Fu" source="https://github.com/antfu/vscode-theme-vitesse"/>
+  <editor>
+    <background color="#121212"/>
+    <foreground color="#cecabe"/>
+    <abstractClass color="#6872ab"/>
+    <abstractMethod color="#80a665"/>
+    <annotation color="#80a665"/>
+    <argument color="#bd976a"/>
+    <bracket color="#666666"/>
+    <class color="#6872ab"/>
+    <comment color="#687668"/>
+    <constant color="#b8a965"/>
+    <currentLine color="#181818"/>
+    <deprecated color="#cecabe" strikethrough="true"/>
+    <doc color="#687668"/>
+    <docLink color="#cecabe"/>
+    <docTag color="#4d9375"/>
+    <docXmlTag color="#4d9375"/>
+    <enum color="#5da994"/>
+    <field color="#b8a965"/>
+    <filteredSearchResult color="#4b442d"/>
+    <findScope color="#222325"/>
+    <inheritedMethod color="#80a665"/>
+    <interface color="#5d99a9"/>
+    <keyword color="#4d9375"/>
+    <lineNumber color="#52514f"/>
+    <localVariable color="#bd976a"/>
+    <localVariableDeclaration color="#bd976a"/>
+    <method color="#80a665"/>
+    <methodDeclaration color="#80a665"/>
+    <multiLineComment color="#687668"/>
+    <number color="#4c9a91"/>
+    <occurrence color="#121413"/>
+    <operator color="#cb7676"/>
+    <removedLine color="#cb7676"/>
+    <searchResult color="#2e2b1f"/>
+    <selectionBackground color="#272727"/>
+    <selectionForeground color="#cecabe"/>
+    <sourceHoverBackground color="#121212"/>
+    <staticField color="#b8a965"/>
+    <staticFinalField color="#b8a965"/>
+    <staticMethod color="#80a665"/>
+    <string color="#c98a7d"/>
+    <taskTag color="#687668" bold="true"/>
+    <templateArgument color="#5da994"/>
+    <templateParameter color="#5da994"/>
+    <writeOccurrence color="#131815"/>
+    <xmlAttribute color="#bd976a"/>
+    <xmlComment color="#687668"/>
+    <xmlTag color="#4d9375"/>
+  </editor>
+  <workbench>
+    <background color="#121212"/>
+    <foreground color="#cecabe"/>
+    <surface color="#121212"/>
+    <surfaceRaised color="#121212"/>
+    <border color="#191919"/>
+    <mutedForeground color="#858480"/>
+    <selection color="#181818"/>
+    <accent color="#4d9375"/>
+  </workbench>
+</themePackage>

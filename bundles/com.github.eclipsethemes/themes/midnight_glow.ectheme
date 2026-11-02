@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.midnight-glow" name="Midnight Glow" appearance="dark" author="Ahmed Hatem" description="Original Eclipse Themes theme by Ahmed Hatem; this package is its source." website="https://github.com/ahatem">
+  <provenance copyright="Ahmed Hatem"/>
+  <editor>
+    <background color="#0d1117"/>
+    <foreground color="#f0f6fc"/>
+    <abstractClass color="#ffc649"/>
+    <abstractMethod color="#d2a8ff"/>
+    <annotation color="#ffa657"/>
+    <argument color="#ffc649"/>
+    <bracket color="#ffd700"/>
+    <class color="#ffd700" bold="true"/>
+    <comment color="#8b949e" italic="true"/>
+    <constant color="#ff7b72"/>
+    <currentLine color="#21262d"/>
+    <deprecated color="#6e7681" strikethrough="true"/>
+    <doc color="#8b949e" italic="true"/>
+    <docLink color="#79c0ff"/>
+    <docTag color="#ffa657"/>
+    <docXmlTag color="#ffa657"/>
+    <enum color="#7ee787"/>
+    <field color="#ffa657"/>
+    <filteredSearchResult color="#3d444d"/>
+    <findScope color="#3d444d"/>
+    <inheritedMethod color="#b392f0"/>
+    <interface color="#ffb347"/>
+    <keyword color="#ff7b72" bold="true"/>
+    <lineNumber color="#6e7681"/>
+    <localVariable color="#f0f6fc"/>
+    <localVariableDeclaration color="#f0f6fc"/>
+    <method color="#d2a8ff"/>
+    <methodDeclaration color="#d2a8ff"/>
+    <multiLineComment color="#8b949e" italic="true"/>
+    <number color="#a5f3fc"/>
+    <occurrence color="#3d444d"/>
+    <operator color="#f0f6fc"/>
+    <removedLine color="#f85149"/>
+    <searchResult color="#3d444d"/>
+    <selectionBackground color="#264f78"/>
+    <selectionForeground color="#f0f6fc"/>
+    <sourceHoverBackground color="#21262d"/>
+    <staticField color="#ffd700" bold="true"/>
+    <staticFinalField color="#ffdf00" bold="true"/>
+    <staticMethod color="#79c0ff"/>
+    <string color="#a5f3fc"/>
+    <taskTag color="#ff7b72" bold="true"/>
+    <templateArgument color="#56d4dd"/>
+    <templateParameter color="#56d4dd"/>
+    <writeOccurrence color="#484f58"/>
+    <xmlAttribute color="#ffa657"/>
+    <xmlComment color="#8b949e" italic="true"/>
+    <xmlTag color="#7ee787"/>
+  </editor>
+  <workbench>
+    <background color="#0d1117"/>
+    <foreground color="#f0f6fc"/>
+    <surface color="#161a20"/>
+    <surfaceRaised color="#21262c"/>
+    <border color="#31363c"/>
+    <mutedForeground color="#7f8590"/>
+    <selection color="#264f78"/>
+    <accent color="#ff7b72"/>
+  </workbench>
+</themePackage>

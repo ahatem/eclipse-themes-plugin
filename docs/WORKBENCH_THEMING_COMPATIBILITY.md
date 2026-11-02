@@ -1,8 +1,6 @@
-# Workbench theming (R8) — compatibility and coverage
+# Workbench theming — compatibility and coverage
 
-Status: implemented by the `dynamic-workbench-theming` change (workbench coordination) and the `plugin-color-coordination` change
-(colors of other plug-ins). The behavioral contracts are `openspec/specs/workbench-theming/spec.md`, `plugin-color-coordination` and
-`preference-ownership`; runtime evidence is in the `evidence/` folders of the archived changes under `openspec/changes/archive/`.
+Status: implemented (workbench coordination and coordinated colors of other plug-ins). The behavior rules are summarized in [ARCHITECTURE.md](ARCHITECTURE.md#behavior-rules).
 
 ## What it does
 
@@ -63,7 +61,8 @@ the workbench-chrome contract) and **THIRD-PARTY** (colors owned by another plug
 | Push, check and radio buttons | THEMED (labels, background) / SYSTEM-NATIVE (frame, check mark) | the native frame and focus ring stay light on dark, as in stock Dark |
 | Dialog-level `CTabFolder` | THEMED | selected fill, outline and text |
 | Group frame lines | SYSTEM/NATIVE | not exposed to CSS; light frame on dark as in stock Dark |
-| Native `TabFolder` tab strip, progress bar, scale | SYSTEM/NATIVE | white-ish in stock Dark too |
+| Native `TabFolder` tab strip, scale, separator lines | SYSTEM/NATIVE | white-ish in stock Dark too; separator lines measured unchanged by CSS |
+| Progress bars (wizards, dialogs, views), including bars nested in progress indicators | THEMED (dark family) / SYSTEM/NATIVE (light family) | dark family: background-role track and accent-role bar, measured on 4.40 and 4.41; light family: Windows keeps its native visual style and ignores the colors |
 | Combo (non-CCombo) drop-down arrow and popup list | SYSTEM/NATIVE | the field itself is themed |
 | Scroll bars | SYSTEM/NATIVE | follow the operating-system theme; after switching to a light theme they stay dark on a dark Windows, identically to stock Dark to Light |
 | Menu bar, menus, title bar, window frame, tooltips | SYSTEM/NATIVE | |
@@ -72,7 +71,7 @@ the workbench-chrome contract) and **THIRD-PARTY** (colors owned by another plug
 | Forms (sections, form text, read-only form fields, form heading error/warning/info text), Properties view tab list and title, compare and progress panes, Marketplace items | THEMED | same selectors as stock Dark/Light; form heading message colors read the platform `FORM_HEADING_*` definitions |
 | Fonts of part tabs and tree/table views | THEMED (platform fonts) | read the platform *Tab text* and *Tree and Table* font definitions, as stock does, so a font chosen under Colors and Fonts applies; a font is changed only when the user chooses *Use theme font* or *Custom font* for it (see the [package format](THEME_PACKAGE_FORMAT.md)) |
 | Widgets of other plug-ins that the stock sheets style by class (EGit, Marketplace, JDT, PDE, Debug, Mylyn, Buildship, WTP wizard and dialog pages, breadcrumbs) | THEMED | styled in the same sheets by palette role, selector for selector with stock; selectors that would also match an editor's text control are left out |
-| Preference-based colors of other plug-ins that stock Dark re-tunes (popups, hyperlinks, error and form-heading text, Compare, EGit diff and label colors, search/revision/coverage/breakpoint annotations, JDT/Debug/Ant/Mylyn colors) | THEMED in dark coordinated themes, ownership-checked (see below); THIRD-PARTY otherwise | 68 declared keys; written only while a dark coordinated theme is active and only where the user has no value of their own. Light themes and editor-only mode write none |
+| Preference-based colors of other plug-ins that are unreadable on a dark workbench (popups, hyperlinks, error and form-heading text, Compare, EGit diff and label colors, search/revision/coverage/breakpoint annotations, JDT/Debug/Ant/Mylyn colors, Spring Tools Boot Dashboard, Boot marker and terminal colors) | THEMED in dark coordinated themes, ownership-checked (see below); THIRD-PARTY otherwise | 79 declared keys; the 8 Spring Tools keys are verified from source, not at runtime; written only while a dark coordinated theme is active and only where the user has no value of their own. Light themes and editor-only mode write none |
 
 Selectors are plain type, class and descendant selectors, almost all of them identical to the stock Eclipse Dark/Light sheets, whose
 widget, class and id selectors were compared one by one against ours (the missing ones were added). Those that are not identical (`.MPart`-scoped Text/Combo/List/Canvas, `SashForm`, `ScrolledForm`, `.MCompositePart`, `.MToolBar`) are ordinary
@@ -82,11 +81,39 @@ turns both into instance preference writes (the owning plug-in's node, or `org.e
 on the next theme change (measured; a test keeps them out). High-contrast mode disables coordination, so accessibility choices are never
 overridden.
 
+### Known platform limits for theme authors
+
+Engine limits that explain some SYSTEM/NATIVE rows above, so nobody goes looking for a selector that does not exist. They were
+**reported by the vogella Eclipse Themes project** against the Eclipse 2026-06 target (`org.eclipse.e4.ui.css.swt` 0.17.100), mostly
+measured on Linux/GTK, and have **not been re-verified here** unless a row above says so. Sources:
+[styling-limits.md](https://github.com/vogellacompany/eclipse-themes/blob/main/docs/styling-limits.md) and
+[platform-styling-bugs.md](https://github.com/vogellacompany/eclipse-themes/blob/main/docs/platform-styling-bugs.md).
+
+- **Tree, Table and List selection colors.** `org.eclipse.e4.ui.css.swt` has no CSS property for them, only `swt-header-color` and
+  `swt-header-background-color` for column headers. The selected row uses the platform or desktop accent color. On GTK,
+  `-Dorg.eclipse.swt.internal.gtk.cssFile=<file>` in `eclipse.ini` can override it, but SWT reads that once at startup, so it cannot
+  follow a theme switch, and this plug-in does not use it.
+- **Selectors match exact class names.** The engine uses the widget's simple class name and does not walk up superclasses, so a
+  `Composite` subclass escapes every `Composite` rule unless a rule names it. This is why the stock sheets, and ours, list subclasses
+  such as `ProgressMonitorPart` and `DelayedFilterCheckboxTree` by name.
+- **`ToolItem:checked` is inert by default.** The pseudo-class only updates when `-Dorg.eclipse.e4.ui.css.dynamic=true` is set.
+  Without it the rule parses and silently matches nothing. Our sheets do not use it.
+- **Check box and radio indicators on GTK.** SWT sends a `Button` background to GTK as a universal selector that also fills the
+  indicator, so on a dark page an unchecked box shows only its border. A theme cannot fix this without putting a visible background
+  behind every button label.
+- **Theme ids decide GTK dark mode before Eclipse 2026-12.** Older releases call `display.setDarkThemePreferred(id.contains("dark"))`.
+  From 2026-12 the `<theme>` element accepts `isDarkTheme`
+  ([eclipse.platform.ui#4354](https://github.com/eclipse-platform/eclipse.platform.ui/pull/4354)). Our dark ids contain `dark` for
+  this reason (see `WorkbenchFamily`).
+- **Third-party colors bound to the stock dark id.** Several plug-ins (EGit, Compare, Ant, PDE, Mylyn, Spring Tools) contribute
+  their dark values only for `org.eclipse.e4.ui.css.theme.e4_dark`, so they keep light defaults under any other dark theme. This is
+  why the plug-in color table below exists.
+
 ## Plug-in colors and the ownership rule
 
-Colors that other plug-ins keep in their own preferences (popups, hyperlinks, diff and status colors, annotation colors, Mylyn and
-Debug colors) cannot be set through the static CSS without overwriting and later deleting the user's own values, which is what stock
-Dark does. The plugin coordinates a fixed, declared table of such keys (`PluginColorTable`, 68 keys, four of them inert on 4.40,
+Colors that other plug-ins keep in their own preferences (popups, hyperlinks, diff and status colors, annotation colors, Mylyn,
+Debug and Spring Tools colors) cannot be set through the static CSS without overwriting and later deleting the user's own values, which is what stock
+Dark does. The plugin coordinates a fixed, declared table of such keys (`PluginColorTable`, 79 keys, four of them inert on 4.40,
 each with the owning bundle and a palette role; the hyperlink keys include the editor's `org.eclipse.ui.editors/hyperlinkColor`) by
 this rule:
 
@@ -103,7 +130,7 @@ theme's foreground stays readable on top. Nothing depends on a theme's name.
 
 Not coordinated, by design: syntax and editor-surface colors (owned by the editor integrations), operating-system colors (for example
 the range indicator, which defaults to the system list-selection color), and colors whose Eclipse default is already readable on a
-dark workbench. `evidence/key-classification.md` in the archived `plugin-color-coordination` change lists every stock-Dark key with its class.
+dark workbench. Every stock-Dark key was classified when this feature was built; the declared key table is in the `eclipse.workbench` package.
 
 If the plugin is uninstalled while a dark theme is active, its colors stay in place (the plugin has no uninstall hook; stock Dark has
 the same exposure). To remove them, untick **Also theme the Eclipse workbench** and apply before uninstalling, or reset the colors

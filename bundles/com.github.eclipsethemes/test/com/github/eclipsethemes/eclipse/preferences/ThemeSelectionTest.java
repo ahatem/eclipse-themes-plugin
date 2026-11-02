@@ -10,7 +10,7 @@ import java.util.Map;
 import org.eclipse.jface.preference.PreferenceStore;
 import org.junit.Test;
 
-import com.github.eclipsethemes.core.Constants;
+import com.github.eclipsethemes.core.models.Constants;
 import com.github.eclipsethemes.core.models.Color;
 import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.models.ThemeType;
@@ -20,6 +20,7 @@ import com.github.eclipsethemes.eclipse.ThemeApplyOutcome;
 import com.github.eclipsethemes.eclipse.ThemeApplyOutcome.EditorConflict;
 import com.github.eclipsethemes.eclipse.ThemeApplyOutcome.EditorOutcome;
 import com.github.eclipsethemes.eclipse.ThemeRecord;
+import com.github.eclipsethemes.eclipse.preferences.ui.PreviewPanel;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchOutcome;
 
 public class ThemeSelectionTest {
@@ -116,12 +117,46 @@ public class ThemeSelectionTest {
 
     @Test public void previewUsesSourceMetadataAndDefaultsUseCuratedLogicalIdentity() {
         ThemeRecord imported = theme("local:generated", "website-source", "GitHub Light Default", "#112233");
-        assertEquals(Constants.PREVIEW_SERVER_URL + "website-source", EclipseThemesPreferencePage.previewUrl(imported).orElseThrow());
-        assertFalse(EclipseThemesPreferencePage.previewUrl(imported).orElseThrow().contains("local:generated"));
+        assertEquals(Constants.PREVIEW_SERVER_URL + "website-source", PreviewPanel.previewUrl(imported).orElseThrow());
+        assertFalse(PreviewPanel.previewUrl(imported).orElseThrow().contains("local:generated"));
         ThemeRecord curated = curated(Constants.DEFAULT_LIGHT_THEME_ID, "curated-source", "Renamed", "#445566");
         assertSame(curated, ThemeSelection.defaultTheme(List.of(imported, curated), false));
         assertNotEquals("Duplicate source claims do not imply the current record", imported,
                 theme("local:other", "website-source", "Other", "#334455"));
+    }
+
+    @Test public void changedDefaultsApplyOnlyWhenNoThemeWasChosen() {
+        // The defaults before Catppuccin; users who chose them, or anything else, keep their choice.
+        ThemeRecord githubLight = curated("bundled:e541c789-7f90-4539-b1fc-3e086dd8e63e", "e541c789-7f90-4539-b1fc-3e086dd8e63e", "GitHub Light Default", "#ffffff");
+        ThemeRecord githubDimmed = curated("bundled:91d7ea64-57a3-433a-b107-3bc1e1873970", "91d7ea64-57a3-433a-b107-3bc1e1873970", "GitHub Dark Dimmed", "#22272e");
+        ThemeRecord latte = curated(Constants.DEFAULT_LIGHT_THEME_ID, null, "Catppuccin Latte", "#eff1f5");
+        ThemeRecord mocha = curated(Constants.DEFAULT_DARK_THEME_ID, null, "Catppuccin Mocha", "#1e1e2e");
+        var themes = List.of(githubLight, githubDimmed, latte, mocha);
+
+        var modern = new PreferenceStore();
+        ThemeSelection.remember(modern, githubDimmed);
+        assertSame(githubDimmed, ThemeSelection.resolve(modern, themes).orElseThrow());
+        var legacy = new PreferenceStore();
+        legacy.setValue(PreferenceKeys.ACTIVE_THEME_ID, "e541c789-7f90-4539-b1fc-3e086dd8e63e");
+        assertSame(githubLight, ThemeSelection.resolve(legacy, themes).orElseThrow());
+
+        // Only a store with no choice falls back, and the fallback is never written by resolution.
+        var fresh = new PreferenceStore();
+        assertTrue(ThemeSelection.resolve(fresh, themes).isEmpty());
+        assertFalse(fresh.contains(PreferenceKeys.SELECTED_THEME_LOGICAL_ID));
+        assertSame(mocha, ThemeSelection.defaultTheme(themes, true));
+        assertSame(latte, ThemeSelection.defaultTheme(themes, false));
+    }
+
+    @Test public void bundledPackageKeepsLegacySelectionAndPreviewThroughItsCuratedSourceId() {
+        // A package carries no source id of its own; the bundled record supplies the curated one.
+        ThemeRecord bundled = ThemeRecord.bundled("bundled:curated-source", model(null, "Packaged", "#112233"));
+        ThemeRecord importedPackage = ThemeRecord.installed("local:package", "p.ectheme", model(null, "Imported", "#334455"));
+        var store = new PreferenceStore();
+        store.setValue(PreferenceKeys.ACTIVE_THEME_ID, "curated-source");
+        assertSame(bundled, ThemeSelection.resolve(store, List.of(bundled, importedPackage)).orElseThrow());
+        assertEquals(Constants.PREVIEW_SERVER_URL + "curated-source", PreviewPanel.previewUrl(bundled).orElseThrow());
+        assertTrue(PreviewPanel.previewUrl(importedPackage).isEmpty());
     }
 
     @Test public void partialOrConflictingEditorApplyDoesNotPersistTheSelectedTheme() {

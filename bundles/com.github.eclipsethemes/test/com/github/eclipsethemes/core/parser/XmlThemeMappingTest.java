@@ -139,7 +139,7 @@ public class XmlThemeMappingTest {
     }
 
     @Test public void allBundledPairsRetainExactSourceColorsAndEffectiveStyles() throws Exception {
-        try (var files = Files.list(ParserTestSupport.themes())) {
+        try (var files = Files.list(ParserTestSupport.legacyThemes())) {
             for (Path file : files.toList()) {
                 Theme theme = new XmlThemeParser().parse(file.toFile());
                 var document = javax.xml.parsers.DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file.toFile());

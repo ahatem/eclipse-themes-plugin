@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.nord" name="Nord" appearance="dark" author="Arctic Ice Studio" website="https://github.com/nordtheme/visual-studio-code" version="0.19.0">
+  <provenance license="MIT" copyright="Arctic Ice Studio; Sven Greb" source="https://github.com/nordtheme/visual-studio-code"/>
+  <editor>
+    <background color="#2e3440"/>
+    <foreground color="#d8dee9"/>
+    <abstractClass color="#8fbcbb"/>
+    <abstractMethod color="#88c0d0"/>
+    <annotation color="#d08770"/>
+    <argument color="#d8dee9"/>
+    <bracket color="#eceff4"/>
+    <class color="#8fbcbb"/>
+    <comment color="#616e88"/>
+    <constant color="#d8dee9"/>
+    <currentLine color="#3b4252"/>
+    <deprecated color="#d8dee9" strikethrough="true"/>
+    <doc color="#616e88"/>
+    <docLink color="#d8dee9"/>
+    <docTag color="#8fbcbb"/>
+    <docXmlTag color="#81a1c1"/>
+    <enum color="#d8dee9"/>
+    <field color="#d8dee9"/>
+    <filteredSearchResult color="#40505d"/>
+    <findScope color="#40505d"/>
+    <inheritedMethod color="#88c0d0"/>
+    <interface color="#d8dee9"/>
+    <keyword color="#81a1c1"/>
+    <lineNumber color="#4c566a"/>
+    <localVariable color="#d8dee9"/>
+    <localVariableDeclaration color="#d8dee9"/>
+    <method color="#88c0d0"/>
+    <methodDeclaration color="#88c0d0"/>
+    <multiLineComment color="#616e88"/>
+    <number color="#b48ead"/>
+    <occurrence color="#4f6074"/>
+    <operator color="#81a1c1"/>
+    <removedLine color="#bf616a"/>
+    <searchResult color="#526c7a"/>
+    <selectionBackground color="#3f4758"/>
+    <selectionForeground color="#d8dee9"/>
+    <sourceHoverBackground color="#3b4252"/>
+    <staticField color="#d8dee9"/>
+    <staticFinalField color="#d8dee9"/>
+    <staticMethod color="#88c0d0"/>
+    <string color="#a3be8c"/>
+    <taskTag color="#616e88" bold="true"/>
+    <templateArgument color="#d8dee9"/>
+    <templateParameter color="#d8dee9"/>
+    <writeOccurrence color="#60758d"/>
+    <xmlAttribute color="#8fbcbb"/>
+    <xmlComment color="#616e88"/>
+    <xmlTag color="#81a1c1"/>
+  </editor>
+  <workbench>
+    <background color="#2e3440"/>
+    <foreground color="#d8dee9"/>
+    <surface color="#2e3440"/>
+    <surfaceRaised color="#3b4252"/>
+    <border color="#3b4252"/>
+    <mutedForeground color="#c7cdd8"/>
+    <selection color="#5b7f8a"/>
+    <accent color="#82b7c6"/>
+  </workbench>
+</themePackage>

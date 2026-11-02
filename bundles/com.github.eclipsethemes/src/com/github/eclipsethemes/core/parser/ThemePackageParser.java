@@ -23,7 +23,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.github.eclipsethemes.core.exceptions.ThemeParseException;
 import com.github.eclipsethemes.core.models.Color;
 import com.github.eclipsethemes.core.models.PackageMetadata;
 import com.github.eclipsethemes.core.models.Theme;

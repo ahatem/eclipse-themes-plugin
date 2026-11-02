@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import com.github.eclipsethemes.core.Constants;
+import com.github.eclipsethemes.core.models.Constants;
 import com.github.eclipsethemes.eclipse.ThemeApplyOutcome;
 import com.github.eclipsethemes.eclipse.ThemeRecord;
 
@@ -22,7 +22,7 @@ public final class ThemeSelection {
         String reference = store.getString(key);
         if (reference.isBlank()) return Optional.empty();
         var matches = themes.stream()
-                .filter(theme -> reference.equals(modern ? theme.logicalId() : theme.theme().getId())).toList();
+                .filter(theme -> reference.equals(modern ? theme.logicalId() : theme.sourceId())).toList();
         return matches.size() == 1 ? Optional.of(matches.get(0)) : Optional.empty();
     }
 

@@ -26,6 +26,19 @@ public record ThemeRecord(String logicalId, ThemeOrigin origin, Optional<String>
 		}
 	}
 
+	/** Logical identity prefix of bundled themes; the remainder is the curated source id. */
+	public static final String BUNDLED_PREFIX = "bundled:";
+
+	/**
+	 * The legacy source id used for pre-logical-identity selections and the online preview: the curated id of a bundled
+	 * record (packages carry none of their own), the theme's own source id otherwise. Null or blank when there is none.
+	 */
+	public String sourceId() {
+		return origin == ThemeOrigin.BUNDLED && logicalId.startsWith(BUNDLED_PREFIX)
+				? logicalId.substring(BUNDLED_PREFIX.length())
+				: theme.getId();
+	}
+
 	public static ThemeRecord bundled(String logicalId, Theme theme) {
 		return new ThemeRecord(logicalId, ThemeOrigin.BUNDLED, Optional.empty(), theme);
 	}

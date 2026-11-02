@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.cursor-dark-midnight" name="Cursor Dark Midnight" appearance="dark" author="Anysphere" description="Colors read from the theme built into the Cursor 2.6.20 app. Cursor publishes no source or license for its themes, so no license is claimed." website="https://cursor.com" version="Cursor 2.6.20">
+  <provenance copyright="Anysphere"/>
+  <editor>
+    <background color="#1e2127"/>
+    <foreground color="#7b88a1"/>
+    <abstractClass color="#8fbcbb"/>
+    <abstractMethod color="#88c0d0"/>
+    <annotation color="#d08770"/>
+    <argument color="#d8dee9"/>
+    <bracket color="#eceff4"/>
+    <class color="#8fbcbb"/>
+    <comment color="#616e88" italic="true"/>
+    <constant color="#d8dee9"/>
+    <currentLine color="#252a32"/>
+    <deprecated color="#7b88a1" strikethrough="true"/>
+    <doc color="#616e88" italic="true"/>
+    <docLink color="#7b88a1"/>
+    <docTag color="#8fbcbb"/>
+    <docXmlTag color="#81a1c1"/>
+    <enum color="#7b88a1"/>
+    <field color="#d8dee9"/>
+    <filteredSearchResult color="#334149"/>
+    <findScope color="#334149"/>
+    <inheritedMethod color="#88c0d0"/>
+    <interface color="#7b88a1"/>
+    <keyword color="#81a1c1"/>
+    <lineNumber color="#4c566a"/>
+    <localVariable color="#d8dee9"/>
+    <localVariableDeclaration color="#d8dee9"/>
+    <method color="#88c0d0"/>
+    <methodDeclaration color="#88c0d0"/>
+    <multiLineComment color="#616e88" italic="true"/>
+    <number color="#b48ead"/>
+    <occurrence color="#465465"/>
+    <operator color="#81a1c1"/>
+    <removedLine color="#bf616a"/>
+    <searchResult color="#48616b"/>
+    <selectionBackground color="#343b48"/>
+    <selectionForeground color="#7b88a1"/>
+    <sourceHoverBackground color="#20242c"/>
+    <staticField color="#d8dee9"/>
+    <staticFinalField color="#d8dee9"/>
+    <staticMethod color="#88c0d0"/>
+    <string color="#a3be8c"/>
+    <taskTag color="#616e88" bold="true"/>
+    <templateArgument color="#7b88a1"/>
+    <templateParameter color="#7b88a1"/>
+    <writeOccurrence color="#596e83"/>
+    <xmlAttribute color="#8fbcbb" italic="true"/>
+    <xmlComment color="#616e88" italic="true"/>
+    <xmlTag color="#81a1c1"/>
+  </editor>
+  <workbench>
+    <background color="#1e2127"/>
+    <foreground color="#7b88a1"/>
+    <surface color="#191c22"/>
+    <surfaceRaised color="#1e2127"/>
+    <border color="#25282d"/>
+    <mutedForeground color="#878b97"/>
+    <selection color="#21242b"/>
+    <accent color="#88c0d0"/>
+  </workbench>
+</themePackage>

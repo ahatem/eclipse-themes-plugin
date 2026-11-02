@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.rose-pine" name="Rosé Pine" appearance="dark" author="Rosé Pine" website="https://github.com/rose-pine/vscode" version="2.15.2">
+  <provenance license="MIT" copyright="Rosé Pine" source="https://github.com/rose-pine/vscode"/>
+  <editor>
+    <background color="#191724"/>
+    <foreground color="#e0def4"/>
+    <abstractClass color="#9ccfd8"/>
+    <abstractMethod color="#ebbcba"/>
+    <annotation color="#31748f"/>
+    <argument color="#c4a7e7" italic="true"/>
+    <bracket color="#908caa"/>
+    <class color="#9ccfd8"/>
+    <comment color="#6e6a86" italic="true"/>
+    <constant color="#e0def4" italic="true"/>
+    <currentLine color="#221f2e"/>
+    <deprecated color="#e0def4" strikethrough="true"/>
+    <doc color="#6e6a86" italic="true"/>
+    <docLink color="#e0def4"/>
+    <docTag color="#31748f"/>
+    <docXmlTag color="#9ccfd8"/>
+    <enum color="#9ccfd8"/>
+    <field color="#e0def4" italic="true"/>
+    <filteredSearchResult color="#3b384b"/>
+    <findScope color="#3b384b"/>
+    <inheritedMethod color="#ebbcba"/>
+    <interface color="#9ccfd8"/>
+    <keyword color="#31748f"/>
+    <lineNumber color="#908caa"/>
+    <localVariable color="#e0def4" italic="true"/>
+    <localVariableDeclaration color="#e0def4" italic="true"/>
+    <method color="#ebbcba"/>
+    <methodDeclaration color="#ebbcba"/>
+    <multiLineComment color="#6e6a86" italic="true"/>
+    <number color="#ebbcba"/>
+    <occurrence color="#2a2838"/>
+    <operator color="#31748f"/>
+    <removedLine color="#eb6f92"/>
+    <searchResult color="#453935"/>
+    <selectionBackground color="#2a2838"/>
+    <selectionForeground color="#e0def4"/>
+    <sourceHoverBackground color="#1f1d2e"/>
+    <staticField color="#e0def4" italic="true"/>
+    <staticFinalField color="#e0def4" italic="true"/>
+    <staticMethod color="#ebbcba"/>
+    <string color="#f6c177"/>
+    <taskTag color="#6e6a86" bold="true"/>
+    <templateArgument color="#9ccfd8"/>
+    <templateParameter color="#9ccfd8"/>
+    <writeOccurrence color="#2a2838"/>
+    <xmlAttribute color="#c4a7e7" italic="true"/>
+    <xmlComment color="#6e6a86" italic="true"/>
+    <xmlTag color="#9ccfd8"/>
+  </editor>
+  <workbench>
+    <background color="#191724"/>
+    <foreground color="#e0def4"/>
+    <surface color="#191724"/>
+    <surfaceRaised color="#221f2e"/>
+    <border color="#373543"/>
+    <mutedForeground color="#908caa"/>
+    <selection color="#2a2838"/>
+    <accent color="#ebbcba"/>
+  </workbench>
+</themePackage>

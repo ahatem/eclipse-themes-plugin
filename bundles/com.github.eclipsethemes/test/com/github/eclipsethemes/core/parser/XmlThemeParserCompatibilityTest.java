@@ -55,7 +55,7 @@ public class XmlThemeParserCompatibilityTest {
 
     @Test public void bundledCorpusMatchesApprovedMappingInterpretation() throws Exception {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        Path themes = ParserTestSupport.themes();
+        Path themes = ParserTestSupport.legacyThemes();
         StringBuilder projection = new StringBuilder();
         try (var paths = Files.list(themes)) {
             var files = paths.filter(p -> p.toString().endsWith(".xml"))

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.dark-pro-vsc" name="Dark Pro VSC" appearance="dark" author="Eclipse Themes" description="Best-effort port: no public upstream source was found, so the editor colors are kept and the workbench colors are derived from them.">
+  <provenance/>
+  <editor>
+    <background color="#111111"/>
+    <foreground color="#e6edf3"/>
+    <abstractClass color="#4ec9b0"/>
+    <abstractMethod color="#dcdcaa"/>
+    <annotation color="#dcdcaa"/>
+    <argument color="#9cdcfe"/>
+    <bracket color="#d4d4d4"/>
+    <class color="#4ec9b0"/>
+    <comment color="#6a9955" italic="true"/>
+    <constant color="#569cd6"/>
+    <currentLine color="#1b1b1b"/>
+    <deprecated color="#d4d4d4" strikethrough="true"/>
+    <doc color="#6a9955"/>
+    <docLink color="#4e94ce"/>
+    <docTag color="#569cd6"/>
+    <docXmlTag color="#569cd6" bold="true"/>
+    <enum color="#4ec9b0"/>
+    <field color="#9cdcfe"/>
+    <filteredSearchResult color="#59380b"/>
+    <findScope color="#234365"/>
+    <inheritedMethod color="#dcdcaa"/>
+    <interface color="#4ec9b0"/>
+    <keyword color="#569cd6"/>
+    <lineNumber color="#454545"/>
+    <localVariable color="#9cdcfe"/>
+    <localVariableDeclaration color="#9cdcfe"/>
+    <method color="#dcdcaa"/>
+    <methodDeclaration color="#dcdcaa"/>
+    <multiLineComment color="#6a9955" italic="true"/>
+    <number color="#b5cea8"/>
+    <occurrence color="#424242"/>
+    <operator color="#d4d4d4"/>
+    <removedLine color="#c74e39"/>
+    <searchResult color="#515c6a"/>
+    <selectionBackground color="#244b6d"/>
+    <selectionForeground color="#e6edf3"/>
+    <sourceHoverBackground color="#252526"/>
+    <staticField color="#9cdcfe" italic="true"/>
+    <staticFinalField color="#4fc1ff" bold="true" italic="true"/>
+    <staticMethod color="#dcdcaa" italic="true"/>
+    <string color="#ce9178"/>
+    <taskTag color="#569cd6" bold="true"/>
+    <templateArgument color="#4ec9b0"/>
+    <templateParameter color="#4ec9b0"/>
+    <writeOccurrence color="#053954"/>
+    <xmlAttribute color="#9cdcfe"/>
+    <xmlComment color="#6a9955"/>
+    <xmlTag color="#569cd6"/>
+  </editor>
+  <workbench>
+    <background color="#111111"/>
+    <foreground color="#e6edf3"/>
+    <surface color="#1a1a1a"/>
+    <surfaceRaised color="#242525"/>
+    <border color="#333435"/>
+    <mutedForeground color="#838383"/>
+    <selection color="#244b6d"/>
+    <accent color="#569cd6"/>
+  </workbench>
+</themePackage>
