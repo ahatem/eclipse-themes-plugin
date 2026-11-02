@@ -170,7 +170,7 @@ semantics, source-hover defaults and the limits of recovery for historical debug
 
 Contributions are welcome; the best way to help is to add a theme to the collection. Please read the
 [Contributing Guidelines](CONTRIBUTING.md). The project is a Maven/Tycho build (`mvn clean verify -B`, JDK 21); the runtime
-bundle targets Java 17. See the [release notes](docs/RELEASE_NOTES_1.2.0.md) for what is new.
+bundle targets Java 17. See the [release notes](docs/RELEASE_NOTES_1.3.0.md) for what is new.
 
 This project began when the original `eclipsecolorthemes.org` website went offline;
 [eclipse-color-themes.vercel.app](https://eclipse-color-themes.vercel.app/) is an open-source alternative for finding themes.
