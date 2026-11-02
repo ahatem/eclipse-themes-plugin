@@ -16,7 +16,8 @@ All code is under `com.github.eclipsethemes`:
 | `eclipse.adapters` | Editor adapters (`editor.*`: text, JDT, CDT, PDE, Ant) and the debug console adapter, discovered through the `com.github.eclipsethemes.theme.adapters` extension point | yes |
 | `eclipse.workbench` | Workbench coordination: palette registry sink, `IThemeEngine` switching, plug-in color keys | yes |
 | `eclipse.fonts` | Theme font coordination | yes |
-| `eclipse.preferences` | The Theme Manager preference page | yes |
+| `eclipse.preferences` | The Theme Manager preference page (`EclipseThemesPreferencePage`): a thin coordinator that holds the selected and applied theme and handles Apply, OK and Restore Defaults | yes |
+| `eclipse.preferences.ui` | One class per visible section of that page: `ThemeLibraryPanel` (list, search, import/export/update/remove), `ThemeDetailsPanel` (scroller and header), `PreviewPanel`, `AppearancePanel`, `FontsPanel`, `AboutPanel`; plus `ResetChoiceDialog`. Panels reach the page only through `PageContext` | yes |
 
 Rule: `core.*` must not import SWT, JFace, the activator or Eclipse preference APIs (`CoreLayeringTest` enforces the SWT / JFace / `org.eclipse.ui` part). Everything that talks to Eclipse lives in `eclipse.*`. Do not split the bundle unless an optional dependency, a public API or a lifecycle difference requires it.
 
@@ -63,7 +64,7 @@ No Eclipse `internal` packages are imported, but some integrations depend on ver
 
 ## Tests
 
-- `bundles/com.github.eclipsethemes/test/` mirrors the source packages (`core/...`, `eclipse/adapters`, `eclipse/preferences`, `eclipse/workbench`) and runs as plain JUnit through Tycho; no Eclipse installation is needed.
+- `bundles/com.github.eclipsethemes/test/` mirrors the source packages (`core/...`, `eclipse/adapters`, `eclipse/preferences` including `ui`, `eclipse/workbench`) and runs as plain JUnit through Tycho; no Eclipse installation is needed.
 - `bundles/com.github.eclipsethemes/test-data/` holds theme fixtures.
 - Add a regression test at the narrowest layer for every bug fix; parser, repository, adapter and apply/reset changes need one.
 - Behavior that only a real Eclipse can show (listeners, CSS, switching themes) is checked by hand on a real IDE, and the result is recorded in the compatibility docs.

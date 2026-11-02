@@ -1,4 +1,4 @@
-package com.github.eclipsethemes.eclipse.preferences;
+package com.github.eclipsethemes.eclipse.preferences.ui;
 
 import static org.junit.Assert.*;
 
@@ -28,23 +28,23 @@ public class ThemeWebsitePresentationTest {
 				{ "   ", "N/A" },
 		};
 		for (String[] c : cases) {
-			assertEquals("website '" + c[0] + "'", c[1], EclipseThemesPreferencePage.websiteText(c[0]));
+			assertEquals("website '" + c[0] + "'", c[1], AboutPanel.websiteText(c[0]));
 		}
 	}
 
 	@Test public void packageSourceFollowsTheWebsiteLinkPolicy() {
-		String notStated = EclipseThemesPreferencePage.NOT_STATED;
+		String notStated = AboutPanel.NOT_STATED;
 		assertEquals("<a>https://github.com/x</a>",
-				EclipseThemesPreferencePage.linkText("https://github.com/x", notStated));
-		assertEquals("file:///etc/passwd", EclipseThemesPreferencePage.linkText("file:///etc/passwd", notStated));
-		assertEquals(notStated, EclipseThemesPreferencePage.linkText(null, notStated));
+				AboutPanel.linkText("https://github.com/x", notStated));
+		assertEquals("file:///etc/passwd", AboutPanel.linkText("file:///etc/passwd", notStated));
+		assertEquals(notStated, AboutPanel.linkText(null, notStated));
 	}
 
 	@Test public void absentProvenanceIsShownAsNotStated() {
 		var metadata = new PackageMetadata("io.example.theme", null, null, null, null);
-		assertEquals("Not stated", EclipseThemesPreferencePage.stated(metadata.licenseText()));
-		assertEquals("Not stated", EclipseThemesPreferencePage.stated(metadata.copyrightText()));
-		assertEquals("MIT", EclipseThemesPreferencePage.stated(
+		assertEquals("Not stated", AboutPanel.stated(metadata.licenseText()));
+		assertEquals("Not stated", AboutPanel.stated(metadata.copyrightText()));
+		assertEquals("MIT", AboutPanel.stated(
 				new PackageMetadata("io.example.theme", null, "MIT", null, null).licenseText()));
 	}
 
@@ -52,6 +52,6 @@ public class ThemeWebsitePresentationTest {
 		Theme packaged = new Theme(null, "Nightfall", "", "", "", ThemeType.DARK, Map.of(),
 				new PackageMetadata("io.example.nightfall", null, null, null, null), Map.of());
 		ThemeRecord record = ThemeRecord.installed("local:x", "x.ectheme", packaged);
-		assertTrue(EclipseThemesPreferencePage.previewUrl(record).isEmpty());
+		assertTrue(PreviewPanel.previewUrl(record).isEmpty());
 	}
 }

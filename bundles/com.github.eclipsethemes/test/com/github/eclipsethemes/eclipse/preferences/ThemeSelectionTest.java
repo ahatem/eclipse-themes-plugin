@@ -20,6 +20,7 @@ import com.github.eclipsethemes.eclipse.ThemeApplyOutcome;
 import com.github.eclipsethemes.eclipse.ThemeApplyOutcome.EditorConflict;
 import com.github.eclipsethemes.eclipse.ThemeApplyOutcome.EditorOutcome;
 import com.github.eclipsethemes.eclipse.ThemeRecord;
+import com.github.eclipsethemes.eclipse.preferences.ui.PreviewPanel;
 import com.github.eclipsethemes.eclipse.workbench.WorkbenchOutcome;
 
 public class ThemeSelectionTest {
@@ -116,8 +117,8 @@ public class ThemeSelectionTest {
 
     @Test public void previewUsesSourceMetadataAndDefaultsUseCuratedLogicalIdentity() {
         ThemeRecord imported = theme("local:generated", "website-source", "GitHub Light Default", "#112233");
-        assertEquals(Constants.PREVIEW_SERVER_URL + "website-source", EclipseThemesPreferencePage.previewUrl(imported).orElseThrow());
-        assertFalse(EclipseThemesPreferencePage.previewUrl(imported).orElseThrow().contains("local:generated"));
+        assertEquals(Constants.PREVIEW_SERVER_URL + "website-source", PreviewPanel.previewUrl(imported).orElseThrow());
+        assertFalse(PreviewPanel.previewUrl(imported).orElseThrow().contains("local:generated"));
         ThemeRecord curated = curated(Constants.DEFAULT_LIGHT_THEME_ID, "curated-source", "Renamed", "#445566");
         assertSame(curated, ThemeSelection.defaultTheme(List.of(imported, curated), false));
         assertNotEquals("Duplicate source claims do not imply the current record", imported,
@@ -131,8 +132,8 @@ public class ThemeSelectionTest {
         var store = new PreferenceStore();
         store.setValue(PreferenceKeys.ACTIVE_THEME_ID, "curated-source");
         assertSame(bundled, ThemeSelection.resolve(store, List.of(bundled, importedPackage)).orElseThrow());
-        assertEquals(Constants.PREVIEW_SERVER_URL + "curated-source", EclipseThemesPreferencePage.previewUrl(bundled).orElseThrow());
-        assertTrue(EclipseThemesPreferencePage.previewUrl(importedPackage).isEmpty());
+        assertEquals(Constants.PREVIEW_SERVER_URL + "curated-source", PreviewPanel.previewUrl(bundled).orElseThrow());
+        assertTrue(PreviewPanel.previewUrl(importedPackage).isEmpty());
     }
 
     @Test public void partialOrConflictingEditorApplyDoesNotPersistTheSelectedTheme() {
