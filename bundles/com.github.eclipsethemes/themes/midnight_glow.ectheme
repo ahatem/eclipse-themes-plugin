@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.midnight-glow" name="Midnight Glow" appearance="dark" author="Ahmed Hatem" website="https://github.com/ahatem">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.midnight-glow" name="Midnight Glow" appearance="dark" author="Ahmed Hatem" description="Original Eclipse Themes theme by Ahmed Hatem; this package is its source." website="https://github.com/ahatem">
+  <provenance copyright="Ahmed Hatem"/>
   <editor>
     <background color="#0d1117"/>
     <foreground color="#f0f6fc"/>
@@ -50,4 +51,14 @@
     <xmlComment color="#8b949e" italic="true"/>
     <xmlTag color="#7ee787"/>
   </editor>
+  <workbench>
+    <background color="#0d1117"/>
+    <foreground color="#f0f6fc"/>
+    <surface color="#161a20"/>
+    <surfaceRaised color="#21262c"/>
+    <border color="#31363c"/>
+    <mutedForeground color="#7f8590"/>
+    <selection color="#264f78"/>
+    <accent color="#ff7b72"/>
+  </workbench>
 </themePackage>

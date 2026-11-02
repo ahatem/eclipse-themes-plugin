@@ -1,53 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.gruvbox-material-dark-hard" name="Gruvbox Material Dark Hard" appearance="dark" author="Eclipse Themes">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.gruvbox-material-dark-hard" name="Gruvbox Material Dark Hard" appearance="dark" author="sainnhe" website="https://github.com/sainnhe/gruvbox-material-vscode" version="6.5.2">
+  <provenance license="MIT" copyright="sainnhe" source="https://github.com/sainnhe/gruvbox-material-vscode"/>
   <editor>
-    <background color="#1d2021"/>
+    <background color="#202020"/>
     <foreground color="#d4be98"/>
-    <abstractClass color="#d8a657"/>
-    <abstractMethod color="#7daea3"/>
-    <annotation color="#d8a657"/>
-    <argument color="#e78a4e"/>
+    <abstractClass color="#7daea3"/>
+    <abstractMethod color="#a9b665"/>
+    <annotation color="#d3869b"/>
+    <argument color="#d4be98"/>
     <bracket color="#d4be98"/>
-    <class color="#d8a657"/>
+    <class color="#7daea3"/>
     <comment color="#928374" italic="true"/>
-    <constant color="#d3869b"/>
-    <currentLine color="#32302f"/>
-    <deprecated color="#928374" strikethrough="true"/>
+    <constant color="#d4be98"/>
+    <currentLine color="#282726"/>
+    <deprecated color="#d4be98" strikethrough="true"/>
     <doc color="#928374" italic="true"/>
-    <docLink color="#7daea3"/>
-    <docTag color="#a9b665"/>
-    <docXmlTag color="#a9b665"/>
-    <enum color="#a9b665"/>
-    <field color="#7daea3"/>
-    <filteredSearchResult color="#504945"/>
-    <findScope color="#504945"/>
-    <inheritedMethod color="#7daea3"/>
-    <interface color="#d8a657"/>
-    <keyword color="#ea6962" bold="true"/>
-    <lineNumber color="#665c54"/>
+    <docLink color="#d4be98"/>
+    <docTag color="#ea6962"/>
+    <docXmlTag color="#e78a4e"/>
+    <enum color="#7daea3"/>
+    <field color="#d4be98"/>
+    <filteredSearchResult color="#3c3f2d"/>
+    <findScope color="#2d2b2a"/>
+    <inheritedMethod color="#a9b665"/>
+    <interface color="#7daea3"/>
+    <keyword color="#ea6962"/>
+    <lineNumber color="#7c6f64"/>
     <localVariable color="#d4be98"/>
     <localVariableDeclaration color="#d4be98"/>
-    <method color="#7daea3"/>
-    <methodDeclaration color="#7daea3"/>
+    <method color="#a9b665"/>
+    <methodDeclaration color="#a9b665"/>
     <multiLineComment color="#928374" italic="true"/>
     <number color="#d3869b"/>
-    <occurrence color="#504945"/>
-    <operator color="#d4be98"/>
-    <removedLine color="#ea6962"/>
-    <searchResult color="#504945"/>
-    <selectionBackground color="#503946"/>
+    <occurrence color="#2d2b2a"/>
+    <operator color="#e78a4e"/>
+    <removedLine color="#7f423f"/>
+    <searchResult color="#473428"/>
+    <selectionBackground color="#3a3634"/>
     <selectionForeground color="#d4be98"/>
-    <sourceHoverBackground color="#32302f"/>
-    <staticField color="#d8a657"/>
-    <staticFinalField color="#d8a657"/>
-    <staticMethod color="#7daea3"/>
-    <string color="#a9b665"/>
-    <taskTag color="#ea6962" bold="true"/>
-    <templateArgument color="#89b482"/>
-    <templateParameter color="#89b482"/>
-    <writeOccurrence color="#504945"/>
+    <sourceHoverBackground color="#2a2827"/>
+    <staticField color="#d4be98"/>
+    <staticFinalField color="#d4be98"/>
+    <staticMethod color="#a9b665"/>
+    <string color="#d8a657"/>
+    <taskTag color="#928374" bold="true"/>
+    <templateArgument color="#7daea3"/>
+    <templateParameter color="#7daea3"/>
+    <writeOccurrence color="#3a3634"/>
     <xmlAttribute color="#d8a657"/>
     <xmlComment color="#928374" italic="true"/>
-    <xmlTag color="#ea6962"/>
+    <xmlTag color="#e78a4e"/>
   </editor>
+  <workbench>
+    <background color="#202020"/>
+    <foreground color="#a89984"/>
+    <surface color="#202020"/>
+    <surfaceRaised color="#202020"/>
+    <border color="#202020"/>
+    <mutedForeground color="#96887a"/>
+    <selection color="#2b2928"/>
+    <accent color="#a89984"/>
+  </workbench>
 </themePackage>

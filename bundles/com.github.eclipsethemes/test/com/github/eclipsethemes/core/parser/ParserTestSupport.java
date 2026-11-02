@@ -25,7 +25,7 @@ final class ParserTestSupport {
         return bundleDirectory("themes");
     }
 
-    /** The pre-package XML of the bundled themes, kept only as the parity reference. */
+    /** The pre-package XML of the bundled themes, kept as the reference for their names, appearances and identities. */
     static Path legacyThemes() {
         return bundleDirectory("test-data/legacy-bundled");
     }

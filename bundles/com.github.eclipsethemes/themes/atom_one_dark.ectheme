@@ -1,48 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.atom-one-dark" name="Atom One Dark" appearance="dark" author="Eclipse Themes">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.atom-one-dark" name="Atom One Dark" appearance="dark" author="Mahmoud Ali" website="https://github.com/akamud/vscode-theme-onedark" version="2.3.0">
+  <provenance license="MIT" copyright="Mahmoud Ali" source="https://github.com/akamud/vscode-theme-onedark"/>
   <editor>
     <background color="#282c34"/>
     <foreground color="#abb2bf"/>
-    <annotation color="#e06c75"/>
-    <argument color="#56b6c2"/>
+    <abstractClass color="#e5c07b"/>
+    <abstractMethod color="#61afef"/>
+    <annotation color="#c678dd"/>
+    <argument color="#abb2bf"/>
     <bracket color="#abb2bf"/>
     <class color="#e5c07b"/>
     <comment color="#5c6370" italic="true"/>
-    <constant color="#d19a66"/>
+    <constant color="#e06c75"/>
     <currentLine color="#2c323c"/>
-    <deprecated color="#828997" strikethrough="true"/>
+    <deprecated color="#abb2bf" strikethrough="true"/>
     <doc color="#5c6370" italic="true"/>
-    <docTag color="#c678dd" italic="true"/>
-    <docXmlTag color="#c678dd" italic="true"/>
-    <enum color="#98c379"/>
+    <docLink color="#abb2bf"/>
+    <docTag color="#c678dd"/>
+    <docXmlTag color="#e06c75"/>
+    <enum color="#e5c07b"/>
     <field color="#e06c75"/>
-    <filteredSearchResult color="#343c47"/>
+    <filteredSearchResult color="#324365"/>
+    <findScope color="#2f3339"/>
     <inheritedMethod color="#61afef"/>
     <interface color="#e5c07b"/>
     <keyword color="#c678dd"/>
-    <lineNumber color="#4b5363"/>
+    <lineNumber color="#636d83"/>
     <localVariable color="#e06c75"/>
     <localVariableDeclaration color="#e06c75"/>
     <method color="#61afef"/>
     <methodDeclaration color="#61afef"/>
     <multiLineComment color="#5c6370" italic="true"/>
     <number color="#d19a66"/>
-    <occurrence color="#343c47"/>
-    <operator color="#abb2bf"/>
-    <removedLine color="#e06c75"/>
-    <searchResult color="#343c47"/>
+    <occurrence color="#4a4b4d"/>
+    <operator color="#c678dd"/>
+    <removedLine color="#f14c4c"/>
+    <searchResult color="#515c6a"/>
     <selectionBackground color="#3e4451"/>
-    <sourceHoverBackground color="#252830"/>
-    <staticField color="#d19a66"/>
-    <staticFinalField color="#d19a66"/>
+    <selectionForeground color="#abb2bf"/>
+    <sourceHoverBackground color="#21252b"/>
+    <staticField color="#e06c75"/>
+    <staticFinalField color="#e06c75"/>
     <staticMethod color="#61afef"/>
     <string color="#98c379"/>
-    <taskTag color="#e06c75"/>
-    <templateArgument color="#56b6c2"/>
-    <templateParameter color="#56b6c2"/>
-    <writeOccurrence color="#343c47"/>
+    <taskTag color="#5c6370" bold="true"/>
+    <templateArgument color="#e5c07b"/>
+    <templateParameter color="#e5c07b"/>
+    <writeOccurrence color="#0b4161"/>
     <xmlAttribute color="#d19a66"/>
     <xmlComment color="#5c6370" italic="true"/>
     <xmlTag color="#e06c75"/>
   </editor>
+  <workbench>
+    <background color="#282c34"/>
+    <foreground color="#abb2bf"/>
+    <surface color="#21252b"/>
+    <surfaceRaised color="#282c34"/>
+    <border color="#181a1f"/>
+    <mutedForeground color="#8f96a6"/>
+    <selection color="#2c313a"/>
+    <accent color="#5990ff"/>
+  </workbench>
 </themePackage>

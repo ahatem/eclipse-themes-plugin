@@ -1,53 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.github-dark-default" name="GitHub Dark Default" appearance="dark" author="Eclipse Themes">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.github-dark-default" name="GitHub Dark Default" appearance="dark" author="GitHub" website="https://github.com/primer/github-vscode-theme" version="6.3.5">
+  <provenance license="MIT" copyright="Primer" source="https://github.com/primer/github-vscode-theme"/>
   <editor>
     <background color="#0d1117"/>
     <foreground color="#e6edf3"/>
-    <abstractClass color="#79c0ff"/>
+    <abstractClass color="#ffa657"/>
     <abstractMethod color="#d2a8ff"/>
-    <annotation color="#7ee787"/>
+    <annotation color="#ffa657"/>
     <argument color="#ffa657"/>
     <bracket color="#e6edf3"/>
-    <class color="#79c0ff"/>
-    <comment color="#8b949e" italic="true"/>
+    <class color="#ffa657"/>
+    <comment color="#8b949e"/>
     <constant color="#79c0ff"/>
-    <currentLine color="#161b22"/>
-    <deprecated color="#6e7681" strikethrough="true"/>
-    <doc color="#8b949e" italic="true"/>
-    <docLink color="#79c0ff"/>
-    <docTag color="#79c0ff"/>
-    <docXmlTag color="#79c0ff"/>
-    <enum color="#7ee787"/>
+    <currentLine color="#171b22"/>
+    <deprecated color="#e6edf3" strikethrough="true"/>
+    <doc color="#8b949e"/>
+    <docLink color="#e6edf3" underline="true"/>
+    <docTag color="#ff7b72"/>
+    <docXmlTag color="#7ee787"/>
+    <enum color="#ffa657"/>
     <field color="#e6edf3"/>
-    <filteredSearchResult color="#3d444d"/>
-    <findScope color="#3d444d"/>
+    <filteredSearchResult color="#806f3c"/>
+    <findScope color="#1f2328"/>
     <inheritedMethod color="#d2a8ff"/>
-    <interface color="#79c0ff"/>
-    <keyword color="#ff7b72" bold="true"/>
+    <interface color="#ffa657"/>
+    <keyword color="#ff7b72"/>
     <lineNumber color="#6e7681"/>
     <localVariable color="#e6edf3"/>
     <localVariableDeclaration color="#e6edf3"/>
     <method color="#d2a8ff"/>
     <methodDeclaration color="#d2a8ff"/>
-    <multiLineComment color="#8b949e" italic="true"/>
-    <number color="#a5f3fc"/>
-    <occurrence color="#3d444d"/>
+    <multiLineComment color="#8b949e"/>
+    <number color="#79c0ff"/>
+    <occurrence color="#3e444c"/>
     <operator color="#ff7b72"/>
-    <removedLine color="#f85149"/>
-    <searchResult color="#3d444d"/>
+    <removedLine color="#6b2b2b"/>
+    <searchResult color="#9e6a03"/>
     <selectionBackground color="#264f78"/>
     <selectionForeground color="#e6edf3"/>
     <sourceHoverBackground color="#161b22"/>
-    <staticField color="#ffa657"/>
-    <staticFinalField color="#ffa657"/>
+    <staticField color="#e6edf3"/>
+    <staticFinalField color="#79c0ff"/>
     <staticMethod color="#d2a8ff"/>
-    <string color="#a5f3fc"/>
-    <taskTag color="#ff7b72" bold="true"/>
-    <templateArgument color="#79c0ff"/>
-    <templateParameter color="#79c0ff"/>
-    <writeOccurrence color="#484f58"/>
-    <xmlAttribute color="#ffa657"/>
-    <xmlComment color="#8b949e" italic="true"/>
+    <string color="#a5d6ff"/>
+    <taskTag color="#8b949e" bold="true"/>
+    <templateArgument color="#ffa657"/>
+    <templateParameter color="#ffa657"/>
+    <writeOccurrence color="#2a2f37"/>
+    <xmlAttribute color="#79c0ff"/>
+    <xmlComment color="#8b949e"/>
     <xmlTag color="#7ee787"/>
   </editor>
+  <workbench>
+    <background color="#0d1117"/>
+    <foreground color="#e6edf3"/>
+    <surface color="#010409"/>
+    <surfaceRaised color="#0d1117"/>
+    <border color="#30363d"/>
+    <mutedForeground color="#7d8590"/>
+    <selection color="#2d3239"/>
+    <accent color="#317bed"/>
+  </workbench>
 </themePackage>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<themePackage schemaVersion="1" id="com.github.eclipsethemes.starry-code" name="Starry Code" appearance="dark" author="Ahmed Hatem" website="https://github.com/ahatem">
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.starry-code" name="Starry Code" appearance="dark" author="Ahmed Hatem" description="Original Eclipse Themes theme by Ahmed Hatem; this package is its source." website="https://github.com/ahatem">
+  <provenance copyright="Ahmed Hatem"/>
   <editor>
     <background color="#1a1a1a"/>
     <foreground color="#e6e6e6"/>
@@ -50,4 +51,14 @@
     <xmlComment color="#7c7c7c" italic="true"/>
     <xmlTag color="#da70d6"/>
   </editor>
+  <workbench>
+    <background color="#1a1a1a"/>
+    <foreground color="#e6e6e6"/>
+    <surface color="#222222"/>
+    <surfaceRaised color="#2c2c2c"/>
+    <border color="#3b3b3b"/>
+    <mutedForeground color="#8b8b8b"/>
+    <selection color="#3d4c5f"/>
+    <accent color="#da70d6"/>
+  </workbench>
 </themePackage>
