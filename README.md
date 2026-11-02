@@ -20,7 +20,7 @@ tool bars, trees, tables, status line) and, if you want, the **fonts** too. Them
 
 ## Key capabilities
 
-- **Editor themes** for Java, C++, XML and more, with a library of 33 bundled themes and hundreds more online.
+- **Editor themes** for Java, C++, XML and more, with a library of 56 bundled themes and hundreds more online.
 - **Coordinated workbench theming** (optional): the same palette on the window, tabs, tool bars, trees, tables and status line.
 - **Two fonts, one place**: an **Editor font** and an **Interface font**, each *Keep current*, *Use theme* or *Custom*.
 - **Theme packages** (`.ectheme`): a declarative single-file format with author and license details, workbench colors and font
@@ -38,8 +38,8 @@ tool bars, trees, tables, status line) and, if you want, the **fonts** too. Them
 ### Themes
 
 - **Searchable Theme Library** with a live preview, filters and the selected theme's details (author, license, source).
-- **33 bundled themes**, for example Catppuccin, GitHub, Atom One, Solarized, Gruvbox Material, Vitesse and IntelliJ-style
-  themes. Many are ports of well-known color schemes by their original designers; this project does not claim to have designed
+- **56 bundled themes**, for example Catppuccin (the default), Dracula, Tokyo Night, Rosé Pine, Nord, Ayu, Night Owl,
+  Kintsugi, GitHub, Atom One, Solarized, Gruvbox Material, Vitesse and IntelliJ-style themes. Many are ports of well-known color schemes by their original designers; this project does not claim to have designed
   them. Hundreds more are available from the [online collection](https://eclipse-color-themes.vercel.app/).
 - **Legacy XML compatibility.** Existing Eclipse Color Theme `.xml` files keep working, and all bundled themes are covered by
   compatibility tests.

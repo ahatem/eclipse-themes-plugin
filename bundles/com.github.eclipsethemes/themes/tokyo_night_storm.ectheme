@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.tokyo-night-storm" name="Tokyo Night Storm" appearance="dark" author="Enkia" website="https://github.com/enkia/tokyo-night-vscode-theme" version="1.1.2">
+  <provenance license="MIT" copyright="Enkia" source="https://github.com/enkia/tokyo-night-vscode-theme"/>
+  <editor>
+    <background color="#24283b"/>
+    <foreground color="#a9b1d6"/>
+    <abstractClass color="#c0caf5"/>
+    <abstractMethod color="#7aa2f7"/>
+    <annotation color="#bb9af7"/>
+    <argument color="#e0af68"/>
+    <bracket color="#9abdf5"/>
+    <class color="#c0caf5"/>
+    <comment color="#5f6996" italic="true"/>
+    <constant color="#ff9e64"/>
+    <currentLine color="#292e42"/>
+    <deprecated color="#a9b1d6" strikethrough="true"/>
+    <doc color="#5f6996" italic="true"/>
+    <docLink color="#73daca" underline="true"/>
+    <docTag color="#89ddff"/>
+    <docXmlTag color="#f7768e"/>
+    <enum color="#c0caf5"/>
+    <field color="#c0caf5"/>
+    <filteredSearchResult color="#2e3c64"/>
+    <findScope color="#2f344d"/>
+    <inheritedMethod color="#7aa2f7"/>
+    <interface color="#c0caf5"/>
+    <keyword color="#bb9af7"/>
+    <lineNumber color="#3b4261"/>
+    <localVariable color="#c0caf5"/>
+    <localVariableDeclaration color="#c0caf5"/>
+    <method color="#7aa2f7"/>
+    <methodDeclaration color="#7aa2f7"/>
+    <multiLineComment color="#5f6996" italic="true"/>
+    <number color="#ff9e64"/>
+    <occurrence color="#333954"/>
+    <operator color="#89ddff"/>
+    <removedLine color="#823c41"/>
+    <searchResult color="#2e3c64"/>
+    <selectionBackground color="#373d5a"/>
+    <selectionForeground color="#a9b1d6"/>
+    <sourceHoverBackground color="#1f2335"/>
+    <staticField color="#c0caf5"/>
+    <staticFinalField color="#ff9e64"/>
+    <staticMethod color="#7aa2f7"/>
+    <string color="#9ece6a"/>
+    <taskTag color="#5f6996" bold="true"/>
+    <templateArgument color="#c0caf5"/>
+    <templateParameter color="#c0caf5"/>
+    <writeOccurrence color="#383e5c"/>
+    <xmlAttribute color="#bb9af7"/>
+    <xmlComment color="#5f6996" italic="true"/>
+    <xmlTag color="#f7768e"/>
+  </editor>
+  <workbench>
+    <background color="#24283b"/>
+    <foreground color="#858eb6"/>
+    <surface color="#1f2335"/>
+    <surfaceRaised color="#1f2335"/>
+    <border color="#1b1e2e"/>
+    <mutedForeground color="#898fa6"/>
+    <selection color="#2c324a"/>
+    <accent color="#7293c8"/>
+  </workbench>
+</themePackage>

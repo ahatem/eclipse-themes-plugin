@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.dracula" name="Dracula" appearance="dark" author="Dracula Theme" website="https://github.com/dracula/visual-studio-code" version="2.25.1">
+  <provenance license="MIT" copyright="Dracula Theme" source="https://github.com/dracula/visual-studio-code"/>
+  <editor>
+    <background color="#282a36"/>
+    <foreground color="#f8f8f2"/>
+    <abstractClass color="#8be9fd"/>
+    <abstractMethod color="#50fa7b"/>
+    <annotation color="#8be9fd" italic="true"/>
+    <argument color="#ffb86c" italic="true"/>
+    <bracket color="#f8f8f2"/>
+    <class color="#8be9fd"/>
+    <comment color="#6272a4"/>
+    <constant color="#bd93f9"/>
+    <currentLine color="#32343f"/>
+    <deprecated color="#f8f8f2" strikethrough="true"/>
+    <doc color="#6272a4"/>
+    <docLink color="#8be9fd" underline="true"/>
+    <docTag color="#ff79c6"/>
+    <docXmlTag color="#ff79c6"/>
+    <enum color="#8be9fd" italic="true"/>
+    <field color="#f8f8f2"/>
+    <filteredSearchResult color="#5e5f68"/>
+    <findScope color="#353747"/>
+    <inheritedMethod color="#50fa7b"/>
+    <interface color="#8be9fd" italic="true"/>
+    <keyword color="#ff79c6"/>
+    <lineNumber color="#6272a4"/>
+    <localVariable color="#f8f8f2"/>
+    <localVariableDeclaration color="#f8f8f2"/>
+    <method color="#50fa7b"/>
+    <methodDeclaration color="#50fa7b"/>
+    <multiLineComment color="#6272a4"/>
+    <number color="#bd93f9"/>
+    <occurrence color="#476674"/>
+    <operator color="#ff79c6"/>
+    <removedLine color="#944046"/>
+    <searchResult color="#947151"/>
+    <selectionBackground color="#44475a"/>
+    <selectionForeground color="#f8f8f2"/>
+    <sourceHoverBackground color="#282a36"/>
+    <staticField color="#f8f8f2"/>
+    <staticFinalField color="#bd93f9"/>
+    <staticMethod color="#50fa7b"/>
+    <string color="#f1fa8c"/>
+    <taskTag color="#6272a4" bold="true"/>
+    <templateArgument color="#8be9fd" italic="true"/>
+    <templateParameter color="#8be9fd" italic="true"/>
+    <writeOccurrence color="#356b4c"/>
+    <xmlAttribute color="#50fa7b" italic="true"/>
+    <xmlComment color="#6272a4"/>
+    <xmlTag color="#ff79c6"/>
+  </editor>
+  <workbench>
+    <background color="#282a36"/>
+    <foreground color="#f8f8f2"/>
+    <surface color="#21222c"/>
+    <surfaceRaised color="#282a36"/>
+    <border color="#bd93f9"/>
+    <mutedForeground color="#8491b7"/>
+    <selection color="#44475a"/>
+    <accent color="#8491b7"/>
+  </workbench>
+</themePackage>

@@ -13,6 +13,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
@@ -22,7 +23,7 @@ import com.github.eclipsethemes.core.models.Theme;
 import com.github.eclipsethemes.core.workbench.WorkbenchColor;
 import com.github.eclipsethemes.core.workbench.WorkbenchPaletteResolver;
 
-/** The shipped packages keep the names, appearances and identities of the themes they replaced, and are complete. */
+/** The shipped packages are complete, and those that replaced legacy themes keep their names, appearances and identities. */
 public class BundledPackageTest {
 
     @Test public void everyBundledPackageIsCompleteAndKeepsItsIdentity() throws Exception {
@@ -49,10 +50,15 @@ public class BundledPackageTest {
                 assertEquals(base, "com.github.eclipsethemes." + base.toLowerCase(Locale.ROOT).replace('_', '-'),
                         metadata.packageId());
                 assertTrue(base, packageIds.add(metadata.packageId()));
-                Theme legacy = legacyByName.get(theme.getName());
-                assertTrue("Renamed theme " + base, legacy != null);
-                assertEquals(base, legacy.getType(), theme.getType());
-                assertEquals(base, legacy.getId(), identities.getProperty(metadata.packageId()));
+                String identity = identities.getProperty(metadata.packageId());
+                Theme legacy = legacyByName.remove(theme.getName());
+                if (legacy != null) {
+                    assertEquals(base, legacy.getType(), theme.getType());
+                    assertEquals(base, legacy.getId(), identity);
+                } else {
+                    // A theme added later gets a new id of the same form.
+                    assertEquals(base, identity, UUID.fromString(identity).toString());
+                }
 
                 assertEquals(base, roles, theme.getAuthoredWorkbench().keySet());
                 // Authored colors are shown as written: none needed a readability correction.
@@ -66,8 +72,9 @@ public class BundledPackageTest {
                 }
             }
         }
-        assertEquals(33, packageIds.size());
+        assertEquals("Legacy themes without a package", Map.of(), legacyByName);
+        assertEquals(56, packageIds.size());
         assertEquals(packageIds, identities.stringPropertyNames());
-        assertEquals(33, new HashSet<>(identities.values()).size());
+        assertEquals(56, new HashSet<>(identities.values()).size());
     }
 }

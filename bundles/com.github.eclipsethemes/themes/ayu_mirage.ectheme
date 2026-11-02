@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.ayu-mirage" name="Ayu Mirage" appearance="dark" author="Ike Kurghinyan" website="https://github.com/ayu-theme/vscode-ayu" version="1.5.0">
+  <provenance license="MIT" copyright="Ike Kurghinyan" source="https://github.com/ayu-theme/vscode-ayu"/>
+  <editor>
+    <background color="#242936"/>
+    <foreground color="#cccac2"/>
+    <abstractClass color="#73d0ff"/>
+    <abstractMethod color="#ffcd66"/>
+    <annotation color="#73d0ff"/>
+    <argument color="#dfbfff"/>
+    <bracket color="#cccac2"/>
+    <class color="#73d0ff"/>
+    <comment color="#6e7c8f" italic="true"/>
+    <constant color="#cccac2"/>
+    <currentLine color="#1a1f29"/>
+    <deprecated color="#cccac2" strikethrough="true"/>
+    <doc color="#6e7c8f" italic="true"/>
+    <docLink color="#5ccfe6" underline="true"/>
+    <docTag color="#ffa659"/>
+    <docXmlTag color="#5ccfe6"/>
+    <enum color="#73d0ff"/>
+    <field color="#cccac2"/>
+    <filteredSearchResult color="#444340"/>
+    <findScope color="#2d313a"/>
+    <inheritedMethod color="#ffcd66"/>
+    <interface color="#5ccfe6"/>
+    <keyword color="#ffa659"/>
+    <lineNumber color="#4a5261"/>
+    <localVariable color="#cccac2"/>
+    <localVariableDeclaration color="#cccac2"/>
+    <method color="#ffcd66"/>
+    <methodDeclaration color="#ffcd66"/>
+    <multiLineComment color="#6e7c8f" italic="true"/>
+    <number color="#dfbfff"/>
+    <occurrence color="#2b3546"/>
+    <operator color="#f29e74"/>
+    <removedLine color="#f27983"/>
+    <searchResult color="#736950"/>
+    <selectionBackground color="#2b4768"/>
+    <selectionForeground color="#cccac2"/>
+    <sourceHoverBackground color="#282e3b"/>
+    <staticField color="#cccac2"/>
+    <staticFinalField color="#cccac2"/>
+    <staticMethod color="#ffcd66"/>
+    <string color="#d5ff80"/>
+    <taskTag color="#6e7c8f" bold="true"/>
+    <templateArgument color="#73d0ff"/>
+    <templateParameter color="#73d0ff"/>
+    <writeOccurrence color="#2c373a"/>
+    <xmlAttribute color="#ffcd66"/>
+    <xmlComment color="#6e7c8f" italic="true"/>
+    <xmlTag color="#5ccfe6"/>
+  </editor>
+  <workbench>
+    <background color="#242936"/>
+    <foreground color="#8a93a1"/>
+    <surface color="#1f2430"/>
+    <surfaceRaised color="#242936"/>
+    <border color="#171b24"/>
+    <mutedForeground color="#8a93a1"/>
+    <selection color="#293040"/>
+    <accent color="#ffcc66"/>
+  </workbench>
+</themePackage>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themePackage schemaVersion="1" id="com.github.eclipsethemes.andromeda" name="Andromeda" appearance="dark" author="Eliver Lara" website="https://github.com/EliverLara/Andromeda" version="1.10.0">
+  <provenance license="MIT" copyright="Eliver Lara" source="https://github.com/EliverLara/Andromeda/tree/d1abb48c69493000aa0133a32d594eb25e523d4f"/>
+  <editor>
+    <background color="#23262e"/>
+    <foreground color="#d5ced9"/>
+    <abstractClass color="#ffe66d"/>
+    <abstractMethod color="#ffe66d"/>
+    <annotation color="#c74ded"/>
+    <argument color="#00e8c6"/>
+    <bracket color="#d5ced9"/>
+    <class color="#ffe66d"/>
+    <comment color="#87888f"/>
+    <constant color="#00e8c6"/>
+    <currentLine color="#2e323d"/>
+    <deprecated color="#d5ced9" strikethrough="true"/>
+    <doc color="#87888f"/>
+    <docLink color="#d5ced9"/>
+    <docTag color="#c74ded"/>
+    <docXmlTag color="#f92672"/>
+    <enum color="#ffe66d"/>
+    <field color="#00e8c6"/>
+    <filteredSearchResult color="#3c6a6c"/>
+    <findScope color="#2c2f36"/>
+    <inheritedMethod color="#ffe66d"/>
+    <interface color="#ffe66d"/>
+    <keyword color="#c74ded"/>
+    <lineNumber color="#746f77"/>
+    <localVariable color="#00e8c6"/>
+    <localVariableDeclaration color="#00e8c6"/>
+    <method color="#ffe66d"/>
+    <methodDeclaration color="#ffe66d"/>
+    <multiLineComment color="#87888f"/>
+    <number color="#f39c12"/>
+    <occurrence color="#4f4355"/>
+    <operator color="#ee5d43"/>
+    <removedLine color="#c25345"/>
+    <searchResult color="#694e25"/>
+    <selectionBackground color="#3d4352"/>
+    <selectionForeground color="#d5ced9"/>
+    <sourceHoverBackground color="#373941"/>
+    <staticField color="#00e8c6"/>
+    <staticFinalField color="#00e8c6"/>
+    <staticMethod color="#ffe66d"/>
+    <string color="#96e072"/>
+    <taskTag color="#87888f" bold="true"/>
+    <templateArgument color="#ffe66d"/>
+    <templateParameter color="#ffe66d"/>
+    <writeOccurrence color="#7f3668"/>
+    <xmlAttribute color="#ffe66d"/>
+    <xmlComment color="#87888f"/>
+    <xmlTag color="#f92672"/>
+  </editor>
+  <workbench>
+    <background color="#23262e"/>
+    <foreground color="#d5ced9"/>
+    <surface color="#23262e"/>
+    <surfaceRaised color="#23262e"/>
+    <border color="#1b1d23"/>
+    <mutedForeground color="#938f94"/>
+    <selection color="#23262e"/>
+    <accent color="#938f94"/>
+  </workbench>
+</themePackage>
